@@ -1,21 +1,22 @@
-<mat-card class="card">
+<mat-card class="card animate__animated animate__fadeInRight animate__faster">
     <div class="example-container">
         <h1 class="title">Sign Up</h1>
+        <mat-divider></mat-divider>
         <br>
-        <mat-form-field class="example-full-width" class="input">
+        <mat-form-field appearance="outline" class="example-full-width" class="input">
             <mat-label>First Name</mat-label>
             <input matInput placeholder="Enter First Name" required>
         </mat-form-field>
-        <mat-form-field class="example-full-width" class="input">
+        <mat-form-field appearance="outline" class="example-full-width" class="input">
             <mat-label>Last Name</mat-label>
             <input matInput placeholder="Enter Last Name" required>
         </mat-form-field>
-        <mat-form-field class="input">
+        <mat-form-field appearance="outline" class="input">
             <mat-label>Enter your email</mat-label>
             <input matInput placeholder="pat@example.com" [formControl]="email" required>
             <mat-error *ngIf="email.invalid">{{ getErrorEmailMessage() }}</mat-error>
         </mat-form-field>
-        <mat-form-field class="input">
+        <mat-form-field appearance="outline" class="input">
             <mat-label>Enter new password</mat-label>
             <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required>
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
@@ -23,7 +24,7 @@
             </button>
             <mat-error *ngIf="password.invalid">{{ getErrorPassMessage() }}</mat-error>
         </mat-form-field>
-        <mat-form-field class="input">
+        <mat-form-field appearance="outline" class="input">
             <mat-label>Confirm password</mat-label>
             <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required>
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
@@ -32,6 +33,13 @@
             <mat-error *ngIf="password.invalid">{{ getErrorPassMessage() }}</mat-error>
         </mat-form-field>
         <br>
-        <button mat-raised-button color="primary" class="input">Submit</button>
+        <div class="row">
+            <div class="col">
+                <button mat-raised-button color="accent" class="input" (click)="return()">Back</button>
+            </div>
+            <div class="col">
+                <button mat-raised-button color="primary" class="input">Next</button>
+            </div>
+        </div>
     </div>
 </mat-card>

@@ -1,16 +1,17 @@
-<mat-card class="card">
+<mat-card class="card animate__animated animate__fadeInRight animate__faster">
     <div>
         <h1 class="title">Forgot Password</h1>
+        <mat-divider></mat-divider>
         <br>
         <p>Please provide the email associated with you SLA account.</p>
-        <mat-form-field class="input">
+        <mat-form-field appearance="outline" class="input">
             <mat-label>Enter your email</mat-label>
             <input matInput placeholder="pat@example.com" [formControl]="email" required>
             <mat-error *ngIf="email.invalid">{{ getErrorEmailMessage() }}</mat-error>
         </mat-form-field>
         <div class="row">
             <div class="col">
-                <button mat-raised-button color="accent" class="input">Back</button>
+                <button mat-raised-button color="accent" class="input" (click)="return()">Back</button>
             </div>
             <div class="col">
                 <button mat-raised-button color="primary" class="input">Next</button>

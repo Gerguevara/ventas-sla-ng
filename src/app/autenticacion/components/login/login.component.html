@@ -1,6 +1,7 @@
-<mat-card class="card">
+<mat-card class="card animate__animated animate__fadeInLeft animate__faster">
     <div class="example-container">
         <h1 class="title">Log In</h1>
+        <mat-divider></mat-divider>
         <br>
         <mat-form-field appearance="fill" class="input">
             <mat-label>Enter your email</mat-label>
@@ -17,8 +18,10 @@
         </mat-form-field>
         <br>
         <button mat-raised-button color="primary" class="input">Submit</button>
+
+        <button mat-raised-button color="accent" class="input" style="margin-top: 10px;" (click)="signup()">Create New Account</button>
     </div>
     <div class="link">
-        <a href="">Forgot Password</a>
+        <a routerLink='/forgot'>Forgot Password</a>
     </div>
 </mat-card>
