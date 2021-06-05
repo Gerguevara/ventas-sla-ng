@@ -1,8 +1,9 @@
 <mat-card class="card">
     <mat-horizontal-stepper #stepper>
+        <!--Formulario General-->
         <mat-step [stepControl]="firstFormGroup" errorMessage="Name is required.">
             <form [formGroup]="firstFormGroup">
-                <ng-template matStepLabel>Fill out your name</ng-template>
+                <ng-template matStepLabel>General</ng-template>
                 <mat-form-field>
                     <mat-label>Name</mat-label>
                     <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
@@ -13,9 +14,10 @@
                 </div>
             </form>
         </mat-step>
+        <!--Formulario Descripcion-->
         <mat-step [stepControl]="secondFormGroup" errorMessage="Address is required.">
             <form [formGroup]="secondFormGroup">
-                <ng-template matStepLabel>Fill out your address</ng-template>
+                <ng-template matStepLabel>Description</ng-template>
                 <mat-form-field>
                     <mat-label>Address</mat-label>
                     <input matInput placeholder="Ex. 1 Main St, New York, NY" formControlName="secondCtrl" required>
@@ -27,8 +29,39 @@
                 </div>
             </form>
         </mat-step>
+        <!--Formulario Design-->
+        <mat-step [stepControl]="secondFormGroup" errorMessage="Address is required.">
+            <form [formGroup]="secondFormGroup">
+                <ng-template matStepLabel>Design</ng-template>
+                <mat-form-field>
+                    <mat-label>Address</mat-label>
+                    <input matInput placeholder="Ex. 1 Main St, New York, NY" formControlName="secondCtrl" required>
+                </mat-form-field>
+                <div>
+                    <p>Go to a different step to see the error state</p>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button matStepperNext>Next</button>
+                </div>
+            </form>
+        </mat-step>
+        <!--Formulario Related Items-->
+        <mat-step [stepControl]="secondFormGroup" errorMessage="Address is required.">
+            <form [formGroup]="secondFormGroup">
+                <ng-template matStepLabel>Related Items</ng-template>
+                <mat-form-field>
+                    <mat-label>Address</mat-label>
+                    <input matInput placeholder="Ex. 1 Main St, New York, NY" formControlName="secondCtrl" required>
+                </mat-form-field>
+                <div>
+                    <p>Go to a different step to see the error state</p>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button matStepperNext>Next</button>
+                </div>
+            </form>
+        </mat-step>
+        <!--Formulario Prices-->
         <mat-step>
-            <ng-template matStepLabel>Done</ng-template>
+            <ng-template matStepLabel>Product Prices</ng-template>
             <p>You are now done.</p>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
