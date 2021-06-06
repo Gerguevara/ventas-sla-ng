@@ -1,5 +1,6 @@
 .card {
     margin: 10px;
+    padding-bottom: 0px;
 }
 
 .example-stepper {
@@ -8,4 +9,17 @@
 
 .mat-form-field {
     margin-top: 16px;
+}
+
+.subtitle {
+    font-weight: bold;
+}
+
+.button {
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.col {
+    width: 100%;
 }

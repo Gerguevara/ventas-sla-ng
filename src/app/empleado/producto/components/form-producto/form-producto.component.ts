@@ -12,11 +12,19 @@ import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 })
 export class FormProductoComponent implements OnInit {
 
+  colorControl = new FormControl('primary');
+  fontSizeControl = new FormControl(0, Validators.min(0));
+
   firstFormGroup: FormGroup = new FormGroup({
     firstCtrl: new FormControl('')
   });
   secondFormGroup: FormGroup = new FormGroup({
     secondCtrl: new FormControl('')
+  });
+
+  options: FormGroup = new FormGroup({
+    color: this.colorControl,
+    fontSize: this.fontSizeControl,
   });
 
   constructor(private _formBuilder: FormBuilder) {}
