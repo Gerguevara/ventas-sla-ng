@@ -1,21 +1,22 @@
 <mat-card class="card animate__animated animate__fadeInRight animate__faster">
-    <div>
+    <form [formGroup]="forgotForm" (ngSubmit)="enviar()">
         <h1 class="title">RECUPERAR CONTRASEÑA</h1>
         <mat-divider></mat-divider>
         <br>
         <p>Por favor ingrese el Email asociado a su cuenta de SLA.</p>
+        <!--Campo para ingresar el Email-->
         <mat-form-field appearance="outline" class="input">
             <mat-label>Ingrese email</mat-label>
-            <input matInput placeholder="pat@example.com" [formControl]="email" required>
-            <mat-error *ngIf="email.invalid">{{ getErrorEmailMessage() }}</mat-error>
+            <input matInput placeholder="pat@example.com" formControlName="email">
+            <mat-error *ngIf="emailNoValido">{{ getErrorEmailMessage() }}</mat-error>
         </mat-form-field>
         <div class="row">
             <div class="col">
-                <button mat-raised-button color="accent" class="input" (click)="return()">Regresar</button>
+                <button mat-raised-button color="accent" class="input" (click)="return()" type="button">Regresar</button>
             </div>
             <div class="col">
-                <button mat-raised-button color="primary" class="input">Siguiente</button>
+                <button mat-raised-button color="primary" class="input" type="submit">Siguiente</button>
             </div>
         </div>
-    </div>
+    </form>
 </mat-card>
