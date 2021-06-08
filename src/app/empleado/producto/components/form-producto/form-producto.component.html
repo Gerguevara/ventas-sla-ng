@@ -1,25 +1,27 @@
 <mat-card class="card">
     <mat-horizontal-stepper #stepper>
-        <!--Formulario General-->
-        <mat-step [stepControl]="firstFormGroup" errorMessage="" label="General">
-            <form [formGroup]="firstFormGroup">
+        <form [formGroup]="productoForm">
+            <!--Formulario General-->
+            <mat-step [stepControl]="productoForm" [errorMessage]="errorGeneralMessage" label="General">
                 <mat-card class="card">
                     <h3 class="subtitle">Descripción General</h3>
                     <mat-divider></mat-divider>
                     <mat-form-field class="col">
                         <mat-label>Nombre</mat-label>
-                        <input matInput placeholder="Nombre Producto" formControlName="firstCtrl" required>
+                        <input matInput placeholder="Nombre Producto" formControlName="nombre">
+                        <mat-error *ngIf="nombreNoValido">{{ getErrorNombreMessage() }}</mat-error>
                     </mat-form-field>
                     <mat-form-field class="col">
                         <mat-label>Descripción</mat-label>
-                        <textarea matInput placeholder="Descripción Producto" formControlName="firstCtrl" required cols="30" rows="1"></textarea>
+                        <textarea matInput placeholder="Descripción Producto" formControlName="descripcion" cols="30" rows="1"></textarea>
+                        <mat-error *ngIf="descripcionNoValido">{{ getErrorDescripcionMessage() }}</mat-error>
                     </mat-form-field>
                     <mat-form-field class="col">
                         <mat-label>Categoría</mat-label>
-                        <mat-select required>
-                            <mat-option value="one">Sin Stock</mat-option>
-                            <mat-option value="two">En Stock</mat-option>
-                            <mat-option value="two">Discontinuado</mat-option>
+                        <mat-select formControlName="categoria">
+                            <mat-option value="Desinfectantes">Desinfectantes</mat-option>
+                            <mat-option value="Herramientas">Herramientas</mat-option>
+                            <mat-option value="Detergentes">Detergentes</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </mat-card>
@@ -27,105 +29,106 @@
                 <div>
                     <button mat-stroked-button matStepperNext class="button">Siguiente</button>
                 </div>
-            </form>
-        </mat-step>
-        <!--Formulario Diseño-->
-        <mat-step [stepControl]="secondFormGroup" errorMessage="" label="Diseño">
-            <form [formGroup]="secondFormGroup">
+            </mat-step>
+            <!--Formulario Diseño-->
+            <mat-step [stepControl]="productoForm" [errorMessage]="errorDesignMessage" label="Diseño">
                 <mat-card class="card">
                     <h3 class="subtitle">Imágenes</h3>
                     <mat-divider></mat-divider>
                     <mat-form-field appearance="outline">
-                        <ngx-mat-file-input>
-                        </ngx-mat-file-input>
+                        <ngx-mat-file-input></ngx-mat-file-input>
                         <!-- <mat-hint>Hint</mat-hint> -->
                     </mat-form-field>
                     <mat-divider></mat-divider>
-                    <mat-grid-list cols="2" rowHeight="2:1" class="gridList">
-                        <mat-grid-tile class="layoutImage">1</mat-grid-tile>
-                        <mat-grid-tile class="layoutImage">2</mat-grid-tile>
-                        <mat-grid-tile class="layoutImage">3</mat-grid-tile>
-                        <mat-grid-tile class="layoutImage">4</mat-grid-tile>
-                    </mat-grid-list>
+                    <div style="display: block;">
+                        <mat-form-field class="col">
+                            <mat-label>URL Imagen</mat-label>
+                            <input matInput placeholder="URL Imagen" formControlName="imagen">
+                            <mat-error *ngIf="imagenNoValido">{{ getErrorImagenMessage() }}</mat-error>
+                        </mat-form-field>
+                        <button mat-flat-button color="primary" style="margin-bottom: 15px;" (click)="insertarImagen()">Insertar</button>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div style="margin: 10px;">
+                        <img loading="lazy" *ngIf="imgUrl !== ''" [src]="imgUrl" alt="" class="imagen-view">
+                        <h4 *ngIf="imgUrl === ''" style="margin-bottom: 10px; text-align: center;">No hay imagen</h4>
+                    </div>
                 </mat-card>
                 <mat-divider></mat-divider>
                 <div>
-                    <button mat-stroked-button matStepperPrevious class="button">Back</button>
-                    <button mat-stroked-button matStepperNext class="button">Next</button>
+                    <button mat-stroked-button matStepperPrevious class="button">Regresar</button>
+                    <button mat-stroked-button matStepperNext class="button">Siguiente</button>
                 </div>
-            </form>
-        </mat-step>
-        <!--Formulario Inventario-->
-        <mat-step [stepControl]="secondFormGroup" errorMessage="" label="Inventario">
-            <form [formGroup]="secondFormGroup">
+            </mat-step>
+            <!--Formulario Inventario-->
+            <mat-step [stepControl]="productoForm" errorMessage="" label="Inventario">
                 <mat-card class="card">
                     <h3 class="subtitle">Inventario</h3>
                     <mat-divider></mat-divider>
                     <mat-form-field class="col">
                         <mat-label>Estado</mat-label>
-                        <mat-select required>
-                            <mat-option value="one">Sin Stock</mat-option>
-                            <mat-option value="two">En Stock</mat-option>
-                            <mat-option value="two">Discontinuado</mat-option>
+                        <mat-select formControlName="estado">
+                            <mat-option value="Sin Stock">Sin Stock</mat-option>
+                            <mat-option value="En Stock">En Stock</mat-option>
+                            <mat-option value="Discontinuado">Discontinuado</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="col">
                         <mat-label>Cantidad Disponible</mat-label>
-                        <input matInput type="number" placeholder="Ej. 12" [formControl]="fontSizeControl" min="10">
+                        <input matInput type="number" placeholder="Ej. 12" formControlName="cantidad" min="10">
                         <span matSuffix>Unidades</span>
                         <mat-error *ngIf="fontSizeControl.invalid">Min size: 0 unidades</mat-error>
                     </mat-form-field>
                     <mat-form-field class="col">
                         <mat-label>Unidad de Conteo</mat-label>
-                        <mat-select required>
-                            <mat-option value="one">Items</mat-option>
-                            <mat-option value="two">Piezas</mat-option>
-                            <mat-option value="two">Kits</mat-option>
-                            <mat-option value="two">Kilogramos</mat-option>
-                            <mat-option value="two">Metro</mat-option>
+                        <mat-select formControlName="unidad">
+                            <mat-option value="Items">Items</mat-option>
+                            <mat-option value="Piezas">Piezas</mat-option>
+                            <mat-option value="Kits">Kits</mat-option>
+                            <mat-option value="Kilogramos">Kilogramos</mat-option>
+                            <mat-option value="Metro">Metro</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </mat-card>
                 <mat-divider></mat-divider>
                 <div>
-                    <button mat-stroked-button matStepperPrevious class="button">Back</button>
-                    <button mat-stroked-button matStepperNext class="button">Next</button>
+                    <button mat-stroked-button matStepperPrevious class="button">Regresar</button>
+                    <button mat-stroked-button matStepperNext class="button">Siguiente</button>
                 </div>
-            </form>
-        </mat-step>
-        <!--Formulario Precios-->
-        <mat-step label="Precios">
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
-                <!-- Position Column -->
-                <ng-container matColumnDef="position">
-                    <th mat-header-cell *matHeaderCellDef>No.</th>
-                    <td mat-cell *matCellDef="let element">{{element.position}}</td>
-                </ng-container>
+            </mat-step>
+            <!--Formulario Precios-->
+            <mat-step label="Precios">
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef>No.</th>
+                        <td mat-cell *matCellDef="let element">{{element.position}}</td>
+                    </ng-container>
 
-                <!-- Name Column -->
-                <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef>Name</th>
-                    <td mat-cell *matCellDef="let element">{{element.name}}</td>
-                </ng-container>
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef>Name</th>
+                        <td mat-cell *matCellDef="let element">{{element.name}}</td>
+                    </ng-container>
 
-                <!-- Weight Column -->
-                <ng-container matColumnDef="weight">
-                    <th mat-header-cell *matHeaderCellDef>Weight</th>
-                    <td mat-cell *matCellDef="let element">{{element.weight}}</td>
-                </ng-container>
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="weight">
+                        <th mat-header-cell *matHeaderCellDef>Weight</th>
+                        <td mat-cell *matCellDef="let element">{{element.weight}}</td>
+                    </ng-container>
 
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="symbol">
-                    <th mat-header-cell *matHeaderCellDef>Symbol</th>
-                    <td mat-cell *matCellDef="let element">{{element.symbol}}</td>
-                </ng-container>
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="symbol">
+                        <th mat-header-cell *matHeaderCellDef>Symbol</th>
+                        <td mat-cell *matCellDef="let element">{{element.symbol}}</td>
+                    </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row (click)="clickedRows.add(row)" [class.demo-row-is-clicked]="clickedRows.has(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row (click)="clickedRows.add(row)" [class.demo-row-is-clicked]="clickedRows.has(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
 
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-            <!-- <div>
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                <!-- <div>
                 <h3>
                     Click Log
                 </h3>
@@ -140,11 +143,12 @@
                     Clicked on {{clickedRow.name}}
                 </li>
             </ul> -->
-            <mat-divider></mat-divider>
-            <div>
-                <button mat-stroked-button matStepperPrevious class="button">Back</button>
-                <button mat-stroked-button (click)="stepper.reset()" class="button">Reset</button>
-            </div>
-        </mat-step>
+                <mat-divider></mat-divider>
+                <div>
+                    <button mat-stroked-button matStepperPrevious class="button">Regresar</button>
+                    <button mat-stroked-button (click)="enviar()" class="button">Enviar</button>
+                </div>
+            </mat-step>
+        </form>
     </mat-horizontal-stepper>
 </mat-card>

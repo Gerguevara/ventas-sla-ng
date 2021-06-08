@@ -13,7 +13,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { TableProductoComponent } from './components/table-producto/table-producto.component';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { MatIconModule } from '@angular/material/icon';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
@@ -34,9 +33,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatSelectModule,
     NgxMatFileInputModule,
     MatIconModule,
-    MatGridListModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
   ]
 })
 export class ProductoModule { }
