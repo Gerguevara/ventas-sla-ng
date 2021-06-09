@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AutenticacionService } from '../../services/autenticacion.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,9 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password')?.invalid && this.loginForm.get('password')?.touched;
   }
 
-  constructor( private router: Router, private formBuilder: FormBuilder ) {
+  constructor( private router: Router,
+               private formBuilder: FormBuilder,
+               private authService: AutenticacionService ) {
     // Creación del formulario
     this.loginForm = this.formBuilder.group({
       email   : ['', [Validators.required, Validators.email]],
@@ -30,6 +33,10 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Prueba de post a login
+    this.authService.submitLogin().subscribe((response: any) => {
+      console.log(response);
+    });
   }
 
   // Método para hacer submit del formulario
