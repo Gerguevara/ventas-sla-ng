@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AutenticacionService } from '../../services/autenticacion.service';
+import { AutenticacionService, LoginResponse } from '../../services/autenticacion.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,8 @@ export class LoginComponent implements OnInit {
 
   constructor( private router: Router,
                private formBuilder: FormBuilder,
-               private authService: AutenticacionService ) {
+               private authService: AutenticacionService,
+               private snackBar: MatSnackBar ) {
     // Creación del formulario
     this.loginForm = this.formBuilder.group({
       email   : ['', [Validators.required, Validators.email]],
@@ -33,15 +35,20 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Prueba de post a login
-    this.authService.submitLogin().subscribe((response: any) => {
-      console.log(response);
-    });
   }
 
   // Método para hacer submit del formulario
   enviar(): void{
-    console.log( this.loginForm );
+    // Prueba de post a login
+    const email = this.loginForm.get('email')?.value;
+    const password = this.loginForm.get('password')?.value;
+    this.authService.submitLogin( email, password ).subscribe(
+      (response: LoginResponse) => {
+        console.log(response);
+      },
+      (error: any) => {
+        this.snackBar.open('Credenciales no válidas', 'Cerrar');
+      });
   }
 
   // Método para obtener mensajes de errores de validaciones Email
@@ -65,6 +72,10 @@ export class LoginComponent implements OnInit {
   // Navegación hacia Registro de usuario
   signup(): void {
     this.router.navigate(['/autentication/signup']);
+  }
+
+  openSnackBar(): void {
+    this.snackBar.open('Error en Correo ó Contraseña', 'Cerrar');
   }
 
 }

@@ -5,13 +5,20 @@ import { Observable } from 'rxjs';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json',
+    'Access-Control-Allow-Origin': '*'
   })
 };
 
-const httpBody = {
-  email: 'iwisoky@example.com',
+export interface LoginResponse {
+  response: string;
+  token: string;
+  tokenType: string;
+}
+
+/*const httpBody = {
+  email: 'janie81@example.org',
   password: 'password'
-};
+};*/
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +31,12 @@ export class AutenticacionService {
     console.log('Running Autentication Service...');
   }
 
-  submitLogin(): Observable<any> {
-    return this.http.post<any>(this.urlApi, httpBody, httpOptions);
+  submitLogin( email: string, password: string ): Observable<LoginResponse> {
+    const httpBody = {
+      email,
+      password
+    };
+    return this.http.post<LoginResponse>(this.urlApi, httpBody, httpOptions);
   }
 
 }
