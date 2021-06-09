@@ -23,3 +23,34 @@
 .col {
     width: 100%;
 }
+
+.gridList {
+    padding: 10px;
+}
+
+.layoutImage {
+    margin: 5px;
+}
+
+.demo-table {
+    width: 100%;
+}
+
+.mat-row .mat-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+}
+
+.mat-row:hover .mat-cell {
+    border-color: currentColor;
+}
+
+.demo-row-is-clicked {
+    font-weight: bold;
+}
+
+.imagen-view {
+    max-height: auto;
+    max-width: 25%;
+}

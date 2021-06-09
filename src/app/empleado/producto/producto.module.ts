@@ -10,10 +10,16 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSelectModule } from '@angular/material/select';
+import { TableProductoComponent } from './components/table-producto/table-producto.component';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
-    FormProductoComponent
+    FormProductoComponent,
+    TableProductoComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +30,11 @@ import { MatSelectModule } from '@angular/material/select';
     MatStepperModule,
     MatButtonModule,
     MatDividerModule,
-    MatSelectModule
+    MatSelectModule,
+    NgxMatFileInputModule,
+    MatIconModule,
+    MatTableModule,
+    MatPaginatorModule,
   ]
 })
 export class ProductoModule { }
