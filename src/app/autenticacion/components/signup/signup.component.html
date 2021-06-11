@@ -4,17 +4,17 @@
         <mat-divider></mat-divider>
         <br>
         <!--Campo para Nombre-->
-        <mat-form-field appearance="outline" class="example-full-width" class="input">
+        <!-- <mat-form-field appearance="outline" class="example-full-width" class="input">
             <mat-label>Nombres</mat-label>
             <input matInput placeholder="Ingrese Nombres" formControlName="nombre">
             <mat-error *ngIf="nombreNoValido">{{ getErrorNombreMessage() }}</mat-error>
-        </mat-form-field>
+        </mat-form-field> -->
         <!--Campo para Apellido-->
-        <mat-form-field appearance="outline" class="example-full-width" class="input">
+        <!-- <mat-form-field appearance="outline" class="example-full-width" class="input">
             <mat-label>Apellidos</mat-label>
             <input matInput placeholder="Ingrese Apellidos" formControlName="apellido">
             <mat-error *ngIf="apellidoNoValido">{{ getErrorApellidoMessage() }}</mat-error>
-        </mat-form-field>
+        </mat-form-field> -->
         <!--Campo para Email-->
         <mat-form-field appearance="outline" class="input">
             <mat-label>Ingrese su email</mat-label>
@@ -25,7 +25,7 @@
         <mat-form-field appearance="outline" class="input">
             <mat-label>Ingrese Nueva Contraseña</mat-label>
             <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <button mat-icon-button type="button" matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
               <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
             <mat-error *ngIf="passwordNoValido">{{ getErrorPassMessage() }}</mat-error>
@@ -34,7 +34,7 @@
         <mat-form-field appearance="outline" class="input">
             <mat-label>Confirmar Contraseña</mat-label>
             <input matInput [type]="hide ? 'password' : 'text'" formControlName="password2">
-            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <button mat-icon-button type="button" matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
               <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
             <mat-error *ngIf="password2NoValido">{{ getErrorConfirmPassMessage() }}</mat-error>
@@ -42,10 +42,10 @@
         <br>
         <div class="row">
             <div class="col">
-                <button mat-raised-button color="accent" class="input" (click)="return()">Regresar</button>
+                <button mat-raised-button type="button" color="accent" class="input" (click)="return()">Regresar</button>
             </div>
             <div class="col">
-                <button mat-raised-button color="primary" class="input">Siguiente</button>
+                <button mat-raised-button [disabled]="signupForm.invalid" color="primary" class="input">Enviar</button>
             </div>
         </div>
     </form>

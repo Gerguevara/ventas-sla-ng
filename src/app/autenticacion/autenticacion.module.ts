@@ -12,6 +12,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
+import { HttpClientModule } from '@angular/common/http';
+import { AutenticacionService } from './services/autenticacion.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +32,12 @@ import { MatDividerModule } from '@angular/material/divider';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    MatDividerModule
+    MatDividerModule,
+    HttpClientModule,
+    MatSnackBarModule
+  ],
+  providers: [
+    AutenticacionService
   ]
 })
 export class AutenticacionModule { }

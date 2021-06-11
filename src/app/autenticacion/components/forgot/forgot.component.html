@@ -15,7 +15,7 @@
                 <button mat-raised-button color="accent" class="input" (click)="return()" type="button">Regresar</button>
             </div>
             <div class="col">
-                <button mat-raised-button color="primary" class="input" type="submit">Siguiente</button>
+                <button mat-raised-button color="primary" class="input" type="submit" [disabled]="forgotForm.invalid">Siguiente</button>
             </div>
         </div>
     </form>
