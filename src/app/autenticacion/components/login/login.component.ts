@@ -39,14 +39,17 @@ export class LoginComponent implements OnInit {
 
   // Método para hacer submit del formulario
   enviar(): void{
-    // Prueba de post a login
+    // Hacemos un post a Login con las credenciales del formulario
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
     this.authService.submitLogin( email, password ).subscribe(
       (response: LoginResponse) => {
+        // El inicio de sesión es exitoso y guardamos el token en el LocalStorage
         console.log(response);
+        localStorage.setItem('token', response.token);
       },
       (error: any) => {
+        // El inicio de sesión falla y mostramos un mensaje de error al usuario
         this.snackBar.open('Credenciales no válidas', 'Cerrar');
       });
   }
@@ -65,17 +68,20 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.get('password')?.hasError('required')) {
       return 'Debe ingresar un valor';
     }
-
-    return this.loginForm.get('password')?.hasError('password') ? 'Contraseña no válida' : '';
+    if (this.loginForm.get('password')?.hasError('minlength')) {
+      return 'Debe tener más de 8 caracteres';
+    }
+    if (this.loginForm.get('password')?.hasError('pattern')) {
+      return 'Contraseña no válida';
+    }
+    else {
+      return '';
+    }
   }
 
   // Navegación hacia Registro de usuario
   signup(): void {
     this.router.navigate(['/autentication/signup']);
-  }
-
-  openSnackBar(): void {
-    this.snackBar.open('Error en Correo ó Contraseña', 'Cerrar');
   }
 
 }

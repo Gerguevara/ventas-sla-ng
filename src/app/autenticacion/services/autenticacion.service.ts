@@ -15,6 +15,13 @@ export interface LoginResponse {
   tokenType: string;
 }
 
+export interface SignUpResponse {
+  user: string;
+  token: string;
+  tokenType: string;
+  message: string;
+}
+
 /*const httpBody = {
   email: 'janie81@example.org',
   password: 'password'
@@ -25,7 +32,8 @@ export interface LoginResponse {
 })
 export class AutenticacionService {
 
-  urlApi = 'http://localhost:8000/api/login';
+  urlLogin = 'http://localhost:8000/api/login';
+  urlSignUp = 'http://localhost:8000/api/register';
 
   constructor( private http: HttpClient ) {
     console.log('Running Autentication Service...');
@@ -36,7 +44,16 @@ export class AutenticacionService {
       email,
       password
     };
-    return this.http.post<LoginResponse>(this.urlApi, httpBody, httpOptions);
+    return this.http.post<LoginResponse>(this.urlLogin, httpBody, httpOptions);
+  }
+
+  submitRegistro( email: string, password: string, password_confirmation: string ): Observable<any> {
+    const httpBody = {
+      email,
+      password,
+      password_confirmation
+    };
+    return this.http.post<any>(this.urlSignUp, httpBody, httpOptions);
   }
 
 }
