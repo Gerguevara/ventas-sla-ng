@@ -6,8 +6,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { ForgotComponent } from './components/forgot/forgot.component';
-import { DialogElementsEmail } from './components/email-verification/email-verification.component';
-import { DialogElementsSignUp } from './components/signup/signup.component';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -28,9 +26,7 @@ import { EmailVerificationComponent } from './components/email-verification/emai
     LoginComponent,
     SignupComponent,
     ForgotComponent,
-    EmailVerificationComponent,
-    DialogElementsEmail,
-    DialogElementsSignUp
+    EmailVerificationComponent
   ],
   imports: [
     CommonModule,
