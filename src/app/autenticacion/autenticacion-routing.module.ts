@@ -9,9 +9,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   // Ruta de redireccionamiento para verificar email con token
-  { path: 'signup/email-verification/:token', component: EmailVerificationComponent },
+  { path: 'signup/email-verification/:id/:hash', component: EmailVerificationComponent },
   { path: 'forgot', component: ForgotComponent },
-  { path: '**', pathMatch: 'full', redirectTo: 'signup/email-verification/asdasdasdsad' }
+  { path: '**', pathMatch: 'full', redirectTo: 'login' }
 ];
 
 @NgModule({

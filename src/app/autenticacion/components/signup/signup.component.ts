@@ -5,6 +5,10 @@ import { Router } from '@angular/router';
 import { ValidatorsService } from '../../services/validators.service';
 import { AutenticacionService, SignUpResponse } from '../../services/autenticacion.service';
 
+export interface DialogData {
+  email: string;
+}
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -62,6 +66,7 @@ export class SignupComponent implements OnInit {
     this.authService.submitRegistro( email, password, password_confirmation ).subscribe(
       ( response: any ) => {
         console.log( response );
+        localStorage.setItem('tokenRegistro', response.token);
         this.openDialog();
       },
       ( error: any ) => {
@@ -112,7 +117,7 @@ export class SignupComponent implements OnInit {
 
   // Método para mostrar el cuadro de dialogo con un mensaje
   openDialog(): void {
-    this.dialog.open( DialogElements, { data: { email: this.signupForm.get('email') } } );
+    this.dialog.open( DialogElementsSignUp, { data: { email: this.signupForm.get('email')?.value } } );
   }
 
   // Método para retornar a login
@@ -122,10 +127,14 @@ export class SignupComponent implements OnInit {
 
 }
 
-export class DialogElements {
+@Component({
+  selector: 'dialog-elements',
+  templateUrl: 'dialog-elements.html'
+})
+export class DialogElementsSignUp {
 
-  constructor( public dialogRef: MatDialogRef<DialogElements>,
-               @Inject(MAT_DIALOG_DATA) public data: string,
+  constructor( public dialogRef: MatDialogRef<DialogElementsSignUp>,
+               @Inject(MAT_DIALOG_DATA) public data: DialogData,
                private router: Router ){}
 
   regresar(): void {

@@ -34,6 +34,7 @@ export class AutenticacionService {
 
   urlLogin = 'http://localhost:8000/api/login';
   urlSignUp = 'http://localhost:8000/api/register';
+  urlEmailVerification = 'http://localhost:8000/api/verify-email/';
 
   constructor( private http: HttpClient ) {
     console.log('Running Autentication Service...');
@@ -54,6 +55,20 @@ export class AutenticacionService {
       password_confirmation
     };
     return this.http.post<any>(this.urlSignUp, httpBody, httpOptions);
+  }
+
+  emailVerification( id: string, hash: string ): Observable<any> {
+    const token = localStorage.getItem('tokenRegistro');
+    const tokenRegistro = 'Bearer ' + token;
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': tokenRegistro
+      })
+    };
+    const url = this.urlEmailVerification + id + '/' + hash;
+    return this.http.get<any>(url, httpHeaders);
   }
 
 }

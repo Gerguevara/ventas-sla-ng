@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { Component, OnInit, Inject } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AutenticacionService } from '../../services/autenticacion.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+export interface DialogData {
+  message: string;
+}
 
 @Component({
   selector: 'app-email-verification',
@@ -11,14 +16,25 @@ export class EmailVerificationComponent implements OnInit {
 
   spinner = true;
 
-  constructor( public dialog: MatDialog ) { }
+  constructor( public dialog: MatDialog,
+               private activeRouter: ActivatedRoute,
+               private auth: AutenticacionService ) { }
 
   ngOnInit(): void {
-    this.openDialog();
+    this.activeRouter.params.subscribe( params => {
+      this.auth.emailVerification( params.id, params.hash ).subscribe( (response: any) => {
+        console.log( response.mensaje );
+        this.openDialog( response.mensaje );
+      },
+      ( error: any ) => {
+        console.log( error );
+        this.openDialog( error );
+      });
+    });
   }
 
-  openDialog(): void {
-    this.dialog.open( DialogElements );
+  openDialog( message: string ): void {
+    this.dialog.open( DialogElementsEmail, { data: { message } } );
   }
 
 }
@@ -28,9 +44,11 @@ export class EmailVerificationComponent implements OnInit {
   templateUrl: 'dialog-elements.html',
   styleUrls: ['./email-verification.component.scss']
 })
-export class DialogElements {
+export class DialogElementsEmail {
 
-  constructor( private router: Router ){}
+  constructor( public dialogRef: MatDialogRef<DialogElementsEmail>,
+               @Inject(MAT_DIALOG_DATA) public data: DialogData,
+               private router: Router ){}
 
   regresar(): void {
     this.router.navigate(['/autentication/login']);
