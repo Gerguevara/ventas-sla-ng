@@ -19,7 +19,10 @@ export class DialogMessageComponent implements OnInit {
      en cualquier componente hijo del AppModule y cuyos titulo y mensaje son parametrizables */
   constructor( public dialogRef: MatDialogRef<DialogMessageComponent>,
                @Inject(MAT_DIALOG_DATA) public data: DialogData,
-               private router: Router ) { }
+               private router: Router ) {
+                  // Evitamos que el dialogo del spinner pueda ser cerrado al hacer click fuera de el
+                  this.dialogRef.disableClose = true;
+               }
 
   ngOnInit(): void {
   }
