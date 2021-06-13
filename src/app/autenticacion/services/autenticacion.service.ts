@@ -19,13 +19,12 @@ export interface SignUpResponse {
   user: string;
   token: string;
   tokenType: string;
-  message: string;
+  mensaje: string;
 }
 
-/*const httpBody = {
-  email: 'janie81@example.org',
-  password: 'password'
-};*/
+export interface EmailVerificationResponse {
+  mensaje: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -48,16 +47,16 @@ export class AutenticacionService {
     return this.http.post<LoginResponse>(this.urlLogin, httpBody, httpOptions);
   }
 
-  submitRegistro( email: string, password: string, password_confirmation: string ): Observable<any> {
+  submitRegistro( email: string, password: string, password_confirmation: string ): Observable<SignUpResponse> {
     const httpBody = {
       email,
       password,
       password_confirmation
     };
-    return this.http.post<any>(this.urlSignUp, httpBody, httpOptions);
+    return this.http.post<SignUpResponse>(this.urlSignUp, httpBody, httpOptions);
   }
 
-  emailVerification( id: string, hash: string ): Observable<any> {
+  emailVerification( id: string, hash: string ): Observable<EmailVerificationResponse> {
     const token = localStorage.getItem('tokenRegistro');
     const tokenRegistro = 'Bearer ' + token;
     const httpHeaders = {
@@ -68,7 +67,7 @@ export class AutenticacionService {
       })
     };
     const url = this.urlEmailVerification + id + '/' + hash;
-    return this.http.get<any>(url, httpHeaders);
+    return this.http.get<EmailVerificationResponse>(url, httpHeaders);
   }
 
 }

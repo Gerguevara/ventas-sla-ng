@@ -1,9 +1,11 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ValidatorsService } from '../../services/validators.service';
 import { AutenticacionService, SignUpResponse } from '../../services/autenticacion.service';
+import { DialogMessageComponent } from '../../../components/dialog-message/dialog-message.component';
+import { DialogSpinnerComponent } from '../../../components/dialog-spinner/dialog-spinner.component';
 
 export interface DialogData {
   email: string;
@@ -60,15 +62,19 @@ export class SignupComponent implements OnInit {
 
   // Método para hacer submit del formulario
   enviar(): void{
+    // Tomamos los datos del formulario
+    this.openSpinner();
     const email = this.signupForm.get('email')?.value;
     const password = this.signupForm.get('password')?.value;
     const password_confirmation = this.signupForm.get('password2')?.value;
+    // Llamamos al servicio para hacer el post de la información
     this.authService.submitRegistro( email, password, password_confirmation ).subscribe(
-      ( response: any ) => {
-        console.log( response );
+      // Si todo sale bien, aquí se recibe la respuesta
+      ( response: SignUpResponse ) => {
         localStorage.setItem('tokenRegistro', response.token);
         this.openDialog();
       },
+      // Si ocurre algún error, se imprimen en esta sección
       ( error: any ) => {
         console.log( error );
       });
@@ -117,7 +123,21 @@ export class SignupComponent implements OnInit {
 
   // Método para mostrar el cuadro de dialogo con un mensaje
   openDialog(): void {
-    this.dialog.open( DialogElementsSignUp, { data: { email: this.signupForm.get('email')?.value } } );
+    // Cerramos todos los dialogos abiertos hasta el momento
+    this.dialog.closeAll();
+    // Abrimos el nuevo dialogo con el mensaje
+    const mensaje = 'Su cuenta ha sido registrada exitósamente. Hemos enviado un correo a ' + this.signupForm.get('email')?.value + ' para que pueda realizar la verificación de su cuenta.';
+    this.dialog.open( DialogMessageComponent,
+                      { data: {
+                          title: 'Registro de Cuenta',
+                          message: mensaje,
+                          redirect: '/autentication/login'
+                        } } );
+  }
+
+  // Método para mostrar el spinner
+  openSpinner(): void {
+    this.dialog.open( DialogSpinnerComponent );
   }
 
   // Método para retornar a login
@@ -125,19 +145,4 @@ export class SignupComponent implements OnInit {
     this.router.navigate(['/autentication/login']);
   }
 
-}
-
-@Component({
-  selector: 'dialog-elements',
-  templateUrl: 'dialog-elements.html'
-})
-export class DialogElementsSignUp {
-
-  constructor( public dialogRef: MatDialogRef<DialogElementsSignUp>,
-               @Inject(MAT_DIALOG_DATA) public data: DialogData,
-               private router: Router ){}
-
-  regresar(): void {
-    this.router.navigate(['/autentication/login']);
-  }
 }

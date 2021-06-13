@@ -1,7 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AutenticacionService } from '../../services/autenticacion.service';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AutenticacionService, EmailVerificationResponse } from '../../services/autenticacion.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogMessageComponent } from '../../../components/dialog-message/dialog-message.component';
+import { DialogSpinnerComponent } from '../../../components/dialog-spinner/dialog-spinner.component';
 
 export interface DialogData {
   message: string;
@@ -21,36 +23,34 @@ export class EmailVerificationComponent implements OnInit {
                private auth: AutenticacionService ) { }
 
   ngOnInit(): void {
+    // Abrimos el dialog del spinner
+    this.dialog.open( DialogSpinnerComponent );
+    // Tomamos los parámetros enviados por la ruta
     this.activeRouter.params.subscribe( params => {
-      this.auth.emailVerification( params.id, params.hash ).subscribe( (response: any) => {
+      // Llamamos al servicio y le enviamos los parametros que recibimos
+      this.auth.emailVerification( params.id, params.hash ).subscribe( (response: EmailVerificationResponse) => {
+        // Se imprimen los mensajes si todo ha salido bien
         console.log( response.mensaje );
         this.openDialog( response.mensaje );
       },
       ( error: any ) => {
+        // En esta sección se imprimen los errores
         console.log( error );
         this.openDialog( error );
       });
     });
   }
 
-  openDialog( message: string ): void {
-    this.dialog.open( DialogElementsEmail, { data: { message } } );
+  openDialog( mensaje: string ): void {
+    // Cerramos todos los dialogos abiertos hasta el momento
+    this.dialog.closeAll();
+    // Abrimos el nuevo dialogo con el mensaje
+    this.dialog.open( DialogMessageComponent,
+      { data: {
+          title: 'Verificación de Email',
+          message: mensaje,
+          redirect: '/autentication/login'
+        } } );
   }
 
-}
-
-@Component({
-  selector: 'dialog-elements',
-  templateUrl: 'dialog-elements.html',
-  styleUrls: ['./email-verification.component.scss']
-})
-export class DialogElementsEmail {
-
-  constructor( public dialogRef: MatDialogRef<DialogElementsEmail>,
-               @Inject(MAT_DIALOG_DATA) public data: DialogData,
-               private router: Router ){}
-
-  regresar(): void {
-    this.router.navigate(['/autentication/login']);
-  }
 }
