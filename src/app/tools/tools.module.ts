@@ -10,6 +10,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { PaginatorService } from './services/paginator.service';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatInputModule,
     MatProgressSpinnerModule,
     MatPaginatorModule
+  ],
+  exports: [
+    PaginatorComponent
+  ],
+  providers: [
+    PaginatorService
   ]
 })
 export class ToolsModule { }

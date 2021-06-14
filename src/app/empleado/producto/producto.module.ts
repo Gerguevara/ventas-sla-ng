@@ -17,6 +17,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ProductoService } from './services/producto.service';
+import { ToolsModule } from 'src/app/tools/tools.module';
+import { PaginatorService } from '../../tools/services/paginator.service';
 
 @NgModule({
   declarations: [
@@ -37,10 +39,12 @@ import { ProductoService } from './services/producto.service';
     MatIconModule,
     MatTableModule,
     MatPaginatorModule,
-    HttpClientModule
+    HttpClientModule,
+    ToolsModule
   ],
   providers: [
-    ProductoService
+    ProductoService,
+    PaginatorService
   ]
 })
 export class ProductoModule { }

@@ -1,9 +1,7 @@
-import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ProductoService } from '../../services/producto.service';
 import { Producto } from '../../../models/producto.models';
-import { PaginatorResponse } from 'src/app/empleado/models/paginator.model';
+import { PaginatorService } from 'src/app/tools/services/paginator.service';
 
 @Component({
   selector: 'app-table-producto',
@@ -14,23 +12,18 @@ export class TableProductoComponent implements OnInit {
 
   displayedColumns: string[] = ['ID', 'Nombre', 'Descripción', 'Precio'];
   dataSource!: MatTableDataSource<Producto>;
-  configPaginator!: PaginatorResponse;
+  // URL donde se consumen los datos
+  url = 'http://localhost:8000/api/productos';
 
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
-
-  constructor( private productoService: ProductoService ) {
-    this.productoService.getAllProducts(5).subscribe((response: PaginatorResponse) => {
-      this.configPaginator = response;
-      this.dataSource = new MatTableDataSource<Producto>(response.data);
-    });
+  constructor( private paginatorService: PaginatorService ) {
   }
 
   ngOnInit(): void {
+    // Aquí nos subscribimos a todos los cambios que nos envíe el paginador con la data de la página
+    this.paginatorService.pageDataChange$.subscribe((response: Producto[]) => {
+      // Seteamos estos datos a la tabla
+      this.dataSource = new MatTableDataSource<Producto>(response);
+    });
   }
-
-  /*ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-  }*/
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { PaginatorResponse } from 'src/app/empleado/models/paginator.model';
 import { PaginatorService } from '../../services/paginator.service';
@@ -8,45 +8,51 @@ import { PaginatorService } from '../../services/paginator.service';
   templateUrl: './paginator.component.html',
   styleUrls: ['./paginator.component.scss']
 })
-export class PaginatorComponent implements OnInit {
+export class PaginatorComponent implements OnInit, AfterViewInit {
 
   // Inputs requeridas para el paginador
-  // @Input() config!: PaginatorResponse;
-  pageSizeOptions: number[];
-  length: number;
-  pageSize: number;
-
-  // Salida de la data recibida por el servidor
-  @Output() dataChangePage = new EventEmitter<PaginatorResponse>();
+  @Input() urlData = '';
+  configPaginator!: PaginatorResponse;
+  pageSizeOptions!: number[];
+  length!: number;
+  pageSize!: number;
 
   // MatPaginator Output
   pageEvent!: PageEvent;
 
-  constructor( private paginatorService: PaginatorService ) {
-    // Establecemos los valores de las variables con los datos de la Input
-    this.pageSizeOptions = [ 5, 10, 15, 20 ];
-    // this.length = this.config?.total;
-    this.length = 100;
-    // this.pageSize = Number(this.config?.per_page);
-    this.pageSize = 10;
-  }
+  constructor( private paginatorService: PaginatorService ) { }
 
   ngOnInit(): void {
+    this.paginatorService.getAllData( this.urlData, 5 ).then((response: PaginatorResponse) => {
+      this.configPaginator = response;
+      // Establecemos los valores de las variables con los datos de la Input
+      this.pageSizeOptions = [ 5, 10, 15, 20 ];
+      this.length = this.configPaginator.total;
+      this.pageSize = Number(this.configPaginator.per_page);
+      // Enviamos la data por el observable hacia el componente
+      this.paginatorService.pageDataChange$.emit(response.data);
+    });
+  }
+
+  ngAfterViewInit(): void {
   }
 
   changePageEvent( event: any ): void{
-    // Cuando el usuario cambia de página se dispara este método
-    // Capturamos el valor del evento
-    this.pageEvent = event;
-    // Lo imprimimos en consola para monitorear
-    console.log(this.pageEvent?.pageIndex);
-    /* Llamamos al servicio y le mandamos el index base 0 de la página a la cual el usuario se ha
-       movido. */
-    this.paginatorService.getDataChangePage( this.pageEvent!.pageIndex + 1 ).subscribe( (response: PaginatorResponse) => {
-      // Emitimos el nuevo valor de la respuesta obtenida de la data que hemos solicitado de la nueva página
-      this.dataChangePage.emit( response );
-      // this.config = response;
+    // Cuando el usuario cambia de página o el numero de items por pagina se dispara este método
+    // Aquí llamamos directamente al servicio para obtener los datos según la acción que el usuario realizó
+    this.paginatorService.getPageData( this.configPaginator.links[ event.pageIndex + 1 ].url, event.pageSize )
+    .then((response: PaginatorResponse) => {
+      // Seteamos la nueva configuración
+      this.configPaginator = response;
+      // Establecemos los valores de las variables con los datos de la respuesta
+      this.pageSizeOptions = [ 5, 10, 15, 20 ];
+      this.length = this.configPaginator.total;
+      this.pageSize = Number(this.configPaginator.per_page);
+      // Enviamos la data por el observable hacia el componente
+      this.paginatorService.pageDataChange$.emit(response.data);
     });
+    // Guardamos el nuevo estado del evento
+    this.pageEvent = event;
   }
 
 }

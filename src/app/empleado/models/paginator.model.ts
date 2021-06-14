@@ -1,11 +1,10 @@
 import { Link } from './link.model';
-import { Producto } from './producto.models';
 
 /* Esta interfaz contiene toda la estructura de datos de la respuesta recibida por el
    API de Productos Index */
 export interface PaginatorResponse {
     current_page: number;
-    data: Producto[];
+    data: any[];
     first_page_url: string;
     from: number;
     last_page: number;
