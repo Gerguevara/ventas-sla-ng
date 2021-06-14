@@ -4,9 +4,8 @@ import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms'
 import { Router } from '@angular/router';
 import { ValidatorsService } from '../../services/validators.service';
 import { AutenticacionService, SignUpResponse } from '../../services/autenticacion.service';
-import { DialogMessageComponent } from '../../../components/dialog-message/dialog-message.component';
-import { DialogSpinnerComponent } from '../../../components/dialog-spinner/dialog-spinner.component';
-
+import { DialogMessageComponent } from 'src/app/tools/components/dialog-message/dialog-message.component';
+import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
 export interface DialogData {
   email: string;
 }
@@ -71,7 +70,7 @@ export class SignupComponent implements OnInit {
     this.authService.submitRegistro( email, password, password_confirmation ).subscribe(
       // Si todo sale bien, aquí se recibe la respuesta
       ( response: SignUpResponse ) => {
-        localStorage.setItem('tokenRegistro', response.token);
+        localStorage.setItem('token', response.token);
         this.openDialog();
       },
       // Si ocurre algún error, se imprimen en esta sección

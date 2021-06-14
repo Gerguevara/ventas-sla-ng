@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 import { ProductoRoutingModule } from './producto-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +16,9 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ProductoService } from './services/producto.service';
+import { ToolsModule } from 'src/app/tools/tools.module';
+import { PaginatorService } from '../../tools/services/paginator.service';
 
 @NgModule({
   declarations: [
@@ -35,6 +39,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatIconModule,
     MatTableModule,
     MatPaginatorModule,
+    HttpClientModule,
+    ToolsModule
+  ],
+  providers: [
+    ProductoService,
+    PaginatorService
   ]
 })
 export class ProductoModule { }

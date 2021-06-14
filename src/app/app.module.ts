@@ -4,33 +4,22 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DialogSpinnerComponent } from './components/dialog-spinner/dialog-spinner.component';
-import { DialogMessageComponent } from './components/dialog-message/dialog-message.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
+import { ToolsModule } from './tools/tools.module';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    DialogSpinnerComponent,
-    DialogMessageComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatProgressSpinnerModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatInputModule
+    ToolsModule
   ],
-  exports: [
-    DialogMessageComponent,
-    DialogSpinnerComponent
+  providers: [
+    AuthGuard
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
