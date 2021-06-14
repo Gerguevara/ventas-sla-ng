@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToolsModule } from './tools/tools.module';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,9 @@ import { ToolsModule } from './tools/tools.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     ToolsModule
+  ],
+  providers: [
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

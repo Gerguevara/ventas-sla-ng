@@ -30,7 +30,6 @@ export class EmailVerificationComponent implements OnInit {
       // Llamamos al servicio y le enviamos los parametros que recibimos
       this.auth.emailVerification( params.id, params.hash ).subscribe( (response: EmailVerificationResponse) => {
         // Se imprimen los mensajes si todo ha salido bien
-        console.log( response.mensaje );
         this.openDialog( response.mensaje );
       },
       ( error: any ) => {
@@ -49,8 +48,7 @@ export class EmailVerificationComponent implements OnInit {
       { data: {
           title: 'Verificación de Email',
           message: mensaje,
-          redirect: '/autentication/login'
+          redirect: 'producto/index/table-producto'
         } } );
   }
-
 }
