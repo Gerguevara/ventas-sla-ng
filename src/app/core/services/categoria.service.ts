@@ -1,9 +1,14 @@
+import { Categoria } from './../Models/categoria.model';
 import { Injectable } from '@angular/core';
+import { RecursoService } from './recurso.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriaService {
+export class CategoriaService extends RecursoService<Categoria> {
 
-  constructor() { }
+  constructor(protected httpClient: HttpClient) { 
+    super('categorias', httpClient);
+  }
 }
