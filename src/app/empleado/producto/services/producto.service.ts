@@ -1,9 +1,22 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PaginatorResponse } from '../../models/paginator.model';
 
-const urlChangePage = 'http://localhost:8000/api/productos?page=';
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Access-Control-Allow-Origin': '*'
+  })
+};
+
+export interface ProductoPost {
+  id_categoria: number;
+  nombre_producto: string;
+  descripcion_producto: string;
+  disponibilidad: string;
+  imagen: string;
+  precio: string;
+  cantidad: number;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +27,11 @@ export class ProductoService {
     console.log('Running Product Service...');
   }
 
-  getAllProducts( itemsPorPagina: number ): Observable<any> {
-    const urlProductos = 'http://localhost:8000/api/productos';
+  subirImagen( formulario: FormData ): Observable<any> {
+    return this.http.post<any>('http://dr17010.infinityfreeapp.com/upload.php', formulario, httpOptions);
+  }
+
+  crearProducto( producto: ProductoPost ): any {
     const token = 'Bearer ' + localStorage.getItem('token');
     const httpHeaders = {
       headers: new HttpHeaders({
@@ -24,19 +40,7 @@ export class ProductoService {
         'Authorization': token
       })
     };
-    return this.http.get<any>( urlProductos + '?val=' + itemsPorPagina, httpHeaders);
-  }
-
-  getDataChangePage( page: number ): Observable<PaginatorResponse> {
-    const token = 'Bearer ' + localStorage.getItem('token');
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': token
-      })
-    };
-    return this.http.get<PaginatorResponse>(urlChangePage + page, httpOptions);
+    return this.http.post<any>('http://localhost:8000/api/productos', producto, httpHeaders);
   }
 
 }

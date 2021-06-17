@@ -19,6 +19,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ProductoService } from './services/producto.service';
 import { ToolsModule } from 'src/app/tools/tools.module';
 import { PaginatorService } from '../../tools/services/paginator.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { PaginatorService } from '../../tools/services/paginator.service';
     MatTableModule,
     MatPaginatorModule,
     HttpClientModule,
-    ToolsModule
+    ToolsModule,
+    MatSnackBarModule,
+    MatChipsModule
   ],
   providers: [
     ProductoService,

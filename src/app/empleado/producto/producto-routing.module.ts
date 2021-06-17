@@ -6,7 +6,7 @@ import { TableProductoComponent } from './components/table-producto/table-produc
 const routes: Routes = [
   { path: 'form-producto', component: FormProductoComponent },
   { path: 'table-producto', component: TableProductoComponent },
-  { path: '**', pathMatch: 'full', redirectTo: 'table-producto' }
+  { path: '**', pathMatch: 'full', redirectTo: 'form-producto' }
 ];
 
 @NgModule({

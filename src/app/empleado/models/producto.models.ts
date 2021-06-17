@@ -7,7 +7,7 @@ export interface Producto extends Resource {
     descripcion_producto: string;
     disponibilidad: string;
     imagen: string;
-    calificacion_promedio: string;
+    calificacion_promedio?: string;
     precio: string;
     cantidad: number;
 }
