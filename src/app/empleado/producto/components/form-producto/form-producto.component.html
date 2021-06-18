@@ -1,7 +1,7 @@
 <mat-card class="card">
     <mat-horizontal-stepper #stepper>
         <!--Formulario General-->
-        <mat-step [stepControl]="generalForm" label="General" errorMessage="Datos no válidos">
+        <mat-step [stepControl]="generalForm" label="General" errorMessage="Datos no válidos" class="stepTab">
             <mat-card class="card">
                 <h3 class="subtitle">Descripción General</h3>
                 <mat-divider></mat-divider>
@@ -53,7 +53,7 @@
                             </ng-container>
 
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                            <tr mat-row (click)="seleccionarCategoria(row)" [class.demo-row-is-clicked]="clickedRows.has(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
+                            <tr mat-row (click)="seleccionarCategoria(row)" [class.demo-row-is-clicked]="filasSeleccionadas.has(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
                         </table>
                         <app-paginator [urlData]="url"></app-paginator>
                     </div>
@@ -65,19 +65,16 @@
             </div>
         </mat-step>
         <!--Formulario Diseño-->
-        <mat-step [stepControl]="designForm" label="Diseño" errorMessage="Datos no válidos">
+        <mat-step [stepControl]="designForm" label="Diseño" errorMessage="Debe insertar una imagen">
             <mat-card class="card">
                 <h3 class="subtitle">Imágenes</h3>
                 <mat-divider></mat-divider>
                 <form [formGroup]="designForm">
                     <mat-form-field appearance="outline">
-                        <ngx-mat-file-input formControlName="file"></ngx-mat-file-input>
-                        <!-- <mat-hint>Hint</mat-hint> -->
+                        <ngx-mat-file-input formControlName="fileInput" (change)="cargarImagen()"></ngx-mat-file-input>
+                        <mat-error *ngIf="imagenNoValido">{{ getErrorImagenMessage() }}</mat-error>
                     </mat-form-field>
                 </form>
-                <div style="display: block;">
-                    <button mat-flat-button color="primary" style="margin-bottom: 15px;" (click)="insertarImagen()">Insertar</button>
-                </div>
                 <mat-divider></mat-divider>
                 <div style="margin: 10px;">
                     <img loading="lazy" *ngIf="imgUrl !== ''" [src]="imgUrl" alt="" class="imagen-view">
@@ -109,7 +106,7 @@
                         <span matSuffix>Unidades</span>
                         <mat-error *ngIf="fontSizeControl.invalid">Min size: 0 unidades</mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col">
+                    <!-- <mat-form-field class="col">
                         <mat-label>Unidad de Conteo</mat-label>
                         <mat-select formControlName="unidad">
                             <mat-option value="Items">Items</mat-option>
@@ -118,7 +115,7 @@
                             <mat-option value="Kilogramos">Kilogramos</mat-option>
                             <mat-option value="Metro">Metro</mat-option>
                         </mat-select>
-                    </mat-form-field>
+                    </mat-form-field> -->
                 </form>
             </mat-card>
             <mat-divider></mat-divider>

@@ -21,11 +21,13 @@ import { ToolsModule } from 'src/app/tools/tools.module';
 import { PaginatorService } from '../../tools/services/paginator.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
+import { IndexProductoComponent } from './components/index-producto/index-producto.component';
 
 @NgModule({
   declarations: [
     FormProductoComponent,
-    TableProductoComponent
+    TableProductoComponent,
+    IndexProductoComponent,
   ],
   imports: [
     CommonModule,

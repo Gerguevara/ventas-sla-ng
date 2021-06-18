@@ -6,7 +6,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductoPost, ProductoService } from '../../services/producto.service';
 import { Categoria } from '../../../models/categoria.models';
 import { PaginatorService } from '../../../../tools/services/paginator.service';
-import { Producto } from '../../../../core/Models/producto.model';
 
 @Component({
   selector: 'app-form-producto',
@@ -21,12 +20,14 @@ export class FormProductoComponent implements OnInit {
   // Tabla de categorias
   displayedColumns: string[] = ['ID', 'Nombre', 'Descripción'];
   dataSource!: MatTableDataSource<Categoria>;
-  clickedRows = new Set<Categoria>();
+  filasSeleccionadas = new Set<Categoria>();
 
   // URL donde se consumen los datos
   url = 'http://localhost:8000/api/categorias';
 
+  // Variable para manejo de imagen
   fileInput!: File;
+  // Declaración de los formularios
   generalForm: FormGroup;
   designForm: FormGroup;
   inventarioForm: FormGroup;
@@ -45,7 +46,7 @@ export class FormProductoComponent implements OnInit {
     return this.generalForm.get('categoria')?.invalid && this.generalForm.get('categoria')?.touched;
   }
   get imagenNoValido(): boolean | undefined {
-    return this.designForm.get('file')?.invalid;
+    return this.designForm.get('fileInput')?.invalid && this.designForm.get('fileInput')?.touched;
   }
   get estadoNoValido(): boolean | undefined {
     return this.inventarioForm.get('estado')?.invalid && this.inventarioForm.get('estado')?.touched;
@@ -61,23 +62,23 @@ export class FormProductoComponent implements OnInit {
   // Método para quitar una categoría de la tabla y del ChipList
   quitarCategoria(): void {
     this.categorias = [];
-    this.clickedRows.clear();
+    this.filasSeleccionadas.clear();
     this.generalForm.get('categoria')?.setValue('');
   }
 
   // Método para añadir una categoría a la tabla y a la ChipList
   seleccionarCategoria( row: Categoria ): void {
     // Si las listas están vacías se introduce la categoría seleccionada
-    if ( this.categorias.length === 0 && this.clickedRows.size === 0) {
-      this.clickedRows.add( row );
+    if ( this.categorias.length === 0 && this.filasSeleccionadas.size === 0) {
+      this.filasSeleccionadas.add( row );
       this.categorias.push( row.nombre );
       this.generalForm.get('categoria')?.setValue(row.nombre);
     }
     // Si las listas ya tienen un valor, estas se limpian y se introduce el nuevo
     else {
       this.categorias = [];
-      this.clickedRows.clear();
-      this.clickedRows.add( row );
+      this.filasSeleccionadas.clear();
+      this.filasSeleccionadas.add( row );
       this.categorias.push( row.nombre );
       this.generalForm.get('categoria')?.setValue(row.nombre);
     }
@@ -90,21 +91,19 @@ export class FormProductoComponent implements OnInit {
     // Creación del formulario
     // Formulario general
     this.generalForm = this.formBuilder.group({
-      nombre     : ['', [Validators.required, Validators.minLength(5)]],
-      descripcion: ['', [Validators.required, Validators.minLength(5)]],
-      categoria  : ['', Validators.required],
-      precio     : ['0.00', [Validators.required]]
+      nombre     : [{value: '', disabled: true}, [Validators.required, Validators.minLength(5)]],
+      descripcion: [{value: '', disabled: true}, [Validators.required, Validators.minLength(5)]],
+      categoria  : [{value: '', disabled: true}, Validators.required],
+      precio     : [{value: '0.00', disabled: true}, [Validators.required]]
     });
     // Formulario de imagen
     this.designForm = this.formBuilder.group({
-      file       : [this.fileInput, [Validators.required]],
+      fileInput  : [{value: '', disabled: true}, [Validators.required]],
     });
     // Formulario de inventario
     this.inventarioForm = this.formBuilder.group({
-      estado     : ['1', [Validators.required]],
-      cantidad   : ['0', [Validators.required]],
-      unidad     : ['Items', [Validators.required]],
-      precio     : ['0.00', [Validators.required]]
+      estado     : [{value: '1', disabled: true}, [Validators.required]],
+      cantidad   : [{value: '0', disabled: true}, [Validators.required]],
     });
   }
 
@@ -146,11 +145,24 @@ export class FormProductoComponent implements OnInit {
 
   // Método para obtener mensajes de errores de validaciones Imagen
   getErrorImagenMessage(): string {
-    if (this.designForm.get('file')?.hasError('required') || this.designForm.get('file')?.value === '') {
+    if (this.designForm.get('urlImagen')?.hasError('required') || this.designForm.get('urlImagen')?.value === '') {
       return 'Debe insertar una imagen';
     }
     else {
       return '';
+    }
+  }
+
+  cargarImagen(): void{
+    try {
+      this.productoService.subirImagen( this.designForm.get('fileInput')?.value ).subscribe((response: any) => {
+        console.log(response);
+      },
+      (error: any) => {
+        console.log(error);
+      });
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -186,7 +198,7 @@ export class FormProductoComponent implements OnInit {
     } else {
       // console.log( this.productoForm );
       let idCategoria = 0;
-      for (const categoria of this.clickedRows) {
+      for (const categoria of this.filasSeleccionadas) {
         idCategoria = categoria.id;
       }
       const producto: ProductoPost = {
@@ -206,25 +218,7 @@ export class FormProductoComponent implements OnInit {
         console.log(error);
         this.snackBar.open(error, 'Cerrar');
       });
-      this.subirImagen();
     }
-  }
-
-  subirImagen(): void{
-    /*try {
-      const formulario = new FormData();
-      formulario.append('file', this.productoForm.get('file')?.value);
-      formulario.append('enctype', 'multipart/form-data');
-      formulario.append('method', 'POST');
-      this.productoService.subirImagen( formulario ).subscribe((response: any) => {
-        console.log(response);
-      },
-      (error: any) => {
-        console.log(error);
-      });
-    } catch (error) {
-      console.log(error);
-    }*/
   }
 
 }

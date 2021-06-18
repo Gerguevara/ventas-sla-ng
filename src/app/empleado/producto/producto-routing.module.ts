@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FormProductoComponent } from './components/form-producto/form-producto.component';
-import { TableProductoComponent } from './components/table-producto/table-producto.component';
+import { IndexProductoComponent } from './components/index-producto/index-producto.component';
 
 const routes: Routes = [
-  { path: 'form-producto', component: FormProductoComponent },
-  { path: 'table-producto', component: TableProductoComponent },
-  { path: '**', pathMatch: 'full', redirectTo: 'form-producto' }
+  { path: '', component: IndexProductoComponent},
+  { path: '**', pathMatch: 'full', redirectTo: '' }
 ];
 
 @NgModule({

@@ -1,5 +1,5 @@
-<div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource">
+<div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
 
         <!-- Position Column -->
         <ng-container matColumnDef="ID">
@@ -26,9 +26,9 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row class="table-row" (click)="seleccionarProducto(row)" [class.demo-row-is-clicked]="filasSeleccionadas.has(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <app-paginator [urlData]="url"></app-paginator>
+    <mat-paginator [pageSizeOptions]="pageSizeOptions" [length]="length" [pageSize]="pageSize" (page)="changePageEvent( $event )"></mat-paginator>
 
 </div>
