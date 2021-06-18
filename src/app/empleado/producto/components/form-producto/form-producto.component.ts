@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductoPost, ProductoService } from '../../services/producto.service';
 import { Categoria } from '../../../models/categoria.models';
 import { PaginatorService } from '../../../../tools/services/paginator.service';
+import { Producto } from 'src/app/core/Models/producto.model';
 
 @Component({
   selector: 'app-form-producto',
@@ -17,10 +18,21 @@ import { PaginatorService } from '../../../../tools/services/paginator.service';
 })
 export class FormProductoComponent implements OnInit {
 
+  // Valores de entrada en caso que el formulario solo sea para previsualización
+  nombre = '';
+  descripcion = '';
+  categoria = '';
+  precio = '0.00';
+  estado = '1';
+  cantidad = '0';
+
   // Tabla de categorias
   displayedColumns: string[] = ['ID', 'Nombre', 'Descripción'];
   dataSource!: MatTableDataSource<Categoria>;
   filasSeleccionadas = new Set<Categoria>();
+
+  // Varibale para manejar el formulario entre solo visualización y previsualización de datos
+  editable = true;
 
   // URL donde se consumen los datos
   url = 'http://localhost:8000/api/categorias';
@@ -61,26 +73,36 @@ export class FormProductoComponent implements OnInit {
 
   // Método para quitar una categoría de la tabla y del ChipList
   quitarCategoria(): void {
-    this.categorias = [];
-    this.filasSeleccionadas.clear();
-    this.generalForm.get('categoria')?.setValue('');
+    // Primero validamos si el formulario es editable
+    if (!this.editable) {
+      this.categorias = [];
+      this.filasSeleccionadas.clear();
+      this.generalForm.get('categoria')?.setValue('');
+    }
+  }
+
+  editar(): void {
+    this.editable = false;
   }
 
   // Método para añadir una categoría a la tabla y a la ChipList
   seleccionarCategoria( row: Categoria ): void {
-    // Si las listas están vacías se introduce la categoría seleccionada
-    if ( this.categorias.length === 0 && this.filasSeleccionadas.size === 0) {
-      this.filasSeleccionadas.add( row );
-      this.categorias.push( row.nombre );
-      this.generalForm.get('categoria')?.setValue(row.nombre);
-    }
-    // Si las listas ya tienen un valor, estas se limpian y se introduce el nuevo
-    else {
-      this.categorias = [];
-      this.filasSeleccionadas.clear();
-      this.filasSeleccionadas.add( row );
-      this.categorias.push( row.nombre );
-      this.generalForm.get('categoria')?.setValue(row.nombre);
+    // Primero validamos si el formulario es editable
+    if (!this.editable) {
+      // Si las listas están vacías se introduce la categoría seleccionada
+      if ( this.categorias.length === 0 && this.filasSeleccionadas.size === 0) {
+        this.filasSeleccionadas.add( row );
+        this.categorias.push( row.nombre );
+        this.generalForm.get('categoria')?.setValue(row.nombre);
+      }
+      // Si las listas ya tienen un valor, estas se limpian y se introduce el nuevo
+      else {
+        this.categorias = [];
+        this.filasSeleccionadas.clear();
+        this.filasSeleccionadas.add( row );
+        this.categorias.push( row.nombre );
+        this.generalForm.get('categoria')?.setValue(row.nombre);
+      }
     }
     // De esta forma se trata de mantener solo una categoría seleccionada
   }
@@ -91,19 +113,19 @@ export class FormProductoComponent implements OnInit {
     // Creación del formulario
     // Formulario general
     this.generalForm = this.formBuilder.group({
-      nombre     : [{value: '', disabled: true}, [Validators.required, Validators.minLength(5)]],
-      descripcion: [{value: '', disabled: true}, [Validators.required, Validators.minLength(5)]],
-      categoria  : [{value: '', disabled: true}, Validators.required],
-      precio     : [{value: '0.00', disabled: true}, [Validators.required]]
+      nombre     : [{value: this.nombre, disabled: this.editable}, [Validators.required, Validators.minLength(5)]],
+      descripcion: [{value: this.descripcion, disabled: this.editable}, [Validators.required, Validators.minLength(5)]],
+      categoria  : [{value: this.categoria, disabled: this.editable}, Validators.required],
+      precio     : [{value: this.precio, disabled: this.editable}, [Validators.required]]
     });
     // Formulario de imagen
     this.designForm = this.formBuilder.group({
-      fileInput  : [{value: '', disabled: true}, [Validators.required]],
+      fileInput  : [{value: '', disabled: this.editable}, [Validators.required]],
     });
     // Formulario de inventario
     this.inventarioForm = this.formBuilder.group({
-      estado     : [{value: '1', disabled: true}, [Validators.required]],
-      cantidad   : [{value: '0', disabled: true}, [Validators.required]],
+      estado     : [{value: this.estado, disabled: this.editable}, [Validators.required]],
+      cantidad   : [{value: this.cantidad, disabled: this.editable}, [Validators.required]],
     });
   }
 
@@ -175,6 +197,16 @@ export class FormProductoComponent implements OnInit {
     this.paginatorService.pageDataChange$.subscribe((response: Categoria[]) => {
       // Seteamos estos datos a la tabla
       this.dataSource = new MatTableDataSource<Categoria>(response);
+    });
+
+    this.productoService.productoChange$.subscribe((data: Producto) => {
+      this.generalForm.get('nombre')?.setValue(data.nombre_producto);
+      this.generalForm.get('descripcion')?.setValue(data.descripcion_producto);
+      this.generalForm.get('precio')?.setValue(data.precio);
+      this.generalForm.get('categoria')?.setValue(data.id_categoria);
+      this.categorias.push('Categoría: ' + data.id_categoria);
+      this.inventarioForm.get('estado')?.setValue(data.disponibilidad.toString());
+      this.inventarioForm.get('cantidad')?.setValue(data.cantidad);
     });
   }
 

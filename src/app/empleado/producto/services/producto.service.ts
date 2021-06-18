@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PaginatorResponse } from '../../models/paginator.model';
+import { Producto } from '../../../core/Models/producto.model';
 
 export interface ProductoPost {
   id_categoria: number;
@@ -21,6 +22,12 @@ export class ProductoService {
   constructor( private http: HttpClient ) {
     console.log('Running Product Service...');
   }
+
+  /*
+  Emisor que nos servirá para comunicar el producto seleccionado en la tabla
+  para que sea visualizado en el formulario
+  */
+  productoChange$ = new EventEmitter<Producto>();
 
   /*
   Este es un método para el manejo de la subida de la imagen del producto.

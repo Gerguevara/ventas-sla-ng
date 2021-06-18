@@ -5,9 +5,9 @@ export interface Producto extends Resource {
     id_categoria: number;
     nombre_producto: string;
     descripcion_producto: string;
-    disponibilidad: string;
+    disponibilidad: number;
     imagen: string;
-    calificacion_promedio?: string;
+    calificacion_promedio: string;
     precio: string;
     cantidad: number;
 }

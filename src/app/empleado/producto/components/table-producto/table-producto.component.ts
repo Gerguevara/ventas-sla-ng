@@ -51,6 +51,7 @@ export class TableProductoComponent implements OnInit {
 
   seleccionarProducto( row: Producto ): void {
     console.log(row);
+    this.productoService.productoChange$.emit(row);
   }
 
   changePageEvent( event: any ): void{

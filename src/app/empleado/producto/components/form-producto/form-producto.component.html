@@ -1,4 +1,5 @@
 <mat-card class="card">
+    <button mat-flat-button color="primary" type="button" (click)="editar()"><mat-icon>edit</mat-icon> Editar</button>
     <mat-horizontal-stepper #stepper>
         <!--Formulario General-->
         <mat-step [stepControl]="generalForm" label="General" errorMessage="Datos no válidos" class="stepTab">
