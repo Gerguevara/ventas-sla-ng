@@ -8,7 +8,7 @@ import { Recurso } from './../Models/recurso.model';
 
 export abstract class RecursoService<T extends Recurso> {
 
-  private origin = "*"
+  private origin = `${environment.allowedOrigin}`;
   private API_URL = `${environment.apiUrl}`;
 
   constructor(
@@ -23,7 +23,7 @@ export abstract class RecursoService<T extends Recurso> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': `${this.origin}`,
+        'Access-Control-Allow-Origin': this.origin,
         'Authorization': token
       })
     };
@@ -36,7 +36,7 @@ export abstract class RecursoService<T extends Recurso> {
       params: { page: page.toString(), page_size: page_size.toString()},
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': `${this.origin}`,
+        'Access-Control-Allow-Origin': this.origin,
         'Authorization': token
       })
     });
@@ -64,7 +64,7 @@ export abstract class RecursoService<T extends Recurso> {
       {
         observe: 'response',
         headers: new HttpHeaders({
-          'Access-Control-Allow-Origin': `${this.origin}`,
+          'Access-Control-Allow-Origin': this.origin,
           'Authorization': token
         })
       });

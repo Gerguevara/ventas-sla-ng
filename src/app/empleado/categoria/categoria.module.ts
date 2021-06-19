@@ -1,3 +1,5 @@
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -15,7 +17,9 @@ import { FormCategoriaComponent } from './components/form-categoria/form-categor
   ],
   imports: [
     CommonModule,
-    CategoriaRoutingModule
+    CategoriaRoutingModule,
+    MatPaginatorModule,
+    MatTableModule
   ]
 })
 export class CategoriaModule { }
