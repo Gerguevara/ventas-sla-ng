@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import { Categoria } from './../../../../core/Models/categoria.model';
 
 @Component({
@@ -6,9 +7,9 @@ import { Categoria } from './../../../../core/Models/categoria.model';
   templateUrl: './table-categoria.component.html',
   styleUrls: ['./table-categoria.component.scss']
 })
-export class TableCategoriaComponent implements OnInit {
+export class TableCategoriaComponent implements OnChanges {
   @Input()
-  categorias? : Categoria = undefined;
+  categorias? : Categoria[] = undefined;
 
   @Output()
   detailEvent = new EventEmitter<number>();
@@ -16,9 +17,21 @@ export class TableCategoriaComponent implements OnInit {
   updateEvent = new EventEmitter<number>();
   @Output()
   deleteEvent = new EventEmitter<Categoria>();
+
+  columnas = [
+    'id',
+    'nombre',
+    'descripcion',
+    'acciones'
+  ]
+
+  dataSource : MatTableDataSource<Categoria> = new MatTableDataSource();
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnChanges(cambios : SimpleChanges): void {
+    const categorias = cambios.categorias; //const { categorias } = cambios;
+    if(categorias)
+      this.dataSource.data = categorias.currentValue;
   }
 
 }
