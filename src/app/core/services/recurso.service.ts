@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
@@ -9,6 +8,7 @@ import { Recurso } from './../Models/recurso.model';
 
 export abstract class RecursoService<T extends Recurso> {
 
+  private origin = `${environment.allowedOrigin}`;
   private API_URL = `${environment.apiUrl}`;
 
   constructor(
@@ -18,21 +18,55 @@ export abstract class RecursoService<T extends Recurso> {
     this.API_URL = this.API_URL.concat(`${endpoint}/`)
   }
 
+  setOptions() {
+    const token = 'Bearer ' + localStorage.getItem('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': this.origin,
+        'Authorization': token
+      })
+    };
+    return httpOptions
+  }
+
   getObjects(page: number = 1, page_size: number = 10): Observable<Resultado<T>> {
+    const token = 'Bearer ' + localStorage.getItem('token');
     return this.httpClient.get<Resultado<T>>(this.API_URL, {
       params: { page: page.toString(), page_size: page_size.toString()},
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': this.origin,
+        'Authorization': token
+      })
     });
   }
 
   getObject(id: number): Observable<T> {
-    return this.httpClient.get<T>(`${this.API_URL}${id}`);
+    const options = this.setOptions();
+    return this.httpClient.get<T>(`${this.API_URL}${id}`,options);
   }
 
   updateObject(resource: T): Observable<T> {
-    return this.httpClient.put<T>(`${this.API_URL}${resource.id}/`, resource);
+    const options = this.setOptions();
+    return this.httpClient.put<T>(`${this.API_URL}${resource.id}/`,resource, options);
   }
 
   postObject(resource: T): Observable<T> {
-    return this.httpClient.post<T>(`${this.API_URL}`, resource);
+    const options = this.setOptions();
+    return this.httpClient.post<T>(`${this.API_URL}`, resource, options);
+  }
+
+  deleteObject(id: number): Observable<HttpResponse<never>> {
+    const token = 'Bearer ' + localStorage.getItem('token');
+    return this.httpClient.delete<never>(
+      `${this.API_URL}${id}`,
+      {
+        observe: 'response',
+        headers: new HttpHeaders({
+          'Access-Control-Allow-Origin': this.origin,
+          'Authorization': token
+        })
+      });
   }
 }

@@ -7,6 +7,10 @@ const routes: Routes = [
     loadChildren: () => import('./producto/producto.module').then(m => m.ProductoModule)
   },
   {
+    path: 'categoria',
+    loadChildren: () => import('./categoria/categoria.module').then(m => m.CategoriaModule)
+  },
+  {
     path: '**',
     pathMatch: 'full',
     redirectTo: 'index'
