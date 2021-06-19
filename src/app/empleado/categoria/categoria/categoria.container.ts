@@ -1,7 +1,8 @@
+import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
 import { Component, OnInit } from '@angular/core';
 import { PartialObserver } from 'rxjs';
 
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 
 import { Resultado } from './../../../core/Models/resultado.model';
@@ -17,12 +18,19 @@ import { FormCategoriaComponent } from './../components/form-categoria/form-cate
 export class CategoriaContainer implements OnInit {
   //objeto que almacenara la respuesta
   respuesta? : Resultado<Categoria> = undefined;
+  //cantidad de datos
+  dataLength : number = 0;
+  //ref que almacena las acciones del dialogo loading
+  cargandoDialogRef? : MatDialogRef<DialogSpinnerComponent> = undefined;
 
   //===observadores===
   private getObserver : PartialObserver<Resultado<Categoria>> = {
-    next: (respuesta : Resultado<Categoria>) => this.respuesta = respuesta,
+    next: (respuesta : Resultado<Categoria>) => {
+      this.respuesta = respuesta;
+      this.dataLength = respuesta.total;
+    },
     error: () => {},
-    complete: () => {},
+    complete: () => {this.cargandoDialogRef?.close()},
   }
   private detailObserver : PartialObserver<Categoria> = {
     next: () => {},
@@ -43,6 +51,7 @@ export class CategoriaContainer implements OnInit {
   }
 
   getCategorias(pagina : PageEvent | number){
+    this.cargandoDialogRef = this.formDialog.open(DialogSpinnerComponent);
     //obtener el numero de pagina segun el tipo del parametro
     const numeroDePagina = (typeof pagina === "number" ? pagina : pagina.pageIndex + 1)
     //obtener el tamano de pagina

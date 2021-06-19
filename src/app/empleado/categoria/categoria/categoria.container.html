@@ -1,3 +1,10 @@
 <app-table-categoria
     [categorias]="respuesta?.data"
 ></app-table-categoria>
+<mat-paginator 
+    [length]="dataLength"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 20]" 
+    (page)="getCategorias($event)"
+    showFirstLastButtons>
+</mat-paginator>
