@@ -29,6 +29,6 @@
         <tr mat-row class="table-row" (click)="seleccionarProducto(row)" [class.demo-row-is-clicked]="filasSeleccionadas.has(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="pageSizeOptions" [length]="length" [pageSize]="pageSize" (page)="changePageEvent( $event )"></mat-paginator>
+    <app-paginator [urlData]="url" (pageDataChange$)="addDataToTable($event)"></app-paginator>
 
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { PaginatorResponse } from 'src/app/empleado/models/paginator.model';
 import { PaginatorService } from '../../services/paginator.service';
@@ -17,6 +17,9 @@ export class PaginatorComponent implements OnInit, AfterViewInit {
   length!: number;
   pageSize!: number;
 
+  // Salida de la data del componente hacia otro
+  @Output() pageDataChange$ = new EventEmitter<any>();
+
   // MatPaginator Output
   pageEvent!: PageEvent;
 
@@ -30,7 +33,7 @@ export class PaginatorComponent implements OnInit, AfterViewInit {
       this.length = this.configPaginator.total;
       this.pageSize = Number(this.configPaginator.per_page);
       // Enviamos la data por el observable hacia el componente
-      this.paginatorService.pageDataChange$.emit(response.data);
+      this.pageDataChange$.emit(response.data);
     });
   }
 
@@ -49,7 +52,7 @@ export class PaginatorComponent implements OnInit, AfterViewInit {
       this.length = this.configPaginator.total;
       this.pageSize = Number(this.configPaginator.per_page);
       // Enviamos la data por el observable hacia el componente
-      this.paginatorService.pageDataChange$.emit(response.data);
+      this.pageDataChange$.emit(response.data);
     });
     // Guardamos el nuevo estado del evento
     this.pageEvent = event;

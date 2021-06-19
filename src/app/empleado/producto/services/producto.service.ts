@@ -64,34 +64,4 @@ export class ProductoService {
     return this.http.post<any>('http://localhost:8000/api/productos', producto, httpHeaders);
   }
 
-  /* Los métodos async esperan hasta que la respuesta del servidor esté lista y devuelven una promesa
-     la cual debe ser recibida en el componente. Esto nos permite asegurar la respuesta para que los datos
-     no queden como Undefined */
-     // Este método devuelve toda la data inicial de la tabla
-     async getAllData( urlData: string, itemsPorPagina: number ): Promise<PaginatorResponse> {
-      const token = 'Bearer ' + localStorage.getItem('token');
-      const httpHeaders = {
-        headers: new HttpHeaders({
-          'Content-Type':  'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Authorization': token
-        })
-      };
-      const response = await this.http.get<PaginatorResponse>( urlData + '?val=' + itemsPorPagina, httpHeaders).toPromise();
-      return response;
-    }
-
-    async getPageData( urlData: string, itemsPorPagina: number ): Promise<PaginatorResponse> {
-      const token = 'Bearer ' + localStorage.getItem('token');
-      const httpHeaders = {
-        headers: new HttpHeaders({
-          'Content-Type':  'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Authorization': token
-        })
-      };
-      const response = await this.http.get<PaginatorResponse>( urlData + '&val=' + itemsPorPagina, httpHeaders).toPromise();
-      return response;
-    }
-
 }

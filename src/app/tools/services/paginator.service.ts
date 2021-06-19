@@ -9,8 +9,6 @@ export class PaginatorService {
 
   constructor( private http: HttpClient ) { }
 
-  pageDataChange$ = new EventEmitter<any>();
-
   /* Los métodos async esperan hasta que la respuesta del servidor esté lista y devuelven una promesa
      la cual debe ser recibida en el componente. Esto nos permite asegurar la respuesta para que los datos
      no queden como Undefined */

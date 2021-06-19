@@ -193,12 +193,6 @@ export class FormProductoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Aquí nos subscribimos a todos los cambios que nos envíe el paginador con la data de la página
-    this.paginatorService.pageDataChange$.subscribe((response: Categoria[]) => {
-      // Seteamos estos datos a la tabla
-      this.dataSource = new MatTableDataSource<Categoria>(response);
-    });
-
     this.productoService.productoChange$.subscribe((data: Producto) => {
       this.generalForm.get('nombre')?.setValue(data.nombre_producto);
       this.generalForm.get('descripcion')?.setValue(data.descripcion_producto);
@@ -208,6 +202,12 @@ export class FormProductoComponent implements OnInit {
       this.inventarioForm.get('estado')?.setValue(data.disponibilidad.toString());
       this.inventarioForm.get('cantidad')?.setValue(data.cantidad);
     });
+  }
+
+  // Obtenemos todos los cambios que nos envíe el paginador con la data de la página
+  addDataToTable( event: Categoria[] ): void {
+    // Seteamos estos datos a la tabla
+    this.dataSource = new MatTableDataSource<Categoria>(event);
   }
 
   // Método para hacer submit del formulario
