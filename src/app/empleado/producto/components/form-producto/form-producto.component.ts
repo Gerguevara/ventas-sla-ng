@@ -31,8 +31,9 @@ export class FormProductoComponent implements OnInit {
   dataSource!: MatTableDataSource<Categoria>;
   filasSeleccionadas = new Set<Categoria>();
 
-  // Varibale para manejar el formulario entre solo visualización y previsualización de datos
+  // Banderas para manejar el formulario entre edición y visualización de datos
   editable = true;
+  formularioLleno = false;
 
   // URL donde se consumen los datos
   url = 'http://localhost:8000/api/categorias';
@@ -64,7 +65,7 @@ export class FormProductoComponent implements OnInit {
     return this.inventarioForm.get('estado')?.invalid && this.inventarioForm.get('estado')?.touched;
   }
 
-  // Chips List
+  // Atributos del Chips List
   visible = true;
   selectable = true;
   removable = true;
@@ -81,8 +82,33 @@ export class FormProductoComponent implements OnInit {
     }
   }
 
-  editar(): void {
-    this.editable = false;
+  editarProducto(): void {
+    // Verificamos si el usuario ha seleccionado un producto primero antes de editar
+    if (this.formularioLleno) {
+      this.editable = false;
+      this.generalForm.enable();
+      this.designForm.enable();
+      this.inventarioForm.enable();
+    } else {
+      this.snackBar.open('Debe seleccionar un producto primero', 'Cerrar');
+    }
+  }
+
+  guardarProducto(): void {
+    // Verificamos que los formularios sean validos
+    if ( this.generalForm.valid && this.designForm.valid && this.inventarioForm.valid ) {
+      this.snackBar.open('Aquí debe ir la actualización del producto', 'Cerrar');
+    } else {
+      this.snackBar.open('Debe completar el formulario', 'Cerrar');
+    }
+  }
+
+  cancelar(): void {
+    // Deshabilitamos los controles de nuevo
+    this.editable = true;
+    this.generalForm.disable();
+    this.designForm.disable();
+    this.inventarioForm.disable();
   }
 
   // Método para añadir una categoría a la tabla y a la ChipList
@@ -108,24 +134,23 @@ export class FormProductoComponent implements OnInit {
   }
 
   constructor( private snackBar: MatSnackBar, private formBuilder: FormBuilder,
-               private productoService: ProductoService,
-               private paginatorService: PaginatorService ) {
+               private productoService: ProductoService ) {
     // Creación del formulario
     // Formulario general
     this.generalForm = this.formBuilder.group({
-      nombre     : [{value: this.nombre, disabled: this.editable}, [Validators.required, Validators.minLength(5)]],
-      descripcion: [{value: this.descripcion, disabled: this.editable}, [Validators.required, Validators.minLength(5)]],
-      categoria  : [{value: this.categoria, disabled: this.editable}, Validators.required],
-      precio     : [{value: this.precio, disabled: this.editable}, [Validators.required]]
+      nombre     : [this.nombre, [Validators.required, Validators.minLength(5)]],
+      descripcion: [this.descripcion, [Validators.required, Validators.minLength(5)]],
+      categoria  : [this.categoria, Validators.required],
+      precio     : [this.precio, [Validators.required]]
     });
     // Formulario de imagen
     this.designForm = this.formBuilder.group({
-      fileInput  : [{value: '', disabled: this.editable}, [Validators.required]],
+      fileInput  : ['', [Validators.required]],
     });
     // Formulario de inventario
     this.inventarioForm = this.formBuilder.group({
-      estado     : [{value: this.estado, disabled: this.editable}, [Validators.required]],
-      cantidad   : [{value: this.cantidad, disabled: this.editable}, [Validators.required]],
+      estado     : [this.estado, [Validators.required]],
+      cantidad   : [this.cantidad, [Validators.required]],
     });
   }
 
@@ -193,6 +218,11 @@ export class FormProductoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Deshabilitar todos los controles al cargar la pantalla
+    this.generalForm.disable();
+    this.designForm.disable();
+    this.inventarioForm.disable();
+    // Nos subscribimos a los cambios de los productos seleccionados de la tabla
     this.productoService.productoChange$.subscribe((data: Producto) => {
       this.generalForm.get('nombre')?.setValue(data.nombre_producto);
       this.generalForm.get('descripcion')?.setValue(data.descripcion_producto);
@@ -201,6 +231,7 @@ export class FormProductoComponent implements OnInit {
       this.categorias.push('Categoría: ' + data.id_categoria);
       this.inventarioForm.get('estado')?.setValue(data.disponibilidad.toString());
       this.inventarioForm.get('cantidad')?.setValue(data.cantidad);
+      this.formularioLleno = true;
     });
   }
 

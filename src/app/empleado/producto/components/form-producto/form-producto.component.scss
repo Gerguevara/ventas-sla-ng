@@ -3,6 +3,42 @@
     padding-bottom: 0px;
 }
 
+.card-step {
+    margin: 15px;
+    padding-bottom: 0px;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+
+/* width */
+
+::-webkit-scrollbar {
+    width: 3px;
+    border-radius: 15px;
+}
+
+
+/* Track */
+
+ ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+
+/* Handle */
+
+ ::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+
+/* Handle on hover */
+
+ ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
 .example-stepper {
     margin-top: 8px;
 }
@@ -89,5 +125,3 @@ input.example-right-align {
 .demo-row-is-clicked {
     font-weight: bold;
 }
-
-.stepTab {}

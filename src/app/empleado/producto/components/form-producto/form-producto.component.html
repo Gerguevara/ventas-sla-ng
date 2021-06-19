@@ -1,9 +1,11 @@
 <mat-card class="card">
-    <button mat-flat-button color="primary" type="button" (click)="editar()"><mat-icon>edit</mat-icon> Editar</button>
+    <button mat-flat-button *ngIf="editable" style="margin-right: 10px;" color="primary" type="button" (click)="editarProducto()"><mat-icon>edit</mat-icon> Editar</button>
+    <button mat-flat-button *ngIf="!editable" style="margin-right: 10px;" color="primary" type="button" (click)="guardarProducto()"><mat-icon>save</mat-icon> Guardar</button>
+    <button mat-flat-button *ngIf="!editable" style="margin-right: 10px;" color="accent" type="button" (click)="cancelar()"><mat-icon>cancel</mat-icon> Cancelar</button>
     <mat-horizontal-stepper #stepper>
         <!--Formulario General-->
-        <mat-step [stepControl]="generalForm" label="General" errorMessage="Datos no válidos" class="stepTab">
-            <mat-card class="card">
+        <mat-step [stepControl]="generalForm" label="General" errorMessage="Datos no válidos">
+            <mat-card class="card-step">
                 <h3 class="subtitle">Descripción General</h3>
                 <mat-divider></mat-divider>
                 <form [formGroup]="generalForm">
@@ -67,7 +69,7 @@
         </mat-step>
         <!--Formulario Diseño-->
         <mat-step [stepControl]="designForm" label="Diseño" errorMessage="Debe insertar una imagen">
-            <mat-card class="card">
+            <mat-card class="card-step">
                 <h3 class="subtitle">Imágenes</h3>
                 <mat-divider></mat-divider>
                 <form [formGroup]="designForm">
@@ -90,7 +92,7 @@
         </mat-step>
         <!--Formulario Inventario-->
         <mat-step [stepControl]="inventarioForm" label="Inventario" errorMessage="Datos no válidos">
-            <mat-card class="card">
+            <mat-card class="card-step">
                 <h3 class="subtitle">Inventario</h3>
                 <mat-divider></mat-divider>
                 <form [formGroup]="inventarioForm">
@@ -107,22 +109,12 @@
                         <span matSuffix>Unidades</span>
                         <mat-error *ngIf="fontSizeControl.invalid">Min size: 0 unidades</mat-error>
                     </mat-form-field>
-                    <!-- <mat-form-field class="col">
-                        <mat-label>Unidad de Conteo</mat-label>
-                        <mat-select formControlName="unidad">
-                            <mat-option value="Items">Items</mat-option>
-                            <mat-option value="Piezas">Piezas</mat-option>
-                            <mat-option value="Kits">Kits</mat-option>
-                            <mat-option value="Kilogramos">Kilogramos</mat-option>
-                            <mat-option value="Metro">Metro</mat-option>
-                        </mat-select>
-                    </mat-form-field> -->
                 </form>
             </mat-card>
             <mat-divider></mat-divider>
             <div>
                 <button type="button" mat-stroked-button matStepperPrevious class="button">Regresar</button>
-                <button type="submit" mat-stroked-button (click)="enviar()" class="button">Enviar</button>
+                <button type="submit" *ngIf="!editable" mat-stroked-button (click)="enviar()" class="button">Enviar</button>
             </div>
         </mat-step>
     </mat-horizontal-stepper>
