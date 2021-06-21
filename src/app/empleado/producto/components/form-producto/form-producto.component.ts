@@ -6,6 +6,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductoPost, ProductoService } from '../../services/producto.service';
 import { Categoria } from '../../../models/categoria.models';
 import { Producto } from 'src/app/core/Models/producto.model';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
 
 @Component({
   selector: 'app-form-producto',
@@ -43,9 +45,9 @@ export class FormProductoComponent implements OnInit {
   // URL donde se consumen los datos
   url = 'http://localhost:8000/api/categorias';
   // URL de subida de imagenes
-  urlImageUpload = 'http://7f354498ac39.eu.ngrok.io/upload.php';
+  urlImageUpload = 'http://02e1c0d6512a.ngrok.io/upload.php';
   // URL de lectura de imagenes
-  urlImage = 'http://7f354498ac39.eu.ngrok.io/images/';
+  urlImage = 'http://02e1c0d6512a.ngrok.io/images/';
   // Variable que almacena el nombre del archivo al ser cargado
   nombreArchivo = 'Seleccionar Imagen';
   textoImagen = 'Inserte una imagen';
@@ -90,7 +92,7 @@ export class FormProductoComponent implements OnInit {
   // Método para quitar una categoría de la tabla y del ChipList
   quitarCategoria(): void {
     // Primero validamos si el formulario es editable
-    if (this.habilitarEditar) {
+    if (!this.habilitarEditar) {
       this.categorias = [];
       this.filasSeleccionadas.clear();
       this.generalForm.get('categoria')?.setValue('');
@@ -139,19 +141,6 @@ export class FormProductoComponent implements OnInit {
     this.inventarioForm.enable();
   }
 
-  guardarProducto(): void {
-    // Verificamos que los formularios sean validos
-    if ( this.generalForm.valid && this.designForm.valid && this.inventarioForm.valid ) {
-      this.snackBar.open('Aquí debe ir la actualización del producto', 'Cerrar', {
-        duration: 5000
-      });
-    } else {
-      this.snackBar.open('Debe completar el formulario', 'Cerrar', {
-        duration: 5000
-      });
-    }
-  }
-
   cancelar(): void {
     // Deshabilitamos los controles de nuevo
     this.habilitarCancelar = false;
@@ -191,7 +180,7 @@ export class FormProductoComponent implements OnInit {
   }
 
   constructor( private snackBar: MatSnackBar, private formBuilder: FormBuilder,
-               private productoService: ProductoService ) {
+               private productoService: ProductoService, private dialog: MatDialog ) {
     // Creación del formulario
     // Formulario general
     this.generalForm = this.formBuilder.group({
@@ -261,7 +250,8 @@ export class FormProductoComponent implements OnInit {
   cargarImagen( form: any ): void{
     this.cargandoImagen = true;
     // Hace el post para subir la imagen enviando el formulario
-    this.productoService.subirImagen( form ).subscribe((response: any) => {
+    this.productoService.subirImagen( form )
+    .subscribe((response: any) => {
       // Si todo sale bien, se crea la URL de la imagen
       this.imgUrl = this.urlImage + this.designForm.get('fileInput')?.value.name;
       // No pude hacer que el servidor retorne la ruta de la imagen por razones que desconozco
@@ -280,6 +270,17 @@ export class FormProductoComponent implements OnInit {
     this.nombreArchivo = event.target.files[0].name;
     // Establece el valor del input del formulario en el archivo que se está recibiendo
     this.designForm.get('fileInput')?.setValue(event.target.files[0]);
+  }
+
+  /* Método para obtener una cadena string aleatoria para evitar guardar
+  imagenes con el mismo nombre en el servidor */
+  getRandomString( length: number ): string {
+    const randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for ( let i = 0; i < length; i++ ) {
+        result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+    }
+    return result;
   }
 
   ngOnInit(): void {
@@ -339,6 +340,8 @@ export class FormProductoComponent implements OnInit {
       });
       this.snackBar.open('Datos no válidos', 'Cerrar');
     } else {
+      // Abrimos el dialog del spinner
+      this.dialog.open( DialogSpinnerComponent );
       // console.log( this.productoForm );
       let idCategoria = 0;
       for (const categoria of this.filasSeleccionadas) {
@@ -354,12 +357,14 @@ export class FormProductoComponent implements OnInit {
         cantidad: this.inventarioForm.get('cantidad')?.value
       };
       this.productoService.crearProducto(producto).subscribe((response: any) => {
+        this.dialog.closeAll();
         console.log(response);
         this.snackBar.open(response.mensaje, 'Cerrar', {
           duration: 5000
         });
       },
       (error: any) => {
+        this.dialog.closeAll();
         console.log(error);
         this.snackBar.open(error, 'Cerrar', {
           duration: 5000
@@ -385,7 +390,8 @@ export class FormProductoComponent implements OnInit {
       });
       this.snackBar.open('Datos no válidos', 'Cerrar');
     } else {
-      // console.log( this.productoForm );
+      // Abrimos el dialog del spinner
+      this.dialog.open( DialogSpinnerComponent );
       let idCategoria = 0;
       for (const categoria of this.filasSeleccionadas) {
         idCategoria = categoria.id;
@@ -402,12 +408,14 @@ export class FormProductoComponent implements OnInit {
         cantidad: this.inventarioForm.get('cantidad')?.value
       };
       this.productoService.actualizarProducto(producto).subscribe((response: any) => {
+        this.dialog.closeAll();
         console.log(response);
         this.snackBar.open(response.mensaje, 'Cerrar', {
           duration: 5000
         });
       },
       (error: any) => {
+        this.dialog.closeAll();
         console.log(error);
         this.snackBar.open(error, 'Cerrar', {
           duration: 5000
