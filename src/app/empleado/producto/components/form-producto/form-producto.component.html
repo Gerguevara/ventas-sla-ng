@@ -1,7 +1,8 @@
 <mat-card class="card">
-    <button mat-flat-button *ngIf="editable" style="margin-right: 10px;" color="primary" type="button" (click)="editarProducto()"><mat-icon>edit</mat-icon> Editar</button>
-    <button mat-flat-button *ngIf="!editable" style="margin-right: 10px;" color="primary" type="button" (click)="guardarProducto()"><mat-icon>save</mat-icon> Guardar</button>
-    <button mat-flat-button *ngIf="!editable" style="margin-right: 10px;" color="accent" type="button" (click)="cancelar()"><mat-icon>cancel</mat-icon> Cancelar</button>
+    <button mat-flat-button *ngIf="habilitarCrear" style="margin-right: 10px;" color="accent" type="button" (click)="crearProducto()"><mat-icon>add</mat-icon> Crear</button>
+    <button mat-flat-button *ngIf="habilitarEditar" style="margin-right: 10px;" color="primary" type="button" (click)="editarProducto()"><mat-icon>edit</mat-icon> Editar</button>
+    <button mat-flat-button *ngIf="habilitarGuardar" style="margin-right: 10px;" color="primary" type="button" (click)="actualizarProducto()"><mat-icon>save</mat-icon> Guardar</button>
+    <button mat-flat-button *ngIf="habilitarCancelar" style="margin-right: 10px;" color="accent" type="button" (click)="cancelar()"><mat-icon>cancel</mat-icon> Salir</button>
     <mat-horizontal-stepper #stepper>
         <!--Formulario General-->
         <mat-step [stepControl]="generalForm" label="General" errorMessage="Datos no válidos">
@@ -72,16 +73,24 @@
             <mat-card class="card-step">
                 <h3 class="subtitle">Imágenes</h3>
                 <mat-divider></mat-divider>
-                <form [formGroup]="designForm">
-                    <mat-form-field appearance="outline">
-                        <ngx-mat-file-input formControlName="fileInput" (change)="cargarImagen()"></ngx-mat-file-input>
-                        <mat-error *ngIf="imagenNoValido">{{ getErrorImagenMessage() }}</mat-error>
-                    </mat-form-field>
+                <!-- Este iframe es para evitar la actualización de la página -->
+                <iframe name="imagen" style="display:none;"></iframe>
+                <!-- Se utilizó un form action normal debido a problemas con los inputs
+                ya que es más manejable el envío de imagenes de esta forma de momento -->
+                <form [action]="urlImageUpload" method="post" enctype="multipart/form-data" target="imagen" #formImagen>
+                    <label for="file-upload" class="custom-file-upload">
+                        {{ nombreArchivo }}
+                    </label>
+                    <input id="file-upload" name="uploaded_file" type="file" (change)="cambioImagen($event)" [disabled]="deshabilitarImagen" />
+                    <button type="submit" (click)="cargarImagen(formImagen)" mat-flat-button class="button" color="primary" [disabled]="deshabilitarImagen">Insertar</button>
                 </form>
                 <mat-divider></mat-divider>
                 <div style="margin: 10px;">
-                    <img loading="lazy" *ngIf="imgUrl !== ''" [src]="imgUrl" alt="" class="imagen-view">
-                    <h4 *ngIf="imgUrl === ''" style="margin-bottom: 10px; text-align: center;">No hay imagen</h4>
+                    <div *ngIf="cargandoImagen" style="margin-bottom: 10px; margin-left: 45.5%; display: block;">
+                        <mat-spinner [strokeWidth]=5 [diameter]=70></mat-spinner>
+                    </div>
+                    <img *ngIf="imgUrl !== ''" [src]="imgUrl" alt="Imagen Producto" class="imagen-view">
+                    <h4 *ngIf="imgUrl === '' && !cargandoImagen" style="margin-bottom: 10px; text-align: center;">{{ textoImagen }}</h4>
                 </div>
             </mat-card>
             <mat-divider></mat-divider>
@@ -114,7 +123,7 @@
             <mat-divider></mat-divider>
             <div>
                 <button type="button" mat-stroked-button matStepperPrevious class="button">Regresar</button>
-                <button type="submit" *ngIf="!editable" mat-stroked-button (click)="enviar()" class="button">Enviar</button>
+                <button type="submit" *ngIf="habilitarEnviar" mat-stroked-button (click)="enviar()" class="button">Enviar</button>
             </div>
         </mat-step>
     </mat-horizontal-stepper>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Producto } from '../../../models/producto.models';
 import { PageEvent } from '@angular/material/paginator';
@@ -14,16 +14,20 @@ export class TableProductoComponent implements OnInit {
   displayedColumns: string[] = ['ID', 'Nombre', 'Descripción', 'Precio'];
   dataSource!: MatTableDataSource<Producto>;
   filasSeleccionadas = new Set<Producto>();
+
+  @Input() disponibilidad = 1;
+
   // URL donde se consumen los datos
   url = 'http://localhost:8000/api/productos';
+  params = '&est=' + this.disponibilidad;
 
   // MatPaginator Output
   pageEvent!: PageEvent;
 
-  constructor( private productoService: ProductoService ) {
-  }
+  constructor( private productoService: ProductoService ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  }
 
   // Obtenemos todos los cambios que nos envíe el paginador con la data de la página
   addDataToTable( event: Producto[] ): void {
@@ -32,7 +36,6 @@ export class TableProductoComponent implements OnInit {
   }
 
   seleccionarProducto( row: Producto ): void {
-    console.log(row);
     this.productoService.productoChange$.emit(row);
   }
 

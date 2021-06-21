@@ -87,8 +87,8 @@
 }
 
 .imagen-view {
-    max-height: auto;
-    max-width: 25%;
+    height: 30vw;
+    max-width: auto;
 }
 
 .example-container .mat-form-field+.mat-form-field {
@@ -124,4 +124,18 @@ input.example-right-align {
 
 .demo-row-is-clicked {
     font-weight: bold;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
 }

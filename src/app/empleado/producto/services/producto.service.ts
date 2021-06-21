@@ -1,8 +1,8 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PaginatorResponse } from '../../models/paginator.model';
-import { Producto } from '../../../core/Models/producto.model';
+import { Categoria } from '../../../core/Models/categoria.model';
+import { Producto } from '../../models/producto.models';
 
 export interface ProductoPost {
   id_categoria: number;
@@ -34,7 +34,7 @@ export class ProductoService {
   Por el momento se realiza en un servidor personal que devuelve como respuesta
   la URL de la imagen
    */
-  subirImagen( imagen: File ): Observable<any> {
+  subirImagen( form: any ): Observable<any> {
     const token = 'Bearer ' + localStorage.getItem('token');
     const httpHeaders = {
       headers: new HttpHeaders({
@@ -43,9 +43,7 @@ export class ProductoService {
         'Authorization': token
       })
     };
-    const formData: FormData = new FormData();
-    formData.append('file', imagen, imagen.name);
-    return this.http.post<any>('http://dr17010.infinityfreeapp.com/upload.php', formData, httpHeaders);
+    return this.http.post<any>('http://7f354498ac39.eu.ngrok.io/upload.php', JSON.stringify(form.value), httpHeaders);
   }
 
   /*
@@ -62,6 +60,30 @@ export class ProductoService {
       })
     };
     return this.http.post<any>('http://localhost:8000/api/productos', producto, httpHeaders);
+  }
+
+  actualizarProducto( producto: Producto ): Observable<any> {
+    const token = 'Bearer ' + localStorage.getItem('token');
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': token
+      })
+    };
+    return this.http.put<any>('http://localhost:8000/api/productos/' + producto.id, JSON.stringify(producto), httpHeaders);
+  }
+
+  obtenerCategoriaProducto( id: number ): Observable<Categoria> {
+    const token = 'Bearer ' + localStorage.getItem('token');
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': token
+      })
+    };
+    return this.http.get<Categoria>('http://localhost:8000/api/categorias/' + id, httpHeaders);
   }
 
 }

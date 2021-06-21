@@ -5,7 +5,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductoPost, ProductoService } from '../../services/producto.service';
 import { Categoria } from '../../../models/categoria.models';
-import { PaginatorService } from '../../../../tools/services/paginator.service';
 import { Producto } from 'src/app/core/Models/producto.model';
 
 @Component({
@@ -32,11 +31,26 @@ export class FormProductoComponent implements OnInit {
   filasSeleccionadas = new Set<Categoria>();
 
   // Banderas para manejar el formulario entre edición y visualización de datos
-  editable = true;
+  habilitarCrear = true;
+  habilitarEditar = false;
+  habilitarGuardar = false;
+  habilitarCancelar = false;
+  habilitarEnviar = false;
+  deshabilitarImagen = true;
   formularioLleno = false;
+  cargandoImagen = false;
 
   // URL donde se consumen los datos
   url = 'http://localhost:8000/api/categorias';
+  // URL de subida de imagenes
+  urlImageUpload = 'http://7f354498ac39.eu.ngrok.io/upload.php';
+  // URL de lectura de imagenes
+  urlImage = 'http://7f354498ac39.eu.ngrok.io/images/';
+  // Variable que almacena el nombre del archivo al ser cargado
+  nombreArchivo = 'Seleccionar Imagen';
+  textoImagen = 'Inserte una imagen';
+
+  idProductoSeleccionado!: number;
 
   // Variable para manejo de imagen
   fileInput!: File;
@@ -44,7 +58,8 @@ export class FormProductoComponent implements OnInit {
   generalForm: FormGroup;
   designForm: FormGroup;
   inventarioForm: FormGroup;
-  imgUrl = 'http://pm1.narvii.com/6843/9cefc6c69cc18d0468cb06002678387b4c67c2f4v2_00.jpg';
+  // imgUrl = 'http://pm1.narvii.com/6843/9cefc6c69cc18d0468cb06002678387b4c67c2f4v2_00.jpg';
+  imgUrl = '';
   fontSizeControl = new FormControl(0, Validators.min(0));
 
   // Getters para validaciones
@@ -59,7 +74,7 @@ export class FormProductoComponent implements OnInit {
     return this.generalForm.get('categoria')?.invalid && this.generalForm.get('categoria')?.touched;
   }
   get imagenNoValido(): boolean | undefined {
-    return this.designForm.get('fileInput')?.invalid && this.designForm.get('fileInput')?.touched;
+    return this.designForm.get('fileInput')?.invalid;
   }
   get estadoNoValido(): boolean | undefined {
     return this.inventarioForm.get('estado')?.invalid && this.inventarioForm.get('estado')?.touched;
@@ -75,46 +90,88 @@ export class FormProductoComponent implements OnInit {
   // Método para quitar una categoría de la tabla y del ChipList
   quitarCategoria(): void {
     // Primero validamos si el formulario es editable
-    if (!this.editable) {
+    if (this.habilitarEditar) {
       this.categorias = [];
       this.filasSeleccionadas.clear();
       this.generalForm.get('categoria')?.setValue('');
     }
   }
 
+  limpiarFormulario(): void{
+    // Se resetea toda la información que esté cargada en el formulario
+    this.generalForm.reset();
+    this.designForm.reset();
+    this.inventarioForm.reset();
+    this.quitarCategoria();
+    this.imgUrl = '';
+    // Aquí se carga la data inicial
+    this.generalForm.setValue({
+      nombre: '',
+      descripcion: '',
+      categoria: '',
+      precio: '0.00'
+    });
+    this.inventarioForm.setValue({
+      estado: '1',
+      cantidad: '0'
+    });
+  }
+
+  crearProducto(): void {
+    this.habilitarEditar = false;
+    this.habilitarGuardar = false;
+    this.habilitarEnviar = true;
+    this.deshabilitarImagen = false;
+    this.formularioLleno = false;
+    this.limpiarFormulario();
+    this.editarProducto();
+  }
+
   editarProducto(): void {
-    // Verificamos si el usuario ha seleccionado un producto primero antes de editar
-    if (this.formularioLleno) {
-      this.editable = false;
-      this.generalForm.enable();
-      this.designForm.enable();
-      this.inventarioForm.enable();
-    } else {
-      this.snackBar.open('Debe seleccionar un producto primero', 'Cerrar');
-    }
+    this.habilitarEditar = false;
+    this.habilitarCancelar = true;
+    this.habilitarGuardar = true;
+    this.habilitarEnviar = false;
+    this.habilitarCrear = false;
+    this.deshabilitarImagen = false;
+    this.generalForm.enable();
+    this.designForm.enable();
+    this.inventarioForm.enable();
   }
 
   guardarProducto(): void {
     // Verificamos que los formularios sean validos
     if ( this.generalForm.valid && this.designForm.valid && this.inventarioForm.valid ) {
-      this.snackBar.open('Aquí debe ir la actualización del producto', 'Cerrar');
+      this.snackBar.open('Aquí debe ir la actualización del producto', 'Cerrar', {
+        duration: 5000
+      });
     } else {
-      this.snackBar.open('Debe completar el formulario', 'Cerrar');
+      this.snackBar.open('Debe completar el formulario', 'Cerrar', {
+        duration: 5000
+      });
     }
   }
 
   cancelar(): void {
     // Deshabilitamos los controles de nuevo
-    this.editable = true;
+    this.habilitarCancelar = false;
+    this.habilitarGuardar = false;
+    this.habilitarCrear = true;
+    this.deshabilitarImagen = true;
     this.generalForm.disable();
     this.designForm.disable();
     this.inventarioForm.disable();
+    if (this.formularioLleno) {
+      this.habilitarEditar = true;
+    } else {
+      this.habilitarEditar = false;
+    }
   }
 
   // Método para añadir una categoría a la tabla y a la ChipList
   seleccionarCategoria( row: Categoria ): void {
-    // Primero validamos si el formulario es editable
-    if (!this.editable) {
+    // Primero validamos si el formulario es habilitarEditar
+    if (!this.habilitarEditar) {
       // Si las listas están vacías se introduce la categoría seleccionada
       if ( this.categorias.length === 0 && this.filasSeleccionadas.size === 0) {
         this.filasSeleccionadas.add( row );
@@ -200,21 +257,29 @@ export class FormProductoComponent implements OnInit {
     }
   }
 
-  cargarImagen(): void{
-    try {
-      this.productoService.subirImagen( this.designForm.get('fileInput')?.value ).subscribe((response: any) => {
-        console.log(response);
-      },
-      (error: any) => {
-        console.log(error);
-      });
-    } catch (error) {
+  // Se ejecuta al dar click en Insertar
+  cargarImagen( form: any ): void{
+    this.cargandoImagen = true;
+    // Hace el post para subir la imagen enviando el formulario
+    this.productoService.subirImagen( form ).subscribe((response: any) => {
+      // Si todo sale bien, se crea la URL de la imagen
+      this.imgUrl = this.urlImage + this.designForm.get('fileInput')?.value.name;
+      // No pude hacer que el servidor retorne la ruta de la imagen por razones que desconozco
+      // Por dicho motivo la estoy construyendo aquí
+      this.cargandoImagen = false;
+    },
+    (error: any) => {
       console.log(error);
-    }
+      this.cargandoImagen = false;
+    });
   }
 
-  insertarImagen(): void{
-    this.imgUrl = this.designForm.get('file')?.value;
+  // Se ejecuta cuando la imagen cambia
+  cambioImagen( event: any ): void{
+    // Cambia el nombre del botón por el nombre del archivo
+    this.nombreArchivo = event.target.files[0].name;
+    // Establece el valor del input del formulario en el archivo que se está recibiendo
+    this.designForm.get('fileInput')?.setValue(event.target.files[0]);
   }
 
   ngOnInit(): void {
@@ -224,15 +289,30 @@ export class FormProductoComponent implements OnInit {
     this.inventarioForm.disable();
     // Nos subscribimos a los cambios de los productos seleccionados de la tabla
     this.productoService.productoChange$.subscribe((data: Producto) => {
-      this.generalForm.get('nombre')?.setValue(data.nombre_producto);
-      this.generalForm.get('descripcion')?.setValue(data.descripcion_producto);
-      this.generalForm.get('precio')?.setValue(data.precio);
-      this.generalForm.get('categoria')?.setValue(data.id_categoria);
-      this.categorias.push('Categoría: ' + data.id_categoria);
-      this.inventarioForm.get('estado')?.setValue(data.disponibilidad.toString());
-      this.inventarioForm.get('cantidad')?.setValue(data.cantidad);
-      this.formularioLleno = true;
+      if (this.formularioLleno) {
+        this.limpiarFormulario();
+        this.cargarData( data );
+      } else {
+        this.cargarData( data );
+      }
     });
+  }
+
+  cargarData( data: Producto ): void{
+    this.idProductoSeleccionado = data.id;
+    this.generalForm.get('nombre')?.setValue(data.nombre_producto);
+    this.generalForm.get('descripcion')?.setValue(data.descripcion_producto);
+    this.generalForm.get('precio')?.setValue(data.precio);
+    this.generalForm.get('categoria')?.setValue(data.id_categoria);
+    this.imgUrl = data.imagen;
+    this.productoService.obtenerCategoriaProducto( data.id_categoria ).subscribe((response: any) => {
+      this.filasSeleccionadas.add(response.categoria);
+      this.categorias.push(response.categoria.nombre);
+    });
+    this.inventarioForm.get('estado')?.setValue(data.disponibilidad.toString());
+    this.inventarioForm.get('cantidad')?.setValue(data.cantidad);
+    this.formularioLleno = true;
+    this.habilitarEditar = true;
   }
 
   // Obtenemos todos los cambios que nos envíe el paginador con la data de la página
@@ -275,11 +355,63 @@ export class FormProductoComponent implements OnInit {
       };
       this.productoService.crearProducto(producto).subscribe((response: any) => {
         console.log(response);
-        this.snackBar.open(response.mensaje, 'Cerrar');
+        this.snackBar.open(response.mensaje, 'Cerrar', {
+          duration: 5000
+        });
       },
       (error: any) => {
         console.log(error);
-        this.snackBar.open(error, 'Cerrar');
+        this.snackBar.open(error, 'Cerrar', {
+          duration: 5000
+        });
+      });
+    }
+  }
+
+  actualizarProducto(): void{
+    if ( this.generalForm.invalid ) {
+      Object.values( this.generalForm.controls ).forEach(element => {
+        element.markAsTouched();
+      });
+      this.snackBar.open('Datos no válidos', 'Cerrar');
+    } else if ( this.designForm.invalid ) {
+      Object.values( this.designForm.controls ).forEach(element => {
+        element.markAsTouched();
+      });
+      this.snackBar.open('Datos no válidos', 'Cerrar');
+    } else if ( this.inventarioForm.invalid ) {
+      Object.values( this.inventarioForm.controls ).forEach(element => {
+        element.markAsTouched();
+      });
+      this.snackBar.open('Datos no válidos', 'Cerrar');
+    } else {
+      // console.log( this.productoForm );
+      let idCategoria = 0;
+      for (const categoria of this.filasSeleccionadas) {
+        idCategoria = categoria.id;
+      }
+      const producto: Producto = {
+        id: this.idProductoSeleccionado,
+        id_categoria: idCategoria,
+        nombre_producto: this.generalForm.get('nombre')?.value,
+        descripcion_producto: this.generalForm.get('descripcion')?.value,
+        disponibilidad: this.inventarioForm.get('estado')?.value,
+        imagen: this.imgUrl,
+        calificacion_promedio: '',
+        precio: this.generalForm.get('precio')?.value,
+        cantidad: this.inventarioForm.get('cantidad')?.value
+      };
+      this.productoService.actualizarProducto(producto).subscribe((response: any) => {
+        console.log(response);
+        this.snackBar.open(response.mensaje, 'Cerrar', {
+          duration: 5000
+        });
+      },
+      (error: any) => {
+        console.log(error);
+        this.snackBar.open(error, 'Cerrar', {
+          duration: 5000
+        });
       });
     }
   }

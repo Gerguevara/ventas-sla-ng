@@ -22,6 +22,7 @@ import { PaginatorService } from '../../tools/services/paginator.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { IndexProductoComponent } from './components/index-producto/index-producto.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { IndexProductoComponent } from './components/index-producto/index-produc
     HttpClientModule,
     ToolsModule,
     MatSnackBarModule,
-    MatChipsModule
+    MatChipsModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     ProductoService,
