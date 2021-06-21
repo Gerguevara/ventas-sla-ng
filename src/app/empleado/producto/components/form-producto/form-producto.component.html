@@ -89,7 +89,7 @@
                     <div *ngIf="cargandoImagen" style="margin-bottom: 10px; margin-left: 45.5%; display: block;">
                         <mat-spinner [strokeWidth]=5 [diameter]=70></mat-spinner>
                     </div>
-                    <img *ngIf="imgUrl !== ''" [src]="imgUrl" alt="Imagen Producto" class="imagen-view">
+                    <img *ngIf="imgUrl !== '' && !cargandoImagen" [src]="imgUrl" alt="Imagen Producto" class="imagen-view">
                     <h4 *ngIf="imgUrl === '' && !cargandoImagen" style="margin-bottom: 10px; text-align: center;">{{ textoImagen }}</h4>
                 </div>
             </mat-card>

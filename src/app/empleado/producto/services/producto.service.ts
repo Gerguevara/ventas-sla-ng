@@ -43,7 +43,7 @@ export class ProductoService {
         'Authorization': token
       })
     };
-    return this.http.post<any>('http://02e1c0d6512a.ngrok.io/upload.php', JSON.stringify(form.value), httpHeaders);
+    return this.http.post<any>('http://d9771c35d78d.eu.ngrok.io/upload.php', JSON.stringify(form.value), httpHeaders);
   }
 
   /*

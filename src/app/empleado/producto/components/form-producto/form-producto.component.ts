@@ -45,9 +45,9 @@ export class FormProductoComponent implements OnInit {
   // URL donde se consumen los datos
   url = 'http://localhost:8000/api/categorias';
   // URL de subida de imagenes
-  urlImageUpload = 'http://02e1c0d6512a.ngrok.io/upload.php';
+  urlImageUpload = 'http://d9771c35d78d.eu.ngrok.io/upload.php';
   // URL de lectura de imagenes
-  urlImage = 'http://02e1c0d6512a.ngrok.io/images/';
+  urlImage = 'http://d9771c35d78d.eu.ngrok.io/images/';
   // Variable que almacena el nombre del archivo al ser cargado
   nombreArchivo = 'Seleccionar Imagen';
   textoImagen = 'Inserte una imagen';
@@ -260,6 +260,11 @@ export class FormProductoComponent implements OnInit {
     },
     (error: any) => {
       console.log(error);
+      this.imgUrl = '';
+      this.designForm.get('fileInput')?.setValue('');
+      this.snackBar.open('No se pudo cargar imagen', 'Cerrar', {
+        duration: 5000
+      });
       this.cargandoImagen = false;
     });
   }
