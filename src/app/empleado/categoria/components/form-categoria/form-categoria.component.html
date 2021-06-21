@@ -1,1 +1,42 @@
-<p>form-categoria works!</p>
+<mat-dialog-content>
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <div>
+        <mat-error>
+            <ng-container *ngIf="nombreControl.errors?.required">
+                El nombre es requerido.
+            </ng-container>
+            <ng-container *ngIf="nombreControl.errors?.minlength">
+                Debe ingresar al menos 3 caracteres.
+            </ng-container>
+            <ng-container *ngIf="nombreControl.errors?.maxlength">
+                El nombre no debe sobrepasar los 100 caracteres.
+            </ng-container>
+        </mat-error>
+        <mat-form-field appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input matInput type="text" formControlName="nombre">
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="outline">
+            <mat-label>Descripcion</mat-label>
+            <input matInput type="text" formControlName="descripcion">
+        </mat-form-field>
+    </div>
+  <button
+    mat-button
+    color="accent"
+    cdkFocusInitial
+    (click)="close()">
+    Cancelar
+  </button>
+  <button
+    type="submit"
+    color="primary"
+    mat-raised-button
+    (click)="onSubmit()"
+    [disabled]="formGroup.invalid">
+    Guardar
+  </button>
+</form>
+</mat-dialog-content>

@@ -30,7 +30,7 @@ export class CategoriaContainer implements OnInit {
       this.dataLength = respuesta.total;
     },
     error: () => {},
-    complete: () => {this.cargandoDialogRef?.close()},
+    complete: () => this.cargandoDialogRef?.close(),
   }
   private detailObserver : PartialObserver<Categoria> = {
     next: () => {},
@@ -38,20 +38,21 @@ export class CategoriaContainer implements OnInit {
     complete: () => {},
   }
   private updateObserver : PartialObserver<Categoria> = {
-    next: () => {},
+    next: (categoria : Categoria) => this.openForm(categoria),
     error: () => {},
-    complete: () => {},
+    complete: () => this.cargandoDialogRef?.close(),
   }
 
   constructor(private categoriaService : CategoriaService,
-    private formDialog : MatDialog) { }
+    private formDialog : MatDialog,
+    private loadingDialog : MatDialog) { }
 
   ngOnInit(): void {
     this.getCategorias(1)
   }
 
   getCategorias(pagina : PageEvent | number){
-    this.cargandoDialogRef = this.formDialog.open(DialogSpinnerComponent);
+    this.cargandoDialogRef = this.loadingDialog.open(DialogSpinnerComponent);
     //obtener el numero de pagina segun el tipo del parametro
     const numeroDePagina = (typeof pagina === "number" ? pagina : pagina.pageIndex + 1)
     //obtener el tamano de pagina
@@ -59,7 +60,11 @@ export class CategoriaContainer implements OnInit {
     if(typeof pagina !== "number") pageSize = pagina.pageSize;
     //obtener las categorias
     this.categoriaService.getObjects(numeroDePagina, pageSize).subscribe(this.getObserver);
+  }
 
+  updateCategoria(id:number){
+    this.cargandoDialogRef = this.loadingDialog.open(DialogSpinnerComponent);
+    this.categoriaService.getObject(id).subscribe(this.updateObserver);
   }
 
   //===metodos que manejan los dialogos===

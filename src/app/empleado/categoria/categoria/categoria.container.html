@@ -1,5 +1,6 @@
 <app-table-categoria
     [categorias]="respuesta?.data"
+    (updateEvent)="updateCategoria($event)"
 ></app-table-categoria>
 <mat-paginator 
     [length]="dataLength"
