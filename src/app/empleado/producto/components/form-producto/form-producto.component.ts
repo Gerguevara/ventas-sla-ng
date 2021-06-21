@@ -38,6 +38,7 @@ export class FormProductoComponent implements OnInit {
   habilitarGuardar = false;
   habilitarCancelar = false;
   habilitarEnviar = false;
+  editable = false;
   deshabilitarImagen = true;
   formularioLleno = false;
   cargandoImagen = false;
@@ -91,9 +92,11 @@ export class FormProductoComponent implements OnInit {
 
   // Método para quitar una categoría de la tabla y del ChipList
   quitarCategoria(): void {
-    this.categorias = [];
-    this.filasSeleccionadas.clear();
-    this.generalForm.get('categoria')?.setValue('');
+    if (this.editable) {
+      this.categorias = [];
+      this.filasSeleccionadas.clear();
+      this.generalForm.get('categoria')?.setValue('');
+    }
   }
 
   limpiarFormulario(): void{
@@ -101,7 +104,9 @@ export class FormProductoComponent implements OnInit {
     this.generalForm.reset();
     this.designForm.reset();
     this.inventarioForm.reset();
-    this.quitarCategoria();
+    this.categorias = [];
+    this.filasSeleccionadas.clear();
+    this.generalForm.get('categoria')?.setValue('');
     this.imgUrl = '';
     // Aquí se carga la data inicial
     this.generalForm.setValue({
@@ -118,12 +123,18 @@ export class FormProductoComponent implements OnInit {
 
   crearProducto(): void {
     this.habilitarEditar = false;
+    this.editable = true;
     this.habilitarGuardar = false;
+    this.habilitarCancelar = true;
     this.habilitarEnviar = true;
     this.deshabilitarImagen = false;
     this.formularioLleno = false;
+    this.deshabilitarImagen = false;
+    this.editable = true;
+    this.generalForm.enable();
+    this.designForm.enable();
+    this.inventarioForm.enable();
     this.limpiarFormulario();
-    this.editarProducto();
   }
 
   editarProducto(): void {
@@ -133,6 +144,7 @@ export class FormProductoComponent implements OnInit {
     this.habilitarEnviar = false;
     this.habilitarCrear = false;
     this.deshabilitarImagen = false;
+    this.editable = true;
     this.generalForm.enable();
     this.designForm.enable();
     this.inventarioForm.enable();
@@ -141,6 +153,7 @@ export class FormProductoComponent implements OnInit {
   cancelar(): void {
     // Deshabilitamos los controles de nuevo
     this.habilitarCancelar = false;
+    this.editable = false;
     this.habilitarGuardar = false;
     this.habilitarCrear = true;
     this.deshabilitarImagen = true;
@@ -157,7 +170,7 @@ export class FormProductoComponent implements OnInit {
   // Método para añadir una categoría a la tabla y a la ChipList
   seleccionarCategoria( row: Categoria ): void {
     // Primero validamos si el formulario es habilitarEditar
-    if (!this.habilitarEditar) {
+    if (this.editable) {
       // Si las listas están vacías se introduce la categoría seleccionada
       if ( this.categorias.length === 0 && this.filasSeleccionadas.size === 0) {
         this.filasSeleccionadas.add( row );
