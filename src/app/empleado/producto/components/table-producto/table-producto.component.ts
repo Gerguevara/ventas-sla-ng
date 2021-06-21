@@ -3,6 +3,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Producto } from '../../../models/producto.models';
 import { PageEvent } from '@angular/material/paginator';
 import { ProductoService } from '../../services/producto.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogEliminarProductoComponent } from '../dialog-eliminar-producto/dialog-eliminar-producto.component';
 
 @Component({
   selector: 'app-table-producto',
@@ -11,7 +13,7 @@ import { ProductoService } from '../../services/producto.service';
 })
 export class TableProductoComponent implements OnInit {
 
-  displayedColumns: string[] = ['ID', 'Nombre', 'Descripción', 'Precio'];
+  displayedColumns: string[] = ['ID', 'Nombre', 'Descripción', 'Precio', 'Acciones'];
   dataSource!: MatTableDataSource<Producto>;
   filasSeleccionadas = new Set<Producto>();
 
@@ -24,7 +26,8 @@ export class TableProductoComponent implements OnInit {
   // MatPaginator Output
   pageEvent!: PageEvent;
 
-  constructor( private productoService: ProductoService ) { }
+  constructor( private productoService: ProductoService,
+               private dialog: MatDialog ) { }
 
   ngOnInit(): void {
   }
@@ -37,6 +40,13 @@ export class TableProductoComponent implements OnInit {
 
   seleccionarProducto( row: Producto ): void {
     this.productoService.productoChange$.emit(row);
+  }
+
+  quitarProducto( element: Producto ): void {
+    // Cerramos todos los dialogos abiertos hasta el momento
+    this.dialog.closeAll();
+    // Abrimos el nuevo dialogo con el mensaje
+    this.dialog.open( DialogEliminarProductoComponent, { data: element } );
   }
 
 }

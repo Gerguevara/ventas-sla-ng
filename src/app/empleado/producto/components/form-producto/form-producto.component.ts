@@ -91,12 +91,9 @@ export class FormProductoComponent implements OnInit {
 
   // Método para quitar una categoría de la tabla y del ChipList
   quitarCategoria(): void {
-    // Primero validamos si el formulario es editable
-    if (!this.habilitarEditar) {
-      this.categorias = [];
-      this.filasSeleccionadas.clear();
-      this.generalForm.get('categoria')?.setValue('');
-    }
+    this.categorias = [];
+    this.filasSeleccionadas.clear();
+    this.generalForm.get('categoria')?.setValue('');
   }
 
   limpiarFormulario(): void{

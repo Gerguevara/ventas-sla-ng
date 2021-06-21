@@ -74,6 +74,18 @@ export class ProductoService {
     return this.http.put<any>('http://localhost:8000/api/productos/' + producto.id, JSON.stringify(producto), httpHeaders);
   }
 
+  eliminarProducto( producto: Producto ): Observable<any> {
+    const token = 'Bearer ' + localStorage.getItem('token');
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': token
+      })
+    };
+    return this.http.delete<any>('http://localhost:8000/api/productos/' + producto.id, httpHeaders);
+  }
+
   obtenerCategoriaProducto( id: number ): Observable<Categoria> {
     const token = 'Bearer ' + localStorage.getItem('token');
     const httpHeaders = {

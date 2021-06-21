@@ -23,12 +23,14 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { IndexProductoComponent } from './components/index-producto/index-producto.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DialogEliminarProductoComponent } from './components/dialog-eliminar-producto/dialog-eliminar-producto.component';
 
 @NgModule({
   declarations: [
     FormProductoComponent,
     TableProductoComponent,
     IndexProductoComponent,
+    DialogEliminarProductoComponent,
   ],
   imports: [
     CommonModule,
