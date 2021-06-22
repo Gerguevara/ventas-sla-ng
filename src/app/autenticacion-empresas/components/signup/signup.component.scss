@@ -9,13 +9,21 @@
     font-weight: bold;
 }
 
+.subtitle {
+    margin-top: -20px;
+}
+
 .input {
     width: 100%;
 }
 
-.link {
-    text-align: right;
-    margin: 10px;
+.row {
+    display: flex;
+}
+
+.col {
+    width: 50%;
+    margin-right: 10px;
 }
 
 .example-container {
@@ -37,11 +45,4 @@
         margin-left: 5%;
         margin-right: 5%;
     }
-}
-
-.contenedor {
-    text-align: right;
-    height: 100%;
-    border-radius: 0px;
-    width: auto;
 }

@@ -2,6 +2,7 @@ import { IndexComponent } from './index/index.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
+import { AutenticacionEmpresasModule } from './autenticacion-empresas/autenticacion-empresas.module';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: 'autentication',
     loadChildren: () => import('./autenticacion/autenticacion.module').then(m => m.AutenticacionModule)
+  },
+  {
+    path: 'enterprise',
+    loadChildren: () => import('./autenticacion-empresas/autenticacion-empresas.module').then(m => m.AutenticacionEmpresasModule)
   },
   {
     path: 'panel',
