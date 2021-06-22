@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Eliminar Producto</h1>
+<div mat-dialog-content>
+    ¿Desea eliminar el registro de {{ data.nombre_producto }} de forma permanente?
+</div>
+<div mat-dialog-actions>
+    <button mat-button style="margin-right: 10px;" (click)="cancelar()">Cancelar</button>
+    <button mat-button (click)="eliminar()" cdkFocusInitial>Ok</button>
+</div>

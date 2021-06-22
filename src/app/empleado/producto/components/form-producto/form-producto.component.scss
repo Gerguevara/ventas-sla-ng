@@ -1,6 +1,42 @@
 .card {
-    margin: 10px;
+    margin: 15px;
     padding-bottom: 0px;
+}
+
+.card-step {
+    margin: 15px;
+    padding-bottom: 0px;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+
+/* width */
+
+::-webkit-scrollbar {
+    width: 3px;
+    border-radius: 15px;
+}
+
+
+/* Track */
+
+ ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+
+/* Handle */
+
+ ::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+
+/* Handle on hover */
+
+ ::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 .example-stepper {
@@ -51,6 +87,55 @@
 }
 
 .imagen-view {
-    max-height: auto;
-    max-width: 25%;
+    height: 30vw;
+    max-width: auto;
+}
+
+.example-container .mat-form-field+.mat-form-field {
+    margin-left: 8px;
+}
+
+.example-right-align {
+    text-align: right;
+}
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+    display: none;
+}
+
+input.example-right-align {
+    -moz-appearance: textfield;
+}
+
+.demo-table {
+    width: 100%;
+}
+
+.mat-row .mat-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+}
+
+.mat-row:hover .mat-cell {
+    border-color: currentColor;
+}
+
+.demo-row-is-clicked {
+    font-weight: bold;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
 }

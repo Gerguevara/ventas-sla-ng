@@ -6,6 +6,7 @@ import { ValidatorsService } from '../../services/validators.service';
 import { AutenticacionService, SignUpResponse } from '../../services/autenticacion.service';
 import { DialogMessageComponent } from 'src/app/tools/components/dialog-message/dialog-message.component';
 import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 export interface DialogData {
   email: string;
 }
@@ -41,7 +42,8 @@ export class SignupComponent implements OnInit {
                private formBuilder: FormBuilder,
                private validadores: ValidatorsService,
                private authService: AutenticacionService,
-               public dialog: MatDialog ) {
+               public dialog: MatDialog,
+               private snackBar: MatSnackBar ) {
     // Creación del formulario
     this.signupForm = this.formBuilder.group({
       email    : ['', [ Validators.required, Validators.email ]],
@@ -75,7 +77,11 @@ export class SignupComponent implements OnInit {
       },
       // Si ocurre algún error, se imprimen en esta sección
       ( error: any ) => {
-        console.log( error );
+        console.log( error.error.message );
+        this.dialog.closeAll();
+        this.snackBar.open( error.error.message, 'Cerrar', {
+          duration: 5000
+        });
       });
   }
 
