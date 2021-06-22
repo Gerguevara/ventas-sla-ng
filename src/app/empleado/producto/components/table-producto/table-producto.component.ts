@@ -1,11 +1,11 @@
-import { environment } from 'src/environments/environment';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Producto } from '../../../models/producto.models';
 import { PageEvent } from '@angular/material/paginator';
-import { ProductoService } from '../../services/producto.service';
 import { MatDialog } from '@angular/material/dialog';
+import { Producto } from './../../../../core/Models/producto.model';
+import { ProductoService } from './../../../../core/services/producto.service';
 import { DialogEliminarProductoComponent } from '../dialog-eliminar-producto/dialog-eliminar-producto.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-table-producto',

@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ProductoPost, ProductoService } from '../../services/producto.service';
-import { Categoria } from '../../../models/categoria.models';
-import { Producto } from 'src/app/core/Models/producto.model';
 import { MatDialog } from '@angular/material/dialog';
+
+import { Categoria } from './../../../../core/Models/categoria.model'
+import { Producto } from 'src/app/core/Models/producto.model';
+
 import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
+import { ProductoPost, ProductoService } from './../../../../core/services/producto.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-form-producto',
@@ -44,11 +48,11 @@ export class FormProductoComponent implements OnInit {
   cargandoImagen = false;
 
   // URL donde se consumen los datos
-  url = 'http://localhost:8000/api/categorias';
+  url = `${environment.apiUrl}categorias`;
   // URL de subida de imagenes
-  urlImageUpload = 'http://d9771c35d78d.eu.ngrok.io/upload.php';
+  urlImageUpload = `${environment.uploadUrl}`;
   // URL de lectura de imagenes
-  urlImage = 'http://d9771c35d78d.eu.ngrok.io/images/';
+  urlImage = `${environment.uploadDir}`;
   // Variable que almacena el nombre del archivo al ser cargado
   nombreArchivo = 'Seleccionar Imagen';
   textoImagen = 'Inserte una imagen';
@@ -257,34 +261,38 @@ export class FormProductoComponent implements OnInit {
   }
 
   // Se ejecuta al dar click en Insertar
-  cargarImagen( form: any ): void{
+  cargarImagen(  ): void{
+    let imageControl = this.designForm.get("fileInput")?.value;
     this.cargandoImagen = true;
     // Hace el post para subir la imagen enviando el formulario
-    this.productoService.subirImagen( form )
-    .subscribe((response: any) => {
+    this.productoService.subirImagen( imageControl ).subscribe({
+      next: (response: any) => {
       // Si todo sale bien, se crea la URL de la imagen
-      this.imgUrl = this.urlImage + this.designForm.get('fileInput')?.value.name;
+      this.imgUrl = response.url;
       // No pude hacer que el servidor retorne la ruta de la imagen por razones que desconozco
       // Por dicho motivo la estoy construyendo aquí
       this.cargandoImagen = false;
-    },
-    (error: any) => {
-      console.log(error);
-      this.imgUrl = '';
-      this.designForm.get('fileInput')?.setValue('');
-      this.snackBar.open('No se pudo cargar imagen', 'Cerrar', {
-        duration: 5000
-      });
-      this.cargandoImagen = false;
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.imgUrl = '';
+        this.designForm.get('fileInput')?.setValue('');
+        this.snackBar.open('No se pudo cargar imagen', 'Cerrar', {
+          duration: 5000
+        });
+        this.cargandoImagen = false;
+      }
     });
   }
 
   // Se ejecuta cuando la imagen cambia
   cambioImagen( event: any ): void{
-    // Cambia el nombre del botón por el nombre del archivo
-    this.nombreArchivo = event.target.files[0].name;
-    // Establece el valor del input del formulario en el archivo que se está recibiendo
-    this.designForm.get('fileInput')?.setValue(event.target.files[0]);
+    if(event.target.files[0]){
+      // Cambia el nombre del botón por el nombre del archivo
+      this.nombreArchivo = event.target.files[0].name;
+      // Establece el valor del input del formulario en el archivo que se está recibiendo
+      this.designForm.get('fileInput')?.setValue(event.target.files[0]);
+    }
   }
 
   /* Método para obtener una cadena string aleatoria para evitar guardar
@@ -411,7 +419,7 @@ export class FormProductoComponent implements OnInit {
       for (const categoria of this.filasSeleccionadas) {
         idCategoria = categoria.id;
       }
-      const producto: Producto = {
+      const producto = {
         id: this.idProductoSeleccionado,
         id_categoria: idCategoria,
         nombre_producto: this.generalForm.get('nombre')?.value,

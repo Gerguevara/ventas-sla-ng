@@ -77,12 +77,12 @@
                 <iframe name="imagen" style="display:none;"></iframe>
                 <!-- Se utilizó un form action normal debido a problemas con los inputs
                 ya que es más manejable el envío de imagenes de esta forma de momento -->
-                <form [action]="urlImageUpload" method="post" enctype="multipart/form-data" target="imagen" #formImagen>
+                <form [formGroup]="designForm" target="imagen" (ngSubmit)="cargarImagen()">
                     <label for="file-upload" class="custom-file-upload">
                         {{ nombreArchivo }}
                     </label>
-                    <input id="file-upload" name="uploaded_file" type="file" (change)="cambioImagen($event)" [disabled]="deshabilitarImagen" />
-                    <button type="submit" (click)="cargarImagen(formImagen)" mat-flat-button class="button" color="primary" [disabled]="deshabilitarImagen">Insertar</button>
+                    <input id="file-upload" formControlName="fileInput" name="uploaded_file" type="file" (change)="cambioImagen($event)" [disabled]="deshabilitarImagen" />
+                    <button type="submit"  mat-flat-button class="button" color="primary" [disabled]="deshabilitarImagen">Insertar</button>
                 </form>
                 <mat-divider></mat-divider>
                 <div style="margin: 10px;">
