@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { EmpleadoRoutingModule } from './empleado-routing.module';
-import { EmpleadoComponent } from './empleado.component';
+import { ClienteRoutingModule } from './cliente-routing.module';
+import { ClienteComponent } from './cliente.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -12,11 +12,11 @@ import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
-    EmpleadoComponent
+    ClienteComponent
   ],
   imports: [
     CommonModule,
-    EmpleadoRoutingModule,
+    ClienteRoutingModule,
     MatSidenavModule,
     MatIconModule,
     MatToolbarModule,
@@ -24,4 +24,4 @@ import { MatListModule } from '@angular/material/list';
     MatListModule
   ]
 })
-export class EmpleadoModule { }
+export class ClienteModule { }

@@ -1,4 +1,3 @@
-import { IndexComponent } from './index/index.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
@@ -6,7 +5,7 @@ import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    component:IndexComponent
+    loadChildren: () => import('./cliente/cliente.module').then(m => m.ClienteModule)
   },
   {
     path: 'autentication',

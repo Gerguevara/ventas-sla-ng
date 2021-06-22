@@ -1,8 +1,16 @@
+<button
+    class="add-button"
+    color="primary"
+    mat-fab
+    (click)="openForm()">
+  <mat-icon>add</mat-icon>
+</button>
 <app-table-categoria
     [categorias]="respuesta?.data"
     (updateEvent)="updateCategoria($event)"
 ></app-table-categoria>
 <mat-paginator 
+    #paginator
     [length]="dataLength"
     [pageSize]="10"
     [pageSizeOptions]="[5, 10, 20]" 

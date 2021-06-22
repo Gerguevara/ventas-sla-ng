@@ -93,6 +93,7 @@ export class FormProductoComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   categorias: string[] = [];
+  
 
   // Método para quitar una categoría de la tabla y del ChipList
   quitarCategoria(): void {
@@ -193,8 +194,11 @@ export class FormProductoComponent implements OnInit {
     // De esta forma se trata de mantener solo una categoría seleccionada
   }
 
-  constructor( private snackBar: MatSnackBar, private formBuilder: FormBuilder,
-               private productoService: ProductoService, private dialog: MatDialog ) {
+  constructor( 
+    private snackBar: MatSnackBar, 
+    private formBuilder: FormBuilder,
+    private productoService: ProductoService, 
+    private dialog: MatDialog) {
     // Creación del formulario
     // Formulario general
     this.generalForm = this.formBuilder.group({
@@ -367,8 +371,12 @@ export class FormProductoComponent implements OnInit {
       this.dialog.open( DialogSpinnerComponent );
       // console.log( this.productoForm );
       let idCategoria = 0;
-      for (const categoria of this.filasSeleccionadas) {
-        idCategoria = categoria.id;
+      if(this.filasSeleccionadas.size>0){
+        for (const categoria of this.filasSeleccionadas) {
+          idCategoria = categoria.id;
+        }
+      } else {
+        idCategoria = 1;
       }
       const producto: ProductoPost = {
         id_categoria: idCategoria,

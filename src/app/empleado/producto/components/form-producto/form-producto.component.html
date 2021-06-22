@@ -1,11 +1,11 @@
-<mat-card class="card">
+<mat-card class="card" [ngClass]="{'disabled-controls': !editable}">
     <button mat-flat-button *ngIf="habilitarCrear" style="margin-right: 10px;" color="accent" type="button" (click)="crearProducto()"><mat-icon>add</mat-icon> Crear</button>
     <button mat-flat-button *ngIf="habilitarEditar" style="margin-right: 10px;" color="primary" type="button" (click)="editarProducto()"><mat-icon>edit</mat-icon> Editar</button>
     <button mat-flat-button *ngIf="habilitarGuardar" style="margin-right: 10px;" color="primary" type="button" (click)="actualizarProducto()"><mat-icon>save</mat-icon> Guardar</button>
     <button mat-flat-button *ngIf="habilitarCancelar" style="margin-right: 10px;" color="accent" type="button" (click)="cancelar()"><mat-icon>cancel</mat-icon> Salir</button>
     <mat-horizontal-stepper #stepper>
         <!--Formulario General-->
-        <mat-step [stepControl]="generalForm" label="General" errorMessage="Datos no válidos">
+        <mat-step [stepControl]="generalForm" label="General" errorMessage="Datos no válidos" >
             <mat-card class="card-step">
                 <h3 class="subtitle">Descripción General</h3>
                 <mat-divider></mat-divider>

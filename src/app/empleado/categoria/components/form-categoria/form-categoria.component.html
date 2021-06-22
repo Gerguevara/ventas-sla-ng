@@ -1,6 +1,7 @@
 <mat-dialog-content>
 <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
     <div>
+        <input type="hidden" formControlName="id"> 
         <mat-error>
             <ng-container *ngIf="nombreControl.errors?.required">
                 El nombre es requerido.

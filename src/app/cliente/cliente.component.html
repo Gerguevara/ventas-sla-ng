@@ -1,0 +1,21 @@
+<mat-toolbar color="accent">
+    <button 
+        mat-icon-button 
+        aria-label="Menú"
+        (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <span>{{title}}</span>
+</mat-toolbar>
+<mat-sidenav-container>
+    <mat-sidenav 
+        [opened]="true"
+        [mode]="'side'"
+        role="directory"
+        #sidenav>
+        Start
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

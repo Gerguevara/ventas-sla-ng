@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
@@ -19,6 +19,8 @@ export class TableProductoComponent implements OnInit {
   filasSeleccionadas = new Set<Producto>();
 
   @Input() disponibilidad = 1;
+  @Output() 
+  clickTabla = new EventEmitter();
 
   private endpoint : string = "productos/";
   // URL donde se consumen los datos
@@ -42,7 +44,8 @@ export class TableProductoComponent implements OnInit {
     this.dataSource = new MatTableDataSource<Producto>(event);
   }
 
-  seleccionarProducto( row: Producto ): void {
+  seleccionarProducto( row: Producto): void {
+    this.clickTabla.emit();
     this.productoService.productoChange$.emit(row);
   }
 

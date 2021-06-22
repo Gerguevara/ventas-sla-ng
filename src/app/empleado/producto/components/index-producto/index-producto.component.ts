@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { FormProductoComponent } from './../form-producto/form-producto.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-index-producto',
@@ -11,5 +12,8 @@ export class IndexProductoComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  scroll(el: HTMLElement) {
+    el.scrollIntoView();
+}
 
 }

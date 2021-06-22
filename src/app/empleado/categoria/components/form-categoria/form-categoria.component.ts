@@ -27,6 +27,7 @@ export class FormCategoriaComponent implements OnInit {
   inicializarForm(){
     this.formGroup = this.formBuilder.group(
       {
+        id:[null],
         nombre: [null,[Validators.required,Validators.minLength(3),Validators.maxLength(100)]],
         descripcion: [null]
       }

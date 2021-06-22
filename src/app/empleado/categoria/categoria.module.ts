@@ -13,13 +13,15 @@ import { CategoriaContainer } from './categoria/categoria.container';
 import { TableCategoriaComponent } from './components/table-categoria/table-categoria.component';
 import { FormCategoriaComponent } from './components/form-categoria/form-categoria.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { DeleteCategoriaComponent } from './components/delete-categoria/delete-categoria.component';
 
 
 @NgModule({
   declarations: [
     CategoriaContainer,
     TableCategoriaComponent,
-    FormCategoriaComponent
+    FormCategoriaComponent,
+    DeleteCategoriaComponent
   ],
   imports: [
     CommonModule,
