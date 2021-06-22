@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ValidatorsService } from '../../../autenticacion/services/validators.service';
-import { AutenticacionService, SignUpResponse } from '../../../autenticacion/services/autenticacion.service';
+import { ValidatorsService } from '../../../core/services/validators.service';
+import { LoginClienteService, SignUpResponse } from '../../../core/services/login-cliente.service';
 import { DialogMessageComponent } from 'src/app/tools/components/dialog-message/dialog-message.component';
 import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -41,7 +41,7 @@ export class SignupComponent implements OnInit {
   constructor( private router: Router,
                private formBuilder: FormBuilder,
                private validadores: ValidatorsService,
-               private authService: AutenticacionService,
+               private authService: LoginClienteService,
                public dialog: MatDialog,
                private snackBar: MatSnackBar ) {
     // Creación del formulario

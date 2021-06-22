@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { AutenticacionService, LoginResponse } from '../../../autenticacion/services/autenticacion.service';
+import { LoginClienteService, LoginResponse } from '../../../core/services/login-cliente.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
 import { LoginEmpresasService } from '../../../core/services/login-empresas.service';
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 
   constructor( private router: Router,
                private formBuilder: FormBuilder,
-               private authService: AutenticacionService,
+               private authService: LoginClienteService,
                private authEmpresaService: LoginEmpresasService,
                private snackBar: MatSnackBar,
                private dialog: MatDialog ) {

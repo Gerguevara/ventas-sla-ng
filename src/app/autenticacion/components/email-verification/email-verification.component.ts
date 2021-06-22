@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AutenticacionService, EmailVerificationResponse } from '../../services/autenticacion.service';
+import { LoginClienteService, EmailVerificationResponse } from '../../../core/services/login-cliente.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
 import { DialogMessageComponent } from 'src/app/tools/components/dialog-message/dialog-message.component';
@@ -20,7 +20,7 @@ export class EmailVerificationComponent implements OnInit {
 
   constructor( public dialog: MatDialog,
                private activeRouter: ActivatedRoute,
-               private auth: AutenticacionService ) { }
+               private auth: LoginClienteService ) { }
 
   ngOnInit(): void {
     // Abrimos el dialog del spinner

@@ -18,15 +18,18 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { HttpClientModule } from '@angular/common/http';
-import { AutenticacionService } from './services/autenticacion.service';
 import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { LoginClienteService } from '../core/services/login-cliente.service';
+import { ValidatorsService } from '../core/services/validators.service';
 
 @NgModule({
   declarations: [
     LoginComponent,
     SignupComponent,
     ForgotComponent,
-    EmailVerificationComponent
+    EmailVerificationComponent,
+    ResetPasswordComponent
   ],
   imports: [
     CommonModule,
@@ -44,7 +47,8 @@ import { EmailVerificationComponent } from './components/email-verification/emai
     MatDialogModule
   ],
   providers: [
-    AutenticacionService
+    LoginClienteService,
+    ValidatorsService
   ]
 })
 export class AutenticacionModule { }
