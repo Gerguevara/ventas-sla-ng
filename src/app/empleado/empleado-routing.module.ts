@@ -17,6 +17,10 @@ const routes: Routes = [
         loadChildren: () => import('./categoria/categoria.module').then(m => m.CategoriaModule)
       },
       {
+        path: 'etiqueta',
+        loadChildren: () => import('./etiqueta/etiqueta.module').then(m => m.EtiquetaModule)
+      },
+      {
         path: '**',
         pathMatch: 'full',
         redirectTo: 'index'
