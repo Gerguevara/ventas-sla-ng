@@ -70,6 +70,11 @@ export class CategoriaContainer implements OnInit {
     this.categoriaService.getObject(id).subscribe(this.updateObserver);
   }
 
+  //elimina un categoria
+  deleteCategoria(categoria: Categoria): void {
+    this.openConfirmation(categoria);
+  }
+
   //===metodos que manejan los dialogos===
   openForm(categoria? : Categoria){
     const dialogoFormRef = this.formDialog.open(
@@ -117,7 +122,7 @@ export class CategoriaContainer implements OnInit {
     })
   }
   openConfirmation(categoria : Categoria){
-    //abrir dialogo con componente de confirmacion de borrado de producto
+    //abrir dialogo con componente de confirmacion de borrado de categoria
     const dialogoFormRef = this.formDialog.open(DeleteCategoriaComponent, {
       data: categoria,
     });
@@ -125,7 +130,7 @@ export class CategoriaContainer implements OnInit {
     dialogoFormRef.afterClosed().subscribe((id? : number) => {
         //si el id no es undefined
         if(id) {
-          //subscribirse al servicio de eliminacion de producto
+          //subscribirse al servicio de eliminacion de categoria
           this.categoriaService.deleteObject(id).subscribe(
             {
               //caso exito

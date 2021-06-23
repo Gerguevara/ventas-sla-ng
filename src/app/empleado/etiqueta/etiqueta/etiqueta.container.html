@@ -1,0 +1,20 @@
+<button
+  color="primary"
+  mat-fab
+  (click)="openForm()">
+  <mat-icon>add</mat-icon>
+</button>
+<app-table-etiqueta
+  [etiquetas]="respuesta?.data"
+  (detailEvent)="detailEtiqueta($event)"
+  (updateEvent)="updateEtiqueta($event)"
+  (deleteEvent)="deleteEtiqueta($event)">
+</app-table-etiqueta>
+<mat-paginator 
+  #paginator
+  [pageSizeOptions]="[5, 10, 20, 100]" 
+  [pageSize]="10"
+  [length]="dataLength"
+  (page)="getEtiquetas($event)"
+  showFirstLastButtons
+></mat-paginator>
