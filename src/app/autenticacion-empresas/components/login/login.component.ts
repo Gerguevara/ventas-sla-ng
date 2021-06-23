@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { LoginClienteService, LoginResponse } from '../../../core/services/login-cliente.service';
+import { LoginEmpresasService, LoginResponse } from '../../../core/services/login-empresas.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
 
@@ -18,8 +18,8 @@ export class LoginComponent implements OnInit {
 
   // Getters para validaciones
   // Aquí obtenemos el estado de validez de cada campo del formulario en métodos separados
-  get emailNoValido(): boolean | undefined {
-    return this.loginForm.get('email')?.invalid && this.loginForm.get('email')?.touched;
+  get usuarioNoValido(): boolean | undefined {
+    return this.loginForm.get('usuario')?.invalid && this.loginForm.get('usuario')?.touched;
   }
   get passwordNoValido(): boolean | undefined {
     return this.loginForm.get('password')?.invalid && this.loginForm.get('password')?.touched;
@@ -27,13 +27,13 @@ export class LoginComponent implements OnInit {
 
   constructor( private router: Router,
                private formBuilder: FormBuilder,
-               private authService: LoginClienteService,
+               private authEmpresaService: LoginEmpresasService,
                private snackBar: MatSnackBar,
                private dialog: MatDialog ) {
     // Creación del formulario
     this.loginForm = this.formBuilder.group({
-      email   : ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]]
+      usuario   : ['', [Validators.required]],
+      password  : ['', [Validators.required]]
     });
   }
 
@@ -45,15 +45,15 @@ export class LoginComponent implements OnInit {
     // Abrimos el dialog del spinner
     this.dialog.open( DialogSpinnerComponent );
     // Hacemos un post a Login con las credenciales del formulario
-    const email = this.loginForm.get('email')?.value;
+    const usuario = this.loginForm.get('usuario')?.value;
     const password = this.loginForm.get('password')?.value;
-    this.authService.submitLogin( email, password ).subscribe(
+    this.authEmpresaService.submitLogin( usuario, password ).subscribe(
       (response: LoginResponse) => {
         // El inicio de sesión es exitoso y guardamos el token en el LocalStorage
         // Cerramos todos los dialogos abiertos hasta el momento
         this.dialog.closeAll();
         localStorage.setItem('token', response.token);
-        this.router.navigate(['producto/index/table-producto']);
+        this.router.navigate(['/panel']);
       },
       (error: any) => {
         // Cerramos todos los dialogos abiertos hasta el momento
@@ -63,13 +63,13 @@ export class LoginComponent implements OnInit {
       });
   }
 
-  // Método para obtener mensajes de errores de validaciones Email
-  getErrorEmailMessage(): string {
-    if (this.loginForm.get('email')?.hasError('required')) {
+  // Método para obtener mensajes de errores de validaciones Usuario
+  getErrorUsuarioMessage(): string {
+    if (this.loginForm.get('usuario')?.hasError('required')) {
       return 'Debe ingresar un valor';
+    } else {
+      return '';
     }
-
-    return this.loginForm.get('email')?.hasError('email') ? 'Email no válido' : '';
   }
 
   // Método para obtener mensajes de errores de validaciones Password
@@ -88,13 +88,13 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  // Navegación hacia Registro de usuario
+  // Navegación hacia Registro de empresa
   signup(): void {
-    this.router.navigate(['/autentication/signup']);
+    this.router.navigate(['/enterprise/signup']);
   }
 
-  loginEmpresarial(): void {
-    this.router.navigate(['/enterprise']);
+  loginCliente(): void {
+    this.router.navigate(['/autentication/login']);
   }
 
 }

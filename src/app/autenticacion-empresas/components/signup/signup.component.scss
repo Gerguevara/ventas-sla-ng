@@ -5,17 +5,48 @@
     width: 40%;
 }
 
+.button {
+    margin-bottom: 10px;
+}
+
 .title {
     font-weight: bold;
+}
+
+.subtitle {
+    margin-top: -20px;
+}
+
+.subtitle2 {
+    font-weight: bold;
+    margin-bottom: 0px;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+input[type="file"] {
+    display: none;
 }
 
 .input {
     width: 100%;
 }
 
-.link {
-    text-align: right;
-    margin: 10px;
+.row {
+    display: flex;
+}
+
+.col {
+    width: 50%;
+    margin-right: 10px;
 }
 
 .example-container {
@@ -37,11 +68,4 @@
         margin-left: 5%;
         margin-right: 5%;
     }
-}
-
-.contenedor {
-    text-align: right;
-    height: 100%;
-    border-radius: 0px;
-    width: auto;
 }

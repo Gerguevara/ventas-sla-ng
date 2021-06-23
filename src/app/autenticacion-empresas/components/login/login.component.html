@@ -1,23 +1,24 @@
 <mat-card class="contenedor">
-    <button mat-raised-button color="primary" (click)="loginEmpresarial()" class="mat-enterprise animate__animated animate__fadeIn animate__faster">Área Empresarial</button>
+    <button mat-raised-button color="primary" (click)="loginCliente()" class="mat-enterprise animate__animated animate__fadeIn animate__faster">Área Cliente</button>
     <mat-card class="card animate__animated animate__fadeInLeft animate__faster">
         <form class="example-container" [formGroup]="loginForm" (ngSubmit)="enviar()">
             <h1 class="title">INICIAR SESIÓN</h1>
+            <h5 class="subtitle">Empresarial</h5>
             <mat-divider></mat-divider>
             <br>
             <!--Campo para Email-->
             <mat-form-field appearance="fill" class="input">
-                <mat-label>Ingrese email</mat-label>
-                <input matInput placeholder="pat@example.com" formControlName="email">
-                <mat-error *ngIf="emailNoValido">{{ getErrorEmailMessage() }}</mat-error>
+                <mat-label>Ingrese usuario</mat-label>
+                <input matInput formControlName="usuario">
+                <mat-error *ngIf="usuarioNoValido">{{ getErrorUsuarioMessage() }}</mat-error>
             </mat-form-field>
             <!--Campo para Password-->
             <mat-form-field appearance="fill" class="input">
                 <mat-label>Ingrese password</mat-label>
                 <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
                 <button mat-icon-button type="button" matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
                 <mat-error *ngIf="passwordNoValido">{{ getErrorPassMessage() }}</mat-error>
             </mat-form-field>
             <br>
@@ -25,8 +26,8 @@
 
             <button mat-raised-button color="accent" class="input" style="margin-top: 10px;" (click)="signup()">Crear Nueva Cuenta</button>
         </form>
-        <div class="link">
-            <a routerLink='/autentication/forgot'>Olvidé mi contraseña</a>
-        </div>
+        <!-- <div class="link">
+        <a routerLink='/autentication/forgot'>Olvidé mi contraseña</a>
+    </div> -->
     </mat-card>
 </mat-card>
