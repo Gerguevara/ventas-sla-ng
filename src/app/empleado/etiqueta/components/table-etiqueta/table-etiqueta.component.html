@@ -1,0 +1,40 @@
+<div class="header"><h1 color="primary">Etiquetas</h1></div>
+<table mat-table [dataSource]="dataSource" class="table-etiqueta mat-elevation-z2">
+
+  <!-- Columna ID -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> No. </th>
+    <td mat-cell *matCellDef="let etiqueta"> {{etiqueta.id}} </td>
+  </ng-container>
+
+    <!-- Cplumna de descripciones -->
+  <ng-container matColumnDef="categoria">
+    <th mat-header-cell *matHeaderCellDef> Categoria </th>
+    <td mat-cell *matCellDef="let etiqueta"> {{getCategoria(etiqueta.categoria_id)}} </td>
+  </ng-container>
+
+    <!-- Columna de nombres -->
+  <ng-container matColumnDef="nombre">
+    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+    <td mat-cell *matCellDef="let etiqueta"> {{etiqueta.nombre}} </td>
+  </ng-container>
+
+    <!-- Botones de acciones -->
+  <ng-container matColumnDef="acciones">
+    <th mat-header-cell *matHeaderCellDef> Acciones </th>
+    <td mat-cell *matCellDef="let etiqueta">
+        <button mat-icon-button color="primary" (click)="detailEvent.emit(etiqueta.id)">
+            <mat-icon>visibility</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" (click)="updateEvent.emit(etiqueta.id)">
+            <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" (click)="deleteEvent.emit(etiqueta)">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+  <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+</table>
