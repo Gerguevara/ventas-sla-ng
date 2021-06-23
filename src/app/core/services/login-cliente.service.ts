@@ -65,12 +65,13 @@ export class LoginClienteService {
     return this.http.post<any>(this.urlForgotPass, httpBody, httpOptions);
   }
 
-  submitResetPassword( password: string, password_confirmation: string, token: string ): Observable<any> {
+  submitResetPassword( token: string, password: string, password_confirmation: string ): Observable<any> {
     const httpBody = {
-      password,
-      password_confirmation,
-      token
+      token: token,
+      password: password,
+      password_confirmation: password_confirmation
     };
+    console.log(httpBody);
     return this.http.post<any>(this.urlResetPass, httpBody, httpOptions);
   }
 
