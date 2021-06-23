@@ -33,9 +33,9 @@ export class LoginClienteService {
 
   urlLogin = 'http://localhost:8000/api/login';
   urlSignUp = 'http://localhost:8000/api/register';
-  urlEmailVerification = 'http://localhost:8000/api/verify-email/';
-  urlForgotPass = 'http://localhost:8000/api/forgot-password';
-  urlResetPass = 'http://localhost:8000/api/reset-password/';
+  urlEmailVerification = 'http://localhost:8000/api/verifyEmail/';
+  urlForgotPass = 'http://localhost:8000/api/forgotPassword';
+  urlResetPass = 'http://localhost:8000/api/resetPassword';
 
   constructor( private http: HttpClient ) {
     console.log('Running Autentication Service...');
@@ -62,16 +62,16 @@ export class LoginClienteService {
     const httpBody = {
       email
     };
-    return this.http.post<SignUpResponse>(this.urlForgotPass, httpBody, httpOptions);
+    return this.http.post<any>(this.urlForgotPass, httpBody, httpOptions);
   }
 
-  submitResetPassword( token: string, password: string, password_confirmation: string ): Observable<any> {
+  submitResetPassword( password: string, password_confirmation: string, token: string ): Observable<any> {
     const httpBody = {
-      token,
       password,
-      password_confirmation
+      password_confirmation,
+      token
     };
-    return this.http.post<SignUpResponse>(this.urlResetPass, httpBody, httpOptions);
+    return this.http.post<any>(this.urlResetPass, httpBody, httpOptions);
   }
 
   emailVerification( id: string, hash: string ): Observable<EmailVerificationResponse> {

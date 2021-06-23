@@ -66,10 +66,13 @@ export class ResetPasswordComponent implements OnInit {
   // Método para hacer submit del formulario
   enviar(): void{
     this.openSpinner();
+    const password = this.resetForm.get('password')?.value;
+    const password_confirmation = this.resetForm.get('password2')?.value;
     this.authService.submitResetPassword( this.token,
-                                          this.resetForm.get('password')?.value,
-                                          this.resetForm.get('password2')?.value ).subscribe((response: any) => {
+                                          password,
+                                          password_confirmation ).subscribe((response: any) => {
                                             this.dialog.closeAll();
+                                            console.log(response);
                                             // Abrimos el nuevo dialogo con el mensaje
                                             const mensaje = 'Has reestablecido tu contraseña exitósamente.';
                                             this.dialog.open( DialogMessageComponent,
@@ -80,6 +83,7 @@ export class ResetPasswordComponent implements OnInit {
                                             } } );
                                           },
                                           (error: any) => {
+                                            console.log(error);
                                             this.dialog.closeAll();
                                             this.snackBar.open('Ha ocurrido un error', 'Cerrar', { duration: 5000 });
                                           });

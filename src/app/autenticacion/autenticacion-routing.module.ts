@@ -10,9 +10,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   // Ruta de redireccionamiento para verificar email con token
-  { path: 'signup/email-verification/:id/:hash', component: EmailVerificationComponent },
+  { path: 'signup/emailVerification/:id/:hash', component: EmailVerificationComponent },
   { path: 'forgot', component: ForgotComponent },
-  { path: 'reset-password/:token', component: ResetPasswordComponent },
+  { path: 'resetPassword/:token', component: ResetPasswordComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'login' }
 ];
 
