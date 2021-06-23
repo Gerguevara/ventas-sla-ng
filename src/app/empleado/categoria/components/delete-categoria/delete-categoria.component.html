@@ -1,0 +1,21 @@
+<div mat-dialog-content>
+  <p>
+    Se eliminará la categoria {{categoria.nombre}} ¿Deseas continuar?
+  </p>
+</div>
+<div mat-dialog-actions>
+  <button
+    mat-button
+    color="accent"
+    cdkFocusInitial
+    mat-dialog-close>
+    NO
+  </button>
+  <button
+    type="submit"
+    color="primary"
+    mat-raised-button
+    [mat-dialog-close]="categoria.id">
+    Sí
+  </button>
+</div>

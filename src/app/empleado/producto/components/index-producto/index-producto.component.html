@@ -1,5 +1,5 @@
-<app-form-producto></app-form-producto>
+<div #formProducto><app-form-producto></app-form-producto></div>
 <mat-card>
     <h3><strong>Productos Disponibles</strong></h3>
-    <app-table-producto></app-table-producto>
+    <app-table-producto (clickTabla)="scroll(formProducto)"></app-table-producto>
 </mat-card>

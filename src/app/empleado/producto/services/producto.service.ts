@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Categoria } from '../../../core/Models/categoria.model';
 import { Producto } from '../../models/producto.models';
+import { environment } from 'src/environments/environment';
 
 export interface ProductoPost {
   id_categoria: number;
@@ -19,6 +20,8 @@ export interface ProductoPost {
 })
 export class ProductoService {
 
+  private endpoint : string = "productos/";
+  private urlUploadServer : string = "http://d9771c35d78d.eu.ngrok.io/upload.php";
   constructor( private http: HttpClient ) {
     console.log('Running Product Service...');
   }
@@ -39,11 +42,11 @@ export class ProductoService {
     const httpHeaders = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
         'Authorization': token
       })
     };
-    return this.http.post<any>('http://d9771c35d78d.eu.ngrok.io/upload.php', JSON.stringify(form.value), httpHeaders);
+    return this.http.post<any>(this.urlUploadServer, JSON.stringify(form.value), httpHeaders);
   }
 
   /*
@@ -55,11 +58,11 @@ export class ProductoService {
     const httpHeaders = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
         'Authorization': token
       })
     };
-    return this.http.post<any>('http://localhost:8000/api/productos', producto, httpHeaders);
+    return this.http.post<any>(`${environment.apiUrl}${this.endpoint}`, producto, httpHeaders);
   }
 
   actualizarProducto( producto: Producto ): Observable<any> {
@@ -67,11 +70,11 @@ export class ProductoService {
     const httpHeaders = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
         'Authorization': token
       })
     };
-    return this.http.put<any>('http://localhost:8000/api/productos/' + producto.id, JSON.stringify(producto), httpHeaders);
+    return this.http.put<any>(`${environment.apiUrl}${this.endpoint}${producto.id}`, JSON.stringify(producto), httpHeaders);
   }
 
   eliminarProducto( producto: Producto ): Observable<any> {
@@ -79,11 +82,11 @@ export class ProductoService {
     const httpHeaders = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
         'Authorization': token
       })
     };
-    return this.http.delete<any>('http://localhost:8000/api/productos/' + producto.id, httpHeaders);
+    return this.http.delete<any>(`${environment.apiUrl}${this.endpoint}${producto.id}`, httpHeaders);
   }
 
   obtenerCategoriaProducto( id: number ): Observable<Categoria> {
@@ -91,11 +94,11 @@ export class ProductoService {
     const httpHeaders = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
         'Authorization': token
       })
     };
-    return this.http.get<Categoria>('http://localhost:8000/api/categorias/' + id, httpHeaders);
+    return this.http.get<Categoria>(`${environment.apiUrl}categorias/` + id, httpHeaders);
   }
 
 }

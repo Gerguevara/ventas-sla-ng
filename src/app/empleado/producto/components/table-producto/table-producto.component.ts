@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Producto } from '../../../models/producto.models';
 import { PageEvent } from '@angular/material/paginator';
-import { ProductoService } from '../../services/producto.service';
 import { MatDialog } from '@angular/material/dialog';
+import { Producto } from './../../../../core/Models/producto.model';
+import { ProductoService } from './../../../../core/services/producto.service';
 import { DialogEliminarProductoComponent } from '../dialog-eliminar-producto/dialog-eliminar-producto.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-table-producto',
@@ -18,16 +19,21 @@ export class TableProductoComponent implements OnInit {
   filasSeleccionadas = new Set<Producto>();
 
   @Input() disponibilidad = 1;
+  @Output() 
+  clickTabla = new EventEmitter();
 
+  private endpoint : string = "productos/";
   // URL donde se consumen los datos
-  url = 'http://localhost:8000/api/productos';
-  params = '&est=' + this.disponibilidad;
+  url = `${environment.apiUrl}${this.endpoint}`;
+  params = '&status=' + this.disponibilidad;
 
   // MatPaginator Output
   pageEvent!: PageEvent;
 
-  constructor( private productoService: ProductoService,
-               private dialog: MatDialog ) { }
+  constructor( 
+    private productoService: ProductoService,
+    private dialog: MatDialog 
+  ) { }
 
   ngOnInit(): void {
   }
@@ -38,7 +44,8 @@ export class TableProductoComponent implements OnInit {
     this.dataSource = new MatTableDataSource<Producto>(event);
   }
 
-  seleccionarProducto( row: Producto ): void {
+  seleccionarProducto( row: Producto): void {
+    this.clickTabla.emit();
     this.productoService.productoChange$.emit(row);
   }
 

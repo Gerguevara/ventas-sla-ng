@@ -1,11 +1,11 @@
-<mat-card class="card">
+<mat-card class="card" [ngClass]="{'disabled-controls': !editable}">
     <button mat-flat-button *ngIf="habilitarCrear" style="margin-right: 10px;" color="accent" type="button" (click)="crearProducto()"><mat-icon>add</mat-icon> Crear</button>
     <button mat-flat-button *ngIf="habilitarEditar" style="margin-right: 10px;" color="primary" type="button" (click)="editarProducto()"><mat-icon>edit</mat-icon> Editar</button>
     <button mat-flat-button *ngIf="habilitarGuardar" style="margin-right: 10px;" color="primary" type="button" (click)="actualizarProducto()"><mat-icon>save</mat-icon> Guardar</button>
     <button mat-flat-button *ngIf="habilitarCancelar" style="margin-right: 10px;" color="accent" type="button" (click)="cancelar()"><mat-icon>cancel</mat-icon> Salir</button>
     <mat-horizontal-stepper #stepper>
         <!--Formulario General-->
-        <mat-step [stepControl]="generalForm" label="General" errorMessage="Datos no válidos">
+        <mat-step [stepControl]="generalForm" label="General" errorMessage="Datos no válidos" >
             <mat-card class="card-step">
                 <h3 class="subtitle">Descripción General</h3>
                 <mat-divider></mat-divider>
@@ -77,12 +77,12 @@
                 <iframe name="imagen" style="display:none;"></iframe>
                 <!-- Se utilizó un form action normal debido a problemas con los inputs
                 ya que es más manejable el envío de imagenes de esta forma de momento -->
-                <form [action]="urlImageUpload" method="post" enctype="multipart/form-data" target="imagen" #formImagen>
+                <form [formGroup]="designForm" target="imagen" (ngSubmit)="cargarImagen()">
                     <label for="file-upload" class="custom-file-upload">
                         {{ nombreArchivo }}
                     </label>
-                    <input id="file-upload" name="uploaded_file" type="file" (change)="cambioImagen($event)" [disabled]="deshabilitarImagen" />
-                    <button type="submit" (click)="cargarImagen(formImagen)" mat-flat-button class="button" color="primary" [disabled]="deshabilitarImagen">Insertar</button>
+                    <input id="file-upload" formControlName="fileInput" name="uploaded_file" type="file" (change)="cambioImagen($event)" [disabled]="deshabilitarImagen" />
+                    <button type="submit"  mat-flat-button class="button" color="primary" [disabled]="deshabilitarImagen">Insertar</button>
                 </form>
                 <mat-divider></mat-divider>
                 <div style="margin: 10px;">
