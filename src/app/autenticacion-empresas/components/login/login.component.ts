@@ -74,9 +74,9 @@ export class LoginComponent implements OnInit {
       usuario: this.loginForm.get('usuario')?.value,
       password: this.loginForm.get('password')?.value
     };
-    this.authEmpresaService.postObject( credenciales ).subscribe(
+    // this.authEmpresaService.postObject( credenciales ).subscribe(
       // next:(response: any) => {console.log(response)}
-    );
+    // );
   }
 
   // Método para obtener mensajes de errores de validaciones Usuario

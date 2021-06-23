@@ -46,7 +46,9 @@ export class ForgotComponent implements OnInit {
   // Método para hacer el submit del formulario
   enviar(): void {
     this.dialog.open( DialogSpinnerComponent );
-    this.authService.submitForgot( this.forgotForm.get('email')?.value ).subscribe((response: any) => {
+    const email = this.forgotForm.get('email')?.value;
+    localStorage.setItem('email', email);
+    this.authService.submitForgot( email ).subscribe((response: any) => {
       this.dialog.closeAll();
       // Abrimos el nuevo dialogo con el mensaje
       const mensaje = 'Hemos enviado un correo a ' + this.forgotForm.get('email')?.value + ' para que pueda realizar el proceso de recuperación de contraseña.';

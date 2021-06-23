@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -31,11 +32,11 @@ export interface EmailVerificationResponse {
 })
 export class LoginClienteService {
 
-  urlLogin = 'http://localhost:8000/api/login';
-  urlSignUp = 'http://localhost:8000/api/register';
-  urlEmailVerification = 'http://localhost:8000/api/verifyEmail/';
-  urlForgotPass = 'http://localhost:8000/api/forgotPassword';
-  urlResetPass = 'http://localhost:8000/api/resetPassword';
+  urlLogin = `${environment.apiUrl}` + 'login';
+  urlSignUp = `${environment.apiUrl}` + 'register';
+  urlEmailVerification = `${environment.apiUrl}` + 'verifyEmail/';
+  urlForgotPass = `${environment.apiUrl}` + 'forgotPassword';
+  urlResetPass = `${environment.apiUrl}` + 'resetPassword';
 
   constructor( private http: HttpClient ) {
     console.log('Running Autentication Service...');
@@ -68,6 +69,7 @@ export class LoginClienteService {
   submitResetPassword( token: string, password: string, password_confirmation: string ): Observable<any> {
     const httpBody = {
       token: token,
+      email: localStorage.getItem('email'),
       password: password,
       password_confirmation: password_confirmation
     };
