@@ -2,12 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { LoginClienteService, LoginResponse } from '../../../core/services/login-cliente.service';
+import { LoginEmpresasService, LoginResponse } from '../../../core/services/login-empresas.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
-import { LoginEmpresasService } from '../../../core/services/login-empresas.service';
-import { Empresa } from '../../../core/Models/empresa.model';
-import { Auth } from 'src/app/core/Models/auth.models';
 
 @Component({
   selector: 'app-login',
@@ -18,9 +15,6 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   hide = true;
-
-  // Respuesta del servidor
-  
 
   // Getters para validaciones
   // Aquí obtenemos el estado de validez de cada campo del formulario en métodos separados
@@ -33,7 +27,6 @@ export class LoginComponent implements OnInit {
 
   constructor( private router: Router,
                private formBuilder: FormBuilder,
-               private authService: LoginClienteService,
                private authEmpresaService: LoginEmpresasService,
                private snackBar: MatSnackBar,
                private dialog: MatDialog ) {
@@ -52,15 +45,15 @@ export class LoginComponent implements OnInit {
     // Abrimos el dialog del spinner
     this.dialog.open( DialogSpinnerComponent );
     // Hacemos un post a Login con las credenciales del formulario
-    const email = this.loginForm.get('email')?.value;
+    const usuario = this.loginForm.get('usuario')?.value;
     const password = this.loginForm.get('password')?.value;
-    this.authService.submitLogin( email, password ).subscribe(
+    this.authEmpresaService.submitLogin( usuario, password ).subscribe(
       (response: LoginResponse) => {
         // El inicio de sesión es exitoso y guardamos el token en el LocalStorage
         // Cerramos todos los dialogos abiertos hasta el momento
         this.dialog.closeAll();
         localStorage.setItem('token', response.token);
-        this.router.navigate(['producto/index/table-producto']);
+        this.router.navigate(['/panel']);
       },
       (error: any) => {
         // Cerramos todos los dialogos abiertos hasta el momento
@@ -68,15 +61,6 @@ export class LoginComponent implements OnInit {
         // El inicio de sesión falla y mostramos un mensaje de error al usuario
         this.snackBar.open('Credenciales no válidas', 'Cerrar');
       });
-
-    const credenciales: Auth = {
-      id: 0,
-      usuario: this.loginForm.get('usuario')?.value,
-      password: this.loginForm.get('password')?.value
-    };
-    // this.authEmpresaService.postObject( credenciales ).subscribe(
-      // next:(response: any) => {console.log(response)}
-    // );
   }
 
   // Método para obtener mensajes de errores de validaciones Usuario

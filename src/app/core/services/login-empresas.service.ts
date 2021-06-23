@@ -11,8 +11,8 @@ const httpOptions = {
 };
 
 export interface LoginResponse {
-  token?: string;
-  tokenType?: string;
+  token: string;
+  tokenType: string;
   mensaje: string;
 }
 

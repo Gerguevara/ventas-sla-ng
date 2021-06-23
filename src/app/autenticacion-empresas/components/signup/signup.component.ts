@@ -18,9 +18,16 @@ export interface DialogData {
 })
 export class SignupComponent implements OnInit {
 
+  panelOpenState = false;
+
   signupForm: FormGroup;
+  imagenesForm: FormGroup;
   confirmPass = new FormControl('', Validators.required);
   hide = true;
+
+  nombreArchivoFrontal = 'Seleccionar Imagen';
+  nombreArchivoReverso = 'Seleccionar Imagen';
+  deshabilitarImagen = true;
 
   // Getters para validaciones
   // Aquí obtenemos el estado de validez de cada campo del formulario en métodos separados
@@ -56,9 +63,34 @@ export class SignupComponent implements OnInit {
         this.validadores.seguridadPassword( 'password' )                // Validador para seguridad de la contraseña
       ]
     });
+    this.imagenesForm = this.formBuilder.group({
+      frontalInput: ['', Validators.required],
+      reversoInput: ['', Validators.required]
+    });
   }
 
   ngOnInit(): void {
+  }
+
+  cargarImagen(): void{
+
+  }
+
+  cambioImagenFrontal( event: any ): void{
+    if (event.target.files[0]) {
+      // Cambia el nombre del botón por el nombre del archivo
+      this.nombreArchivoFrontal = event.target.files[0].name;
+      // Establece el valor del input del formulario en el archivo que se está recibiendo
+      this.imagenesForm.get('frontalInput')?.setValue(event.target.files[0]);
+    }
+  }
+  cambioImagenReverso( event: any ): void{
+    if (event.target.files[0]) {
+      // Cambia el nombre del botón por el nombre del archivo
+      this.nombreArchivoReverso = event.target.files[0].name;
+      // Establece el valor del input del formulario en el archivo que se está recibiendo
+      this.imagenesForm.get('reversoInput')?.setValue(event.target.files[0]);
+    }
   }
 
   // Método para hacer submit del formulario

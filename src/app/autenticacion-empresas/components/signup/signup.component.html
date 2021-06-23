@@ -4,6 +4,12 @@
         <h5 class="subtitle">Empresarial</h5>
         <mat-divider></mat-divider>
         <br>
+        <!--Campo para Nombre Empresa-->
+        <mat-form-field appearance="outline" class="input">
+            <mat-label>Nombre Empresa</mat-label>
+            <input matInput formControlName="email">
+            <mat-error *ngIf="emailNoValido">{{ getErrorEmailMessage() }}</mat-error>
+        </mat-form-field>
         <!--Campo para Email-->
         <mat-form-field appearance="outline" class="input">
             <mat-label>Ingrese su email</mat-label>
@@ -28,6 +34,27 @@
             </button>
             <mat-error *ngIf="password2NoValido">{{ getErrorConfirmPassMessage() }}</mat-error>
         </mat-form-field>
+        <!-- NIT Frontal -->
+        <mat-divider></mat-divider>
+        <h3 class="subtitle2">Imagen NIT Frontal</h3>
+        <!-- Este iframe es para evitar la actualización de la página -->
+        <iframe name="imagen" style="display:none;"></iframe>
+        <form [formGroup]="imagenesForm" target="imagen" (ngSubmit)="cargarImagen()" style="text-align: left;">
+            <label for="file-upload" class="custom-file-upload" style="width: 65%;">{{ nombreArchivoFrontal }}</label>
+            <input id="file-upload" formControlName="frontalInput" name="uploaded_file" type="file" (change)="cambioImagenFrontal($event)" [disabled]="deshabilitarImagen" />
+            <button type="submit" mat-flat-button class="button" color="primary" [disabled]="!deshabilitarImagen">Insertar</button>
+        </form>
+        <!-- NIT Reverso -->
+        <mat-divider></mat-divider>
+        <h3 class="subtitle2">Imagen NIT Reverso</h3>
+        <!-- Este iframe es para evitar la actualización de la página -->
+        <iframe name="imagen" style="display:none;"></iframe>
+        <form [formGroup]="imagenesForm" target="imagen" (ngSubmit)="cargarImagen()" style="text-align: left;">
+            <label for="file-upload" class="custom-file-upload" style="width: 65%;">{{ nombreArchivoReverso }}</label>
+            <input id="file-upload" formControlName="reversoInput" name="uploaded_file" type="file" (change)="cambioImagenReverso($event)" [disabled]="deshabilitarImagen" />
+            <button type="submit" mat-flat-button class="button" color="primary" [disabled]="!deshabilitarImagen">Insertar</button>
+        </form>
+        <mat-divider></mat-divider>
         <br>
         <div class="row">
             <div class="col">

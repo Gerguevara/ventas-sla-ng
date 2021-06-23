@@ -78,6 +78,7 @@ export class SignupComponent implements OnInit {
       // Si ocurre algún error, se imprimen en esta sección
       ( error: any ) => {
         console.log( error.error.message );
+        console.log(error);
         this.dialog.closeAll();
         this.snackBar.open( error.error.message, 'Cerrar', {
           duration: 5000
