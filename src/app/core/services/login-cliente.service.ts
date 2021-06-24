@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Usuario } from '../Models/usuario.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -12,8 +13,10 @@ const httpOptions = {
 
 export interface LoginResponse {
   response: string;
+  rol: string;
   token: string;
   tokenType: string;
+  user: Usuario;
 }
 
 export interface SignUpResponse {

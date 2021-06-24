@@ -22,6 +22,7 @@ export class ClienteComponent implements OnInit {
 
   // Bandera para inicio de sesión
   iniciarSesion!: boolean;
+  rolAdmin!: boolean;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: UIEvent) {
@@ -36,6 +37,7 @@ export class ClienteComponent implements OnInit {
 
   ngOnInit(): void {
     this.iniciarSesion = true;
+    this.rolAdmin = false;
     this.categoriaService.getObjects().subscribe(
       {
         next: (result : Resultado<Categoria>) => this.categorias=result.data,
@@ -44,6 +46,12 @@ export class ClienteComponent implements OnInit {
     // Validación de usuario logeado
     if (localStorage.getItem('token')) {
       this.iniciarSesion = false;
+    }
+    // Validación de rol usuario
+    if (localStorage.getItem('rol')) {
+      if (localStorage.getItem('rol') === 'admin') {
+        this.rolAdmin = true;
+      }
     }
   }
 
@@ -60,6 +68,12 @@ export class ClienteComponent implements OnInit {
       localStorage.removeItem('token');
       window.location.reload();
     });
+  }
+
+  adminArea(): void {
+    this.dialog.open(DialogSpinnerComponent);
+    this.router.navigate(['/panel']);
+    this.dialog.closeAll();
   }
 
   sidenavMode(){
