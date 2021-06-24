@@ -319,28 +319,36 @@ export class FormProductoComponent implements OnInit {
     this.productoService.productoChange$.subscribe((data: Producto) => {
       if (this.formularioLleno) {
         this.limpiarFormulario();
-        this.cargarData( data );
-      } else {
-        this.cargarData( data );
       }
+      this.cargarData( data );
     });
   }
 
   cargarData( data: Producto ): void{
     this.idProductoSeleccionado = data.id;
+    this.setImagenEdit(data.imagen);
     this.generalForm.get('nombre')?.setValue(data.nombre_producto);
     this.generalForm.get('descripcion')?.setValue(data.descripcion_producto);
     this.generalForm.get('precio')?.setValue(data.precio);
     this.generalForm.get('categoria')?.setValue(data.id_categoria);
     this.imgUrl = data.imagen;
     this.productoService.obtenerCategoriaProducto( data.id_categoria ).subscribe((response: any) => {
-      this.filasSeleccionadas.add(response.categoria);
-      this.categorias.push(response.categoria.nombre);
+      this.filasSeleccionadas.add(response);
+      this.categorias.push(response.nombre);
     });
     this.inventarioForm.get('estado')?.setValue(data.disponibilidad.toString());
     this.inventarioForm.get('cantidad')?.setValue(data.cantidad);
     this.formularioLleno = true;
     this.habilitarEditar = true;
+  }
+
+  setImagenEdit(url : string){
+    this.productoService.obtenerImagen(url).then(
+      (respuesta)=>{
+        this.designForm.get('fileInput')?.setValue(respuesta);
+        this.nombreArchivo = respuesta.name;
+      },
+    )
   }
 
   // Obtenemos todos los cambios que nos envíe el paginador con la data de la página
@@ -438,7 +446,7 @@ export class FormProductoComponent implements OnInit {
         precio: this.generalForm.get('precio')?.value,
         cantidad: this.inventarioForm.get('cantidad')?.value
       };
-      this.productoService.actualizarProducto(producto).subscribe((response: any) => {
+      this.productoService.actualizarProducto(producto as Producto).subscribe((response: any) => {
         this.dialog.closeAll();
         console.log(response);
         this.snackBar.open(response.mensaje, 'Cerrar', {

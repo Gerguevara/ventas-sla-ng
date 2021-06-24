@@ -1,3 +1,6 @@
+import { IndexTableComponent } from './index/index-table/index-table.component';
+import { IndexProductCardComponent } from './index/index-product-card/index-product-card.component';
+import { IndexContainer } from './index/index/index.container';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -8,11 +11,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
+import { ListarCategoriasComponent } from './listar-categorias/listar-categorias.component';
+import { DetalleProductoComponent } from './detalle-producto/detalle-producto.component';
 
 
 @NgModule({
   declarations: [
-    ClienteComponent
+    ClienteComponent,
+    ListarCategoriasComponent,
+    DetalleProductoComponent
   ],
   imports: [
     CommonModule,

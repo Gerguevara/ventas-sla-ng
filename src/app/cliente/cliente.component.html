@@ -13,7 +13,16 @@
         [mode]="'side'"
         role="directory"
         #sidenav>
-        Start
+        
+        <mat-list>
+            <ng-container *ngFor="let cat of categorias">
+                <mat-list-item>
+                  <h3 matLine> {{cat?.nombre}} </h3>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </ng-container>
+        </mat-list>
+
     </mat-sidenav>
     <mat-sidenav-content>
         <router-outlet></router-outlet>

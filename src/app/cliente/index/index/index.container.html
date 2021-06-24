@@ -1,1 +1,6 @@
-<p>INDICE FUNCIONA</p>
+<ng-container *ngFor="let cat of categorias">
+    <div class="categoria-container">
+        <h1>{{cat.nombre}}</h1>
+        <app-index-table [categoriaId]="cat.id"></app-index-table>
+    </div>
+</ng-container>

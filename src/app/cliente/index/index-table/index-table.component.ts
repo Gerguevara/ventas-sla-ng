@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Categoria } from 'src/app/core/Models/categoria.model';
+import { Producto } from 'src/app/core/Models/producto.model';
+import { Resultado } from 'src/app/core/Models/resultado.model';
+import { ProductoService } from 'src/app/core/services/producto.service';
 
 @Component({
   selector: 'app-index-table',
@@ -6,10 +10,31 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./index-table.component.scss']
 })
 export class IndexTableComponent implements OnInit {
-
-  constructor() { }
+  @Input()
+  categoriaId : number = -1;
+  productos : Producto[] = [];
+  constructor(private productoService : ProductoService) { }
 
   ngOnInit(): void {
+    this.productoService.obtenerListaProductos().subscribe({
+      next: (res : Resultado<Producto>)=>{
+        this.productos = res.data.filter((prod:Producto)=>prod.id_categoria===this.categoriaId)
+        this.productos=this.productos.sort(this.comparador);
+        if(this.productos.length > 5)
+          this.productos = this.productos.slice(4);
+        console.log(this.productos);
+      }
+    })
+  }
+
+  comparador(productoA : Producto, productoB : Producto) {
+    if (Number(productoA.calificacion_promedio) < Number(productoB.calificacion_promedio )){
+      return -1;
+    }
+    if (Number(productoA.calificacion_promedio) > Number(productoB.calificacion_promedio) ){
+      return 1;
+    }
+    return 0;
   }
 
 }

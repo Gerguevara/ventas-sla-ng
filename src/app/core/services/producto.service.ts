@@ -1,3 +1,4 @@
+import { Resultado } from './../Models/resultado.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -102,5 +103,42 @@ export class ProductoService  extends RecursoService<Etiqueta>{
       })
     };
     return this.httpClient.get<Categoria>(`${environment.apiUrl}categorias/` + id, httpHeaders);
+  }
+
+  obtenerListaProductos(): Observable<Resultado<Producto>> {
+    const token = 'Bearer ' + localStorage.getItem('token');
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
+        'Authorization': token
+      })
+    };
+    //http://localhost:8000/api/productos?status=1
+    return this.httpClient.get<Resultado<Producto>>(`${environment.apiUrl}${this.endpoint}?status=1`, options);
+  }
+
+  // Con esta funcion creamos un archivo a partir de una url del recurso
+  async obtenerImagen( url: string ): Promise<File>{
+    const response = await fetch(url,{
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      mode: 'no-cors', // no-cors, *cors, same-origin
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'omit', // include, *same-origin, omit
+      headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: 'follow', // manual, *follow, error
+      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    }
+      );
+    const arreglo = url.split('/');
+    const data = await response.blob();
+    const metadata = {
+      type: 'image/jpeg,image/png,image/jpg'
+    };
+    const file = new File([data], arreglo[arreglo.length - 1], metadata);
+    return file;
   }
 }

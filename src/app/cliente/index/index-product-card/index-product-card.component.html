@@ -1,0 +1,26 @@
+<div>
+    <img src="{{productoInput?.imagen}}" alt="{{productoInput?.nombre_producto}} - {{productoInput?.descripcion_producto}}">
+</div>
+
+<mat-list>
+    <mat-list-item>
+      <h3 matLine> {{productoInput?.nombre_producto}} </h3>
+      <p matLine>
+        <span> {{productoInput?.descripcion_producto}} </span>
+      </p>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+      <h3 matLine>Calificacion</h3>
+      <p matLine>
+        <span> {{productoInput?.calificacion_promedio}} </span>
+      </p>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+      <h3 matLine>Precio </h3>
+      <p matLine>
+        <span> {{productoInput?.precio}} </span>
+      </p>
+    </mat-list-item>
+</mat-list>

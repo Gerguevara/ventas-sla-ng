@@ -29,11 +29,11 @@
         <ng-container matColumnDef="Acciones">
             <th mat-header-cell *matHeaderCellDef>Acciones</th>
             <td mat-cell *matCellDef="let element">
-                <button (click)="quitarProducto(element)" style="margin-right: 5px; cursor: pointer;" mat-icon-button color="primary" aria-label="delete_icon">
-                    <mat-icon>delete</mat-icon>
-                </button>
                 <button (click)="seleccionarProducto(element)" style="margin-right: 5px; cursor: pointer;" mat-icon-button color="primary" aria-label="delete_icon">
                     <mat-icon>search</mat-icon>
+                </button>
+                <button (click)="quitarProducto(element)" style="margin-right: 5px; cursor: pointer;" mat-icon-button color="primary" aria-label="delete_icon">
+                    <mat-icon>delete</mat-icon>
                 </button>
             </td>
         </ng-container>
