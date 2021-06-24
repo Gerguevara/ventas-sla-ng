@@ -33,6 +33,7 @@ export interface EmailVerificationResponse {
 export class LoginClienteService {
 
   urlLogin = `${environment.apiUrl}` + 'login';
+  urlLogout = `${environment.apiUrl}` + 'logout';
   urlSignUp = `${environment.apiUrl}` + 'register';
   urlEmailVerification = `${environment.apiUrl}` + 'verifyEmail/';
   urlForgotPass = `${environment.apiUrl}` + 'forgotPassword';
@@ -48,6 +49,18 @@ export class LoginClienteService {
       password
     };
     return this.http.post<LoginResponse>(this.urlLogin, httpBody, httpOptions);
+  }
+
+  submitLogout(): Observable<any> {
+    const token = 'Bearer ' + localStorage.getItem('token');
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': token
+      })
+    };
+    return this.http.post<any>(this.urlLogout, {}, httpHeaders);
   }
 
   submitRegistro( email: string, password: string, password_confirmation: string ): Observable<SignUpResponse> {

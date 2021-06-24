@@ -1,25 +1,25 @@
 <mat-toolbar color="accent">
-    <button 
-        mat-icon-button 
-        aria-label="Menú"
-        (click)="sidenav.toggle()">
+    <button mat-icon-button aria-label="Menú" (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
     </button>
     <a [routerLink]="['/']"><span>{{title}}</span></a>
+    <span class="example-spacer"></span>
+    <button mat-raised-button (click)="iniciarSesionClick()" *ngIf="iniciarSesion" color="primary" class="example-icon">
+        <mat-icon>send</mat-icon> Iniciar Sesión
+    </button>
+    <button mat-raised-button (click)="cerrarSesionClick()" *ngIf="!iniciarSesion" color="warn" class="example-icon">
+        <mat-icon>close</mat-icon> Cerrar Sesión
+    </button>
 </mat-toolbar>
 <mat-sidenav-container>
-    <mat-sidenav 
-        [opened]="false"
-        [mode]="'side'"
-        role="directory"
-        #sidenav>
-        <h1> Categorías </h1>        
+    <mat-sidenav [opened]="false" [mode]="'side'" role="directory" #sidenav>
+        <h1> Categorías </h1>
         <mat-list>
             <ng-container *ngFor="let cat of categorias">
                 <a [routerLink]="['/categoria', cat.id]">
-                <mat-list-item>
-                  <h3 matLine> {{cat?.nombre}} </h3>
-                </mat-list-item>
+                    <mat-list-item>
+                        <h3 matLine> {{cat?.nombre}} </h3>
+                    </mat-list-item>
                 </a>
                 <mat-divider></mat-divider>
             </ng-container>
