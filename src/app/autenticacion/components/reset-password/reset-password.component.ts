@@ -73,6 +73,10 @@ export class ResetPasswordComponent implements OnInit {
                                           password_confirmation ).subscribe((response: any) => {
                                             this.dialog.closeAll();
                                             console.log(response);
+                                            // Eliminamos el token del storage ya que ya no es válido
+                                            localStorage.removeItem('token');
+                                            // Eliminamos el email del storage
+                                            localStorage.removeItem('email');
                                             // Abrimos el nuevo dialogo con el mensaje
                                             const mensaje = 'Has reestablecido tu contraseña exitósamente.';
                                             this.dialog.open( DialogMessageComponent,
