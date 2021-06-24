@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Etiqueta } from 'src/app/core/Models/etiqueta.model';
 
 @Component({
   selector: 'app-delete-etiqueta',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeleteEtiquetaComponent implements OnInit {
 
-  constructor() { }
+  constructor(@Inject(MAT_DIALOG_DATA) public etiqueta : Etiqueta) { }
 
   ngOnInit(): void {
   }

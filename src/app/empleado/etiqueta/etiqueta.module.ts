@@ -1,3 +1,4 @@
+import { MatListModule } from '@angular/material/list';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -15,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { MatAutocompleteModule} from '@angular/material/autocomplete'
 
 
 @NgModule({
@@ -31,11 +33,13 @@ import { MatTableModule } from '@angular/material/table';
     MatPaginatorModule,
     MatTableModule,
     MatIconModule,
+    MatListModule,
     MatButtonModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     MatDialogModule,
-    MatInputModule
+    MatInputModule,
+    MatAutocompleteModule
   ]
 })
 export class EtiquetaModule { }
