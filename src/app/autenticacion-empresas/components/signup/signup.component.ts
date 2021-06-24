@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ValidatorsService } from '../../../core/services/validators.service';
-import { LoginClienteService, SignUpResponse } from '../../../core/services/login-cliente.service';
 import { DialogMessageComponent } from 'src/app/tools/components/dialog-message/dialog-message.component';
 import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { LoginEmpresasService, SignUpResponse } from '../../../core/services/login-empresas.service';
 export interface DialogData {
   email: string;
 }
@@ -19,52 +18,56 @@ export interface DialogData {
 export class SignupComponent implements OnInit {
 
   panelOpenState = false;
+  cargandoImagenFrontal = false;
+  cargandoImagenReverso = false;
+  textoImagen = 'Inserte una imagen';
+  imgFrontal!: File;
+  imgFrontalUrl = '';
+  imgReverso!: File;
+  imgReversoUrl = '';
 
   signupForm: FormGroup;
-  imagenesForm: FormGroup;
+  frontalImagenForm: FormGroup;
+  reversoImagenForm: FormGroup;
   confirmPass = new FormControl('', Validators.required);
   hide = true;
 
   nombreArchivoFrontal = 'Seleccionar Imagen';
   nombreArchivoReverso = 'Seleccionar Imagen';
+  urlImageUpload = 'http://dr17010pdm115.000webhostapp.com/upload.php';
+  urlImage = 'http://dr17010pdm115.000webhostapp.com/images/';
   deshabilitarImagen = true;
+  hash = this.getRandomString(10);
 
   // Getters para validaciones
   // Aquí obtenemos el estado de validez de cada campo del formulario en métodos separados
   get emailNoValido(): boolean | undefined {
     return this.signupForm.get('email')?.invalid && this.signupForm.get('email')?.touched;
   }
-  get passwordNoValido(): boolean | undefined {
-    return this.signupForm.get('password')?.invalid && this.signupForm.get('password')?.touched;
+  get nombreNoValido(): boolean | undefined {
+    return this.signupForm.get('nombre')?.invalid && this.signupForm.get('nombre')?.touched;
   }
-
-  get password2NoValido(): boolean | undefined {
-    const password1 = this.signupForm.get('password');
-    const password2 = this.signupForm.get('password2');
-
-    return ( password1 === password2 ) ? false : true;
+  get imgFrontalNoValido(): boolean | undefined {
+    return this.frontalImagenForm.get('frontalInput')?.invalid && this.frontalImagenForm.get('frontalInput')?.touched;
+  }
+  get imgReversoNoValido(): boolean | undefined {
+    return this.reversoImagenForm.get('reversoInput')?.invalid && this.reversoImagenForm.get('reversoInput')?.touched;
   }
 
   constructor( private router: Router,
                private formBuilder: FormBuilder,
-               private validadores: ValidatorsService,
-               private authService: LoginClienteService,
+               private authService: LoginEmpresasService,
                public dialog: MatDialog,
                private snackBar: MatSnackBar ) {
     // Creación del formulario
     this.signupForm = this.formBuilder.group({
+      nombre   : ['', Validators.required],
       email    : ['', [ Validators.required, Validators.email ]],
-      password : ['', [ Validators.required ]],
-      password2: ['', [ Validators.required ]]
-    }, {
-      // Validadores personalizados
-      validators: [
-        this.validadores.contraseñasIguales( 'password', 'password2' ), // Validador para hacer coincidir contraseñas
-        this.validadores.seguridadPassword( 'password' )                // Validador para seguridad de la contraseña
-      ]
     });
-    this.imagenesForm = this.formBuilder.group({
+    this.frontalImagenForm = this.formBuilder.group({
       frontalInput: ['', Validators.required],
+    });
+    this.reversoImagenForm = this.formBuilder.group({
       reversoInput: ['', Validators.required]
     });
   }
@@ -72,24 +75,79 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  cargarImagen(): void{
+  // Función para crear el hash de la imagen y evitar nombres de archivos repetidos
+  getRandomString( length: number ): string {
+    const randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for ( let i = 0; i < length; i++ ) {
+        result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+    }
+    return result;
+  }
 
+  cargarImagenFrontal( form: any ): void{
+    if (this.imgFrontal) {
+      this.cargandoImagenFrontal = true;
+      this.hash = this.getRandomString(10);
+      // Hace el post para subir la imagen enviando el formulario
+      this.authService.subirImagen( form, this.hash ).subscribe((response: any) => {
+      // Si todo sale bien, se crea la URL de la imagen
+      this.imgFrontalUrl = this.urlImage + this.hash + '_' + this.nombreArchivoFrontal;
+      this.frontalImagenForm.get('frontalInput')?.setValue(this.imgFrontalUrl);
+      // No pude hacer que el servidor retorne la ruta de la imagen por razones que desconozco
+      // Por dicho motivo la estoy construyendo aquí
+      this.cargandoImagenFrontal = false;
+      },
+      (error: any) => {
+        this.snackBar.open('No se pudo cargar imagen', 'Cerrar', {
+          duration: 5000
+        });
+        this.cargandoImagenFrontal = false;
+      });
+    } else {
+      this.snackBar.open('Debe seleccionar una imagen', 'Cerrar', {
+        duration: 5000
+      });
+    }
+  }
+  cargarImagenReverso( form: any ): void{
+    if (this.imgReverso) {
+      this.cargandoImagenReverso = true;
+      this.hash = this.getRandomString(10);
+      // Hace el post para subir la imagen enviando el formulario
+      this.authService.subirImagen( form, this.hash ).subscribe((response: any) => {
+        // Si todo sale bien, se crea la URL de la imagen
+        this.imgReversoUrl = this.urlImage + this.hash + '_' + this.nombreArchivoReverso;
+        this.reversoImagenForm.get('reversoInput')?.setValue(this.imgReversoUrl);
+        // No pude hacer que el servidor retorne la ruta de la imagen por razones que desconozco
+        // Por dicho motivo la estoy construyendo aquí
+        this.cargandoImagenReverso = false;
+      },
+      (error: any) => {
+        this.snackBar.open('No se pudo cargar imagen', 'Cerrar', {
+          duration: 5000
+        });
+        this.cargandoImagenReverso = false;
+      });
+    } else {
+      this.snackBar.open('Debe seleccionar una imagen', 'Cerrar', {
+        duration: 5000
+      });
+    }
   }
 
   cambioImagenFrontal( event: any ): void{
     if (event.target.files[0]) {
       // Cambia el nombre del botón por el nombre del archivo
-      this.nombreArchivoFrontal = event.target.files[0].name;
-      // Establece el valor del input del formulario en el archivo que se está recibiendo
-      this.imagenesForm.get('frontalInput')?.setValue(event.target.files[0]);
+      this.imgFrontal = event.target.files[0];
+      this.nombreArchivoFrontal = this.imgFrontal.name;
     }
   }
   cambioImagenReverso( event: any ): void{
     if (event.target.files[0]) {
       // Cambia el nombre del botón por el nombre del archivo
-      this.nombreArchivoReverso = event.target.files[0].name;
-      // Establece el valor del input del formulario en el archivo que se está recibiendo
-      this.imagenesForm.get('reversoInput')?.setValue(event.target.files[0]);
+      this.imgReverso = event.target.files[0];
+      this.nombreArchivoReverso = this.imgReverso.name;
     }
   }
 
@@ -97,24 +155,29 @@ export class SignupComponent implements OnInit {
   enviar(): void{
     // Tomamos los datos del formulario
     this.openSpinner();
-    const email = this.signupForm.get('email')?.value;
-    const password = this.signupForm.get('password')?.value;
-    const password_confirmation = this.signupForm.get('password2')?.value;
-    // Llamamos al servicio para hacer el post de la información
-    this.authService.submitRegistro( email, password, password_confirmation ).subscribe(
+    if (this.imgFrontalUrl.length > 0 && this.imgReversoUrl.length > 0) {
+      const nombre = this.signupForm.get('nombre')?.value;
+      const email = this.signupForm.get('email')?.value;
+      // Llamamos al servicio para hacer el post de la información
+      this.authService.submitRegistro( nombre, email, this.imgFrontalUrl, this.imgReversoUrl ).subscribe(
       // Si todo sale bien, aquí se recibe la respuesta
       ( response: SignUpResponse ) => {
-        localStorage.setItem('token', response.token);
-        this.openDialog();
+        this.openDialog(response.mensaje);
       },
       // Si ocurre algún error, se imprimen en esta sección
       ( error: any ) => {
-        console.log( error.error.message );
+        console.log( error );
         this.dialog.closeAll();
         this.snackBar.open( error.error.message, 'Cerrar', {
           duration: 5000
         });
       });
+    } else {
+      this.dialog.closeAll();
+      this.snackBar.open( 'Debe insertar las imágenes', 'Cerrar', {
+        duration: 5000
+      });
+    }
   }
 
   // Método para obtener mensajes de errores de validaciones Email
@@ -125,50 +188,38 @@ export class SignupComponent implements OnInit {
 
     return this.signupForm.get('email')?.hasError('email') ? 'Email no válido' : '';
   }
-
-  // Método para obtener mensajes de errores de validaciones Password
-  getErrorPassMessage(): string {
-    if (this.signupForm.get('password')?.hasError('required')) {
+  getErrorNombreMessage(): string {
+    if (this.signupForm.get('nombre')?.hasError('required')) {
       return 'Debe ingresar un valor';
-    }
-    if (this.signupForm.get('password')?.hasError('minlength')) {
-      return 'Debe tener más de 8 caracteres';
-    }
-    if (this.signupForm.get('password')?.hasError('pattern')) {
-      return 'Contraseña no válida';
-    }
-    else {
+    } else {
       return '';
     }
   }
 
-  // Método para obtener mensajes de errores de confirmación de Password
-  getErrorConfirmPassMessage(): string {
-    if (this.signupForm.get('password2')?.hasError('required')) {
-      return 'Debe ingresar un valor';
+  getErrorFrontalImageMessage(): string {
+    if (this.frontalImagenForm.get('frontalInput')?.hasError('required')) {
+      return 'Debe insertar una imagen';
+    } else {
+      return '';
     }
-    else if (this.signupForm.get('password2')?.hasError('minlength')) {
-      return 'Constraseña inválida';
-    }
-    else if (this.signupForm.get('password') !== this.signupForm.get('password2')) {
-      return 'Contraseña no coincide';
-    }
-    else {
+  }
+  getErrorReversoImageMessage(): string {
+    if (this.reversoImagenForm.get('reversoInput')?.hasError('required')) {
+      return 'Debe insertar una imagen';
+    } else {
       return '';
     }
   }
 
   // Método para mostrar el cuadro de dialogo con un mensaje
-  openDialog(): void {
+  openDialog(mensaje: string): void {
     // Cerramos todos los dialogos abiertos hasta el momento
     this.dialog.closeAll();
-    // Abrimos el nuevo dialogo con el mensaje
-    const mensaje = 'Su cuenta ha sido registrada exitósamente. Hemos enviado un correo a ' + this.signupForm.get('email')?.value + ' para que pueda realizar la verificación de su cuenta.';
     this.dialog.open( DialogMessageComponent,
                       { data: {
                           title: 'Registro de Cuenta',
                           message: mensaje,
-                          redirect: '/autentication/login'
+                          redirect: '/enterprise/login'
                         } } );
   }
 

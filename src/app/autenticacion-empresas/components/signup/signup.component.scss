@@ -19,14 +19,18 @@
 
 .subtitle2 {
     font-weight: bold;
+    text-align: center;
     margin-bottom: 0px;
+    margin-top: 5px;
 }
 
 .custom-file-upload {
     border: 1px solid #ccc;
     border-radius: 3px;
     display: inline-block;
+    width: max-content;
     padding: 6px 12px;
+    margin-top: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
     cursor: pointer;

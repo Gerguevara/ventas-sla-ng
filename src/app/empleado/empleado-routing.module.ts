@@ -4,8 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path:'',
-    component:EmpleadoComponent,
+    path: '',
+    component: EmpleadoComponent,
     children:
     [
       {
@@ -19,6 +19,10 @@ const routes: Routes = [
       {
         path: 'etiqueta',
         loadChildren: () => import('./etiqueta/etiqueta.module').then(m => m.EtiquetaModule)
+      },
+      {
+        path: 'solicitudesEmpresa',
+        loadChildren: () => import('./solicitudes-empresa/solicitudes-empresa.module').then(m => m.SolicitudesEmpresaModule)
       },
       {
         path: '**',

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
-import { AutenticacionEmpresasModule } from './autenticacion-empresas/autenticacion-empresas.module';
+import { LoginGuard } from './guards/login.guard';
 
 const routes: Routes = [
   {
@@ -10,11 +10,13 @@ const routes: Routes = [
   },
   {
     path: 'autentication',
-    loadChildren: () => import('./autenticacion/autenticacion.module').then(m => m.AutenticacionModule)
+    loadChildren: () => import('./autenticacion/autenticacion.module').then(m => m.AutenticacionModule),
+    canLoad: [LoginGuard]
   },
   {
     path: 'enterprise',
-    loadChildren: () => import('./autenticacion-empresas/autenticacion-empresas.module').then(m => m.AutenticacionEmpresasModule)
+    loadChildren: () => import('./autenticacion-empresas/autenticacion-empresas.module').then(m => m.AutenticacionEmpresasModule),
+    canLoad: [LoginGuard]
   },
   {
     path: 'panel',

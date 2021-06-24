@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatButtonModule,
     MatIconModule,
     MatSnackBarModule,
-    MatExpansionModule
+    MatProgressSpinnerModule
   ]
 })
 export class AutenticacionEmpresasModule { }

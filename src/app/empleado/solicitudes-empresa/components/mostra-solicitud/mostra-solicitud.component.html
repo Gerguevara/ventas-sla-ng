@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Solicitud Empresa</h2>
+<mat-dialog-content class="mat-typography">
+    <mat-form-field appearance="fill">
+        <mat-label>Nombre Comercial</mat-label>
+        <input matInput [value]="data.nombreComercial" disabled>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput [value]="data.email" disabled>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Fecha de Solicitud</mat-label>
+        <input matInput [value]="data.created_at | date:'medium'" disabled>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <h4>NIT</h4>
+    <h6>Frontal</h6>
+    <img [src]="data.nitFrontal" alt="NIT Frontal">
+    <br>
+    <h6>Reverso</h6>
+    <img [src]="data.nitReverso" alt="NIT Reverso">
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-button (click)="cambiarEstado('R')">Denegar</button>
+    <button mat-button (click)="cambiarEstado('A')" cdkFocusInitial>Aprobar</button>
+</mat-dialog-actions>
