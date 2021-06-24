@@ -7,8 +7,8 @@
         <!--Campo para Nombre Empresa-->
         <mat-form-field appearance="outline" class="input">
             <mat-label>Nombre Empresa</mat-label>
-            <input matInput formControlName="email">
-            <mat-error *ngIf="emailNoValido">{{ getErrorEmailMessage() }}</mat-error>
+            <input matInput formControlName="nombre">
+            <mat-error *ngIf="nombreNoValido">{{ getErrorNombreMessage() }}</mat-error>
         </mat-form-field>
         <!--Campo para Email-->
         <mat-form-field appearance="outline" class="input">
@@ -16,53 +16,57 @@
             <input matInput placeholder="alguien@example.com" formControlName="email">
             <mat-error *ngIf="emailNoValido">{{ getErrorEmailMessage() }}</mat-error>
         </mat-form-field>
-        <!--Campo para Contraseña-->
-        <mat-form-field appearance="outline" class="input">
-            <mat-label>Ingrese Nueva Contraseña</mat-label>
-            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-            <button mat-icon-button type="button" matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-            <mat-error *ngIf="passwordNoValido">{{ getErrorPassMessage() }}</mat-error>
-        </mat-form-field>
-        <!--Campo para Confirmar Contraseña-->
-        <mat-form-field appearance="outline" class="input">
-            <mat-label>Confirmar Contraseña</mat-label>
-            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password2">
-            <button mat-icon-button type="button" matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-            <mat-error *ngIf="password2NoValido">{{ getErrorConfirmPassMessage() }}</mat-error>
-        </mat-form-field>
-        <!-- NIT Frontal -->
-        <mat-divider></mat-divider>
-        <h3 class="subtitle2">Imagen NIT Frontal</h3>
-        <!-- Este iframe es para evitar la actualización de la página -->
-        <iframe name="imagen" style="display:none;"></iframe>
-        <form [formGroup]="imagenesForm" target="imagen" (ngSubmit)="cargarImagen()" style="text-align: left;">
-            <label for="file-upload" class="custom-file-upload" style="width: 65%;">{{ nombreArchivoFrontal }}</label>
-            <input id="file-upload" formControlName="frontalInput" name="uploaded_file" type="file" (change)="cambioImagenFrontal($event)" [disabled]="deshabilitarImagen" />
-            <button type="submit" mat-flat-button class="button" color="primary" [disabled]="!deshabilitarImagen">Insertar</button>
-        </form>
-        <!-- NIT Reverso -->
-        <mat-divider></mat-divider>
-        <h3 class="subtitle2">Imagen NIT Reverso</h3>
-        <!-- Este iframe es para evitar la actualización de la página -->
-        <iframe name="imagen" style="display:none;"></iframe>
-        <form [formGroup]="imagenesForm" target="imagen" (ngSubmit)="cargarImagen()" style="text-align: left;">
-            <label for="file-upload" class="custom-file-upload" style="width: 65%;">{{ nombreArchivoReverso }}</label>
-            <input id="file-upload" formControlName="reversoInput" name="uploaded_file" type="file" (change)="cambioImagenReverso($event)" [disabled]="deshabilitarImagen" />
-            <button type="submit" mat-flat-button class="button" color="primary" [disabled]="!deshabilitarImagen">Insertar</button>
-        </form>
-        <mat-divider></mat-divider>
-        <br>
-        <div class="row">
-            <div class="col">
-                <button mat-raised-button type="button" color="accent" class="input" (click)="return()">Regresar</button>
-            </div>
-            <div class="col">
-                <button mat-raised-button [disabled]="signupForm.invalid" color="primary" class="input">Enviar</button>
-            </div>
-        </div>
     </form>
+    <!-- NIT Frontal -->
+    <mat-divider></mat-divider>
+    <h3 class="subtitle2">Imagen NIT Frontal</h3>
+    <!-- Este iframe es para evitar la actualización de la página -->
+    <iframe name="imagenFrontal" style="display:none;"></iframe>
+    <form [action]="urlImageUpload" style="text-align: center;" method="POST" enctype="multipart/form-data" target="imagenFrontal">
+        <label for="file-upload-frontal" class="custom-file-upload">
+            {{ nombreArchivoFrontal }}
+        </label>
+        <input id="file-upload-frontal" name="uploaded_file" type="file" accept="image/png, image/jpeg" (change)="cambioImagenFrontal($event)" [disabled]="!deshabilitarImagen" #formImagen/>
+        <input type="hidden" name="file_hash" [value]="hash" />
+        <h5 class="subtitle" *ngIf="imgFrontalNoValido" style="color: red;">{{ getErrorFrontalImageMessage() }}</h5>
+        <button type="submit" (click)="cargarImagenFrontal(formImagen)" mat-flat-button class="button" color="primary" [disabled]="!deshabilitarImagen">Insertar</button>
+    </form>
+    <div style="margin: 10px;">
+        <div *ngIf="cargandoImagenFrontal" style="margin-bottom: 10px; margin-left: 45.5%; display: block;">
+            <mat-spinner [strokeWidth]=5 [diameter]=70></mat-spinner>
+        </div>
+        <img *ngIf="imgFrontalUrl !== '' && !cargandoImagenFrontal" [src]="imgFrontalUrl" alt="Imagen Producto" class="imagen-view" accept="image/jpeg,image/png,image/jpg">
+        <h4 *ngIf="imgFrontalUrl === '' && !cargandoImagenFrontal" style="margin-bottom: 10px; text-align: center;">{{ textoImagen }}</h4>
+    </div>
+    <!-- NIT Reverso -->
+    <mat-divider></mat-divider>
+    <h3 class="subtitle2">Imagen NIT Reverso</h3>
+    <!-- Este iframe es para evitar la actualización de la página -->
+    <iframe name="imagenReverso" style="display:none;"></iframe>
+    <form [action]="urlImageUpload" style="text-align: center;" method="POST" enctype="multipart/form-data" target="imagenReverso">
+        <label for="file-upload" class="custom-file-upload">
+            {{ nombreArchivoReverso }}
+        </label>
+        <input id="file-upload" name="uploaded_file" type="file" accept="image/png, image/jpeg" (change)="cambioImagenReverso($event)" [disabled]="!deshabilitarImagen" #formImagen/>
+        <input type="hidden" name="file_hash" [value]="hash" />
+        <h5 class="subtitle" *ngIf="imgReversoNoValido" style="color: red;">{{ getErrorReversoImageMessage() }}</h5>
+        <button type="submit" (click)="cargarImagenReverso(formImagen)" mat-flat-button class="button" color="primary" [disabled]="!deshabilitarImagen">Insertar</button>
+    </form>
+    <div style="margin: 10px;">
+        <div *ngIf="cargandoImagenReverso" style="margin-bottom: 10px; margin-left: 45.5%; display: block;">
+            <mat-spinner [strokeWidth]=5 [diameter]=70></mat-spinner>
+        </div>
+        <img *ngIf="imgReversoUrl !== '' && !cargandoImagenReverso" [src]="imgReversoUrl" alt="Imagen Producto" class="imagen-view" accept="image/jpeg,image/png,image/jpg">
+        <h4 *ngIf="imgReversoUrl === '' && !cargandoImagenReverso" style="margin-bottom: 10px; text-align: center;">{{ textoImagen }}</h4>
+    </div>
+    <mat-divider></mat-divider>
+    <br>
+    <div class="row">
+        <div class="col">
+            <button mat-raised-button type="button" color="accent" class="input" (click)="return()">Regresar</button>
+        </div>
+        <div class="col">
+            <button mat-raised-button [disabled]="signupForm.invalid && frontalImagenForm.invalid && reversoImagenForm.invalid" (click)="enviar()" color="primary" class="input">Enviar</button>
+        </div>
+    </div>
 </mat-card>

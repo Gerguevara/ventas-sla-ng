@@ -18,9 +18,6 @@ export interface LoginResponse {
 
 export interface SignUpResponse {
   usuario_empresa: string;
-  user: string;
-  token: string;
-  token_type: string;
   mensaje: string;
 }
 
@@ -31,10 +28,24 @@ export class LoginEmpresasService {
 
   urlLogin = `${environment.apiUrl}` + 'loginEmpresa';
   urlSignUp = `${environment.apiUrl}` + 'registrarEmpresa';
+  urlUploadServer = 'http://dr17010pdm115.000webhostapp.com/upload.php';
 
   constructor( protected http: HttpClient ) {
     console.log('Running login enterprise service...');
   }
+
+  subirImagen( form: any, hash: string ): Observable<any> {
+    const token = 'Bearer ' + localStorage.getItem('token');
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': token
+      })
+    };
+    return this.http.post<any>('http://dr17010pdm115.000webhostapp.com/upload.php?fileHash=' + hash, JSON.stringify(form.value));
+  }
+
 
   submitLogin( email: string, password: string ): Observable<LoginResponse> {
     const httpBody = {
@@ -44,11 +55,12 @@ export class LoginEmpresasService {
     return this.http.post<LoginResponse>(this.urlLogin, httpBody, httpOptions);
   }
 
-  submitRegistro( email: string, password: string, password_confirmation: string ): Observable<SignUpResponse> {
+  submitRegistro( nombre: string, email: string, nitFrontal: string, nitReverso: string ): Observable<SignUpResponse> {
     const httpBody = {
-      email,
-      password,
-      password_confirmation
+      nombreComercial: nombre,
+      email: email,
+      nitFrontal: nitFrontal,
+      nitReverso: nitReverso
     };
     return this.http.post<SignUpResponse>(this.urlSignUp, httpBody, httpOptions);
   }
