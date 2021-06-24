@@ -1,4 +1,5 @@
 <button
+  class="add-button"
   color="primary"
   mat-fab
   (click)="openForm()">
@@ -6,6 +7,7 @@
 </button>
 <app-table-etiqueta
   [etiquetas]="respuesta?.data"
+  [categorias]="categorias"
   (detailEvent)="detailEtiqueta($event)"
   (updateEvent)="updateEtiqueta($event)"
   (deleteEvent)="deleteEtiqueta($event)">

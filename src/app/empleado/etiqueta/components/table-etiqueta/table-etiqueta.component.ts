@@ -1,8 +1,8 @@
-import { CategoriaService } from './../../../../core/services/categoria.service';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Etiqueta } from './../../../../core/Models/etiqueta.model';
 import { Categoria } from 'src/app/core/Models/categoria.model';
+import { CategoriaService } from './../../../../core/services/categoria.service';
 
 @Component({
   selector: 'app-table-etiqueta',
@@ -13,6 +13,8 @@ export class TableEtiquetaComponent implements OnChanges {
 
   @Input()
   etiquetas? : Etiqueta[] = undefined;
+  @Input()
+  categorias? : Categoria[] = undefined;
 
   @Output()
   detailEvent = new EventEmitter<number>();
@@ -41,14 +43,8 @@ export class TableEtiquetaComponent implements OnChanges {
   }
 
   getCategoria(idCategoria : number) : string{
-    if(idCategoria!==this.idCategoriaActual)
-      this.idCategoriaActual = idCategoria;
-      this.categoryService.getObject(this.idCategoriaActual).subscribe({
-        next:(categoria : Categoria)=>{
-          this.categoriaActual = categoria.nombre;
-        }
-      })
-    return this.categoriaActual;
+    let catAux = this.categorias?.find((cat : Categoria) => cat.id ===idCategoria)
+    return (catAux ? catAux.nombre : "");
   }
 
 }

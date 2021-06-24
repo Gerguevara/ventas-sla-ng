@@ -1,14 +1,47 @@
-import { HttpClient } from '@angular/common/http';
-import { Etiqueta } from './../Models/etiqueta.model';
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Etiqueta } from './../Models/etiqueta.model';
+import { Resultado } from '../Models/resultado.model';
 import { RecursoService } from './recurso.service';
+import { environment } from 'src/environments/environment';
+import { Categoria } from '../Models/categoria.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EtiquetaService extends RecursoService<Etiqueta> {
 
+  private origin_config = `${environment.allowedOrigin}`;
+  private API_URL_config = `${environment.apiUrl}`;
+
   constructor(protected httpClient: HttpClient) { 
     super('etiquetas',httpClient);
+  }
+
+  getEtiquetas(page: number = 1, page_size?: number): {resultado:Observable<Resultado<Etiqueta>>,categorias:Observable<Resultado<Categoria>>} {
+    const token = 'Bearer ' + localStorage.getItem('token');
+    let paramsReq = undefined;
+    if(page_size)
+      paramsReq = { page: page.toString(), page_size: page_size.toString()};
+    else
+      paramsReq = { page: page.toString()};
+
+    let headers = new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Access-Control-Allow-Origin': this.origin_config,
+      'Authorization': token
+    });
+    let resultado : Observable<Resultado<Etiqueta>> = this.httpClient.get<Resultado<Etiqueta>>(`${this.API_URL_config}etiquetas/`, {
+      params: paramsReq,
+      headers: headers
+    });
+    let categorias : Observable<Resultado<Categoria>> =this.httpClient.get<Resultado<Categoria>>(`${this.API_URL_config}categorias/`, {
+      headers: headers
+    });
+    return {
+      resultado: resultado,
+      categorias : categorias
+    }
   }
 }

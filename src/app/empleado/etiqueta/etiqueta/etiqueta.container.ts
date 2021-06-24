@@ -10,6 +10,7 @@ import { Etiqueta } from './../../../core/Models/etiqueta.model';
 import { Resultado } from './../../../core/Models/resultado.model';
 import { EtiquetaService } from './../../../core/services/etiqueta.service';
 import { HttpResponse } from '@angular/common/http';
+import { Categoria } from 'src/app/core/Models/categoria.model';
 
 @Component({
   selector: 'app-etiqueta',
@@ -24,16 +25,28 @@ export class EtiquetaContainer implements OnInit {
   dataLength : number = 0;
   //ref que almacena las acciones del dialogo loading
   cargandoDialogRef? : MatDialogRef<DialogSpinnerComponent> = undefined;
+  //objeto que almacenara las categorias
+  categorias? : Categoria[] = [];
   
   //===observadores===
-  private getObserver : PartialObserver<Resultado<Etiqueta>> = {
+  private getEtiquetasObserver :
+   PartialObserver<Resultado<Etiqueta>> = {
     next: (respuesta : Resultado<Etiqueta>) => {
       this.respuesta = respuesta;
       this.dataLength = respuesta.total;
     },
     error: () => {},
-    complete: () => this.cargandoDialogRef?.close(),
+    complete: () => {
+      this.cargandoDialogRef?.close();
+    },
   }
+
+  private getCategoriasObserver:
+   PartialObserver<Resultado<Categoria>> = {
+     next:(cats : Resultado<Categoria>)=>{
+      this.categorias = cats.data;
+     }
+   }
   private detailObserver : PartialObserver<Etiqueta> = {
     next: (etiqueta:Etiqueta) => {
       //abrir dialogo
@@ -57,14 +70,21 @@ export class EtiquetaContainer implements OnInit {
           //caso de error
           error: () => {}
         }
-      )    },
+      )   
+    },
     error: () => {},
-    complete: () => {},
+    complete: () => {
+      this.cargandoDialogRef?.close();
+    }, 
   }
   private updateObserver : PartialObserver<Etiqueta> = {
-    next: (etiqueta : Etiqueta) => this.openForm(etiqueta),
+    next: (etiqueta : Etiqueta) => {
+      this.openForm(etiqueta);
+    },
     error: () => {},
-    complete: () => this.cargandoDialogRef?.close(),
+    complete: () => {
+      this.cargandoDialogRef?.close();
+    },
   }
   
   //===constructor===
@@ -87,7 +107,10 @@ export class EtiquetaContainer implements OnInit {
     let pageSize = 10;
     if(typeof pagina !== "number") pageSize = pagina.pageSize;
     //obtener las categorias
-    this.etiquetaService.getObjects(numeroDePagina, pageSize).subscribe(this.getObserver);
+    let getEtiquetas = this.etiquetaService.getEtiquetas(numeroDePagina, pageSize);
+    getEtiquetas.categorias.subscribe(this.getCategoriasObserver);
+    getEtiquetas.resultado.subscribe(this.getEtiquetasObserver);
+
   }
 
   //trae un producto
@@ -115,28 +138,31 @@ export class EtiquetaContainer implements OnInit {
     )
     dialogoFormRef.afterClosed().subscribe({
       //etiqueta obtenida del dialogo
-      next: (etiquetaDialogo? : Etiqueta)=>{
+      next: (etiquetaDialogo?)=>{
         //si la etiqueta viene
         if(etiquetaDialogo){
+          etiquetaDialogo["categoria_id"]=etiquetaDialogo.categoria_id.id;
           //si ya existe
           if(etiquetaDialogo.id){
             //actualizarlo
-            this.etiquetaService.updateObject(etiquetaDialogo).subscribe({
+            this.etiquetaService.updateObject(etiquetaDialogo as Etiqueta).subscribe({
               //luego de actualizarlo
-              next:(etiquetaActualizada : Etiqueta)=>{
+              next:(res : any)=>{ //{mensaje,resultado}
                 //obtener el indice
                 const index = this.respuesta ? this.respuesta.data.findIndex(
                   //donde el id corresponda al de la etiqueta actualizada
-                  (etiquetaABuscar : Etiqueta)=> etiquetaABuscar.id === etiquetaActualizada.id 
+                  (etiquetaABuscar : Etiqueta)=> etiquetaABuscar.id === etiquetaDialogo.id 
                 //si el indice no esta, retornar -1
                 ) : -1
                 //si el objeto se encontro 
                 if(index >= 0) {
+                  let etiAux = etiquetaDialogo as Etiqueta;
                   //actualizar el arreglo de categorias en la respuesta
-                  if(this.respuesta) this.respuesta.data[index] = etiquetaActualizada;
+                  if(this.respuesta) 
+                  this.respuesta.data[index] = etiAux;
                 }
               },
-              complete:()=> this.getEtiquetas(this.paginator.pageIndex)
+              error:(err:any)=>console.log(err),
             })
           //si no esta, entonces hay que guardarlo
           } else {
@@ -144,13 +170,12 @@ export class EtiquetaContainer implements OnInit {
             this.etiquetaService.postObject(etiquetaDialogo).subscribe({
               //Meter la etiqueta que se creo, al arreglo de categorias de la respuesta
               next:(categoriaNueva : Etiqueta)=> this.respuesta?.data.push(categoriaNueva),
-              complete:()=> this.getEtiquetas(this.paginator.pageIndex)
             })
           }
         }
       },
       error: ()=>{},
-      complete: ()=>{}
+      complete:()=> this.getEtiquetas(this.paginator.pageIndex)
     })
   }
 

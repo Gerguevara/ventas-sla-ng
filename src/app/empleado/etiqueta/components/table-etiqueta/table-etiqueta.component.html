@@ -1,4 +1,4 @@
-<div class="header"><h1 color="primary">Etiquetas</h1></div>
+<div class="header"><h1 color="primary">Tipos de etiquetas</h1></div>
 <table mat-table [dataSource]="dataSource" class="table-etiqueta mat-elevation-z2">
 
   <!-- Columna ID -->
@@ -9,7 +9,7 @@
 
     <!-- Cplumna de descripciones -->
   <ng-container matColumnDef="categoria">
-    <th mat-header-cell *matHeaderCellDef> Categoria </th>
+    <th mat-header-cell *matHeaderCellDef>Categoria de pertenencia</th>
     <td mat-cell *matCellDef="let etiqueta"> {{getCategoria(etiqueta.categoria_id)}} </td>
   </ng-container>
 
