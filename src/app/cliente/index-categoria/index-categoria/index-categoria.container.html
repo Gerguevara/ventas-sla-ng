@@ -1,0 +1,10 @@
+<h1>{{catTitle}}</h1>
+<mat-grid-list [cols]="breakpoint" rowHeight="425" gutterSize="5px" (window:resize)="onResize()">
+<ng-container *ngFor="let producto of listaProductos">
+    <mat-grid-tile>
+        <a [routerLink]="['/detalle',producto.id]">
+            <mat-card><app-index-product-card [productoInput]="producto"></app-index-product-card></mat-card>
+        </a>
+    </mat-grid-tile>
+</ng-container>
+</mat-grid-list>

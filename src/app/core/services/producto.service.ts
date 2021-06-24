@@ -4,7 +4,6 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Categoria } from './../Models/categoria.model';
 import { Producto } from './../Models/producto.model';
-import { Etiqueta } from '../Models/etiqueta.model';
 import { RecursoService } from './recurso.service';
 import { environment } from 'src/environments/environment';
 
@@ -21,7 +20,7 @@ export interface ProductoPost {
 @Injectable({
   providedIn: 'root'
 })
-export class ProductoService  extends RecursoService<Etiqueta>{
+export class ProductoService  extends RecursoService<Producto>{
 
   private endpoint : string = "productos/";
   private urlUploadServer : string = environment.uploadUrl;

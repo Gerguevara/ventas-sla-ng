@@ -20,6 +20,9 @@ import { IndexProductCardComponent } from './index-product-card/index-product-ca
     IndexRoutingModule,
     MatCardModule,
     MatListModule
+  ],
+  exports: [
+    IndexProductCardComponent
   ]
 })
 export class IndexModule { }

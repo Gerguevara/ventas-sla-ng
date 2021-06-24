@@ -1,3 +1,21 @@
-.mat-sidenav-content{
+@import '~@angular/material/theming';
+.mat-sidenav-container{
     min-height: 100%;
+}
+
+.mat-list a{
+    text-decoration: none;
+}
+
+.mat-list-item:hover{
+    background-color: mat-color($mat-gray,100);
+}
+
+.mat-sidenav h1{
+    margin: 20px;
+}
+
+.mat-toolbar a{
+    text-decoration: none;
+    color: #FFF;//mat-color($mat-gray,100);
 }

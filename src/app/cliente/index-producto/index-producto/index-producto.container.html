@@ -1,0 +1,27 @@
+<table class="product-container">
+    <tr>
+        <th>
+            <img src="{{producto?.imagen}}" alt={{producto?.descripcion_producto}}>
+        </th>
+        <th>
+                <h1> {{producto?.nombre_producto}} </h1>
+                    <h3> {{producto?.descripcion_producto}} </h3>
+            <mat-list>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                <h3 matLine>Calificacion</h3>
+                <p matLine>
+                    <span> {{producto?.calificacion_promedio}} </span>
+                </p>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                <h3 matLine>Precio </h3>
+                <p matLine>
+                    <span> {{producto?.precio}} </span>
+                </p>
+                </mat-list-item>
+            </mat-list>
+        </th>
+    </tr>
+</table>

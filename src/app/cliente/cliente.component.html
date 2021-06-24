@@ -5,20 +5,22 @@
         (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
     </button>
-    <span>{{title}}</span>
+    <a [routerLink]="['/']"><span>{{title}}</span></a>
 </mat-toolbar>
 <mat-sidenav-container>
     <mat-sidenav 
-        [opened]="true"
+        [opened]="false"
         [mode]="'side'"
         role="directory"
         #sidenav>
-        
+        <h1> Categorías </h1>        
         <mat-list>
             <ng-container *ngFor="let cat of categorias">
+                <a [routerLink]="['/categoria', cat.id]">
                 <mat-list-item>
                   <h3 matLine> {{cat?.nombre}} </h3>
                 </mat-list-item>
+                </a>
                 <mat-divider></mat-divider>
             </ng-container>
         </mat-list>

@@ -22,13 +22,14 @@ export class ClienteComponent implements OnInit {
   }
 
   constructor(private categoriaService : CategoriaService) {
-    this.sidenavMode()
   }
 
   ngOnInit(): void {
     this.categoriaService.getObjects().subscribe(
-      (result : Resultado<Categoria>) => this.categorias=result.data,
-    )
+      {
+        next: (result : Resultado<Categoria>) => this.categorias=result.data,
+        complete: () => this.sidenavMode(),
+      });
   }
 
   sidenavMode(){

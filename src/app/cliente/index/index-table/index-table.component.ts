@@ -13,6 +13,7 @@ export class IndexTableComponent implements OnInit {
   @Input()
   categoriaId : number = -1;
   productos : Producto[] = [];
+  maxProductos : number = 4;
   constructor(private productoService : ProductoService) { }
 
   ngOnInit(): void {
@@ -20,9 +21,8 @@ export class IndexTableComponent implements OnInit {
       next: (res : Resultado<Producto>)=>{
         this.productos = res.data.filter((prod:Producto)=>prod.id_categoria===this.categoriaId)
         this.productos=this.productos.sort(this.comparador);
-        if(this.productos.length > 5)
-          this.productos = this.productos.slice(4);
-        console.log(this.productos);
+        if(this.productos.length > this.maxProductos)
+          this.productos = this.productos.slice(0,this.maxProductos);
       }
     })
   }

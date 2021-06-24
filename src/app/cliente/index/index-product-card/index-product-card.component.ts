@@ -14,7 +14,6 @@ export class IndexProductCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.productoInput)
   }
 
 }

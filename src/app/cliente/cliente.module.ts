@@ -11,15 +11,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
-import { ListarCategoriasComponent } from './listar-categorias/listar-categorias.component';
-import { DetalleProductoComponent } from './detalle-producto/detalle-producto.component';
-
 
 @NgModule({
   declarations: [
-    ClienteComponent,
-    ListarCategoriasComponent,
-    DetalleProductoComponent
+    ClienteComponent
   ],
   imports: [
     CommonModule,
