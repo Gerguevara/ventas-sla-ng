@@ -30,6 +30,11 @@ export class EmailVerificationComponent implements OnInit {
       // Llamamos al servicio y le enviamos los parametros que recibimos
       this.auth.emailVerification( params.id, params.hash ).subscribe( (response: EmailVerificationResponse) => {
         // Se imprimen los mensajes si todo ha salido bien
+        const tokenRegistro = localStorage.getItem('token-registro');
+        if (tokenRegistro) {
+          localStorage.setItem('token', tokenRegistro);
+          localStorage.removeItem('token-registro');
+        }
         this.openDialog( response.mensaje );
       },
       ( error: any ) => {

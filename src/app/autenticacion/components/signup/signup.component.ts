@@ -72,7 +72,7 @@ export class SignupComponent implements OnInit {
     this.authService.submitRegistro( email, password, password_confirmation ).subscribe(
       // Si todo sale bien, aquí se recibe la respuesta
       ( response: SignUpResponse ) => {
-        localStorage.setItem('token', response.token);
+        localStorage.setItem('token-registro', response.token);
         this.openDialog();
       },
       // Si ocurre algún error, se imprimen en esta sección

@@ -1,0 +1,34 @@
+<mat-card>
+    <table mat-table [dataSource]="dataSource" style="width: 100%;" class="mat-elevation-z8 demo-table">
+        <!-- Position Column -->
+        <ng-container matColumnDef="ID">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let solicitud"> {{solicitud.id}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="NombreComercial">
+            <th mat-header-cell *matHeaderCellDef> Nombre Comercial </th>
+            <td mat-cell *matCellDef="let solicitud"> {{solicitud.nombreComercial}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="FechaSolicitud">
+            <th mat-header-cell *matHeaderCellDef> Fecha de Solicitud </th>
+            <td mat-cell *matCellDef="let solicitud"> {{solicitud.created_at | date: 'medium' }} </td>
+        </ng-container>
+
+        <!-- Acciones Column -->
+        <ng-container matColumnDef="Acciones">
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+            <td mat-cell *matCellDef="let solicitud">
+                <button (click)="mostrarDialogo(solicitud)" style="margin-right: 5px; cursor: pointer;" mat-icon-button color="primary" aria-label="delete_icon">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</mat-card>

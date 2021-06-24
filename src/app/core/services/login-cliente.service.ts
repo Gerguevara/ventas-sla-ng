@@ -78,7 +78,7 @@ export class LoginClienteService {
   }
 
   emailVerification( id: string, hash: string ): Observable<EmailVerificationResponse> {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token-registro');
     const tokenRegistro = 'Bearer ' + token;
     const httpHeaders = {
       headers: new HttpHeaders({
