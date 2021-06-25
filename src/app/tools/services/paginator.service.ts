@@ -22,7 +22,7 @@ export class PaginatorService {
         'Authorization': token
       })
     };
-    const response = await this.http.get<PaginatorResponse>( urlData + '?val=' + itemsPorPagina + params, httpHeaders).toPromise();
+    const response = await this.http.get<PaginatorResponse>( urlData + '?page_size=' + itemsPorPagina + params, httpHeaders).toPromise();
     return response;
   }
 
@@ -35,7 +35,7 @@ export class PaginatorService {
         'Authorization': token
       })
     };
-    const response = await this.http.get<PaginatorResponse>( urlData + '&val=' + itemsPorPagina + params, httpHeaders).toPromise();
+    const response = await this.http.get<PaginatorResponse>( urlData + '&page_size=' + itemsPorPagina + params, httpHeaders).toPromise();
     return response;
   }
 

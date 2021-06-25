@@ -47,10 +47,10 @@ export class LoginEmpresasService {
   }
 
 
-  submitLogin( email: string, password: string ): Observable<LoginResponse> {
+  submitLogin( usuario: string, password: string ): Observable<LoginResponse> {
     const httpBody = {
-      email,
-      password
+      username: usuario,
+      password: password
     };
     return this.http.post<LoginResponse>(this.urlLogin, httpBody, httpOptions);
   }
