@@ -1,35 +1,39 @@
 <mat-toolbar color="primary">
-    <button 
-        mat-icon-button 
-        aria-label="Menú"
-        (click)="sidenav.toggle()">
+    <button mat-icon-button aria-label="Menú" (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
-    </button>            
-    <a class="title-link" [routerLink]="['/panel/']" >
+    </button>
+    <a class="title-link" [routerLink]="['/panel/']">
         <span>{{title}}</span>
     </a>
+    <span class="example-spacer"></span>
+    <button mat-raised-button style="margin-right: 10px;" (click)="adminArea()" *ngIf="rolAdmin" color="primary" class="example-icon">
+        <mat-icon>book</mat-icon> Área Cliente
+    </button>
+    <button mat-raised-button (click)="iniciarSesionClick()" *ngIf="iniciarSesion" color="primary" class="example-icon">
+        <mat-icon>send</mat-icon> Iniciar Sesión
+    </button>
+    <button mat-raised-button (click)="cerrarSesionClick()" *ngIf="!iniciarSesion" color="warn" class="example-icon">
+        <mat-icon>close</mat-icon> Cerrar Sesión
+    </button>
 </mat-toolbar>
 
 <mat-sidenav-container>
-    <mat-sidenav 
-        [opened]="true"
-        [mode]="'side'"
-        (window:resize)="onResize($event)"
-        role="directory"
-        #sidenav>
+    <mat-sidenav [opened]="true" [mode]="'side'" (window:resize)="onResize($event)" role="directory" #sidenav>
         <mat-nav-list>
-            <a mat-list-item [routerLink]="['/panel/producto']" class="list-item-container" >
+            <a mat-list-item [routerLink]="['/panel/producto']" class="list-item-container">
                 <mat-icon color="primary">receipt_long</mat-icon>&nbsp;&nbsp;Productos
             </a>
             <mat-divider></mat-divider>
-            <a mat-list-item [routerLink]="['/panel/categoria']" class="list-item-container" >
+            <a mat-list-item [routerLink]="['/panel/categoria']" class="list-item-container">
                 <mat-icon color="primary">category</mat-icon>&nbsp;&nbsp;Categorias
             </a>
             <mat-divider></mat-divider>
-            <a mat-list-item [routerLink]="['/panel/etiqueta']" class="list-item-container" >
+            <a mat-list-item [routerLink]="['/panel/etiqueta']" class="list-item-container">
                 <mat-icon color="primary">label</mat-icon>&nbsp;&nbsp;Etiquetas
             </a>
         </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content><router-outlet></router-outlet></mat-sidenav-content>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
 </mat-sidenav-container>

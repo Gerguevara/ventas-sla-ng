@@ -1,8 +1,12 @@
-.list-item-container{
+.list-item-container {
     min-width: 250px;
 }
 
-.title-link{
+.title-link {
     text-decoration: none;
     color: white;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
 }
