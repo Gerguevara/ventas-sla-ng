@@ -56,6 +56,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/panel']);
       },
       (error: any) => {
+        console.log(error);
         // Cerramos todos los dialogos abiertos hasta el momento
         this.dialog.closeAll();
         // El inicio de sesión falla y mostramos un mensaje de error al usuario
