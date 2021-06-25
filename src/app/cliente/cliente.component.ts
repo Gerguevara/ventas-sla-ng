@@ -12,7 +12,7 @@ import { CategoriaService } from './../core/services/categoria.service';
 })
 export class ClienteComponent implements OnInit {
   @ViewChild('sidenav') sidenav! : MatSidenav;
-  title = `${environment.appTitle}`;
+  title = "Servicios de Limpieza Ambiental";//`${environment.appTitle}`;
   categorias : Categoria[] = [];
   smolWindow : boolean = true;
 

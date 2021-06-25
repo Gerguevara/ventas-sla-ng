@@ -1,11 +1,11 @@
-<mat-toolbar color="accent">
+<mat-toolbar color="primary">
     <button 
         mat-icon-button 
         aria-label="Menú"
         (click)="sidenav.toggle()">
-        <mat-icon>menu</mat-icon>
+        <mat-icon class="white-icon">menu</mat-icon>
     </button>
-    <a [routerLink]="['/']"><span>{{title}}</span></a>
+    <a class="logo-link" [routerLink]="['/']"><img class="logo-img" src="assets/logo.png"><span class="titulo-navbar">{{title}}</span></a>
 </mat-toolbar>
 <mat-sidenav-container>
     <mat-sidenav 

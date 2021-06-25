@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class EmpleadoComponent implements OnInit {
   @ViewChild('sidenav') sidenav! : MatSidenav;
-  title = `${environment.appTitle}`;
+  title = "Panel de administración";//`${environment.appTitle}`;
   smolWindow : boolean = true;
   
   @HostListener('window:resize', ['$event'])
