@@ -2,11 +2,18 @@
     min-width: 250px;
 }
 
+.mat-sidenav-container{
+    min-height: 100%;
+}
+
 .title-link {
     text-decoration: none;
     color: white;
 }
 
+.white-icon {
+    color: white;
+}
 .example-spacer {
     flex: 1 1 auto;
 }

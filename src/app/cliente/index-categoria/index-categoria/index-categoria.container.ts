@@ -1,3 +1,4 @@
+import { IndexService } from './../../../core/services/index.service';
 import { Categoria } from './../../../empleado/models/categoria.models';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -16,7 +17,7 @@ export class IndexCategoriaContainer implements OnInit {
   breakpoint?: number= 4;
   catTitle:string = "";
   constructor(
-    private productoService : ProductoService,
+    private indexService : IndexService,
     private route : ActivatedRoute
     ) { }
 
@@ -26,10 +27,10 @@ export class IndexCategoriaContainer implements OnInit {
       (params: ParamMap) => {
         let idObtenido = params.get('id')
         if(idObtenido) this.idActual = Number(params.get('id'));
-        this.productoService.obtenerCategoriaProducto(this.idActual).subscribe(
+        this.indexService.obtenerCategoriaProducto(this.idActual).subscribe(
           (result:Categoria)=>{this.catTitle=result.nombre}
         )
-        this.productoService.obtenerListaProductos().subscribe({
+        this.indexService.getObjects().subscribe({
           next:(result : Resultado<Producto>)=>{
               this.listaProductos = result.data;
               this.listaProductos = this.listaProductos.filter((producto:Producto)=>producto.id_categoria===this.idActual)
