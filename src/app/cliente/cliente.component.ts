@@ -66,6 +66,7 @@ export class ClienteComponent implements OnInit {
       console.log(response);
       this.dialog.closeAll();
       localStorage.removeItem('token');
+      localStorage.removeItem('rol');
       window.location.reload();
     });
   }
