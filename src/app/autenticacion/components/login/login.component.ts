@@ -53,6 +53,7 @@ export class LoginComponent implements OnInit {
         // Cerramos todos los dialogos abiertos hasta el momento
         this.dialog.closeAll();
         localStorage.setItem('token', response.token);
+        localStorage.setItem('rol', response.rol);
         this.router.navigate(['producto/index/table-producto']);
       },
       (error: any) => {

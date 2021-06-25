@@ -1,23 +1,23 @@
 @import '~@angular/material/theming';
-.mat-sidenav-container{
+.mat-sidenav-container {
     min-height: 100%;
 }
 
-.mat-list a{
+.mat-list a {
     text-decoration: none;
 }
 
-.mat-list-item:hover{
-    background-color: mat-color($mat-gray,100);
+.mat-list-item:hover {
+    background-color: mat-color($mat-gray, 100);
 }
 
-.mat-sidenav h1{
+.mat-sidenav h1 {
     margin: 20px;
 }
 
-.mat-toolbar a{
+.mat-toolbar a {
     text-decoration: none;
-    color: #FFF;//mat-color($mat-gray,100);
+    color: #FFF; //mat-color($mat-gray,100);
 }
 
 .white-icon {
@@ -40,4 +40,8 @@
 .titulo-navbar{
     display: inline-flex;
     vertical-align:middle;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
 }

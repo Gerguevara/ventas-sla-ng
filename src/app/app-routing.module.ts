@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 import { LoginGuard } from './guards/login.guard';
+import { RolGuard } from './guards/rol.guard';
 
 const routes: Routes = [
   {
@@ -21,7 +22,7 @@ const routes: Routes = [
   {
     path: 'panel',
     loadChildren: () => import('./empleado/empleado.module').then(m => m.EmpleadoModule),
-    canLoad: [AuthGuard]
+    canLoad: [AuthGuard, RolGuard]
   },
   {
     path: '**',
