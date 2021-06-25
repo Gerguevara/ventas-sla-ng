@@ -24,6 +24,7 @@ export abstract class RecursoService<T extends Recurso> {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
         'Access-Control-Allow-Origin': this.origin,
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
         'Authorization': token
       })
     };
@@ -37,6 +38,7 @@ export abstract class RecursoService<T extends Recurso> {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
         'Access-Control-Allow-Origin': this.origin,
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
         'Authorization': token
       })
     });
@@ -65,6 +67,7 @@ export abstract class RecursoService<T extends Recurso> {
         observe: 'response',
         headers: new HttpHeaders({
           'Access-Control-Allow-Origin': this.origin,
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
           'Authorization': token
         })
       });
