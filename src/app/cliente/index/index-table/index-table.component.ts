@@ -1,3 +1,4 @@
+import { IndexService } from './../../../core/services/index.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { Categoria } from 'src/app/core/Models/categoria.model';
 import { Producto } from 'src/app/core/Models/producto.model';
@@ -14,10 +15,10 @@ export class IndexTableComponent implements OnInit {
   categoriaId : number = -1;
   productos : Producto[] = [];
   maxProductos : number = 4;
-  constructor(private productoService : ProductoService) { }
+  constructor(private indexService : IndexService) { }
 
   ngOnInit(): void {
-    this.productoService.obtenerListaProductos().subscribe({
+    this.indexService.getObjects().subscribe({
       next: (res : Resultado<Producto>)=>{
         this.productos = res.data.filter((prod:Producto)=>prod.id_categoria===this.categoriaId)
         this.productos=this.productos.sort(this.comparador);

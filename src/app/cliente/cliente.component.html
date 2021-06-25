@@ -1,4 +1,4 @@
-<mat-toolbar color="accent">
+<mat-toolbar color="primary">
     <button 
         mat-icon-button 
         aria-label="Menú"
@@ -7,13 +7,13 @@
     </button>
     <a class="logo-link" [routerLink]="['/']"><img class="logo-img" src="assets/logo.png"><span class="titulo-navbar">{{title}}</span></a>
     <span class="example-spacer"></span>
-    <button mat-raised-button style="margin-right: 10px;" (click)="adminArea()" *ngIf="rolAdmin" color="primary" class="example-icon">
+    <button mat-raised-button style="margin-right: 10px;" (click)="adminArea()" *ngIf="rolAdmin" color="accent" class="example-icon">
         <mat-icon>shield</mat-icon> Admin Área
     </button>
-    <button mat-raised-button (click)="iniciarSesionClick()" *ngIf="iniciarSesion" color="primary" class="example-icon">
+    <button mat-raised-button (click)="iniciarSesionClick()" *ngIf="iniciarSesion" color="accent" class="example-icon">
         <mat-icon>send</mat-icon> Iniciar Sesión
     </button>
-    <button mat-raised-button (click)="cerrarSesionClick()" *ngIf="!iniciarSesion" color="warn" class="example-icon">
+    <button mat-raised-button (click)="cerrarSesionClick()" *ngIf="!iniciarSesion" color="accent" class="example-icon">
         <mat-icon>close</mat-icon> Cerrar Sesión
     </button>
 </mat-toolbar>
