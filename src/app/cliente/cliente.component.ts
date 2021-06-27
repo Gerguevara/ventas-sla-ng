@@ -19,6 +19,7 @@ export class ClienteComponent implements OnInit {
   title = "Servicios de Limpieza Ambiental";//`${environment.appTitle}`;
   categorias : Categoria[] = [];
   smolWindow : boolean = true;
+  window = window;
 
   // Bandera para inicio de sesión
   iniciarSesion!: boolean;
@@ -29,10 +30,12 @@ export class ClienteComponent implements OnInit {
     this.sidenavMode()
   }
 
-  constructor(private categoriaService : CategoriaService,
-              private router: Router,
-              private authCliente: LoginClienteService,
-              private dialog: MatDialog ) {
+  constructor(
+    private categoriaService : CategoriaService,
+    private router: Router,
+    private authCliente: LoginClienteService,
+    private dialog: MatDialog
+    ) {
   }
 
   ngOnInit(): void {
@@ -69,6 +72,10 @@ export class ClienteComponent implements OnInit {
       localStorage.removeItem('rol');
       window.location.reload();
     });
+  }
+
+  flushLocalStorage(){
+    localStorage.clear();
   }
 
   adminArea(): void {

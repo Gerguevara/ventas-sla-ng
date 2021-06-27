@@ -16,7 +16,7 @@ export class EmpleadoComponent implements OnInit {
   // Bandera para inicio de sesión
   iniciarSesion!: boolean;
   rolAdmin!: boolean;
-
+  window = window;
   @ViewChild('sidenav') sidenav! : MatSidenav;
   title = "Panel de administración";//`${environment.appTitle}`;
   smolWindow : boolean = true;

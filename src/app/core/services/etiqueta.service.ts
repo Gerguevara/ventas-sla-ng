@@ -12,7 +12,6 @@ import { Categoria } from '../Models/categoria.model';
 })
 export class EtiquetaService extends RecursoService<Etiqueta> {
 
-  private origin_config = `${environment.allowedOrigin}`;
   private API_URL_config = `${environment.apiUrl}`;
 
   constructor(protected httpClient: HttpClient) { 
@@ -29,14 +28,14 @@ export class EtiquetaService extends RecursoService<Etiqueta> {
 
     let headers = new HttpHeaders({
       'Content-Type':  'application/json',
-      'Access-Control-Allow-Origin': this.origin_config,
+      'Access-Control-Allow-Origin': environment.allowedOrigin,
       'Authorization': token
     });
-    let resultado : Observable<Resultado<Etiqueta>> = this.httpClient.get<Resultado<Etiqueta>>(`${this.API_URL_config}etiquetas/`, {
+    let resultado : Observable<Resultado<Etiqueta>> = this.httpClient.get<Resultado<Etiqueta>>(`${this.API_URL_config}etiquetas`, {
       params: paramsReq,
       headers: headers
     });
-    let categorias : Observable<Resultado<Categoria>> =this.httpClient.get<Resultado<Categoria>>(`${this.API_URL_config}categorias/`, {
+    let categorias : Observable<Resultado<Categoria>> =this.httpClient.get<Resultado<Categoria>>(`${this.API_URL_config}categorias`, {
       headers: headers
     });
     return {

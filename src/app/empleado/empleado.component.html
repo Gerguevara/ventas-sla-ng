@@ -10,13 +10,13 @@
     </a>
     <span class="example-spacer"></span>
     <button mat-raised-button style="margin-right: 10px;" (click)="adminArea()" *ngIf="rolAdmin" color="accent" class="example-icon">
-        <mat-icon>book</mat-icon> Área Cliente
+        <mat-icon>book</mat-icon><ng-container *ngIf="window.matchMedia('(min-width: 700px)').matches"> Área Cliente</ng-container>
     </button>
     <button mat-raised-button (click)="iniciarSesionClick()" *ngIf="iniciarSesion" color="accent" class="example-icon">
-        <mat-icon>send</mat-icon> Iniciar Sesión
+        <mat-icon>login</mat-icon><ng-container *ngIf="window.matchMedia('(min-width: 700px)').matches"> Iniciar Sesión</ng-container>
     </button>
     <button mat-raised-button (click)="cerrarSesionClick()" *ngIf="!iniciarSesion" color="accent" class="example-icon">
-        <mat-icon>close</mat-icon> Cerrar Sesión
+        <mat-icon>logout</mat-icon><ng-container *ngIf="window.matchMedia('(min-width: 700px)').matches"> Cerrar Sesión</ng-container>
     </button>
 </mat-toolbar>
 

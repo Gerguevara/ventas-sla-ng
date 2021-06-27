@@ -22,7 +22,7 @@ export interface ProductoPost {
 })
 export class ProductoService  extends RecursoService<Producto>{
 
-  private endpoint : string = "productos/";
+  private endpoint : string = "productos";
   private urlUploadServer : string = environment.uploadUrl;
 
   constructor(protected httpClient: HttpClient) {
@@ -77,7 +77,7 @@ export class ProductoService  extends RecursoService<Producto>{
         'Authorization': token
       })
     };
-    return this.httpClient.put<any>(`${environment.apiUrl}${this.endpoint}${producto.id}`, JSON.stringify(producto), httpHeaders);
+    return this.httpClient.put<any>(`${environment.apiUrl}${this.endpoint}/${producto.id}`, JSON.stringify(producto), httpHeaders);
   }
 
   eliminarProducto( producto: Producto ): Observable<any> {
@@ -89,7 +89,7 @@ export class ProductoService  extends RecursoService<Producto>{
         'Authorization': token
       })
     };
-    return this.httpClient.delete<any>(`${environment.apiUrl}${this.endpoint}${producto.id}`, httpHeaders);
+    return this.httpClient.delete<any>(`${environment.apiUrl}${this.endpoint}/${producto.id}`, httpHeaders);
   }
 
   obtenerCategoriaProducto( id: number ): Observable<Categoria> {
@@ -101,7 +101,7 @@ export class ProductoService  extends RecursoService<Producto>{
         'Authorization': token
       })
     };
-    return this.httpClient.get<Categoria>(`${environment.apiUrl}categorias/` + id, httpHeaders);
+    return this.httpClient.get<Categoria>(`${environment.apiUrl}categorias` + id, httpHeaders);
   }
 
   obtenerListaProductos(): Observable<Resultado<Producto>> {

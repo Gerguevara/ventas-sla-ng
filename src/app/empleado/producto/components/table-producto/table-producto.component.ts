@@ -22,7 +22,7 @@ export class TableProductoComponent implements OnInit {
   @Output() 
   clickTabla = new EventEmitter();
 
-  private endpoint : string = "productos/";
+  private endpoint : string = "productos";
   // URL donde se consumen los datos
   url = `${environment.apiUrl}${this.endpoint}`;
   params = '&status=' + this.disponibilidad;

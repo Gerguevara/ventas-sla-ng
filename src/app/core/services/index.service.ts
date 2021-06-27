@@ -29,6 +29,6 @@ export class IndexService extends RecursoService<Producto> {
         'Authorization': token
       })
     };
-    return this.httpClient.get<Categoria>(`${environment.apiUrl}categorias/` + id, httpHeaders);
+    return this.httpClient.get<Categoria>(`${environment.apiUrl}categorias` + id, httpHeaders);
   }
 }

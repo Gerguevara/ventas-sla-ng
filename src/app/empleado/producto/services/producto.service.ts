@@ -20,7 +20,7 @@ export interface ProductoPost {
 })
 export class ProductoService {
 
-  private endpoint : string = "productos/";
+  private endpoint : string = "productos";
   private urlUploadServer : string = "http://d9771c35d78d.eu.ngrok.io/upload.php";
   constructor( private http: HttpClient ) {
     console.log('Running Product Service...');
@@ -74,7 +74,7 @@ export class ProductoService {
         'Authorization': token
       })
     };
-    return this.http.put<any>(`${environment.apiUrl}${this.endpoint}${producto.id}`, JSON.stringify(producto), httpHeaders);
+    return this.http.put<any>(`${environment.apiUrl}${this.endpoint}/${producto.id}`, JSON.stringify(producto), httpHeaders);
   }
 
   eliminarProducto( producto: Producto ): Observable<any> {
@@ -86,7 +86,7 @@ export class ProductoService {
         'Authorization': token
       })
     };
-    return this.http.delete<any>(`${environment.apiUrl}${this.endpoint}${producto.id}`, httpHeaders);
+    return this.http.delete<any>(`${environment.apiUrl}${this.endpoint}/${producto.id}`, httpHeaders);
   }
 
   obtenerCategoriaProducto( id: number ): Observable<Categoria> {
@@ -98,7 +98,7 @@ export class ProductoService {
         'Authorization': token
       })
     };
-    return this.http.get<Categoria>(`${environment.apiUrl}categorias/` + id, httpHeaders);
+    return this.http.get<Categoria>(`${environment.apiUrl}categorias` + id, httpHeaders);
   }
 
 }
