@@ -5,8 +5,9 @@
 export const environment = {
   production: false,
   appTitle: "App de Ventas SLA",
-  apiUrl: "http://localhost:8000/api/",
-  allowedOrigin:"*",
+  //con / final
+  apiUrl: "http://ec2-44-193-240-123.compute-1.amazonaws.com/api/",
+  allowedOrigin:"http://localhost:4200",
   uploadUrl: "https://prueba-pp15001.000webhostapp.com/upload.php",
   uploadDir: "https://prueba-pp15001.000webhostapp.com/uploads/"
 };

@@ -8,23 +8,21 @@ import { Recurso } from './../Models/recurso.model';
 
 export abstract class RecursoService<T extends Recurso> {
 
-  private origin = `${environment.allowedOrigin}`;
-  private API_URL = `${environment.apiUrl}`;
+  private API_URL = environment.apiUrl;
 
   constructor(
     endpoint: string,
     protected httpClient: HttpClient
     ) {
-    this.API_URL = this.API_URL.concat(`${endpoint}/`)
+    this.API_URL = this.API_URL.concat(`${endpoint}`)
   }
 
   setOptions() {
     const token = 'Bearer ' + localStorage.getItem('token');
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': this.origin,
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+        'Content-Type':'application/json',
+        'Access-Control-Allow-Origin': environment.allowedOrigin,
         'Authorization': token
       })
     };
@@ -36,9 +34,8 @@ export abstract class RecursoService<T extends Recurso> {
     return this.httpClient.get<Resultado<T>>(this.API_URL, {
       params: { page: page.toString(), page_size: page_size.toString()},
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': this.origin,
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+        'Content-Type':'application/json',
+        'Access-Control-Allow-Origin': environment.allowedOrigin,
         'Authorization': token
       })
     });
@@ -46,12 +43,12 @@ export abstract class RecursoService<T extends Recurso> {
 
   getObject(id: number): Observable<T> {
     const options = this.setOptions();
-    return this.httpClient.get<T>(`${this.API_URL}${id}`,options);
+    return this.httpClient.get<T>(`${this.API_URL}/${id}`,options);
   }
 
   updateObject(resource: T): Observable<T> {
     const options = this.setOptions();
-    return this.httpClient.put<T>(`${this.API_URL}${resource.id}/`,resource, options);
+    return this.httpClient.put<T>(`${this.API_URL}/${resource.id}`,resource, options);
   }
 
   postObject(resource: T): Observable<T> {
@@ -62,12 +59,12 @@ export abstract class RecursoService<T extends Recurso> {
   deleteObject(id: number): Observable<HttpResponse<never>> {
     const token = 'Bearer ' + localStorage.getItem('token');
     return this.httpClient.delete<never>(
-      `${this.API_URL}${id}`,
+      `${this.API_URL}/${id}`,
       {
         observe: 'response',
         headers: new HttpHeaders({
-          'Access-Control-Allow-Origin': this.origin,
-          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+          'Content-Type':'application/json',
+          'Access-Control-Allow-Origin': environment.allowedOrigin,
           'Authorization': token
         })
       });
