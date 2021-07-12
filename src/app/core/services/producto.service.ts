@@ -52,6 +52,19 @@ export class ProductoService  extends RecursoService<Producto>{
     return this.httpClient.post<any>(this.urlUploadServer, formData);
   }
 
+  async uploadImage( form: any ): Promise<any> {
+    const token = 'Bearer ' + localStorage.getItem('token');
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': token
+      })
+    };
+    const response = await this.httpClient.post(
+      `${environment.apiUrl}${this.endpoint}` + '/uploadImage/', form, httpHeaders).toPromise();
+    return response;
+}
+
   /*
   Este es un método para hacer post a la API con los datos necesarios
   para la creación de un nuevo producto
@@ -101,7 +114,7 @@ export class ProductoService  extends RecursoService<Producto>{
         'Authorization': token
       })
     };
-    return this.httpClient.get<Categoria>(`${environment.apiUrl}categorias` + id, httpHeaders);
+    return this.httpClient.get<Categoria>(`${environment.apiUrl}categorias` + '/' + id, httpHeaders);
   }
 
   obtenerListaProductos(): Observable<Resultado<Producto>> {

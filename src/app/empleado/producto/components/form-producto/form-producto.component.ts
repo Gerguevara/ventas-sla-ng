@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 
-import { Categoria } from './../../../../core/Models/categoria.model'
+import { Categoria } from './../../../../core/Models/categoria.model';
 import { Producto } from 'src/app/core/Models/producto.model';
 
 import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
@@ -44,6 +44,7 @@ export class FormProductoComponent implements OnInit {
   habilitarEnviar = false;
   editable = false;
   deshabilitarImagen = true;
+  mostrarImagen = false;
   formularioLleno = false;
   cargandoImagen = false;
 
@@ -65,7 +66,6 @@ export class FormProductoComponent implements OnInit {
   generalForm: FormGroup;
   designForm: FormGroup;
   inventarioForm: FormGroup;
-  // imgUrl = 'http://pm1.narvii.com/6843/9cefc6c69cc18d0468cb06002678387b4c67c2f4v2_00.jpg';
   imgUrl = '';
   fontSizeControl = new FormControl(0, Validators.min(0));
 
@@ -93,7 +93,6 @@ export class FormProductoComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   categorias: string[] = [];
-  
 
   // Método para quitar una categoría de la tabla y del ChipList
   quitarCategoria(): void {
@@ -136,6 +135,7 @@ export class FormProductoComponent implements OnInit {
     this.formularioLleno = false;
     this.deshabilitarImagen = false;
     this.editable = true;
+    this.mostrarImagen = false;
     this.generalForm.enable();
     this.designForm.enable();
     this.inventarioForm.enable();
@@ -194,10 +194,10 @@ export class FormProductoComponent implements OnInit {
     // De esta forma se trata de mantener solo una categoría seleccionada
   }
 
-  constructor( 
-    private snackBar: MatSnackBar, 
+  constructor(
+    private snackBar: MatSnackBar,
     private formBuilder: FormBuilder,
-    private productoService: ProductoService, 
+    private productoService: ProductoService,
     private dialog: MatDialog) {
     // Creación del formulario
     // Formulario general
@@ -264,50 +264,28 @@ export class FormProductoComponent implements OnInit {
     }
   }
 
-  // Se ejecuta al dar click en Insertar
-  cargarImagen(  ): void{
-    let imageControl = this.designForm.get("fileInput")?.value;
-    this.cargandoImagen = true;
-    // Hace el post para subir la imagen enviando el formulario
-    this.productoService.subirImagen( imageControl ).subscribe({
-      next: (response: any) => {
-      // Si todo sale bien, se crea la URL de la imagen
-      this.imgUrl = response.url;
-      // No pude hacer que el servidor retorne la ruta de la imagen por razones que desconozco
-      // Por dicho motivo la estoy construyendo aquí
-      this.cargandoImagen = false;
-      },
-      error: (error: any) => {
-        console.log(error);
-        this.imgUrl = '';
-        this.designForm.get('fileInput')?.setValue('');
-        this.snackBar.open('No se pudo cargar imagen', 'Cerrar', {
-          duration: 5000
-        });
-        this.cargandoImagen = false;
-      }
-    });
-  }
-
   // Se ejecuta cuando la imagen cambia
   cambioImagen( event: any ): void{
-    if(event.target.files[0]){
+    if (event.target.files[0]){
+      this.cargandoImagen = true;
       // Cambia el nombre del botón por el nombre del archivo
       this.nombreArchivo = event.target.files[0].name;
-      // Establece el valor del input del formulario en el archivo que se está recibiendo
-      this.designForm.get('fileInput')?.setValue(event.target.files[0]);
-    }
-  }
+      this.fileInput = event.target.files[0];
 
-  /* Método para obtener una cadena string aleatoria para evitar guardar
-  imagenes con el mismo nombre en el servidor */
-  getRandomString( length: number ): string {
-    const randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for ( let i = 0; i < length; i++ ) {
-        result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+      const form = new FormData();
+      form.append('image', this.fileInput, this.fileInput.name);
+
+      this.productoService.uploadImage( form ).then((response: any) => {
+        this.cargandoImagen = false;
+        this.imgUrl = 'http://localhost:8000/' + response.path;
+        this.mostrarImagen = true;
+        this.designForm.get('fileInput')?.setValue(this.imgUrl);
+      },
+      (error: any) => {
+        this.cargandoImagen = false;
+        console.log(error);
+      });
     }
-    return result;
   }
 
   ngOnInit(): void {
@@ -317,6 +295,7 @@ export class FormProductoComponent implements OnInit {
     this.inventarioForm.disable();
     // Nos subscribimos a los cambios de los productos seleccionados de la tabla
     this.productoService.productoChange$.subscribe((data: Producto) => {
+      this.mostrarImagen = true;
       if (this.formularioLleno) {
         this.limpiarFormulario();
       }
@@ -326,7 +305,7 @@ export class FormProductoComponent implements OnInit {
 
   cargarData( data: Producto ): void{
     this.idProductoSeleccionado = data.id;
-    this.setImagenEdit(data.imagen);
+    // this.setImagenEdit(data.imagen);
     this.generalForm.get('nombre')?.setValue(data.nombre_producto);
     this.generalForm.get('descripcion')?.setValue(data.descripcion_producto);
     this.generalForm.get('precio')?.setValue(data.precio);
@@ -342,13 +321,13 @@ export class FormProductoComponent implements OnInit {
     this.habilitarEditar = true;
   }
 
-  setImagenEdit(url : string){
+  setImagenEdit(url: string): void{
     this.productoService.obtenerImagen(url).then(
-      (respuesta)=>{
+      (respuesta) => {
         this.designForm.get('fileInput')?.setValue(respuesta);
         this.nombreArchivo = respuesta.name;
       },
-    )
+    );
   }
 
   // Obtenemos todos los cambios que nos envíe el paginador con la data de la página
@@ -363,23 +342,28 @@ export class FormProductoComponent implements OnInit {
       Object.values( this.generalForm.controls ).forEach(element => {
         element.markAsTouched();
       });
-      this.snackBar.open('Datos no válidos', 'Cerrar');
+      this.snackBar.open('Datos no válidos', 'Cerrar', {
+        duration: 5000
+      });
     } else if ( this.designForm.invalid ) {
       Object.values( this.designForm.controls ).forEach(element => {
         element.markAsTouched();
       });
-      this.snackBar.open('Datos no válidos', 'Cerrar');
+      this.snackBar.open('Datos no válidos', 'Cerrar', {
+        duration: 5000
+      });
     } else if ( this.inventarioForm.invalid ) {
       Object.values( this.inventarioForm.controls ).forEach(element => {
         element.markAsTouched();
       });
-      this.snackBar.open('Datos no válidos', 'Cerrar');
+      this.snackBar.open('Datos no válidos', 'Cerrar', {
+        duration: 5000
+      });
     } else {
       // Abrimos el dialog del spinner
       this.dialog.open( DialogSpinnerComponent );
-      // console.log( this.productoForm );
       let idCategoria = 0;
-      if(this.filasSeleccionadas.size>0){
+      if (this.filasSeleccionadas.size > 0){
         for (const categoria of this.filasSeleccionadas) {
           idCategoria = categoria.id;
         }
@@ -417,17 +401,23 @@ export class FormProductoComponent implements OnInit {
       Object.values( this.generalForm.controls ).forEach(element => {
         element.markAsTouched();
       });
-      this.snackBar.open('Datos no válidos', 'Cerrar');
+      this.snackBar.open('Datos no válidos', 'Cerrar', {
+        duration: 5000
+      });
     } else if ( this.designForm.invalid ) {
       Object.values( this.designForm.controls ).forEach(element => {
         element.markAsTouched();
       });
-      this.snackBar.open('Datos no válidos', 'Cerrar');
+      this.snackBar.open('Datos no válidos', 'Cerrar', {
+        duration: 5000
+      });
     } else if ( this.inventarioForm.invalid ) {
       Object.values( this.inventarioForm.controls ).forEach(element => {
         element.markAsTouched();
       });
-      this.snackBar.open('Datos no válidos', 'Cerrar');
+      this.snackBar.open('Datos no válidos', 'Cerrar', {
+        duration: 5000
+      });
     } else {
       // Abrimos el dialog del spinner
       this.dialog.open( DialogSpinnerComponent );
