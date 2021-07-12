@@ -305,7 +305,6 @@ export class FormProductoComponent implements OnInit {
 
   cargarData( data: Producto ): void{
     this.idProductoSeleccionado = data.id;
-    // this.setImagenEdit(data.imagen);
     this.generalForm.get('nombre')?.setValue(data.nombre_producto);
     this.generalForm.get('descripcion')?.setValue(data.descripcion_producto);
     this.generalForm.get('precio')?.setValue(data.precio);
@@ -319,15 +318,6 @@ export class FormProductoComponent implements OnInit {
     this.inventarioForm.get('cantidad')?.setValue(data.cantidad);
     this.formularioLleno = true;
     this.habilitarEditar = true;
-  }
-
-  setImagenEdit(url: string): void{
-    this.productoService.obtenerImagen(url).then(
-      (respuesta) => {
-        this.designForm.get('fileInput')?.setValue(respuesta);
-        this.nombreArchivo = respuesta.name;
-      },
-    );
   }
 
   // Obtenemos todos los cambios que nos envíe el paginador con la data de la página
