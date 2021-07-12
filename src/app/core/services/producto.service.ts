@@ -50,7 +50,18 @@ export class ProductoService  extends RecursoService<Producto>{
     const response = await this.httpClient.post(
       `${environment.apiUrl}${this.endpoint}` + '/uploadImage/', form, httpHeaders).toPromise();
     return response;
-}
+  }
+
+  deleteImage(path: string): Observable<any> {
+    const token = 'Bearer ' + localStorage.getItem('token');
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': token
+      })
+    };
+    return this.httpClient.post(`${environment.apiUrl}${this.endpoint}` + '/deleteImage', { path }, httpHeaders);
+  }
 
   /*
   Este es un método para hacer post a la API con los datos necesarios

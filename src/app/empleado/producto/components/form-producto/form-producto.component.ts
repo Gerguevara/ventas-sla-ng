@@ -288,6 +288,17 @@ export class FormProductoComponent implements OnInit {
     }
   }
 
+  quitarImagen(): void {
+    this.productoService.deleteImage(this.imgUrl).subscribe((response: any) => {
+      console.log('eliminado');
+      this.imgUrl = '';
+      this.designForm.get('fileInput')?.setValue(this.imgUrl);
+    },
+    (error: any) => {
+      console.log(error);
+    });
+  }
+
   ngOnInit(): void {
     // Deshabilitar todos los controles al cargar la pantalla
     this.generalForm.disable();
