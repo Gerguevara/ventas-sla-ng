@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { PaginatorResponse } from 'src/app/empleado/models/paginator.model';
+import { PaginatorResponse } from 'src/app/core/Models/paginator.model';
 
 @Injectable({
   providedIn: 'root'

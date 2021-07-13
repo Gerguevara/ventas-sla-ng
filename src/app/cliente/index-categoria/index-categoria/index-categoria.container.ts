@@ -1,5 +1,5 @@
-import { IndexService } from './../../../core/services/index.service';
-import { Categoria } from './../../../empleado/models/categoria.models';
+import { IndexService } from 'src/app/core/services/index.service';
+import { Categoria } from 'src/app/core/Models/categoria.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Producto } from 'src/app/core/Models/producto.model';
@@ -40,7 +40,7 @@ export class IndexCategoriaContainer implements OnInit {
       }
     )
   }
-  
+
   onResize() {
     if((window.matchMedia("(max-width: 1199px)").matches)&&(window.matchMedia("(min-width: 950px)").matches)){
       this.breakpoint = 3;

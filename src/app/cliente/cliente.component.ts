@@ -80,7 +80,7 @@ export class ClienteComponent implements OnInit {
 
   adminArea(): void {
     this.dialog.open(DialogSpinnerComponent);
-    this.router.navigate(['/panel']);
+    this.router.navigate(['/panel/inventario/']);
     this.dialog.closeAll();
   }
 

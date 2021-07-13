@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { PaginatorResponse } from 'src/app/empleado/models/paginator.model';
+import { PaginatorResponse } from 'src/app/core/Models/paginator.model';
 import { PaginatorService } from '../../services/paginator.service';
 
 @Component({

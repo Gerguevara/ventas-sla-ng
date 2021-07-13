@@ -9,16 +9,8 @@ const routes: Routes = [
     children:
     [
       {
-        path: 'index',
-        loadChildren: () => import('./producto/producto.module').then(m => m.ProductoModule)
-      },
-      {
-        path: 'categoria',
-        loadChildren: () => import('./categoria/categoria.module').then(m => m.CategoriaModule)
-      },
-      {
-        path: 'etiqueta',
-        loadChildren: () => import('./etiqueta/etiqueta.module').then(m => m.EtiquetaModule)
+        path: 'inventario',
+        loadChildren: () => import('./inventario/inventario.module').then(m => m.InventarioModule)
       },
       {
         path: 'solicitudesEmpresa',
@@ -27,7 +19,7 @@ const routes: Routes = [
       {
         path: '**',
         pathMatch: 'full',
-        redirectTo: 'index'
+        redirectTo: 'inventario'
       }
     ]
   }
