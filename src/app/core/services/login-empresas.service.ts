@@ -28,24 +28,35 @@ export class LoginEmpresasService {
 
   urlLogin = `${environment.apiUrl}` + 'loginEmpresa';
   urlSignUp = `${environment.apiUrl}` + 'registrarEmpresa';
-  urlUploadServer = 'http://dr17010pdm115.000webhostapp.com/upload.php';
+  private endpoint = 'registrarEmpresa';
 
   constructor( protected http: HttpClient ) {
     console.log('Running login enterprise service...');
   }
 
-  subirImagen( form: any, hash: string ): Observable<any> {
+  async uploadImage( form: any ): Promise<any> {
     const token = 'Bearer ' + localStorage.getItem('token');
     const httpHeaders = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
         'Access-Control-Allow-Origin': '*',
         'Authorization': token
       })
     };
-    return this.http.post<any>('http://dr17010pdm115.000webhostapp.com/upload.php?fileHash=' + hash, JSON.stringify(form.value));
+    const response = await this.http.post(
+      `${environment.apiUrl}${this.endpoint}` + '/uploadImage/', form, httpHeaders).toPromise();
+    return response;
   }
 
+  deleteImage(path: string): Observable<any> {
+    const token = 'Bearer ' + localStorage.getItem('token');
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': token
+      })
+    };
+    return this.http.post(`${environment.apiUrl}${this.endpoint}` + '/deleteImage', { path }, httpHeaders);
+  }
 
   submitLogin( usuario: string, password: string ): Observable<LoginResponse> {
     const httpBody = {
