@@ -22,11 +22,10 @@ export interface ProductoPost {
 })
 export class ProductoService  extends RecursoService<Producto>{
 
-  private endpoint : string = "productos";
-  private urlUploadServer : string = environment.uploadUrl;
+  private endpoint = 'productos';
 
   constructor(protected httpClient: HttpClient) {
-    super('productos',httpClient)
+    super('productos', httpClient);
   }
   /*
   Emisor que nos servirá para comunicar el producto seleccionado en la tabla
@@ -39,17 +38,29 @@ export class ProductoService  extends RecursoService<Producto>{
   Por el momento se realiza en un servidor personal que devuelve como respuesta
   la URL de la imagen
    */
-  subirImagen( imagen : any ): Observable<any> {
+
+  async uploadImage( form: any ): Promise<any> {
     const token = 'Bearer ' + localStorage.getItem('token');
     const httpHeaders = {
       headers: new HttpHeaders({
-        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
+        'Access-Control-Allow-Origin': '*',
         'Authorization': token
       })
     };
-    let formData : FormData = new FormData();
-    formData.append('uploaded_file', imagen);
-    return this.httpClient.post<any>(this.urlUploadServer, formData);
+    const response = await this.httpClient.post(
+      `${environment.apiUrl}${this.endpoint}` + '/uploadImage/', form, httpHeaders).toPromise();
+    return response;
+  }
+
+  deleteImage(path: string): Observable<any> {
+    const token = 'Bearer ' + localStorage.getItem('token');
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': token
+      })
+    };
+    return this.httpClient.post(`${environment.apiUrl}${this.endpoint}` + '/deleteImage', { path }, httpHeaders);
   }
 
   /*
@@ -101,7 +112,7 @@ export class ProductoService  extends RecursoService<Producto>{
         'Authorization': token
       })
     };
-    return this.httpClient.get<Categoria>(`${environment.apiUrl}categorias` + id, httpHeaders);
+    return this.httpClient.get<Categoria>(`${environment.apiUrl}categorias` + '/' + id, httpHeaders);
   }
 
   obtenerListaProductos(): Observable<Resultado<Producto>> {
@@ -113,31 +124,6 @@ export class ProductoService  extends RecursoService<Producto>{
         'Authorization': token
       })
     };
-    //http://localhost:8000/api/productos?status=1
     return this.httpClient.get<Resultado<Producto>>(`${environment.apiUrl}${this.endpoint}?status=1`, options);
-  }
-
-  // Con esta funcion creamos un archivo a partir de una url del recurso
-  async obtenerImagen( url: string ): Promise<File>{
-    const response = await fetch(url,{
-      method: 'GET', // *GET, POST, PUT, DELETE, etc.
-      mode: 'no-cors', // no-cors, *cors, same-origin
-      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: 'omit', // include, *same-origin, omit
-      headers: {
-        'Content-Type': 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      redirect: 'follow', // manual, *follow, error
-      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    }
-      );
-    const arreglo = url.split('/');
-    const data = await response.blob();
-    const metadata = {
-      type: 'image/jpeg,image/png,image/jpg'
-    };
-    const file = new File([data], arreglo[arreglo.length - 1], metadata);
-    return file;
   }
 }

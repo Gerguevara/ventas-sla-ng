@@ -22,8 +22,10 @@ export class SignupComponent implements OnInit {
   cargandoImagenReverso = false;
   textoImagen = 'Inserte una imagen';
   imgFrontal!: File;
+  frontalPathServer = '';
   imgFrontalUrl = '';
   imgReverso!: File;
+  reversoPathServer = '';
   imgReversoUrl = '';
 
   signupForm: FormGroup;
@@ -34,10 +36,7 @@ export class SignupComponent implements OnInit {
 
   nombreArchivoFrontal = 'Seleccionar Imagen';
   nombreArchivoReverso = 'Seleccionar Imagen';
-  urlImageUpload = 'http://dr17010pdm115.000webhostapp.com/upload.php';
-  urlImage = 'http://dr17010pdm115.000webhostapp.com/images/';
   deshabilitarImagen = true;
-  hash = this.getRandomString(10);
 
   // Getters para validaciones
   // Aquí obtenemos el estado de validez de cada campo del formulario en métodos separados
@@ -75,80 +74,77 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // Función para crear el hash de la imagen y evitar nombres de archivos repetidos
-  getRandomString( length: number ): string {
-    const randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for ( let i = 0; i < length; i++ ) {
-        result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
-    }
-    return result;
-  }
-
-  cargarImagenFrontal( form: any ): void{
-    if (this.imgFrontal) {
-      this.cargandoImagenFrontal = true;
-      this.hash = this.getRandomString(10);
-      // Hace el post para subir la imagen enviando el formulario
-      this.authService.subirImagen( form, this.hash ).subscribe((response: any) => {
-      // Si todo sale bien, se crea la URL de la imagen
-      this.imgFrontalUrl = this.urlImage + this.hash + '_' + this.nombreArchivoFrontal;
-      this.frontalImagenForm.get('frontalInput')?.setValue(this.imgFrontalUrl);
-      // No pude hacer que el servidor retorne la ruta de la imagen por razones que desconozco
-      // Por dicho motivo la estoy construyendo aquí
-      this.cargandoImagenFrontal = false;
-      },
-      (error: any) => {
-        this.snackBar.open('No se pudo cargar imagen', 'Cerrar', {
-          duration: 5000
-        });
-        this.cargandoImagenFrontal = false;
-      });
-    } else {
-      this.snackBar.open('Debe seleccionar una imagen', 'Cerrar', {
-        duration: 5000
-      });
-    }
-  }
-  cargarImagenReverso( form: any ): void{
-    if (this.imgReverso) {
-      this.cargandoImagenReverso = true;
-      this.hash = this.getRandomString(10);
-      // Hace el post para subir la imagen enviando el formulario
-      this.authService.subirImagen( form, this.hash ).subscribe((response: any) => {
-        // Si todo sale bien, se crea la URL de la imagen
-        this.imgReversoUrl = this.urlImage + this.hash + '_' + this.nombreArchivoReverso;
-        this.reversoImagenForm.get('reversoInput')?.setValue(this.imgReversoUrl);
-        // No pude hacer que el servidor retorne la ruta de la imagen por razones que desconozco
-        // Por dicho motivo la estoy construyendo aquí
-        this.cargandoImagenReverso = false;
-      },
-      (error: any) => {
-        this.snackBar.open('No se pudo cargar imagen', 'Cerrar', {
-          duration: 5000
-        });
-        this.cargandoImagenReverso = false;
-      });
-    } else {
-      this.snackBar.open('Debe seleccionar una imagen', 'Cerrar', {
-        duration: 5000
-      });
-    }
-  }
-
-  cambioImagenFrontal( event: any ): void{
-    if (event.target.files[0]) {
-      // Cambia el nombre del botón por el nombre del archivo
-      this.imgFrontal = event.target.files[0];
-      this.nombreArchivoFrontal = this.imgFrontal.name;
-    }
-  }
   cambioImagenReverso( event: any ): void{
     if (event.target.files[0]) {
+      this.cargandoImagenReverso = true;
       // Cambia el nombre del botón por el nombre del archivo
       this.imgReverso = event.target.files[0];
       this.nombreArchivoReverso = this.imgReverso.name;
+
+      const form = new FormData();
+      form.append('image', this.imgReverso, this.imgReverso.name);
+      this.authService.uploadImage( form ).then((response: any) => {
+        this.cargandoImagenReverso = false;
+        this.reversoPathServer = response.path;
+        this.imgReversoUrl = 'http://localhost:8000/' + response.path;
+        this.reversoImagenForm.get('reversoInput')?.setValue(this.imgReversoUrl);
+      },
+      (error: any) => {
+        this.cargandoImagenReverso = false;
+        this.snackBar.open('No se pudo cargar imagen', 'Cerrar', {
+          duration: 5000
+        });
+        console.log(error);
+      });
     }
+  }
+  cambioImagenFrontal( event: any ): void{
+    if (event.target.files[0]) {
+      this.cargandoImagenFrontal = true;
+      // Cambia el nombre del botón por el nombre del archivo
+      this.imgFrontal = event.target.files[0];
+      this.nombreArchivoFrontal = this.imgFrontal.name;
+
+      const form = new FormData();
+      form.append('image', this.imgFrontal, this.imgFrontal.name);
+      this.authService.uploadImage( form ).then((response: any) => {
+        this.cargandoImagenFrontal = false;
+        this.frontalPathServer = response.path;
+        this.imgFrontalUrl = 'http://localhost:8000/' + response.path;
+        this.frontalImagenForm.get('frontalInput')?.setValue(this.imgFrontalUrl);
+      },
+      (error: any) => {
+        this.cargandoImagenFrontal = false;
+        this.snackBar.open('No se pudo cargar imagen', 'Cerrar', {
+          duration: 5000
+        });
+        console.log(error);
+      });
+    }
+  }
+
+  quitarImagenFrontal(): void {
+    this.authService.deleteImage(this.frontalPathServer).subscribe((response: any) => {
+      console.log('eliminado');
+      this.imgFrontalUrl = '';
+      this.frontalImagenForm.get('frontalInput')?.setValue(this.imgFrontalUrl);
+      this.nombreArchivoFrontal = 'Seleccionar Imagen';
+    },
+    (error: any) => {
+      console.log(error);
+    });
+  }
+
+  quitarImagenReverso(): void {
+    this.authService.deleteImage(this.reversoPathServer).subscribe((response: any) => {
+      console.log('eliminado');
+      this.imgReversoUrl = '';
+      this.reversoImagenForm.get('reversoInput')?.setValue(this.imgReversoUrl);
+      this.nombreArchivoReverso = 'Seleccionar Imagen';
+    },
+    (error: any) => {
+      console.log(error);
+    });
   }
 
   // Método para hacer submit del formulario
@@ -168,9 +164,19 @@ export class SignupComponent implements OnInit {
       ( error: any ) => {
         console.log( error );
         this.dialog.closeAll();
-        this.snackBar.open( error.error.message, 'Cerrar', {
-          duration: 5000
-        });
+        if ( error.error.errors.email ) {
+          this.snackBar.open( 'Esta cuenta de Email ya ha sido tomada', 'Cerrar', {
+            duration: 10000
+          });
+        } else if ( error.error.errors.name ) {
+          this.snackBar.open( 'Este nombre ya ha sido registrado', 'Cerrar', {
+            duration: 5000
+          });
+        } else {
+          this.snackBar.open( error.error.message, 'Cerrar', {
+            duration: 5000
+          });
+        }
       });
     } else {
       this.dialog.closeAll();
