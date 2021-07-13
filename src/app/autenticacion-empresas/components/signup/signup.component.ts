@@ -164,9 +164,19 @@ export class SignupComponent implements OnInit {
       ( error: any ) => {
         console.log( error );
         this.dialog.closeAll();
-        this.snackBar.open( error.error.message, 'Cerrar', {
-          duration: 5000
-        });
+        if ( error.error.errors.email ) {
+          this.snackBar.open( 'Esta cuenta de Email ya ha sido tomada', 'Cerrar', {
+            duration: 10000
+          });
+        } else if ( error.error.errors.name ) {
+          this.snackBar.open( 'Este nombre ya ha sido registrado', 'Cerrar', {
+            duration: 5000
+          });
+        } else {
+          this.snackBar.open( error.error.message, 'Cerrar', {
+            duration: 5000
+          });
+        }
       });
     } else {
       this.dialog.closeAll();
