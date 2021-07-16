@@ -9,6 +9,10 @@ const routes: Routes = [
     children:
     [
       {
+        path: 'empleados',
+        loadChildren: () => import('./empleados/empleados.module').then(m => m.EmpleadosModule)
+      },
+      {
         path: 'inventario',
         loadChildren: () => import('./inventario/inventario.module').then(m => m.InventarioModule)
       },
