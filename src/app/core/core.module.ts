@@ -1,3 +1,4 @@
+import { DepartamentoService } from './services/departamento.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -16,7 +17,8 @@ import { ProductoService } from './services/producto.service';
   providers:[
     CategoriaService,
     EtiquetaService,
-    ProductoService
+    ProductoService,
+    DepartamentoService
   ]
 })
 export class CoreModule { }

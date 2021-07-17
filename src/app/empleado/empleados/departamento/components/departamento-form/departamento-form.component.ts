@@ -11,6 +11,7 @@ import { FormCategoriaComponent } from 'src/app/empleado/inventario/categoria/co
 })
 export class DepartamentoFormComponent implements OnInit {
   formGroup! : FormGroup;
+  formTitle : string = "Nuevo departamento";
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public departamento : Departamento,
@@ -21,6 +22,7 @@ export class DepartamentoFormComponent implements OnInit {
   ngOnInit(): void {
     this.inicializarForm();
     if(this.departamento){
+      this.formTitle = `Editando ${this.departamento.nombre}`;
       this.formGroup.patchValue(this.departamento);
     }
   }
@@ -29,7 +31,7 @@ export class DepartamentoFormComponent implements OnInit {
     this.formGroup = this.formBuilder.group(
       {
         id:[null],
-        nombre: [null,[Validators.required,Validators.minLength(3),Validators.maxLength(100)]],
+        nombre: [null,[Validators.required,Validators.minLength(3),Validators.maxLength(30)]],
         descripcion: [null]
       }
     )

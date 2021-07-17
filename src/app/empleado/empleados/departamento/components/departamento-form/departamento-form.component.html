@@ -1,5 +1,6 @@
-<mat-dialog-content>
   <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <h1 mat-dialog-title>{{formTitle}}</h1>
+    <mat-dialog-content>
       <div>
           <input type="hidden" formControlName="id">
           <mat-error>
@@ -10,7 +11,7 @@
                   Debe ingresar al menos 3 caracteres.
               </ng-container>
               <ng-container *ngIf="nombreControl.errors?.maxlength">
-                  El nombre no debe sobrepasar los 100 caracteres.
+                  El nombre no debe sobrepasar los 30 caracteres.
               </ng-container>
           </mat-error>
           <mat-form-field appearance="outline">
@@ -24,6 +25,8 @@
               <input matInput type="text" formControlName="descripcion">
           </mat-form-field>
       </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
     <button
       mat-button
       color="accent"
@@ -39,5 +42,5 @@
       [disabled]="formGroup.invalid">
       Guardar
     </button>
+  </mat-dialog-actions>
   </form>
-  </mat-dialog-content>
