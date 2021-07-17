@@ -41,6 +41,7 @@ export class LoginClienteService {
   urlEmailVerification = `${environment.apiUrl}` + 'verifyEmail/';
   urlForgotPass = `${environment.apiUrl}` + 'forgotPassword';
   urlResetPass = `${environment.apiUrl}` + 'resetPassword';
+  urlTokenVerify = `${environment.apiUrl}` + 'tokenVerify';
 
   constructor( private http: HttpClient ) {
     console.log('Running Autentication Service...');
@@ -105,6 +106,19 @@ export class LoginClienteService {
     };
     const url = this.urlEmailVerification + id + '/' + hash;
     return this.http.get<EmailVerificationResponse>(url, httpHeaders);
+  }
+
+  async verificarToken(): Promise<any> {
+    const token = 'Bearer ' + localStorage.getItem('token');
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': token
+      })
+    };
+    const response = await this.http.get<any>(this.urlTokenVerify, httpHeaders).toPromise();
+    return response;
   }
 
 }
