@@ -1,3 +1,21 @@
+<div class="header"><h1 color="primary">Tipos de etiquetas</h1></div>
+<mat-card class="table-container">
+  <app-table-etiqueta
+    [etiquetas]="respuesta?.data"
+    [categorias]="categorias"
+    (detailEvent)="detailEtiqueta($event)"
+    (updateEvent)="updateEtiqueta($event)"
+    (deleteEvent)="deleteEtiqueta($event)">
+  </app-table-etiqueta>
+  <mat-paginator
+    #paginator
+    [pageSizeOptions]="[5, 10, 20, 100]"
+    [pageSize]="10"
+    [length]="dataLength"
+    (page)="getEtiquetas($event)"
+    showFirstLastButtons
+  ></mat-paginator>
+</mat-card>
 <button
   class="add-button"
   color="primary"
@@ -5,18 +23,3 @@
   (click)="openForm()">
   <mat-icon>add</mat-icon>
 </button>
-<app-table-etiqueta
-  [etiquetas]="respuesta?.data"
-  [categorias]="categorias"
-  (detailEvent)="detailEtiqueta($event)"
-  (updateEvent)="updateEtiqueta($event)"
-  (deleteEvent)="deleteEtiqueta($event)">
-</app-table-etiqueta>
-<mat-paginator 
-  #paginator
-  [pageSizeOptions]="[5, 10, 20, 100]" 
-  [pageSize]="10"
-  [length]="dataLength"
-  (page)="getEtiquetas($event)"
-  showFirstLastButtons
-></mat-paginator>

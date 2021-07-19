@@ -34,4 +34,9 @@ export class TableCategoriaComponent implements OnChanges {
       this.dataSource.data = categorias.currentValue;
   }
 
+  detailAction($event: MouseEvent, row: Categoria){
+    const element = $event.target as HTMLElement;
+    if(!element.classList.contains('mat-icon'))
+      this.detailEvent.emit(row.id);
+  }
 }

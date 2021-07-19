@@ -15,6 +15,7 @@ import { environment } from 'src/environments/environment';
 export class TableProductoComponent implements OnInit {
 
   displayedColumns: string[] = ['ID', 'Nombre', 'Descripción', 'Precio', 'Acciones'];
+
   dataSource!: MatTableDataSource<Producto>;
   filasSeleccionadas = new Set<Producto>();
 
@@ -45,7 +46,7 @@ export class TableProductoComponent implements OnInit {
   }
 
   seleccionarProducto( row: Producto): void {
-    this.clickTabla.emit();
+    this.clickTabla.emit(row);
     this.productoService.productoChange$.emit(row);
   }
 
