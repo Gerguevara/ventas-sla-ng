@@ -32,7 +32,6 @@ export class RolIndexComponent implements OnInit {
   // Obtenemos todos los cambios que nos envíe el paginador con la data de la página
   addDataToTable( event: Rol[] ): void {
     // Seteamos estos datos a la tabla
-    console.log(event);
     this.dataSource = new MatTableDataSource<Rol>(event);
   }
 
