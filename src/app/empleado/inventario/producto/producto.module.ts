@@ -24,6 +24,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { IndexProductoComponent } from './components/index-producto/index-producto.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DialogEliminarProductoComponent } from './components/dialog-eliminar-producto/dialog-eliminar-producto.component';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { DialogEliminarProductoComponent } from './components/dialog-eliminar-pr
     ToolsModule,
     MatSnackBarModule,
     MatChipsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    NgxPermissionsModule.forChild()
   ],
   providers: [
     ProductoService,

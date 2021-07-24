@@ -1,11 +1,8 @@
 <mat-toolbar color="primary">
-    <button
-        mat-icon-button
-        aria-label="Menú"
-        (click)="sidenav.toggle()">
+    <button mat-icon-button aria-label="Menú" (click)="sidenav.toggle()">
         <mat-icon class="white-icon">menu</mat-icon>
     </button>
-    <a class="title-link" [routerLink]="['/panel/']" >
+    <a class="title-link" [routerLink]="['/panel/']">
         <span>{{title}}</span>
     </a>
     <span class="example-spacer"></span>
@@ -23,32 +20,37 @@
 <mat-sidenav-container>
     <mat-sidenav [opened]="true" [mode]="'side'" (window:resize)="onResize($event)" role="directory" #sidenav>
         <mat-nav-list>
-          <mat-expansion-panel hideToggle mat-list-item class="mat-elevation-z0">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Inventario
-              </mat-panel-title>
-              <mat-panel-description>
-                Productos, categorías, etc...
-              </mat-panel-description>
-              </mat-expansion-panel-header>
-              <mat-nav-list>
-                <a mat-list-item [routerLink]="['/panel/inventario/producto']" class="list-item-container" >
-                    <mat-icon color="primary">receipt_long</mat-icon>&nbsp;&nbsp;Productos
-                </a>
-                <mat-divider></mat-divider>
-                <a mat-list-item [routerLink]="['/panel/inventario/categoria']" class="list-item-container" >
-                    <mat-icon color="primary">category</mat-icon>&nbsp;&nbsp;Categorias
-                </a>
-                <mat-divider></mat-divider>
-                <a mat-list-item [routerLink]="['/panel/inventario/etiqueta']" class="list-item-container" >
-                    <mat-icon color="primary">label</mat-icon>&nbsp;&nbsp;Etiquetas
-                </a>
-              </mat-nav-list>
-          </mat-expansion-panel>
-          <mat-divider></mat-divider>
-            <a mat-list-item [routerLink]="['/panel/solicitudesEmpresa/index']" class="list-item-container" >
-              <mat-icon color="primary">person_add</mat-icon>&nbsp;&nbsp;Solicitudes de empresas
+            <mat-expansion-panel hideToggle mat-list-item class="mat-elevation-z0">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Inventario
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Productos, categorías, etc...
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <mat-nav-list>
+                    <ng-template [ngxPermissionsOnly]="['productos.index']">
+                        <a mat-list-item [routerLink]="['/panel/inventario/producto']" class="list-item-container">
+                            <mat-icon color="primary">receipt_long</mat-icon>&nbsp;&nbsp;Productos
+                        </a>
+                    </ng-template>
+                    <mat-divider></mat-divider>
+                    <ng-template [ngxPermissionsOnly]="['categorias.index']">
+                        <a mat-list-item [routerLink]="['/panel/inventario/categoria']" class="list-item-container">
+                            <mat-icon color="primary">category</mat-icon>&nbsp;&nbsp;Categorias
+                        </a>
+                    </ng-template>
+
+                    <mat-divider></mat-divider>
+                    <a mat-list-item [routerLink]="['/panel/inventario/etiqueta']" class="list-item-container">
+                        <mat-icon color="primary">label</mat-icon>&nbsp;&nbsp;Etiquetas
+                    </a>
+                </mat-nav-list>
+            </mat-expansion-panel>
+            <mat-divider></mat-divider>
+            <a mat-list-item [routerLink]="['/panel/solicitudesEmpresa/index']" class="list-item-container">
+                <mat-icon color="primary">person_add</mat-icon>&nbsp;&nbsp;Solicitudes de empresas
             </a>
         </mat-nav-list>
     </mat-sidenav>
