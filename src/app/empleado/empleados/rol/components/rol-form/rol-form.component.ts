@@ -96,7 +96,7 @@ export class RolFormComponent implements OnInit {
       console.log(response);
       this.filasSeleccionadas.add( response.producto );
       this.departamento = response.producto.nombre;
-    })
+    });
     this.roleService.getPermisos( rol.id ).subscribe((response: Permission[]) => {
       // Se recogen los permisos del rol seleccionado y se atribuye a cada switch a través del array
       const data = [];
