@@ -17,6 +17,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTableModule } from '@angular/material/table';
 import { ToolsModule } from 'src/app/tools/tools.module';
 import { RolesService } from '../../../core/services/roles.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 @NgModule({
@@ -38,7 +40,9 @@ import { RolesService } from '../../../core/services/roles.service';
     MatSlideToggleModule,
     MatCardModule,
     MatGridListModule,
-    MatTableModule
+    MatTableModule,
+    MatSnackBarModule,
+    MatChipsModule
   ],
   providers: [
     RolesService

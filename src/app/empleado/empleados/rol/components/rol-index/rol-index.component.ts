@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { Rol } from 'src/app/core/Models/rol.model';
+import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
 import { environment } from 'src/environments/environment';
 import { RolesService } from '../../../../../core/services/roles.service';
 import { RolFormComponent } from '../rol-form/rol-form.component';
@@ -22,7 +24,8 @@ export class RolIndexComponent implements OnInit {
   url = `${environment.apiUrl}${this.endpoint}`;
 
   constructor( private roles: RolesService,
-               private formDialog: MatDialog, ) { }
+               private formDialog: MatDialog,
+               private snackBar: MatSnackBar ) { }
 
   ngOnInit(): void { }
 
@@ -34,13 +37,29 @@ export class RolIndexComponent implements OnInit {
   }
 
   verRol( rol: Rol ): void {
-    const dialogoFormRef = this.formDialog.open(
+    this.formDialog.open(
       RolFormComponent, { data: rol }
     );
   }
 
+  crearRol(): void{
+    this.formDialog.open( RolFormComponent );
+  }
+
   eliminarRol( id: number ): void {
-    console.log(id);
+    /*this.formDialog.open( DialogSpinnerComponent );
+    this.roles.deleteRol( id ).subscribe((response: any) => {
+      this.formDialog.closeAll();
+      this.snackBar.open(response.mensaje, 'Cerrar', {
+        duration: 5000
+      });
+    }, (error: any) => {
+      this.formDialog.closeAll();
+      console.log(error);
+      this.snackBar.open('Ah ocurrido un error!', 'Cerrar', {
+        duration: 5000
+      });
+    });*/
   }
 
   getDepartamento( id: number ): string {

@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Resultado } from '../Models/resultado.model';
@@ -29,6 +29,18 @@ export class RolesService {
     return response;
   }
 
+  getDepartamentos(): Observable<any> {
+    const token = 'Bearer ' + localStorage.getItem('token');
+    const headers = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
+        'Authorization': token
+      })
+    };
+    return this.http.get<Permission[]>(`${environment.apiUrl}` + 'departamentos/', headers);
+  }
+
   getPermisos( idRole: number ): Observable<Permission[]> {
     const token = 'Bearer ' + localStorage.getItem('token');
     const headers = {
@@ -45,7 +57,7 @@ export class RolesService {
     ));
   }
 
-  actualizarRol( rol: Rol ): Observable<any> {
+  crearRol( rol: Rol ): Observable<any> {
     const token = 'Bearer ' + localStorage.getItem('token');
     const httpHeaders = {
       headers: new HttpHeaders({
@@ -55,6 +67,30 @@ export class RolesService {
       })
     };
     return this.http.post<any>(`${environment.apiUrl}${this.endpoint}`, rol, httpHeaders);
+  }
+
+  actualizarRol( rol: Rol, id: number ): Observable<any> {
+    const token = 'Bearer ' + localStorage.getItem('token');
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
+        'Authorization': token
+      })
+    };
+    return this.http.put<any>(`${environment.apiUrl}${this.endpoint}` + '/' + id, rol, httpHeaders);
+  }
+
+  deleteRol( id: number ): Observable<any> {
+    const token = 'Bearer ' + localStorage.getItem('token');
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
+        'Authorization': token
+      })
+    };
+    return this.http.delete<any>(`${environment.apiUrl}${this.endpoint}/${id}`, httpHeaders);
   }
 
 }

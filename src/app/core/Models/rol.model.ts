@@ -3,7 +3,7 @@ import { Permission } from './permission.model';
 
 export interface Rol extends Recurso {
     name: string;
-    guard_name: string;
+    guard_name?: string;
     descripcion: string;
     id_departamento: string;
     created_at?: string;
