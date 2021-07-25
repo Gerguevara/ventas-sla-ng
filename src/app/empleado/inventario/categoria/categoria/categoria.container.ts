@@ -117,8 +117,8 @@ export class CategoriaContainer implements OnInit {
           }
         }
       },
-      error: ()=>{},
-      complete: ()=>{}
+      error: ()=>{console.log('error')},
+      complete: ()=>{console.log('complete')}
     })
   }
   openConfirmation(categoria : Categoria){

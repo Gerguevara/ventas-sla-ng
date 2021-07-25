@@ -47,4 +47,10 @@ export class TableEtiquetaComponent implements OnChanges {
     return (catAux ? catAux.nombre : "");
   }
 
+  detailAction($event: MouseEvent, row: Etiqueta){
+    const element = $event.target as HTMLElement;
+    if(!element.classList.contains('mat-icon') && !element.classList.contains('mat-icon-button'))
+      this.detailEvent.emit(row.id);
+  }
+
 }

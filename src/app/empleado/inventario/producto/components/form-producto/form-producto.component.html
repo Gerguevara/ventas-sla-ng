@@ -11,7 +11,7 @@
     <button mat-flat-button *ngIf="habilitarCancelar" style="margin-right: 10px;" color="accent" type="button" (click)="cancelar()"><mat-icon>cancel</mat-icon> Salir</button>
     <mat-horizontal-stepper #stepper>
         <!--Formulario General-->
-        <mat-step [stepControl]="generalForm" label="General" errorMessage="Datos no válidos">
+        <mat-step [stepControl]="generalForm" label="General" errorMessage="Datos generales no válidos">
             <mat-card class="card-step">
                 <h3 class="subtitle">Descripción General</h3>
                 <mat-divider></mat-divider>
@@ -130,7 +130,8 @@
             <mat-divider></mat-divider>
             <div>
                 <button type="button" mat-stroked-button matStepperPrevious class="button">Regresar</button>
-                <button type="submit" *ngIf="habilitarEnviar" mat-stroked-button (click)="enviar()" class="button">Enviar</button>
+                <button mat-flat-button *ngIf="habilitarGuardar" style="margin-right: 10px;" color="primary" type="button" (click)="actualizarProducto()"><mat-icon>save</mat-icon> Guardar</button>
+                <button type="submit" *ngIf="habilitarEnviar" mat-flat-button (click)="enviar()" color="primary" class="button">Enviar</button>
             </div>
         </mat-step>
     </mat-horizontal-stepper>

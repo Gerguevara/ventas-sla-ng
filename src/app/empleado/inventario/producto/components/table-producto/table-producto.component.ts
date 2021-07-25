@@ -16,6 +16,7 @@ import { NgxPermissionsService } from 'ngx-permissions';
 export class TableProductoComponent implements OnInit {
 
   displayedColumns: string[] = ['ID', 'Nombre', 'Descripción', 'Precio', 'Acciones'];
+
   dataSource!: MatTableDataSource<Producto>;
   filasSeleccionadas = new Set<Producto>();
 
@@ -48,7 +49,7 @@ export class TableProductoComponent implements OnInit {
   seleccionarProducto( row: Producto): void {
     this.permissions.hasPermission('productos.show').then((response: boolean) => {
       if (response) {
-        this.clickTabla.emit();
+        this.clickTabla.emit(row);
         this.productoService.productoChange$.emit(row);
       }
     });

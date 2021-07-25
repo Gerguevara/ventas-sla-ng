@@ -1,3 +1,4 @@
+import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +16,7 @@ import { FormCategoriaComponent } from './components/form-categoria/form-categor
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DeleteCategoriaComponent } from './components/delete-categoria/delete-categoria.component';
 import { NgxPermissionsModule } from 'ngx-permissions';
+import { MatRippleModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -35,6 +37,8 @@ import { NgxPermissionsModule } from 'ngx-permissions';
     ReactiveFormsModule,
     MatDialogModule,
     MatInputModule,
+    MatCardModule,
+    MatRippleModule,
     NgxPermissionsModule.forChild()
   ]
 })

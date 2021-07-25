@@ -1,6 +1,24 @@
-<button class="add-button" color="primary" mat-fab *ngxPermissionsOnly="['categorias.store']" (click)="openForm()">
+<div class="header"><h1 color="primary">Categorias</h1></div>
+<mat-card class="table-container">
+  <app-table-categoria
+      [categorias]="respuesta?.data"
+      (updateEvent)="updateCategoria($event)"
+      (deleteEvent)="deleteCategoria($event)"
+  ></app-table-categoria>
+  <mat-paginator
+      #paginator
+      [length]="dataLength"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 20]"
+      (page)="getCategorias($event)"
+      showFirstLastButtons>
+  </mat-paginator>
+</mat-card>
+<button
+    class="add-button"
+    color="primary"
+    mat-fab
+    (click)="openForm()"
+    *ngxPermissionsOnly="['categorias.store']">
   <mat-icon>add</mat-icon>
 </button>
-<app-table-categoria [categorias]="respuesta?.data" (updateEvent)="updateCategoria($event)"></app-table-categoria>
-<mat-paginator #paginator [length]="dataLength" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" (page)="getCategorias($event)" showFirstLastButtons>
-</mat-paginator>
