@@ -47,6 +47,23 @@
               </mat-nav-list>
           </mat-expansion-panel>
           <mat-divider></mat-divider>
+          <mat-expansion-panel hideToggle mat-list-item class="mat-elevation-z0">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Empleados
+              </mat-panel-title>
+              <mat-panel-description>
+                Departamentos, planillas, etc...
+              </mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-nav-list>
+                <a mat-list-item [routerLink]="['/panel/empleados/departamento']" class="list-item-container" >
+                    <mat-icon color="primary">groups</mat-icon>&nbsp;&nbsp;Departamentos
+                </a>
+                <mat-divider></mat-divider>
+              </mat-nav-list>
+          </mat-expansion-panel>
+          <mat-divider></mat-divider>
             <a mat-list-item [routerLink]="['/panel/solicitudesEmpresa/index']" class="list-item-container" >
               <mat-icon color="primary">person_add</mat-icon>&nbsp;&nbsp;Solicitudes de empresas
             </a>
