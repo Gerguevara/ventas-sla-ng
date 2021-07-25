@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ToolsModule } from './tools/tools.module';
 import { AuthGuard } from './guards/auth.guard';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    ToolsModule
+    ToolsModule,
+    NgxPermissionsModule.forRoot()
   ],
   providers: [
     AuthGuard

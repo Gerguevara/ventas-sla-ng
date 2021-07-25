@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogSpinnerComponent } from '../tools/components/dialog-spinner/dialog-spinner.component';
 import { LoginClienteService } from '../core/services/login-cliente.service';
+import { NgxPermissionsService } from 'ngx-permissions';
 
 @Component({
   selector: 'app-empleado',
@@ -27,7 +28,8 @@ export class EmpleadoComponent implements OnInit {
   }
 
   constructor( private router: Router, private dialog: MatDialog,
-               private authCliente: LoginClienteService ) {
+               private authCliente: LoginClienteService,
+               private permissions: NgxPermissionsService ) {
     this.sidenavMode()
   }
 
@@ -55,6 +57,7 @@ export class EmpleadoComponent implements OnInit {
     this.dialog.open(DialogSpinnerComponent);
     this.authCliente.submitLogout().subscribe((response: any) => {
       this.dialog.closeAll();
+      this.permissions.flushPermissions();
       localStorage.removeItem('token');
       localStorage.removeItem('rol');
       this.router.navigate(['/']);

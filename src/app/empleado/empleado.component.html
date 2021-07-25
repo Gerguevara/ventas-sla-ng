@@ -1,11 +1,8 @@
 <mat-toolbar color="primary">
-    <button
-        mat-icon-button
-        aria-label="Menú"
-        (click)="sidenav.toggle()">
+    <button mat-icon-button aria-label="Menú" (click)="sidenav.toggle()">
         <mat-icon class="white-icon">menu</mat-icon>
     </button>
-    <a class="title-link" [routerLink]="['/panel/']" >
+    <a class="title-link" [routerLink]="['/panel/']">
         <span>{{title}}</span>
     </a>
     <span class="example-spacer"></span>
@@ -33,17 +30,23 @@
               </mat-panel-description>
               </mat-expansion-panel-header>
               <mat-nav-list>
-                <a mat-list-item [routerLink]="['/panel/inventario/producto']" class="list-item-container" >
-                    <mat-icon color="primary">receipt_long</mat-icon>&nbsp;&nbsp;Productos
-                </a>
+                <ng-template [ngxPermissionsOnly]="['productos.index']">
+                  <a mat-list-item [routerLink]="['/panel/inventario/producto']" class="list-item-container" >
+                      <mat-icon color="primary">receipt_long</mat-icon>&nbsp;&nbsp;Productos
+                  </a>
+                </ng-template>
                 <mat-divider></mat-divider>
-                <a mat-list-item [routerLink]="['/panel/inventario/categoria']" class="list-item-container" >
-                    <mat-icon color="primary">category</mat-icon>&nbsp;&nbsp;Categorias
-                </a>
+                <ng-template [ngxPermissionsOnly]="['categorias.index']">
+                  <a mat-list-item [routerLink]="['/panel/inventario/categoria']" class="list-item-container" >
+                      <mat-icon color="primary">category</mat-icon>&nbsp;&nbsp;Categorias
+                  </a>
+                </ng-template>
                 <mat-divider></mat-divider>
-                <a mat-list-item [routerLink]="['/panel/inventario/etiqueta']" class="list-item-container" >
-                    <mat-icon color="primary">label</mat-icon>&nbsp;&nbsp;Etiquetas
-                </a>
+                <ng-template [ngxPermissionsOnly]="['etiquetas.index']">
+                  <a mat-list-item [routerLink]="['/panel/inventario/etiqueta']" class="list-item-container" >
+                      <mat-icon color="primary">label</mat-icon>&nbsp;&nbsp;Etiquetas
+                  </a>
+                </ng-template>
               </mat-nav-list>
           </mat-expansion-panel>
           <mat-divider></mat-divider>
@@ -57,9 +60,11 @@
               </mat-panel-description>
               </mat-expansion-panel-header>
               <mat-nav-list>
-                <a mat-list-item [routerLink]="['/panel/empleados/departamento']" class="list-item-container" >
-                    <mat-icon color="primary">groups</mat-icon>&nbsp;&nbsp;Departamentos
-                </a>
+                <ng-template [ngxPermissionsOnly]="['departamentos.index']">
+                  <a mat-list-item [routerLink]="['/panel/empleados/departamentos']" class="list-item-container" >
+                      <mat-icon color="primary">groups</mat-icon>&nbsp;&nbsp;Departamentos
+                  </a>
+                </ng-template>
                 <mat-divider></mat-divider>
               </mat-nav-list>
           </mat-expansion-panel>

@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginClienteService } from '../core/services/login-cliente.service';
+import { NgxPermissionsService } from 'ngx-permissions';
 
 @Component({
   selector: 'app-cliente',
@@ -34,7 +35,8 @@ export class ClienteComponent implements OnInit {
     private categoriaService : CategoriaService,
     private router: Router,
     private authCliente: LoginClienteService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private permissions: NgxPermissionsService
     ) {
   }
 
@@ -52,7 +54,7 @@ export class ClienteComponent implements OnInit {
     }
     // Validación de rol usuario
     if (localStorage.getItem('rol')) {
-      if (localStorage.getItem('rol') === 'admin') {
+      if (localStorage.getItem('rol') === 'E') {
         this.rolAdmin = true;
       }
     }
@@ -68,6 +70,7 @@ export class ClienteComponent implements OnInit {
     this.authCliente.submitLogout().subscribe((response: any) => {
       console.log(response);
       this.dialog.closeAll();
+      this.permissions.flushPermissions();
       localStorage.removeItem('token');
       localStorage.removeItem('rol');
       window.location.reload();
