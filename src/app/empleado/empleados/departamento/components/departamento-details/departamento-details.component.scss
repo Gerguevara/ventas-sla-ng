@@ -1,0 +1,21 @@
+mat-form-field{
+  width: 100%;
+}
+
+mat-list-item{
+  margin: 20px;
+  width: auto !important;
+  max-width: 100%;
+}
+
+mat-list-item div{
+  display: flex !important;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+mat-list-item div p{
+  width: 100%;
+  height: auto;
+  white-space: initial;
+}

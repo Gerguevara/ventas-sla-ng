@@ -1,7 +1,9 @@
 <h1>Departamentos de empleados</h1>
 
 <mat-card class="table-container" *ngIf="respuesta">
-  <app-departamento-table [departamentos]="respuesta.data"></app-departamento-table>
+  <app-departamento-table
+    [departamentos]="respuesta.data"
+    (eventSelect)="openDepartamentoDetail($event)"></app-departamento-table>
   <mat-paginator
       #paginator
       [length]="dataLength"

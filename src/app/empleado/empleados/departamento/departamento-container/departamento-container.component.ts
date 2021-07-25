@@ -1,13 +1,17 @@
-import { DepartamentoFormComponent } from './../components/departamento-form/departamento-form.component';
-import { DepartamentoService } from './../../../../core/services/departamento.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Departamento } from 'src/app/core/Models/departamento.model';
-import { Resultado } from 'src/app/core/Models/resultado.model';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
+import { DepartamentoDetailsComponent } from './../components/departamento-details/departamento-details.component';
+import { DepartamentoConfirmationDialogComponent } from './../components/departamento-confirmation-dialog/departamento-confirmation-dialog.component';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Observable, PartialObserver } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { Departamento } from 'src/app/core/Models/departamento.model';
+import { Resultado } from 'src/app/core/Models/resultado.model';
+import { DepartamentoService } from 'src/app/core/services/departamento.service';
+import { DepartamentoFormComponent } from './../components/departamento-form/departamento-form.component';
+import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
+import { HttpResponse } from '@angular/common/http';
+import { IData } from 'src/app/tools/Interfaces/DataInterface';
 
 @Component({
   selector: 'app-departamento-container',
@@ -66,6 +70,19 @@ export class DepartamentoContainerComponent implements OnInit {
     return this.departamentoService.getObjects(numeroDePagina, pageSize);
   }
 
+  openDepartamentoDetail(departamento : Departamento){
+    let dialogoFormRef = this.formDialog.open(
+      DepartamentoDetailsComponent,
+      {
+        data:{
+          data: departamento,
+          paramsText: ['Nombre', 'Descripcion']
+        },
+        width: '75vw',
+      }//config dialog
+    );
+  }
+
   //===metodos que manejan los dialogos===
   openForm(departamento? : Departamento){
     const dialogoFormRef = this.formDialog.open(
@@ -73,9 +90,9 @@ export class DepartamentoContainerComponent implements OnInit {
       {data:departamento}//config dialog
     )
     dialogoFormRef.afterClosed().subscribe({
-      //categoria obtenida del dialogo
+      //departamento obtenida del dialogo
       next: (departamentoDialogo? : Departamento)=>{
-        //si la categoria viene
+        //si la departamento viene
         if(departamentoDialogo){
           //si ya existe
           if(departamentoDialogo.id){
@@ -85,7 +102,7 @@ export class DepartamentoContainerComponent implements OnInit {
               next:(departamentoActualizado : Departamento)=>{
                 //obtener el indice
                 const index = this.respuesta ? this.respuesta.data.findIndex(
-                  //donde el id corresponda al de la categoria actualizada
+                  //donde el id corresponda al de la departamento actualizada
                   (departamentoABuscar : Departamento)=> departamentoABuscar.id === departamentoActualizado.id
                 //si el indice no esta, retornar -1
                 ) : -1
@@ -101,7 +118,7 @@ export class DepartamentoContainerComponent implements OnInit {
           } else {
             //post a la api
             this.departamentoService.postObject(departamentoDialogo).subscribe({
-              //Meter la categoria que se creo, al arreglo de categorias de la respuesta
+              //Meter la departamento que se creo, al arreglo de categorias de la respuesta
               next:(response:any)=> {
                 this.snackBar.open(response.mensaje, 'Cerrar',{duration: 3000});
 
@@ -120,4 +137,38 @@ export class DepartamentoContainerComponent implements OnInit {
       complete: ()=>{}
     })
   }
+
+  openConfirmation(departamento : Departamento){
+    const dialogText = `Se procederá a eliminar el departamento: `;
+    let data: IData<Departamento> = {data: departamento, paramsText: [dialogText]} as IData<Departamento>;
+    //abrir dialogo con componente de confirmacion de borrado de departamento
+    const dialogoFormRef = this.formDialog.open(DepartamentoConfirmationDialogComponent, {
+      data: data,
+    });
+    //subscribirse al observable obtenido de cerrar el dialogo
+    dialogoFormRef.afterClosed().subscribe((id? : number) => {
+        //si el id no es undefined
+        if(id) {
+          //subscribirse al servicio de eliminacion de departamento
+          this.departamentoService.deleteObject(id).subscribe(
+            {
+              //caso exito
+              next: (response: HttpResponse<never>) => {
+                //si el result existe
+                if(this.respuesta){
+                  //destructura results, de array result, en variable results
+                  const { data } = this.respuesta;
+                  //asigna a result.results, un arreglo tal que ninguno de sus elementos contiene id
+                  this.respuesta.data = data.filter((departamento: Departamento) => departamento.id !== id);
+                }
+              },
+              //caso error
+              error: () => {},
+              complete:()=> this.getDepartamentos(this.paginator.pageIndex)
+            }
+          )
+        }
+     });
+    }
+
 }

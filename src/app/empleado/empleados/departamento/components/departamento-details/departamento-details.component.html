@@ -1,0 +1,43 @@
+<h2>Detalle de departamento</h2>
+<mat-dialog-content>
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <mat-list>
+      <mat-list-item>
+        <h3 matLine> {{context.paramsText[0]}} </h3>
+        <div matLine *ngIf="!editableNombre">
+          <p> {{context.data.nombre}}</p>
+          <button mat-icon-button *ngIf="editable" type="button" (click)="enableNombreEdit()" #enableName><mat-icon>edit</mat-icon></button>
+        </div>
+        <div matLine *ngIf="editableNombre">
+          <mat-form-field appearance="fill">
+              <input matInput type="text" formControlName="nombre" #nameInput>
+              {{nameInput.focus()}}
+          </mat-form-field>
+          <div class="button-group">
+            <button mat-icon-button type="submit" [disabled]="!nombreControl.valid"><mat-icon>done</mat-icon></button>
+            <button mat-icon-button type="button" (click)="disableNombreEdit()"><mat-icon>close</mat-icon></button>
+          </div>
+        </div>
+
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine> {{context.paramsText[1]}} </h3>
+        <div matLine *ngIf="!editableDescripcion">
+          <p> {{context.data.descripcion}} </p>
+          <button mat-icon-button *ngIf="editable" type="button" (click)="enableDescripcionEdit()" #enableDescription><mat-icon>edit</mat-icon></button>
+        </div>
+        <div matLine *ngIf="editableDescripcion">
+          <mat-form-field appearance="fill" #descriptionFormField>
+              <input matInput type="text" formControlName="descripcion" #descriptionInput>
+              {{descriptionInput.focus()}}
+          </mat-form-field>
+          <div class="button-group">
+            <button mat-icon-button type="submit" [disabled]="!descripcionControl.valid"><mat-icon>done</mat-icon></button>
+            <button mat-icon-button type="button" (click)="disableDescripcionEdit()"><mat-icon>close</mat-icon></button>
+          </div>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </form>
+  <mat-slide-toggle [checked]="false" (change)="toggleEdit($event)">Editar</mat-slide-toggle>
+</mat-dialog-content>

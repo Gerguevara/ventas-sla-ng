@@ -1,3 +1,4 @@
+import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -16,6 +17,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DepartamentoComponent } from './departamento.component';
 import { DepartamentoContainerComponent } from './departamento-container/departamento-container.component';
 import { DepartamentoTableComponent } from './components/departamento-table/departamento-table.component';
+import { DepartamentoConfirmationDialogComponent } from './components/departamento-confirmation-dialog/departamento-confirmation-dialog.component';
+import { DepartamentoDetailsComponent } from './components/departamento-details/departamento-details.component';
+import { MatRippleModule } from '@angular/material/core';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 
 @NgModule({
@@ -23,12 +28,15 @@ import { DepartamentoTableComponent } from './components/departamento-table/depa
     DepartamentoFormComponent,
     DepartamentoComponent,
     DepartamentoContainerComponent,
-    DepartamentoTableComponent
+    DepartamentoTableComponent,
+    DepartamentoConfirmationDialogComponent,
+    DepartamentoDetailsComponent
   ],
   imports: [
     CommonModule,
     DepartamentoRoutingModule,
     ReactiveFormsModule,
+    MatListModule,
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
@@ -37,7 +45,9 @@ import { DepartamentoTableComponent } from './components/departamento-table/depa
     MatTableModule,
     MatPaginatorModule,
     MatCardModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatRippleModule,
+    MatSlideToggleModule
   ]
 })
 export class DepartamentoModule { }
