@@ -1,21 +1,21 @@
-@import '~@angular/material/theming';
-.mat-sidenav-container {
+@import 'variables';
+mat-sidenav-container {
     min-height: 100%;
 }
 
-.mat-list a {
+mat-list a {
     text-decoration: none;
 }
 
-.mat-list-item:hover {
-    background-color: mat-color($mat-gray, 100);
+mat-list-item:hover {
+    background-color: $hover-white;
 }
 
-.mat-sidenav h1 {
+mat-sidenav h1 {
     margin: 20px;
 }
 
-.mat-toolbar a {
+mat-toolbar a {
     text-decoration: none;
     color: #FFF; //mat-color($mat-gray,100);
 }
@@ -29,7 +29,7 @@
 }
 
 .logo-img{
-    max-height:60px;
+    max-height:10vh;
     width: auto;
     display: inline-flex;
     vertical-align:middle;

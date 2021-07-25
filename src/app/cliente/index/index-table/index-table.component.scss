@@ -1,15 +1,19 @@
-@import '~@angular/material/theming';
+@import 'variables';
 .products-container{
     table-layout: fixed ;
     width: 100%;
 }
-.mat-card{
+mat-card{
     min-height: 375px;
 }
 .products-container .mat-card:hover{
-    background-color: mat-color($mat-gray,100);
+    background-color: $hover-white;
 }
 
 th a{
     text-decoration: none;
+}
+
+.categoria-container{
+  margin: 20px 30px;
 }

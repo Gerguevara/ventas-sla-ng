@@ -49,14 +49,14 @@ export class DepartamentoDetailsComponent implements OnInit {
   executeNombreEdit(name: string){
     if(name.length!=0 && name.length <= 30){
       this.context.data.nombre = name;
-      this.departamentoService.updateDepartamento(this.context.data).subscribe(this.editObserver);
+      this.departamentoService.updateObject(this.context.data).subscribe(this.editObserver);
     }
     this.disableNombreEdit();
   }
 
   executeDescripcionEdit(description: string){
     this.context.data.descripcion = description;
-    this.departamentoService.updateDepartamento(this.context.data).subscribe(this.editObserver);
+    this.departamentoService.updateObject(this.context.data).subscribe(this.editObserver);
     this.disableDescripcionEdit();
   }
 

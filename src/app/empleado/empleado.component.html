@@ -66,6 +66,11 @@
                   </a>
                 </ng-template>
                 <mat-divider></mat-divider>
+                <!-- <ng-template [ngxPermissionsOnly]="['roles.index']"> -->
+                  <a mat-list-item [routerLink]="['/panel/empleados/roles']" class="list-item-container" >
+                      <mat-icon color="primary">badge</mat-icon>&nbsp;&nbsp;Roles
+                  </a>
+                <!-- </ng-template> -->
               </mat-nav-list>
           </mat-expansion-panel>
           <mat-divider></mat-divider>

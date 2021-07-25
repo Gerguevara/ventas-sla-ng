@@ -99,17 +99,17 @@ export class DepartamentoContainerComponent implements OnInit {
             //actualizarlo
             this.departamentoService.updateObject(departamentoDialogo).subscribe({
               //luego de actualizarlo
-              next:(departamentoActualizado : Departamento)=>{
+              next:({resultado:boolean,mensaje:string})=>{
                 //obtener el indice
                 const index = this.respuesta ? this.respuesta.data.findIndex(
                   //donde el id corresponda al de la departamento actualizada
-                  (departamentoABuscar : Departamento)=> departamentoABuscar.id === departamentoActualizado.id
+                  (departamentoABuscar : Departamento)=> departamentoABuscar.id === departamentoDialogo.id
                 //si el indice no esta, retornar -1
                 ) : -1
                 //si el objeto se encontro
                 if(index >= 0) {
                   //actualizar el arreglo de categorias en la respuesta
-                  if(this.respuesta) this.respuesta.data[index] = departamentoActualizado;
+                  if(this.respuesta) this.respuesta.data[index] = departamentoDialogo;
                 }
               },
               //complete:()=> this.getDepartamentos(this.paginator.pageIndex)

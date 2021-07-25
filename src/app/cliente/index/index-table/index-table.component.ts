@@ -12,21 +12,30 @@ import { ProductoService } from 'src/app/core/services/producto.service';
 })
 export class IndexTableComponent implements OnInit {
   @Input()
-  categoriaId : number = -1;
+  categoria! : Categoria;
   productos : Producto[] = [];
   maxProductos : number = 4;
-  constructor(private indexService : IndexService) { }
-
-  ngOnInit(): void {
+  rendered = true;
+  constructor(private indexService : IndexService) {
     this.indexService.getObjects().subscribe({
       next: (res : Resultado<Producto>)=>{
-        this.productos = res.data.filter((prod:Producto)=>prod.id_categoria===this.categoriaId)
-        this.productos=this.productos.sort(this.comparador);
-        if(this.productos.length > this.maxProductos)
-          this.productos = this.productos.slice(0,this.maxProductos);
+        this.productos = res.data.filter((prod:Producto)=>prod.id_categoria===this.categoria.id)//cambiar por servicio que filtre productos por categorias
+        console.log(this.productos.length);
+        if(this.productos.length>0){
+          this.rendered = true;
+          this.productos=this.productos.sort(this.comparador);
+          if(this.productos.length > this.maxProductos){
+            this.productos = this.productos.slice(0,this.maxProductos);
+          }
+        } else {
+          this.rendered = false;
+        }
       }
     })
+
   }
+
+  ngOnInit(): void { }
 
   comparador(productoA : Producto, productoB : Producto) {
     if (Number(productoA.calificacion_promedio) < Number(productoB.calificacion_promedio )){
