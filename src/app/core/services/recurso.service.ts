@@ -8,7 +8,7 @@ import { Recurso } from './../Models/recurso.model';
 
 export abstract class RecursoService<T extends Recurso> {
 
-  private API_URL = environment.apiUrl;
+  protected API_URL = environment.apiUrl;
 
   constructor(
     endpoint: string,

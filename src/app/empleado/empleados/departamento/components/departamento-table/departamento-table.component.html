@@ -1,0 +1,20 @@
+<mat-table [dataSource]="dataSource" #departamentoTable>
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+    <mat-cell *matCellDef="let departamento"> {{departamento.id}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="nombre">
+    <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+    <mat-cell *matCellDef="let departamento"> {{departamento.nombre}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="descripcion">
+    <mat-header-cell *matHeaderCellDef> Descripcion </mat-header-cell>
+    <mat-cell *matCellDef="let departamento"> {{departamento.descripcion}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="acciones">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let departamento"></mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="eventSelect.emit(row)" matRipple></mat-row>
+</mat-table>

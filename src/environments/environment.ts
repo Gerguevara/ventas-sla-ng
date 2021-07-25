@@ -9,7 +9,8 @@ export const environment = {
   apiUrl: "http://localhost:8000/api/",
   allowedOrigin:"http://localhost:4200",
   uploadUrl: "https://prueba-pp15001.000webhostapp.com/upload.php",
-  uploadDir: "https://prueba-pp15001.000webhostapp.com/uploads/"
+  uploadDir: "https://prueba-pp15001.000webhostapp.com/uploads/",
+  appFont: "Merriweather Sans"
 };
 
 /*
