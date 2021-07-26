@@ -18,6 +18,7 @@ import { NgxPermissionsService } from 'ngx-permissions';
 export class ClienteComponent implements OnInit {
   @ViewChild('sidenav') sidenav! : MatSidenav;
   title = environment.appTitle;
+  bannerText = environment.bannerText;
   categorias : Categoria[] = [];
   smolWindow : boolean = true;
   window = window;

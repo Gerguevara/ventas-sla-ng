@@ -1,3 +1,4 @@
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { IndexService } from 'src/app/core/services/index.service';
 import { Categoria } from 'src/app/core/Models/categoria.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -16,13 +17,16 @@ export class IndexCategoriaContainer implements OnInit {
   listaProductos : Producto[] = [];
   breakpoint?: number= 4;
   catTitle:string = "";
+  rowHeight!: string;
   constructor(
     private indexService : IndexService,
-    private route : ActivatedRoute
-    ) { }
+    private route : ActivatedRoute,
+    private breakpointObserver: BreakpointObserver
+    ) {
+      this.onResize();
+    }
 
   ngOnInit(): void {
-    this.breakpoint = (window.innerWidth <= 400) ? 1 : 6;
     this.route.paramMap.subscribe(
       (params: ParamMap) => {
         let idObtenido = params.get('id')
@@ -41,16 +45,40 @@ export class IndexCategoriaContainer implements OnInit {
     )
   }
 
+  setRowHeight(){
+    let heigthRatio = (0.00055186559 * window.innerWidth) + 1.211;
+    this.rowHeight = `1:${heigthRatio}`;
+  }
+
   onResize() {
-    if((window.matchMedia("(max-width: 1199px)").matches)&&(window.matchMedia("(min-width: 950px)").matches)){
-      this.breakpoint = 3;
-    }else if((window.matchMedia("(max-width: 949px)").matches)&&(window.matchMedia("(min-width: 650px)").matches)){
-      this.breakpoint = 2;
-    } else if((window.matchMedia("(max-width: 649px)").matches)){
-      this.breakpoint = 1;
-    } if((window.matchMedia("(min-width: 1200px)").matches)){
-      this.breakpoint = 4;
-    }
+    this.setRowHeight();
+    this.breakpointObserver.observe(
+      [
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Medium,
+        Breakpoints.Large,
+        Breakpoints.XLarge
+      ]
+    ).subscribe({
+      next: (breakpointState: BreakpointState)=>{
+        if(breakpointState.breakpoints[Breakpoints.XSmall]){
+          this.breakpoint = 1;
+        };
+        if(breakpointState.breakpoints[Breakpoints.Small]){
+          this.breakpoint = 2;
+        };
+        if(breakpointState.breakpoints[Breakpoints.Medium]){
+          this.breakpoint = 3;
+        }
+        if(breakpointState.breakpoints[Breakpoints.Large]){
+          this.breakpoint = 4;
+        }
+        if(breakpointState.breakpoints[Breakpoints.XLarge]){
+          this.breakpoint = 6;
+        }
+        this.setRowHeight();
+    }})
   }
 
 }

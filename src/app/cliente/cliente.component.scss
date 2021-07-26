@@ -20,20 +20,31 @@ mat-sidenav {
 }
 
 mat-toolbar {
+  justify-content: space-between;
+  align-items: center;
 }
 
 mat-toolbar a {
-    text-decoration: none;
-    color: #FFF; //mat-color($mat-gray,100);
+  text-decoration: none;
+  color: #FFF; //mat-color($mat-gray,100);
+  align-items: center;
 }
 
 .white-icon {
     color: white;
 }
 
+.toolbar-items-left{
+  display: flex;
+}
+
 .toolbar-item-left{
-    display: flex;
-    margin-left: 1vw;
+  display: flex;
+  margin-left: 1vw;
+}
+
+.toolbar-items-right{
+  display: flex;
 }
 
 .logo-img{

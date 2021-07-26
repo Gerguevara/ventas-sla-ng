@@ -1,3 +1,4 @@
+import { MatGridListModule } from '@angular/material/grid-list';
 import { MatListModule } from '@angular/material/list';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -19,7 +20,8 @@ import { IndexProductCardComponent } from './index-product-card/index-product-ca
     CommonModule,
     IndexRoutingModule,
     MatCardModule,
-    MatListModule
+    MatListModule,
+    MatGridListModule
   ],
   exports: [
     IndexProductCardComponent

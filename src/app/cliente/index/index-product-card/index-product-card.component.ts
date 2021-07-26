@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { ProductoService } from 'src/app/core/services/producto.service';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Producto } from 'src/app/core/Models/producto.model';
 
 @Component({
@@ -8,12 +10,26 @@ import { Producto } from 'src/app/core/Models/producto.model';
 })
 export class IndexProductCardComponent implements OnInit {
   @Input()
-  productoInput? : Producto;
+  productoInput! : Producto;
+  hasImage: boolean;
+  placeholderProductImage: string = environment.defaultProductImage;
 
-  constructor() { 
+  constructor(
+    private productoService: ProductoService
+    ) {
+    this.hasImage=false;
   }
 
   ngOnInit(): void {
+    this.checkImageStatus();
   }
 
+  checkImageStatus(){
+    this.productoService.getImage(this.productoInput).subscribe({
+      next: (response:any)=> {
+        this.hasImage=true;
+      },
+      error: ()=> {this.hasImage=false;}
+    })
+  }
 }

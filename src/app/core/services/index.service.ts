@@ -11,7 +11,7 @@ import { Categoria } from '../Models/categoria.model';
 })
 export class IndexService extends RecursoService<Producto> {
 
-  constructor(protected httpClient: HttpClient) { 
+  constructor(protected httpClient: HttpClient) {
     super('index', httpClient);
   }
 
@@ -29,6 +29,6 @@ export class IndexService extends RecursoService<Producto> {
         'Authorization': token
       })
     };
-    return this.httpClient.get<Categoria>(`${environment.apiUrl}categorias` + id, httpHeaders);
+    return this.httpClient.get<Categoria>(`${environment.apiUrl}categorias/` + id, httpHeaders);
   }
 }

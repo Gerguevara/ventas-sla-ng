@@ -10,10 +10,12 @@ export const environment = {
   allowedOrigin:"http://localhost:4200",
   uploadUrl: "https://prueba-pp15001.000webhostapp.com/upload.php",
   uploadDir: "https://prueba-pp15001.000webhostapp.com/uploads/",
+  bannerText: "Las mejores marcas",
+  defaultProductImage: "/assets/images/placeholder-product-image.svg",
   appFonts: [
     "Merriweather Sans",
     "Oswald"
-  ]
+  ],
 };
 
 /*

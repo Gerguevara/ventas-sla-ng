@@ -1,5 +1,23 @@
-img{
-    max-height: 150px;
-    max-width: 100%;
-    margin:0 auto;
-}
+@import 'variables';
+
+.card-container{
+  max-height: 99.5%;
+  max-width: 90%;
+ }
+
+ mat-list{
+   padding-top: 0;
+ }
+
+ mat-card:hover{
+   background-color: $hover-white;
+   cursor: pointer;
+ }
+
+ mat-card-title{
+   margin-bottom: 0;
+ }
+
+ img{
+   margin-bottom: 0;
+ }
