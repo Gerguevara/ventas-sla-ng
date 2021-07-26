@@ -8,6 +8,10 @@
 $ventas-sla-ng-typography: mat-typography-config(
   $font-family: 'Merriweather Sans',
 );
+$title-sla-ng-typography: mat-typography-config(
+  $font-family: 'Oswald',
+);
+@include mat-core($title-sla-ng-typography);
 @include mat-core($ventas-sla-ng-typography);
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker

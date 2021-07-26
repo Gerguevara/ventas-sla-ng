@@ -17,7 +17,7 @@ import { NgxPermissionsService } from 'ngx-permissions';
 })
 export class ClienteComponent implements OnInit {
   @ViewChild('sidenav') sidenav! : MatSidenav;
-  title = "Servicios de Limpieza Ambiental";//`${environment.appTitle}`;
+  title = environment.appTitle;
   categorias : Categoria[] = [];
   smolWindow : boolean = true;
   window = window;

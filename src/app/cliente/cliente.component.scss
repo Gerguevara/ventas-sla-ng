@@ -15,6 +15,13 @@ mat-sidenav h1 {
     margin: 20px;
 }
 
+mat-sidenav {
+  width: 20vw;
+}
+
+mat-toolbar {
+}
+
 mat-toolbar a {
     text-decoration: none;
     color: #FFF; //mat-color($mat-gray,100);
@@ -24,22 +31,25 @@ mat-toolbar a {
     color: white;
 }
 
-.logo-link{
-    display: flexbox;
+.toolbar-item-left{
+    display: flex;
+    margin-left: 1vw;
 }
 
 .logo-img{
-    max-height:10vh;
+    max-height:7vh;
     width: auto;
-    display: inline-flex;
-    vertical-align:middle;
-    margin-right: 10px;
 }
 
 
 .titulo-navbar{
-    display: inline-flex;
-    vertical-align:middle;
+    display: flex;
+    color: $primary;
+    font-family: mat-font-family($title-sla-ng-typography) !important;
+    justify-content: center;
+    width: 100%;
+    font-size: 5.5vh !important;
+    font-weight: 800;
 }
 
 .example-spacer {
