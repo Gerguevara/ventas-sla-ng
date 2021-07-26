@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@import 'variables';
 .mat-table{
   min-width: 100%;
   text-align: center;
@@ -6,8 +6,10 @@
 .mat-cell{
   margin: 0 auto;
 }
-.mat-row:hover{
-  background-color: mat-color($mat-gray,100);
+
+mat-row:hover{
+  background-color: $accent;
+  cursor: pointer;
 }
 .mat-column-id{
   word-wrap: break-word !important;

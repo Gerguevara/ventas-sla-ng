@@ -1,7 +1,9 @@
+@import 'variables';
 table {
     width: 100%;
 }
 
-.table-row:hover {
-    background-color: rgb(180, 180, 180);
+mat-row:hover{
+  cursor: pointer;
+  background-color: $hover-white;
 }

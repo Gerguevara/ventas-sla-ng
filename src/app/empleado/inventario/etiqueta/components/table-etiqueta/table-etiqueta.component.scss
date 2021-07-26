@@ -1,13 +1,15 @@
-@import '~@angular/material/theming';
+@import 'variables';
 .mat-table{
   min-width: 100%;
 }
 .mat-cell{
   margin: 0 auto;
 }
-.mat-row:hover{
+
+
+mat-row:hover{
   cursor: pointer;
-  background-color: mat-color($mat-gray,100);
+  background-color: $hover-white;
 }
 .mat-column-id{
   word-wrap: break-word !important;

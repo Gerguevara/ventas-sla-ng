@@ -1,12 +1,12 @@
-@import '~@angular/material/theming';
+@import 'variables';
 .mat-card{
     max-width: 225px;
     min-width: 225px;
 }
 
-.mat-card:hover{
-    background-color: mat-color($mat-gray,100);
-
+mat-card:hover{
+    background-color: $hover-white;
+    cursor: pointer;
 }
 
 .mat-grid-tile a{

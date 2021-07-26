@@ -6,7 +6,7 @@
 mat-card{
     min-height: 375px;
 }
-.products-container .mat-card:hover{
+.products-container mat-card:hover{
     background-color: $hover-white;
 }
 

@@ -1,4 +1,5 @@
 @import '~@angular/material/theming';
+@import 'variables';
 
 .card {
     margin: 15px;
@@ -80,8 +81,9 @@
     cursor: pointer;
 }
 
-.mat-row:hover .mat-cell {
-    border-color: currentColor;
+mat-row:hover{
+  cursor: pointer;
+  background-color: $hover-white;
 }
 
 .demo-row-is-clicked {
@@ -120,8 +122,9 @@ input.example-right-align {
     cursor: pointer;
 }
 
-.mat-row:hover .mat-cell {
-    border-color: currentColor;
+mat-row:hover .mat-cell{
+  cursor: pointer;
+  background-color: $hover-white;
 }
 
 .demo-row-is-clicked {
