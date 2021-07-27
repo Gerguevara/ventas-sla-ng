@@ -21,10 +21,6 @@ const routes: Routes = [
         loadChildren: () => import('./solicitudes-empresa/solicitudes-empresa.module').then(m => m.SolicitudesEmpresaModule)
       },
       {
-        path: 'empleados',
-        loadChildren: () => import('./empleados/empleados.module').then(m => m.EmpleadosModule)
-      },
-      {
         path: '**',
         pathMatch: 'full',
         redirectTo: 'empleados'

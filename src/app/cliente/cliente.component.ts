@@ -1,3 +1,4 @@
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { environment } from 'src/environments/environment';
@@ -37,7 +38,8 @@ export class ClienteComponent implements OnInit {
     private router: Router,
     private authCliente: LoginClienteService,
     private dialog: MatDialog,
-    private permissions: NgxPermissionsService
+    private permissions: NgxPermissionsService,
+    private breakpointObserver: BreakpointObserver
     ) {
   }
 
@@ -89,16 +91,44 @@ export class ClienteComponent implements OnInit {
   }
 
   sidenavMode(){
-    if(this.sidenav)
-      if(window.matchMedia("(max-width: 700px)").matches){
-        this.sidenav.close();
-        this.sidenav.mode="over";
-        this.smolWindow=true;
-      } else {
-        this.sidenav.open();
-        this.sidenav.mode="side";
-        this.smolWindow=false;
+    this.breakpointObserver.observe(
+      [
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Medium,
+        Breakpoints.Large,
+        Breakpoints.XLarge
+      ]
+    ).subscribe({
+      next: (breakpointState: BreakpointState)=>{
+        if(this.sidenav){
+          if(breakpointState.breakpoints[Breakpoints.XSmall]){
+            this.setOverSidenav();
+          } else if (breakpointState.breakpoints[Breakpoints.Small]) {
+            this.setOverSidenav();
+          } else if (breakpointState.breakpoints[Breakpoints.Medium]) {
+            this.setSideSidenav();
+          } else if (breakpointState.breakpoints[Breakpoints.Large]) {
+            this.setSideSidenav();
+          } else if (breakpointState.breakpoints[Breakpoints.XLarge]) {
+            this.setSideSidenav();
+          } else {
+            this.setOverSidenav();
+          }
+        }
       }
+    });
   }
 
+  setSideSidenav(){
+    this.sidenav.open();
+    this.sidenav.mode="side";
+    this.smolWindow=false;
+  }
+
+  setOverSidenav(){
+    this.sidenav.close();
+    this.sidenav.mode="over";
+    this.smolWindow=true;
+  }
 }
