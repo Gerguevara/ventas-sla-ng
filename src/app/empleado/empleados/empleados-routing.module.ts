@@ -10,6 +10,10 @@ const routes: Routes = [
     path: 'roles',
     loadChildren: () => import('./rol/rol.module').then(m => m.RolModule)
   },
+  {
+    path: 'empleados',
+    loadChildren: () => import('./gestion-empleados/gestion-empleados.module').then(m => m.GestionEmpleadosModule)
+  },
   { path: '**', pathMatch: 'full', redirectTo: 'roles' }
 ];
 

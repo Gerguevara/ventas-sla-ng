@@ -1,0 +1,7 @@
+<form [formGroup]="formGroup">
+  <mat-form-field appearance="fill">
+    <mat-label>Enter your email</mat-label>
+    <input matInput placeholder="pat@example.com" [formControl]="nombresControl" required>
+    <mat-error *ngIf="nombresControl.invalid">{{getErrorMessage(nombresControl)}}</mat-error>
+  </mat-form-field>
+</form>
