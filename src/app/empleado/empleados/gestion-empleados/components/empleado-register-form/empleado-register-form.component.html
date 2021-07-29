@@ -1,28 +1,26 @@
 
 
-<button mat-icon-button ><mat-icon>home</mat-icon>
-</button>
 <mat-vertical-stepper [linear]="true" #stepper>
-  <mat-step [stepControl]="accessFormGroup">
+  <mat-step [stepControl]="accessForm">
     <ng-template matStepLabel>Fill out your name</ng-template>
-    <app-empleado-register-form-access [formGroup]="accessFormGroup"></app-empleado-register-form-access>
+    <app-empleado-register-form-access [formGroup]="accessForm"></app-empleado-register-form-access>
     <button mat-button matStepperNext>Next</button>
   </mat-step>
-  <mat-step [stepControl]="generalFormGroup" label="Fill out your address">
+  <mat-step [stepControl]="generalForm" label="Fill out your address">
     <ng-template matStepLabel>Fill out your name</ng-template>
-    <app-empleado-register-form-general [formGroup]="generalFormGroup"></app-empleado-register-form-general>
+    <app-empleado-register-form-general [formGroup]="generalForm"></app-empleado-register-form-general>
     <button mat-button matStepperPrevious>Back</button>
     <button mat-button matStepperNext>Next</button>
   </mat-step>
-  <mat-step [stepControl]="documentsFormGroup">
+  <mat-step [stepControl]="documentsForm">
     <ng-template matStepLabel>Fill out your name</ng-template>
-    <app-empleado-register-form-documents [formGroup]="documentsFormGroup"></app-empleado-register-form-documents>
+    <app-empleado-register-form-documents [formGroup]="documentsForm"></app-empleado-register-form-documents>
     <button mat-button matStepperPrevious>Back</button>
     <button mat-button matStepperNext>Next</button>
   </mat-step>
-  <mat-step [stepControl]="corporateFormGroup">
+  <mat-step [stepControl]="corporateForm">
     <ng-template matStepLabel>Fill out your name</ng-template>
-    <app-empleado-register-form-corporate [formGroup]="corporateFormGroup"></app-empleado-register-form-corporate>
+    <app-empleado-register-form-corporate [formGroup]="corporateForm"></app-empleado-register-form-corporate>
     <button mat-button matStepperPrevious>Back</button>
     <button mat-button (click)="submit()">Submit</button>
   </mat-step>

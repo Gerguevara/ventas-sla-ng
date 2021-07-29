@@ -22,15 +22,27 @@ export class EmpleadoRegisterFormDocumentsComponent implements OnInit {
     if(errors){
       const errorsKeys = Object.keys(errors);
       errorsKeys.forEach((key: string) => {
-        const errorMessage = String(errors![key]);
+        const errorMessage = String(key);
         message = message.concat(`${errorMessage} `);
       });
     }
     return message;
   }
 
-  get nombresControl(): FormControl {
-    return this.formGroup.get('nombres') as FormControl;
+  get duiControl(): FormControl {
+    return this.formGroup.get('dui') as FormControl;
+  }
+
+  get nitControl(): FormControl {
+    return this.formGroup.get('nit') as FormControl;
+  }
+
+  get afpControl(): FormControl {
+    return this.formGroup.get('afp') as FormControl;
+  }
+
+  get isssControl(): FormControl {
+    return this.formGroup.get('isss') as FormControl;
   }
 
 }

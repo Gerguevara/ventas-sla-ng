@@ -1,5 +1,9 @@
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AfterContentInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatStepper } from '@angular/material/stepper';
+
+import { Empleado } from '@models/empleado.model';
+import { EmpleadoService } from '@global-services/empleado.service';
 
 @Component({
   selector: 'app-empleado-register-form',
@@ -7,35 +11,46 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./empleado-register-form.component.scss']
 })
 export class EmpleadoRegisterFormComponent implements OnInit {
-  accessFormGroup!: FormGroup;
-  generalFormGroup!: FormGroup;
-  documentsFormGroup!: FormGroup;
-  corporateFormGroup!: FormGroup;
+  accessForm!: FormGroup;
+  generalForm!: FormGroup;
+  documentsForm!: FormGroup;
+  corporateForm!: FormGroup;
+  @ViewChild('stepper')
+  stepper!: MatStepper;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private empleadoService: EmpleadoService
   ) {
-    this.accessFormGroup = formBuilder.group(
+    this.accessForm = formBuilder.group(
       {
+        //id: [null,[]],
         nombres: ['',[]],
         apellidos: ['',[]],
         email: ['',[]],
-        password: ['',[]]
       }
     );
-    this.generalFormGroup = formBuilder.group(
+    this.generalForm = formBuilder.group(
       {
-        //form config
+        genero: ['',[]],
+        telefono: ['',[]],
+        direccion: ['',[]],
+        estadoCivil: ['',[]],
       }
     );
-    this.documentsFormGroup = formBuilder.group(
+    this.documentsForm = formBuilder.group(
       {
-        //form config
+        dui: ['',[]],
+        nit: ['',[]],
+        afp: ['',[]],
+        isss: ['',[]],
       }
     );
-    this.corporateFormGroup = formBuilder.group(
+    this.corporateForm = formBuilder.group(
       {
-        //form config
+        nivelEstudios: ['',[]],
+        salario: [0.0,[]],
+        fechaInicio: ['',[]],
       }
     );
   }
@@ -43,6 +58,23 @@ export class EmpleadoRegisterFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  submit(){}
+  submit(){
+    this.empleadoService.postEmpleado(this.getFormEmpleado()).subscribe({
+      next: () => {console.log("anadido con exito")},
+      error: () => {console.log("error en el registro")},
+      complete: () => {}
+    })
+  }
 
+  getFormData(){
+    const access = this.accessForm.getRawValue();
+    const general = this.generalForm.getRawValue();
+    const documents = this.documentsForm.getRawValue();
+    const corporate = this.corporateForm.getRawValue();
+    return Object.assign(access, general, documents, corporate);
+  }
+
+  getFormEmpleado(){
+    return this.getFormData() as Empleado;
+  }
 }

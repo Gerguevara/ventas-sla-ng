@@ -21,15 +21,27 @@ export class EmpleadoRegisterFormGeneralComponent implements OnInit {
     if(errors){
       const errorsKeys = Object.keys(errors);
       errorsKeys.forEach((key: string) => {
-        const errorMessage = String(errors![key]);
+        const errorMessage = String(key);
         message = message.concat(`${errorMessage} `);
       });
     }
     return message;
   }
 
-  get nombresControl(): FormControl {
-    return this.formGroup.get('nombres') as FormControl;
+  get generoControl(): FormControl {
+    return this.formGroup.get('genero') as FormControl;
+  }
+
+  get telefonoControl(): FormControl {
+    return this.formGroup.get('telefono') as FormControl;
+  }
+
+  get direccionControl(): FormControl {
+    return this.formGroup.get('direccion') as FormControl;
+  }
+
+  get estadoCivilControl(): FormControl {
+    return this.formGroup.get('estadoCivil') as FormControl;
   }
 
 }

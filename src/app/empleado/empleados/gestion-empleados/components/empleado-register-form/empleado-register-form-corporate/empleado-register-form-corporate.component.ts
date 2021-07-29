@@ -16,21 +16,28 @@ export class EmpleadoRegisterFormCorporateComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
   getErrorMessage(control: FormControl){
     let message = '';
     let { errors } = control;
     if(errors){
       const errorsKeys = Object.keys(errors);
       errorsKeys.forEach((key: string) => {
-        const errorMessage = String(errors![key]);
+        const errorMessage = String(key);
         message = message.concat(`${errorMessage} `);
       });
     }
     return message;
   }
 
-  get nombresControl(): FormControl {
-    return this.formGroup.get('nombres') as FormControl;
+  get nivelEstudiosControl(): FormControl {
+    return this.formGroup.get('nivelEstudios') as FormControl;
+  }
+
+  get salarioControl(): FormControl {
+    return this.formGroup.get('salario') as FormControl;
+  }
+
+  get fechaInicioControl(): FormControl {
+    return this.formGroup.get('fechaInicio') as FormControl;
   }
 }

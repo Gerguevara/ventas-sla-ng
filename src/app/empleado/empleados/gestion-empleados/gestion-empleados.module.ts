@@ -1,3 +1,4 @@
+import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
@@ -15,14 +16,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { GestionEmpleadosRoutingModule } from './gestion-empleados-routing.module';
 import { EmpleadoContainerComponent } from './empleado-container/empleado-container.component';
 import { EmpleadoIndexComponent } from './components/empleado-index/empleado-index.component';
 import { EmpleadoDetailComponent } from './components/empleado-detail/empleado-detail.component';
 import { EmpleadoConfirmationDialogComponent } from './components/empleado-confirmation-dialog/empleado-confirmation-dialog.component';
-import { MatCardModule } from '@angular/material/card';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { EmpleadoRegisterFormComponent } from './components/empleado-register-form/empleado-register-form.component';
 import { EmpleadoRegisterFormAccessComponent } from './components/empleado-register-form/empleado-register-form-access/empleado-register-form-access.component';
 import { EmpleadoRegisterFormGeneralComponent } from './components/empleado-register-form/empleado-register-form-general/empleado-register-form-general.component';
@@ -60,7 +61,8 @@ import { EmpleadoRegisterFormCorporateComponent } from './components/empleado-re
     MatIconModule,
     MatDividerModule,
     MatTooltipModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatGridListModule
   ]
 })
 export class GestionEmpleadosModule { }

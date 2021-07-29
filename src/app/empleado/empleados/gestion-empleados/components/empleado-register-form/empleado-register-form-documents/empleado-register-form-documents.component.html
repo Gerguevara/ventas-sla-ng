@@ -1,3 +1,28 @@
 <form [formGroup]="formGroup">
-
+  <div class="access-container">
+    <div class="left-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Ingresa su DUI</mat-label>
+        <input matInput placeholder="00000000-0" formControlName="dui" required tabindex="1">
+        <mat-error *ngIf="duiControl.invalid">{{getErrorMessage(duiControl)}}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Ingresa su nit</mat-label>
+        <input matInput placeholder="0000-000000-000-0" formControlName="nit" required tabindex="3">
+        <mat-error *ngIf="nitControl.invalid">{{getErrorMessage(nitControl)}}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="right-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Ingresa su afp</mat-label>
+        <input matInput placeholder="Calle Martínez" formControlName="afp" required tabindex="2">
+        <mat-error *ngIf="afpControl.invalid">{{getErrorMessage(afpControl)}}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Ingresa su isss</mat-label>
+        <input matInput placeholder="Soltero/a" formControlName="isss" required tabindex="4">
+        <mat-error *ngIf="isssControl.invalid">{{getErrorMessage(isssControl)}}</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
 </form>

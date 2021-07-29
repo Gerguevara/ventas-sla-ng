@@ -22,7 +22,7 @@ export class EmpleadoRegisterFormAccessComponent implements OnInit {
     if(errors){
       const errorsKeys = Object.keys(errors);
       errorsKeys.forEach((key: string) => {
-        const errorMessage = String(errors![key]);
+        const errorMessage = String(key);
         message = message.concat(`${errorMessage} `);
       });
     }
@@ -39,9 +39,5 @@ export class EmpleadoRegisterFormAccessComponent implements OnInit {
 
   get emailControl(): FormControl {
     return this.formGroup.get('email') as FormControl;
-  }
-
-  get passwordControl(): FormControl {
-    return this.formGroup.get('password') as FormControl;
   }
 }
