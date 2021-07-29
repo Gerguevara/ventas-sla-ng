@@ -93,7 +93,6 @@ export class RolFormComponent implements OnInit {
     this.rolForm.get('descripcion')?.setValue( rol.descripcion );
     this.rolForm.get('departamento')?.setValue( rol.id_departamento );
     this.roleService.getDepartamento( Number(rol.id_departamento) ).then((response: any) => {
-      console.log(response);
       this.filasSeleccionadas.add( response.producto );
       this.departamento = response.producto.nombre;
     });
@@ -114,12 +113,10 @@ export class RolFormComponent implements OnInit {
     const index = this.permisos.indexOf(id);
     if (index > -1) {
       // Si es así, se elimina
-      console.log(this.permisos);
       this.permisos.splice(index, 1);
       this.rolForm.get('permissions')?.setValue(this.permisos);
     } else {
       // de lo contrario se añade a la lista
-      console.log(this.permisos);
       this.permisos.push(id);
       this.rolForm.get('permissions')?.setValue(this.permisos);
     }

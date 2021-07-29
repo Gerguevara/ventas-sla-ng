@@ -1,4 +1,4 @@
-<div mat-dialog-content>
+<div style="position: relative;">
     <mat-horizontal-stepper>
         <mat-step label="General" state="phone">
             <mat-card class="mat-step">
@@ -58,9 +58,6 @@
             </mat-card>
             <div style="position: relative; margin-top: 10px;">
                 <button mat-button type="button" matStepperNext>Siguiente</button>
-                <button mat-button type="button" (click)="editar()" *ngIf="!enableEdit" style="position: absolute; right: 10px;">
-                    <mat-icon>edit</mat-icon> Editar
-                </button>
             </div>
         </mat-step>
         <mat-step label="Permisos" state="chat">
@@ -188,9 +185,6 @@
             <div style="margin-top: 10px; position: relative;">
                 <button mat-button type="button" matStepperPrevious>Regresar</button>
                 <button mat-button type="button" *ngIf="enableEdit" [disabled]="rolForm.invalid" (click)="enviar()" matStepperNext>Enviar</button>
-                <button mat-button type="button" (click)="editar()" *ngIf="!enableEdit" style="position: absolute; right: 10px;">
-                    <mat-icon>edit</mat-icon> Editar
-                </button>
             </div>
         </mat-step>
 
@@ -202,7 +196,12 @@
             <mat-icon>shield</mat-icon>
         </ng-template>
     </mat-horizontal-stepper>
-</div>
-<div mat-dialog-actions>
-    <button mat-button (click)="cerrarDialogo()" cdkFocusInitial>Cerrar</button>
+    <div style="display: block;">
+        <button mat-mini-fab color="primary" type="button" (click)="editar()" *ngIf="!enableEdit" style="position: absolute; right: 60px; bottom: 10px;">
+            <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-mini-fab color="warn" type="button" (click)="cerrarDialogo()" *ngIf="!enableEdit" style="position: absolute; right: 10px; bottom: 10px;">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
 </div>

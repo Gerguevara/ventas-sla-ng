@@ -52,8 +52,12 @@ export class LoginComponent implements OnInit {
         // El inicio de sesión es exitoso y guardamos el token en el LocalStorage
         // Cerramos todos los dialogos abiertos hasta el momento
         this.dialog.closeAll();
-        localStorage.setItem('token', response.token);
-        this.router.navigate(['/panel']);
+        localStorage.setItem('change-password', response.token);
+        if (response.password_status) {
+          this.router.navigate(['/enterprise/change-password']);
+        } else {
+          this.router.navigate(['/']);
+        }
       },
       (error: any) => {
         console.log(error);

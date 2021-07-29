@@ -4,6 +4,7 @@ import { SolicitudesEmpresaService } from '../../../../core/services/solicitudes
 import { Empresa } from '../../../../core/Models/empresa.model';
 import { MatDialog } from '@angular/material/dialog';
 import { MostraSolicitudComponent } from '../mostra-solicitud/mostra-solicitud.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-index-solicitudes',
@@ -12,17 +13,26 @@ import { MostraSolicitudComponent } from '../mostra-solicitud/mostra-solicitud.c
 })
 export class IndexSolicitudesComponent implements OnInit {
 
+  url = `${environment.apiUrl}` + 'usuarioEmpresas';
+  params = '';
+
   displayedColumns: string[] = ['ID', 'NombreComercial', 'FechaSolicitud', 'Acciones'];
   dataSource!: MatTableDataSource<Empresa>;
 
   constructor( private solicitudesEmpresaService: SolicitudesEmpresaService,
                private dialog: MatDialog ) {
-    this.solicitudesEmpresaService.getData().subscribe((response: any) => {
-      this.dataSource = new MatTableDataSource<Empresa>(response.usuarioEmpresa);
-    });
+    // this.solicitudesEmpresaService.getData().subscribe((response: any) => {
+    //   this.dataSource = new MatTableDataSource<Empresa>(response.usuarioEmpresa);
+    // });
   }
 
   ngOnInit(): void {
+  }
+
+  // Obtenemos todos los cambios que nos envíe el paginador con la data de la página
+  addDataToTable( event: Empresa[] ): void {
+    // Seteamos estos datos a la tabla
+    this.dataSource = new MatTableDataSource<Empresa>(event);
   }
 
   mostrarDialogo( solicitud: Empresa ): void {
