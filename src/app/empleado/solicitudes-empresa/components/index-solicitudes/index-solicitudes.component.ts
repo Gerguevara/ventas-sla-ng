@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { SolicitudesEmpresaService } from '../../../../core/services/solicitudes-empresa.service';
-import { Empresa } from '../../../../core/Models/empresa.model';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+
+import { Empresa } from '@models/empresa.model';
+import { SolicitudesEmpresaService } from '@global-services/solicitudes-empresa.service';
 import { MostraSolicitudComponent } from '../mostra-solicitud/mostra-solicitud.component';
 
 @Component({

@@ -1,7 +1,7 @@
-import { environment } from 'src/environments/environment';
 import { Component } from '@angular/core';
+import { PermissionService } from '@global-services/permission.service';
+import { environment } from '@environments/environment';
 import { NgxPermissionsService } from 'ngx-permissions';
-import { PermissionService } from './core/services/permission.service';
 
 @Component({
   selector: 'app-root',

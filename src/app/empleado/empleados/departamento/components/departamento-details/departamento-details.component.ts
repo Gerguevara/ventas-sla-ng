@@ -1,15 +1,15 @@
-import { DepartamentoService } from 'src/app/core/services/departamento.service';
 import { Component, Inject, OnInit, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatFormField } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { Departamento } from 'src/app/core/Models/departamento.model';
-import { IData } from 'src/app/tools/Interfaces/DataInterface';
 import { PartialObserver } from 'rxjs';
+
+import { MatInput } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatButton } from '@angular/material/button';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+
+import { IData } from '@tool-interfaces/DataInterface';
+import { Departamento } from '@models/departamento.model';
+import { DepartamentoService } from '@global-services/departamento.service';
 
 @Component({
   selector: 'app-departamento-details',

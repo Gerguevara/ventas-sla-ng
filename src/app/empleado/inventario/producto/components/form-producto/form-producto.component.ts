@@ -6,12 +6,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 
-import { Categoria } from 'src/app/core/Models/categoria.model'
-import { Producto } from 'src/app/core/Models/producto.model';
+import { Categoria } from '@models/categoria.model'
+import { Producto } from '@models/producto.model';
+import { ProductoPost, ProductoService } from '@global-services/producto.service';
 
-import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
-import { ProductoPost, ProductoService } from 'src/app/core/services/producto.service';
-import { environment } from 'src/environments/environment';
+import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-form-producto',

@@ -1,10 +1,10 @@
-import { IndexService } from './../../../core/services/index.service';
 import { Component, Input, OnInit } from '@angular/core';
-import { Categoria } from 'src/app/core/Models/categoria.model';
-import { Producto } from 'src/app/core/Models/producto.model';
-import { Resultado } from 'src/app/core/Models/resultado.model';
-import { ProductoService } from 'src/app/core/services/producto.service';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+
+import { Categoria } from '@models/categoria.model';
+import { Producto } from '@models/producto.model';
+import { Resultado } from '@models/resultado.model';
+import { IndexService } from '@global-services/index.service';
 
 @Component({
   selector: 'app-index-table',

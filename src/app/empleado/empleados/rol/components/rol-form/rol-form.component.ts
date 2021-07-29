@@ -1,14 +1,17 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Rol } from '../../../../../core/Models/rol.model';
-import { RolesService } from 'src/app/core/services/roles.service';
-import { Permission } from 'src/app/core/Models/permission.model';
+
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
 import { MatTableDataSource } from '@angular/material/table';
-import { environment } from 'src/environments/environment';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+import { environment } from '@environments/environment';
+import { Rol } from '@models/rol.model';
+import { Permission } from '@models/permission.model';
+import { RolesService } from '@global-services/roles.service';
+
+import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 
 @Component({
   selector: 'app-rol-form',

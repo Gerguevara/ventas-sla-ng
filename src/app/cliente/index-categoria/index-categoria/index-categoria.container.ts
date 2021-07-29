@@ -1,11 +1,11 @@
-import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
-import { IndexService } from 'src/app/core/services/index.service';
-import { Categoria } from 'src/app/core/Models/categoria.model';
-import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Producto } from 'src/app/core/Models/producto.model';
-import { Resultado } from 'src/app/core/Models/resultado.model';
-import { ProductoService } from 'src/app/core/services/producto.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+
+import { Categoria } from '@models/categoria.model';
+import { Producto } from '@models/producto.model';
+import { Resultado } from '@models/resultado.model';
+import { IndexService } from '@global-services/index.service';
 
 @Component({
   selector: 'app-index-categoria',

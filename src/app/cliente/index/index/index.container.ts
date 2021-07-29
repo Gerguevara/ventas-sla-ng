@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Categoria } from 'src/app/core/Models/categoria.model';
-import { Resultado } from 'src/app/core/Models/resultado.model';
-import { CategoriaService } from 'src/app/core/services/categoria.service';
+import { Categoria } from '@models/categoria.model';
+import { Resultado } from '@models/resultado.model';
+import { CategoriaService } from '@global-services/categoria.service';
 
 @Component({
   selector: 'app-index',

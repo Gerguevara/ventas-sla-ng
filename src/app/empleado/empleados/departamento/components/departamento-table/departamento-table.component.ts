@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, EventEmitter } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Departamento } from 'src/app/core/Models/departamento.model';
+import { Departamento } from '@models/departamento.model';
 
 @Component({
   selector: 'app-departamento-table',

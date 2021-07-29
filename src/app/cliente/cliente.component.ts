@@ -1,15 +1,19 @@
-import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
-import { environment } from 'src/environments/environment';
-import { Categoria } from '../core/Models/categoria.model';
-import { Resultado } from '../core/Models/resultado.model';
-import { CategoriaService } from './../core/services/categoria.service';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
-import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
 import { MatDialog } from '@angular/material/dialog';
-import { LoginClienteService } from '../core/services/login-cliente.service';
+import { MatSidenav } from '@angular/material/sidenav';
+
 import { NgxPermissionsService } from 'ngx-permissions';
+
+import { environment } from '@environments/environment';
+import { Categoria } from '@models/categoria.model';
+import { Resultado } from '@models/resultado.model';
+
+import { CategoriaService } from '@global-services/categoria.service';
+import { LoginClienteService } from '@global-services/login-cliente.service';
+
+import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 
 @Component({
   selector: 'app-cliente',

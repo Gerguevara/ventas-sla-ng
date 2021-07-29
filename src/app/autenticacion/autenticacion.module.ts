@@ -20,8 +20,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
 import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
-import { LoginClienteService } from '../core/services/login-cliente.service';
-import { ValidatorsService } from '../core/services/validators.service';
+import { LoginClienteService } from '@global-services/login-cliente.service';
+import { ValidatorsService } from '@global-services/validators.service';
 
 @NgModule({
   declarations: [
