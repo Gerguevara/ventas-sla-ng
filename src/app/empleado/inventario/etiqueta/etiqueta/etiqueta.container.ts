@@ -1,16 +1,18 @@
-import { DetailEtiquetaComponent } from './../components/detail-etiqueta/detail-etiqueta.component';
-import { DeleteEtiquetaComponent } from './../components/delete-etiqueta/delete-etiqueta.component';
-import { FormEtiquetaComponent } from './../components/form-etiqueta/form-etiqueta.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
+import { PartialObserver } from 'rxjs';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { PartialObserver } from 'rxjs';
-import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
-import { Etiqueta } from 'src/app/core/Models/etiqueta.model';
-import { Resultado } from 'src/app/core/Models/resultado.model';
-import { EtiquetaService } from 'src/app/core/services/etiqueta.service';
-import { HttpResponse } from '@angular/common/http';
-import { Categoria } from 'src/app/core/Models/categoria.model';
+
+import { Etiqueta } from '@models/etiqueta.model';
+import { Resultado } from '@models/resultado.model';
+import { Categoria } from '@models/categoria.model';
+import { EtiquetaService } from '@global-services/etiqueta.service';
+
+import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
+import { DetailEtiquetaComponent } from '../components/detail-etiqueta/detail-etiqueta.component';
+import { DeleteEtiquetaComponent } from '../components/delete-etiqueta/delete-etiqueta.component';
+import { FormEtiquetaComponent } from '../components/form-etiqueta/form-etiqueta.component';
 
 @Component({
   selector: 'app-etiqueta',

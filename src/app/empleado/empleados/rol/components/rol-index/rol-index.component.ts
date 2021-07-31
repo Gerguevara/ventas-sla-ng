@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { Rol } from 'src/app/core/Models/rol.model';
-import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
-import { environment } from 'src/environments/environment';
-import { RolesService } from '../../../../../core/services/roles.service';
+
+import { environment } from '@environments/environment';
+import { Rol } from '@models/rol.model';
+import { RolesService } from '@global-services/roles.service';
+
 import { RolFormComponent } from '../rol-form/rol-form.component';
 
 @Component({

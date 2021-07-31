@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Departamento } from 'src/app/core/Models/departamento.model';
-import { FormCategoriaComponent } from 'src/app/empleado/inventario/categoria/components/form-categoria/form-categoria.component';
+import { Departamento } from '@models/departamento.model';
+import { FormCategoriaComponent } from '@empleado/inventario/categoria/components/form-categoria/form-categoria.component';
 
 @Component({
   selector: 'app-departamento-form',

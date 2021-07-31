@@ -1,12 +1,15 @@
 import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { NgxPermissionsService } from 'ngx-permissions';
+
 import { MatTableDataSource } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
-import { Producto } from 'src/app/core/Models/producto.model';
-import { ProductoService } from 'src/app/core/services/producto.service';
+
+import { Producto } from '@models/producto.model';
+import { ProductoService } from '@global-services/producto.service';
+
 import { DialogEliminarProductoComponent } from '../dialog-eliminar-producto/dialog-eliminar-producto.component';
-import { environment } from 'src/environments/environment';
-import { NgxPermissionsService } from 'ngx-permissions';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-table-producto',

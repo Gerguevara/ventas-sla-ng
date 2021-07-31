@@ -1,9 +1,17 @@
 import { Component, Inject, OnInit } from '@angular/core';
+<<<<<<< HEAD
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Empresa } from 'src/app/core/Models/empresa.model';
 import { SolicitudesEmpresaService } from 'src/app/core/services/solicitudes-empresa.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
+=======
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+import { Empresa } from '@models/empresa.model';
+import { SolicitudesEmpresaService } from '@global-services/solicitudes-empresa.service';
+>>>>>>> development
 
 @Component({
   selector: 'app-mostra-solicitud',

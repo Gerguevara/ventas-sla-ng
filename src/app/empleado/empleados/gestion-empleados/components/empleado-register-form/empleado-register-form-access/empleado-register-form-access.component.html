@@ -1,0 +1,26 @@
+<form [formGroup]="formGroup">
+  <!-- Con esto queda con una altura relativa al ancho, con una proporcion definida -->
+  <mat-grid-list [cols]="columns" rowHeight="341.5:70.13">
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>Ingresa sus nombres</mat-label>
+        <input matInput placeholder="Vilma Juana" formControlName="nombres" required>
+        <mat-error *ngIf="nombresControl.invalid">{{getErrorMessage(nombresControl)}}</mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>Ingresa sus apellidos</mat-label>
+        <input matInput placeholder="Aparicio Martínez" formControlName="apellidos" required>
+        <mat-error *ngIf="apellidosControl.invalid">{{getErrorMessage(apellidosControl)}}</mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>Ingresa su email de SLA</mat-label>
+        <input matInput placeholder="example@sla.sv" formControlName="email" required>
+        <mat-error *ngIf="emailControl.invalid">{{getErrorMessage(emailControl)}}</mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>

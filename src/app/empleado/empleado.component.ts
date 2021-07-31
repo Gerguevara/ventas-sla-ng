@@ -1,10 +1,10 @@
 import { Component, HostListener, OnChanges, ViewChild, OnInit } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
-import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { MatSidenav } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogSpinnerComponent } from '../tools/components/dialog-spinner/dialog-spinner.component';
-import { LoginClienteService } from '../core/services/login-cliente.service';
+
+import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
+import { LoginClienteService } from '@global-services/login-cliente.service';
 import { NgxPermissionsService } from 'ngx-permissions';
 
 @Component({
@@ -21,7 +21,7 @@ export class EmpleadoComponent implements OnInit {
   @ViewChild('sidenav') sidenav! : MatSidenav;
   title = "Panel de administración";//`${environment.appTitle}`;
   smolWindow : boolean = true;
-  
+
   @HostListener('window:resize', ['$event'])
   onResize(event: UIEvent) {
     this.sidenavMode()

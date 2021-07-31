@@ -1,10 +1,14 @@
 @import 'variables';
 mat-sidenav-container {
-    min-height: 100%;
+    min-height: 100vh;
 }
 
 mat-list a {
     text-decoration: none;
+}
+
+mat-list-base{
+  padding: 0 3vw 0 1.5vw;
 }
 
 mat-list-item:hover {
@@ -13,10 +17,6 @@ mat-list-item:hover {
 
 mat-sidenav h1 {
     margin: 20px;
-}
-
-mat-sidenav {
-  width: 20vw;
 }
 
 mat-toolbar {

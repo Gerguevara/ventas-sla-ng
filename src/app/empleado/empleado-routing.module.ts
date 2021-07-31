@@ -1,6 +1,6 @@
-import { EmpleadoComponent } from './empleado.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { EmpleadoComponent } from './empleado.component';
 
 const routes: Routes = [
   {
@@ -19,10 +19,6 @@ const routes: Routes = [
       {
         path: 'solicitudesEmpresa',
         loadChildren: () => import('./solicitudes-empresa/solicitudes-empresa.module').then(m => m.SolicitudesEmpresaModule)
-      },
-      {
-        path: 'empleados',
-        loadChildren: () => import('./empleados/empleados.module').then(m => m.EmpleadosModule)
       },
       {
         path: '**',

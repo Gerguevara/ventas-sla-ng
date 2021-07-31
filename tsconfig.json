@@ -3,6 +3,50 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths":{
+      "@assets/*": [
+        "src/assets/*"
+      ],
+      "@autenticacion/*": [
+        "src/app/autenticacion/*"
+      ],
+      "@autenticacion-empresas/*": [
+        "src/app/autenticacion-empresas/*"
+      ],
+      "@cliente/*": [
+        "src/app/cliente/*"
+      ],
+      "@core/*": [
+        "src/app/core/*"
+      ],
+      "@empleado/*": [
+        "src/app/empleado/*"
+      ],
+      "@guards/*": [
+        "src/app/guards/*"
+      ],
+      "@tools/*": [
+        "src/app/tools/*"
+      ],
+      "@models/*": [
+        "src/app/core/Models/*"
+      ],
+      "@global-services/*": [
+        "src/app/core/services/*"
+      ],
+      "@tool-components/*": [
+        "src/app/tools/components/*"
+      ],
+      "@tool-interfaces/*": [
+        "src/app/tools/Interfaces/*"
+      ],
+      "@tool-services/*": [
+        "src/app/tools/services/*"
+      ],
+      "@environments/*": [
+        "src/environments/*"
+      ]
+    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,

@@ -1,14 +1,20 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
-import { environment } from 'src/environments/environment';
-import { Categoria } from '../core/Models/categoria.model';
-import { Resultado } from '../core/Models/resultado.model';
-import { CategoriaService } from './../core/services/categoria.service';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
-import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
 import { MatDialog } from '@angular/material/dialog';
-import { LoginClienteService } from '../core/services/login-cliente.service';
+import { MatSidenav } from '@angular/material/sidenav';
+
 import { NgxPermissionsService } from 'ngx-permissions';
+
+import { environment } from '@environments/environment';
+import { Categoria } from '@models/categoria.model';
+import { ResultadoIndex } from '@models/resultado-index.model';
+
+import { IndexService } from '@global-services/index.service';
+import { CategoriaService } from '@global-services/categoria.service';
+import { LoginClienteService } from '@global-services/login-cliente.service';
+
+import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 
 @Component({
   selector: 'app-cliente',
@@ -37,17 +43,23 @@ export class ClienteComponent implements OnInit {
     private router: Router,
     private authCliente: LoginClienteService,
     private dialog: MatDialog,
-    private permissions: NgxPermissionsService
+    private permissions: NgxPermissionsService,
+    private breakpointObserver: BreakpointObserver,
+    private indexService: IndexService
     ) {
   }
 
   ngOnInit(): void {
     this.iniciarSesion = true;
     this.rolAdmin = false;
-    this.categoriaService.getObjects().subscribe(
+    this.indexService.obtenerProductos().subscribe(
       {
-        next: (result : Resultado<Categoria>) => this.categorias=result.data,
-        complete: () => this.sidenavMode(),
+        next: (result : ResultadoIndex[]) => {
+          this.categorias = [];
+          result.forEach(resultado => {
+            this.categorias.push(resultado.categoria);
+          });
+        }
       });
     // Validación de usuario logeado
     if (localStorage.getItem('token')) {
@@ -89,16 +101,44 @@ export class ClienteComponent implements OnInit {
   }
 
   sidenavMode(){
-    if(this.sidenav)
-      if(window.matchMedia("(max-width: 700px)").matches){
-        this.sidenav.close();
-        this.sidenav.mode="over";
-        this.smolWindow=true;
-      } else {
-        this.sidenav.open();
-        this.sidenav.mode="side";
-        this.smolWindow=false;
+    this.breakpointObserver.observe(
+      [
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Medium,
+        Breakpoints.Large,
+        Breakpoints.XLarge
+      ]
+    ).subscribe({
+      next: (breakpointState: BreakpointState)=>{
+        if(this.sidenav){
+          if(breakpointState.breakpoints[Breakpoints.XSmall]){
+            this.setOverSidenav();
+          } else if (breakpointState.breakpoints[Breakpoints.Small]) {
+            this.setOverSidenav();
+          } else if (breakpointState.breakpoints[Breakpoints.Medium]) {
+            this.setSideSidenav();
+          } else if (breakpointState.breakpoints[Breakpoints.Large]) {
+            this.setSideSidenav();
+          } else if (breakpointState.breakpoints[Breakpoints.XLarge]) {
+            this.setSideSidenav();
+          } else {
+            this.setOverSidenav();
+          }
+        }
       }
+    });
   }
 
+  setSideSidenav(){
+    this.sidenav.open();
+    this.sidenav.mode="side";
+    this.smolWindow=false;
+  }
+
+  setOverSidenav(){
+    this.sidenav.close();
+    this.sidenav.mode="over";
+    this.smolWindow=true;
+  }
 }

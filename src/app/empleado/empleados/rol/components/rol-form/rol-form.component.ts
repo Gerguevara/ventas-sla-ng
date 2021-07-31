@@ -1,17 +1,21 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Rol } from '../../../../../core/Models/rol.model';
-import { RolesService } from 'src/app/core/services/roles.service';
-import { Permission } from 'src/app/core/Models/permission.model';
+
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { environment } from 'src/environments/environment';
 import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 import { Departamento } from '../../../../../core/Models/departamento.model';
+
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+import { Rol } from '@models/rol.model';
+import { Permission } from '@models/permission.model';
+import { RolesService } from '@global-services/roles.service';
+
+import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 
 export interface User {
   name: string;

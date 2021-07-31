@@ -1,0 +1,25 @@
+<form [formGroup]="formGroup">
+  <mat-grid-list cols="2" rowHeight="341.5:70.13">
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>Ingresa sus nivel de estudios</mat-label>
+        <input matInput placeholder="Vilma Juana" formControlName="nivelEstudios" required>
+        <mat-error *ngIf="nivelEstudiosControl.invalid">{{getErrorMessage(nivelEstudiosControl)}}</mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>Ingresa su salario actual ($)</mat-label>
+        <input matInput placeholder="0000.00" type="number" [step]="salarySteps" formControlName="salario" required>
+        <mat-error *ngIf="salarioControl.invalid">{{getErrorMessage(salarioControl)}}</mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>Ingresa la fecha en que inició labor el empleado</mat-label>
+        <input matInput placeholder="Aparicio Martínez" formControlName="fechaInicio" required>
+        <mat-error *ngIf="fechaInicioControl.invalid">{{getErrorMessage(fechaInicioControl)}}</mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>

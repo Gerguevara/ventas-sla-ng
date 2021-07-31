@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Producto } from 'src/app/core/Models/producto.model';
-import { IndexService } from './../../../core/services/index.service';
+
+import { Producto } from '@models/producto.model';
+import { IndexService } from '@global-services/index.service';
 
 @Component({
   selector: 'app-index-producto',

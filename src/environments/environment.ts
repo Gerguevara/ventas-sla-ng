@@ -12,6 +12,15 @@ export const environment = {
   uploadDir: "https://prueba-pp15001.000webhostapp.com/uploads/",
   bannerText: "Las mejores marcas",
   defaultProductImage: "/assets/images/placeholder-product-image.svg",
+  patterns:
+  {
+    allLetters: /^[a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ\s+]+$/,
+    phoneNumber: /[+]{0,1}[(]{0,1}[0-9]{1,4}[)]{0,1}([\s]{0,1}[-]{0,1}[\s]{0,1}[0-9]+)+/,
+    dui: /[0-9]{8}[-][0-9]/,
+    nit: /[0-9]{4}[-][0-9]{6}[-][0-9]{3}[-][0-9]{1}/,
+    integer: /[0-9]+/,
+    decimal: /[0-9]+([.][0-9]+)?/
+  },
   appFonts: [
     "Merriweather Sans",
     "Oswald"
