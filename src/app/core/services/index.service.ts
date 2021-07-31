@@ -17,11 +17,6 @@ export class IndexService extends RecursoService<Producto> {
     super('index', httpClient);
   }
 
-  getObject(id: number): Observable<Producto> {
-    const options = this.setOptions();
-    return this.httpClient.get<Producto>(`${environment.apiUrl}index/${id}`,options);
-  }
-
   obtenerCategoria( id: number ): Observable<ResultadoIndex> {
     const token = 'Bearer ' + localStorage.getItem('token');
     const httpHeaders = {
