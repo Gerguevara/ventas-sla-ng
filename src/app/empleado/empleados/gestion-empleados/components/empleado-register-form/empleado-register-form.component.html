@@ -1,27 +1,30 @@
-
-
-<mat-vertical-stepper [linear]="true" #stepper>
-  <mat-step [stepControl]="accessForm">
-    <ng-template matStepLabel>Fill out your name</ng-template>
-    <app-empleado-register-form-access [formGroup]="accessForm"></app-empleado-register-form-access>
-    <button mat-button matStepperNext>Next</button>
-  </mat-step>
-  <mat-step [stepControl]="generalForm" label="Fill out your address">
-    <ng-template matStepLabel>Fill out your name</ng-template>
-    <app-empleado-register-form-general [formGroup]="generalForm"></app-empleado-register-form-general>
-    <button mat-button matStepperPrevious>Back</button>
-    <button mat-button matStepperNext>Next</button>
-  </mat-step>
-  <mat-step [stepControl]="documentsForm">
-    <ng-template matStepLabel>Fill out your name</ng-template>
-    <app-empleado-register-form-documents [formGroup]="documentsForm"></app-empleado-register-form-documents>
-    <button mat-button matStepperPrevious>Back</button>
-    <button mat-button matStepperNext>Next</button>
-  </mat-step>
-  <mat-step [stepControl]="corporateForm">
-    <ng-template matStepLabel>Fill out your name</ng-template>
-    <app-empleado-register-form-corporate [formGroup]="corporateForm"></app-empleado-register-form-corporate>
-    <button mat-button matStepperPrevious>Back</button>
-    <button mat-button (click)="submit()">Submit</button>
-  </mat-step>
-</mat-vertical-stepper>
+<div class="header">
+  <h1>Registro de nuevo empleado</h1>
+</div>
+<mat-card>
+  <mat-vertical-stepper [linear]="false" #stepper>
+    <mat-step [stepControl]="accessForm" label="Ingresa los datos de acceso al sistema del empleado">
+      <ng-template matStepLabel>Datos de acceso</ng-template>
+      <app-empleado-register-form-access [formGroup]="accessForm"></app-empleado-register-form-access>
+      <button mat-button matStepperNext>Next</button>
+    </mat-step>
+    <mat-step [stepControl]="generalForm" label="Ingresa la información general del empleado">
+      <ng-template matStepLabel>Información general</ng-template>
+      <app-empleado-register-form-general [formGroup]="generalForm"></app-empleado-register-form-general>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </mat-step>
+    <mat-step [stepControl]="documentsForm" label="Proporciona los documentos del empleado">
+      <ng-template matStepLabel>Documentos del empleado</ng-template>
+      <app-empleado-register-form-documents [formGroup]="documentsForm"></app-empleado-register-form-documents>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </mat-step>
+    <mat-step [stepControl]="corporateForm">
+      <ng-template matStepLabel>Más información</ng-template>
+      <app-empleado-register-form-corporate [formGroup]="corporateForm"></app-empleado-register-form-corporate>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="submit()">Submit</button>
+    </mat-step>
+  </mat-vertical-stepper>
+</mat-card>

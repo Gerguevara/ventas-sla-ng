@@ -1,30 +1,30 @@
 <form [formGroup]="formGroup">
-  <mat-grid-list>
+  <mat-grid-list cols="2" rowHeight="341.5:70.13">
     <mat-grid-tile>
       <mat-form-field appearance="fill">
         <mat-label>Ingresa su sexo</mat-label>
-        <input matInput placeholder="Vilma Juana" formControlName="genero" required tabindex="1">
+        <input matInput placeholder="Vilma Juana" formControlName="genero" required>
         <mat-error *ngIf="generoControl.invalid">{{getErrorMessage(generoControl)}}</mat-error>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="fill">
-        <mat-label>Ingresa su telefono de contacto</mat-label>
-        <input matInput placeholder="0000-0000" formControlName="telefono" required tabindex="3">
-        <mat-error *ngIf="telefonoControl.invalid">{{getErrorMessage(telefonoControl)}}</mat-error>
-      </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field appearance="fill">
         <mat-label>Ingresa su direccion</mat-label>
-        <input matInput placeholder="Calle Martínez" formControlName="direccion" required tabindex="2">
+        <input matInput placeholder="Calle Martínez" formControlName="direccion" required>
         <mat-error *ngIf="direccionControl.invalid">{{getErrorMessage(direccionControl)}}</mat-error>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="fill">
+        <mat-label>Ingresa su telefono de contacto</mat-label>
+        <input matInput placeholder="0000-0000" formControlName="telefono" required>
+        <mat-error *ngIf="telefonoControl.invalid">{{getErrorMessage(telefonoControl)}}</mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
         <mat-label>Ingresa su estado civil</mat-label>
-        <input matInput placeholder="Soltero/a" formControlName="estadoCivil" required tabindex="4">
+        <input matInput placeholder="Soltero/a" formControlName="estadoCivil" required>
         <mat-error *ngIf="estadoCivilControl.invalid">{{getErrorMessage(estadoCivilControl)}}</mat-error>
       </mat-form-field>
     </mat-grid-tile>

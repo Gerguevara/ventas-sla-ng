@@ -1,9 +1,10 @@
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AfterContentInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 
 import { Empleado } from '@models/empleado.model';
 import { EmpleadoService } from '@global-services/empleado.service';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-empleado-register-form',
@@ -22,34 +23,40 @@ export class EmpleadoRegisterFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private empleadoService: EmpleadoService
   ) {
+    const allLettersPattern = environment.patterns.allLetters;
+    const phoneNumbersPattern = environment.patterns.phoneNumber;
+    const duiPatter = environment.patterns.dui;
+    const nitPattern = environment.patterns.nit;
+    const integerPattern = environment.patterns.integer;
+    const decimalPattern = environment.patterns.decimal;
     this.accessForm = formBuilder.group(
       {
         //id: [null,[]],
-        nombres: ['',[]],
-        apellidos: ['',[]],
-        email: ['',[]],
+        nombres: ['',[Validators.pattern(allLettersPattern)]],
+        apellidos: ['',[Validators.pattern(allLettersPattern)]],
+        email: ['',[Validators.email]],
       }
     );
     this.generalForm = formBuilder.group(
       {
         genero: ['',[]],
-        telefono: ['',[]],
+        telefono: ['',[Validators.pattern(phoneNumbersPattern)]],
         direccion: ['',[]],
         estadoCivil: ['',[]],
       }
     );
     this.documentsForm = formBuilder.group(
       {
-        dui: ['',[]],
-        nit: ['',[]],
-        afp: ['',[]],
-        isss: ['',[]],
+        dui: ['',[Validators.pattern(duiPatter), Validators.maxLength(10)]],
+        nit: ['',[Validators.pattern(nitPattern), Validators.maxLength(17)]],
+        afp: ['',[Validators.pattern(integerPattern)]],
+        isss: ['',[Validators.pattern(integerPattern)]],
       }
     );
     this.corporateForm = formBuilder.group(
       {
         nivelEstudios: ['',[]],
-        salario: [0.0,[]],
+        salario: [0.0,[Validators.pattern(decimalPattern)]],
         fechaInicio: ['',[]],
       }
     );

@@ -14,6 +14,43 @@ export class EmpleadoRegisterFormDocumentsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.duiControl.valueChanges.subscribe(
+      (value: string)=>{
+        console.log(value.match(/[0-9]{8}/));
+        if(value.length===8){
+          const match = value.match(/[0-9]{8}/);
+          if(match){
+            const valueArr = match.input!.split("");
+              if(valueArr[valueArr?.length - 1] !=='-'){
+                this.duiControl.setValue(`${value}-`);
+              }
+          }
+        } else if(value.length===9){
+          if(value.match(/[0-9]{9}/)){
+            let valueArray = value.split("");
+            valueArray.splice(value.length - 2, 0, "-")
+            this.duiControl.setValue(valueArray.toString());
+          }
+        }
+      }
+    )
+    this.nitControl.valueChanges.subscribe(
+      (value: string)=>{
+        if(value.length===4){
+          if(value.match(/[0-9]{4}/)){
+            this.nitControl.setValue(`${value}-`);
+          }
+        } else if(value.length===11){
+          if(value.match(/[0-9]{4}[-][0-9]{6}/)){
+            this.nitControl.setValue(`${value}-`);
+          }
+        } else if(value.length===15){
+          if(value.match(/[0-9]{4}[-][0-9]{6}[-][0-9]{3}/)){
+            this.nitControl.setValue(`${value}-`);
+          }
+        }
+      }
+    )
   }
 
   getErrorMessage(control: FormControl){

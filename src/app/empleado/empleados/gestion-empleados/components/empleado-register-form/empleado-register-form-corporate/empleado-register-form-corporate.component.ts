@@ -10,8 +10,11 @@ export class EmpleadoRegisterFormCorporateComponent implements OnInit {
 
   @Input()
   formGroup!: FormGroup;
+  salarySteps: number;
 
-  constructor() { }
+  constructor() {
+    this.salarySteps = 10;
+  }
 
   ngOnInit(): void {
   }
