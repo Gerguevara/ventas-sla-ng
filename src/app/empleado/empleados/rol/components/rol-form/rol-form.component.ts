@@ -1,14 +1,25 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Rol } from '../../../../../core/Models/rol.model';
-import { RolesService } from 'src/app/core/services/roles.service';
-import { Permission } from 'src/app/core/Models/permission.model';
+
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { environment } from 'src/environments/environment';
+import { Observable, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
+import { Departamento } from '../../../../../core/Models/departamento.model';
+
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+import { Rol } from '@models/rol.model';
+import { Permission } from '@models/permission.model';
+import { RolesService } from '@global-services/roles.service';
+
+import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
+
+export interface User {
+  name: string;
+}
 
 @Component({
   selector: 'app-rol-form',
@@ -41,6 +52,11 @@ export class RolFormComponent implements OnInit {
   removable = true;
   departamento = '';
 
+  // Autocomplete
+  options: Departamento[] = [];
+  filteredDepartamentos: Observable<Departamento[]> = of<Departamento[]>([]);
+  searching = false;
+
   // Variables del formulario
   rolForm: FormGroup;
   disableToggles = true;
@@ -70,6 +86,15 @@ export class RolFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const departamento = this.rolForm.get('departamento') as FormControl;
+    this.filteredDepartamentos = departamento.valueChanges.pipe(
+      startWith(''),
+      debounceTime(400),
+      distinctUntilChanged(),
+      switchMap(val => {
+        return this._filter(val || '');
+      })
+    );
     this.rolForm.disable();
     // Si se trae un rol se carga la data solo para previsualizacion
     if (this.rol) {
@@ -78,6 +103,14 @@ export class RolFormComponent implements OnInit {
       // Sino se abre el formulario para crear un nuevo rol
       this.editar();
     }
+  }
+
+  displayFn(dep: Departamento): string {
+    return dep && dep.nombre ? dep.nombre : '';
+  }
+
+  private _filter(name: string): Observable<Departamento[]> {
+    return this.roleService.searchDepartamento(name);
   }
 
   // Obtenemos todos los cambios que nos envíe el paginador con la data de la página
@@ -93,7 +126,6 @@ export class RolFormComponent implements OnInit {
     this.rolForm.get('descripcion')?.setValue( rol.descripcion );
     this.rolForm.get('departamento')?.setValue( rol.id_departamento );
     this.roleService.getDepartamento( Number(rol.id_departamento) ).then((response: any) => {
-      console.log(response);
       this.filasSeleccionadas.add( response.producto );
       this.departamento = response.producto.nombre;
     });
@@ -114,12 +146,10 @@ export class RolFormComponent implements OnInit {
     const index = this.permisos.indexOf(id);
     if (index > -1) {
       // Si es así, se elimina
-      console.log(this.permisos);
       this.permisos.splice(index, 1);
       this.rolForm.get('permissions')?.setValue(this.permisos);
     } else {
       // de lo contrario se añade a la lista
-      console.log(this.permisos);
       this.permisos.push(id);
       this.rolForm.get('permissions')?.setValue(this.permisos);
     }

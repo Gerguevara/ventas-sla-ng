@@ -1,6 +1,6 @@
 <!-- <h1>Servicios de Limpieza Ambiental S.A. de C.V.</h1> -->
 <ng-container *ngIf="categorias">
-  <ng-container *ngFor="let cat of categorias">
-    <app-index-table [categoria]="cat"></app-index-table>
+  <ng-container *ngFor="let result of results">
+    <app-index-table [resultado]="result"></app-index-table>
   </ng-container>
 </ng-container>

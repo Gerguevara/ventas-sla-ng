@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ValidatorsService } from '../../../core/services/validators.service';
-import { LoginClienteService } from '../../../core/services/login-cliente.service';
-import { DialogMessageComponent } from 'src/app/tools/components/dialog-message/dialog-message.component';
-import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
+
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+
+import { ValidatorsService } from '@global-services/validators.service';
+import { LoginClienteService } from '@global-services/login-cliente.service';
+import { DialogMessageComponent } from '@tool-components/dialog-message/dialog-message.component';
+import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
+
 export interface DialogData {
   email: string;
 }

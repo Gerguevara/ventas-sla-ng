@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Etiqueta } from 'src/app/core/Models/etiqueta.model';
-import { Categoria } from 'src/app/core/Models/categoria.model';
-import { CategoriaService } from 'src/app/core/services/categoria.service';
+
+import { Etiqueta } from '@models/etiqueta.model';
+import { Categoria } from '@models/categoria.model';
+import { CategoriaService } from '@global-services/categoria.service';
 
 @Component({
   selector: 'app-table-etiqueta',

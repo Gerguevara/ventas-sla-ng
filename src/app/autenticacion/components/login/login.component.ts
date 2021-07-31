@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { LoginClienteService, LoginResponse } from '../../../core/services/login-cliente.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
+
+import { LoginClienteService, LoginResponse } from '@global-services/login-cliente.service';
+import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 
 @Component({
   selector: 'app-login',

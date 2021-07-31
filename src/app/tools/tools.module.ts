@@ -10,7 +10,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { PaginatorService } from './services/paginator.service';
+
+import { PaginatorService } from '@tool-services/paginator.service';
 
 @NgModule({
   declarations: [

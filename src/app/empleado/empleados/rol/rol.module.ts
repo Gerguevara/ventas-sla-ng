@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RolRoutingModule } from './rol-routing.module';
 import { RolFormComponent } from './components/rol-form/rol-form.component';
 import { RolIndexComponent } from './components/rol-index/rol-index.component';
+
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,11 +16,12 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTableModule } from '@angular/material/table';
-import { ToolsModule } from 'src/app/tools/tools.module';
-import { RolesService } from '../../../core/services/roles.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
+import { ToolsModule } from '@tools/tools.module';
+import { RolesService } from '@global-services/roles.service';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { MatChipsModule } from '@angular/material/chips';
     MatGridListModule,
     MatTableModule,
     MatSnackBarModule,
-    MatChipsModule
+    MatChipsModule,
+    MatAutocompleteModule
   ],
   providers: [
     RolesService

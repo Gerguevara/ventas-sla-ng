@@ -1,6 +1,3 @@
-import { IndexTableComponent } from './index/index-table/index-table.component';
-import { IndexProductCardComponent } from './index/index-product-card/index-product-card.component';
-import { IndexContainer } from './index/index/index.container';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 

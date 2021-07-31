@@ -1,17 +1,20 @@
-import { DepartamentoDetailsComponent } from './../components/departamento-details/departamento-details.component';
-import { DepartamentoConfirmationDialogComponent } from './../components/departamento-confirmation-dialog/departamento-confirmation-dialog.component';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
 import { Observable, PartialObserver } from 'rxjs';
+
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { Departamento } from 'src/app/core/Models/departamento.model';
-import { Resultado } from 'src/app/core/Models/resultado.model';
-import { DepartamentoService } from 'src/app/core/services/departamento.service';
-import { DepartamentoFormComponent } from './../components/departamento-form/departamento-form.component';
-import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
-import { HttpResponse } from '@angular/common/http';
-import { IData } from 'src/app/tools/Interfaces/DataInterface';
+
+import { Departamento } from '@models/departamento.model';
+import { Resultado } from '@models/resultado.model';
+import { DepartamentoService } from '@global-services/departamento.service';
+
+import { IData } from '@tool-interfaces/DataInterface';
+import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
+import { DepartamentoFormComponent } from '../components/departamento-form/departamento-form.component';
+import { DepartamentoConfirmationDialogComponent } from '../components/departamento-confirmation-dialog/departamento-confirmation-dialog.component';
+import { DepartamentoDetailsComponent } from '../components/departamento-details/departamento-details.component';
 
 @Component({
   selector: 'app-departamento-container',

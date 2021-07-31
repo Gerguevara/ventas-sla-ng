@@ -1,7 +1,7 @@
-import { environment } from 'src/environments/environment';
-import { ProductoService } from 'src/app/core/services/producto.service';
-import { Component, HostListener, Input, OnInit } from '@angular/core';
-import { Producto } from 'src/app/core/Models/producto.model';
+import { environment } from '@environments/environment';
+import { Component, Input, OnInit } from '@angular/core';
+import { ProductoService } from '@global-services/producto.service';
+import { Producto } from '@models/producto.model';
 
 @Component({
   selector: 'app-index-product-card',

@@ -1,6 +1,6 @@
-import { Categoria } from 'src/app/core/Models/categoria.model';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Categoria } from '@models/categoria.model';
 
 @Component({
   selector: 'app-delete-categoria',

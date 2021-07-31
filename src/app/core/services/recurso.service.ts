@@ -1,4 +1,5 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { PreflightService } from '@tool-services/preflight-service';
 import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
@@ -6,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import { Resultado } from '../Models/resultado.model';
 import { Recurso } from './../Models/recurso.model';
 
-export abstract class RecursoService<T extends Recurso> {
+export abstract class RecursoService<T extends Recurso> extends PreflightService {
 
   protected API_URL = environment.apiUrl;
 
@@ -14,20 +15,9 @@ export abstract class RecursoService<T extends Recurso> {
     endpoint: string,
     protected httpClient: HttpClient
     ) {
-    this.API_URL = this.API_URL.concat(`${endpoint}`)
-  }
-
-  setOptions() {
-    const token = 'Bearer ' + localStorage.getItem('token');
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':'application/json',
-        'Access-Control-Allow-Origin': environment.allowedOrigin,
-        'Authorization': token
-      })
-    };
-    return httpOptions
-  }
+      super();
+      this.API_URL = this.API_URL.concat(`${endpoint}`)
+    }
 
   getObjects(page: number = 1, page_size: number = 10, non_empty?: boolean): Observable<Resultado<T>> {
     const token = 'Bearer ' + localStorage.getItem('token');

@@ -1,10 +1,11 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Producto } from 'src/app/core/Models/producto.model';
-import { ProductoService } from 'src/app/core/services/producto.service';
-import { MatDialog } from '@angular/material/dialog';
-import { DialogMessageComponent } from 'src/app/tools/components/dialog-message/dialog-message.component';
-import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+import { Producto } from '@models/producto.model';
+import { ProductoService } from '@global-services/producto.service';
+
+import { DialogMessageComponent } from '@tool-components/dialog-message/dialog-message.component';
+import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 
 @Component({
   selector: 'app-dialog-eliminar-producto',

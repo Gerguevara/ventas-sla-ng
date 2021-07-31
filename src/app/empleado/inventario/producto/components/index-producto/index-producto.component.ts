@@ -1,10 +1,10 @@
-import { Resultado } from './../../../../../core/Models/resultado.model';
-import { FormProductoComponent } from './../form-producto/form-producto.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatExpansionPanel } from '@angular/material/expansion';
-import { ProductoService } from 'src/app/core/services/producto.service';
-import { Producto } from 'src/app/core/Models/producto.model';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
+
+import { Resultado } from '@models/resultado.model';
+import { Producto } from '@models/producto.model';
+import { ProductoService } from '@global-services/producto.service';
 
 @Component({
   selector: 'app-index-producto',

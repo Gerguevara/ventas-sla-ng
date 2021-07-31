@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Departamento } from 'src/app/core/Models/departamento.model';
-import { IData } from 'src/app/tools/Interfaces/DataInterface';
+import { Departamento } from '@models/departamento.model';
+import { IData } from '@tool-interfaces/DataInterface';
 
 @Component({
   selector: 'app-departamento-confirmation-dialog',

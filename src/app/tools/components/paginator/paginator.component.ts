@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { PaginatorResponse } from 'src/app/core/Models/paginator.model';
-import { PaginatorService } from '../../services/paginator.service';
+
+import { PaginatorResponse } from '@models/paginator.model';
+import { PaginatorService } from '@tool-services/paginator.service';
 
 @Component({
   selector: 'app-paginator',

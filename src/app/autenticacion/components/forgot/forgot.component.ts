@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogMessageComponent } from 'src/app/tools/components/dialog-message/dialog-message.component';
-import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
-import { LoginClienteService } from '../../../core/services/login-cliente.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { DialogMessageComponent } from '@tool-components/dialog-message/dialog-message.component';
+import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
+import { LoginClienteService } from '@global-services/login-cliente.service';
 
 @Component({
   selector: 'app-forgot',

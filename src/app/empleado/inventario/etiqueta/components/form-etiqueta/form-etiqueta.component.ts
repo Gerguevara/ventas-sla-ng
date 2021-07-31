@@ -1,13 +1,15 @@
-import { Resultado } from 'src/app/core/Models/resultado.model';
-import { CategoriaService } from 'src/app/core/services/categoria.service';
-import { Categoria } from 'src/app/core/Models/categoria.model';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Etiqueta } from 'src/app/core/Models/etiqueta.model';
-import { FormCategoriaComponent } from './../../../categoria/components/form-categoria/form-categoria.component';
 import { Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
+;
+import { Resultado } from '@models/resultado.model';
+import { Categoria } from '@models/categoria.model';
+import { Etiqueta } from '@models/etiqueta.model';
+import { CategoriaService } from '@global-services/categoria.service';
+import { FormCategoriaComponent } from '../../../categoria/components/form-categoria/form-categoria.component';
 
 @Component({
   selector: 'app-form-etiqueta',

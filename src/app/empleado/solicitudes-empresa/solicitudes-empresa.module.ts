@@ -8,12 +8,13 @@ import { MostraSolicitudComponent } from './components/mostra-solicitud/mostra-s
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { ToolsModule } from '../../tools/tools.module';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+
+import { ToolsModule } from '@tools/tools.module';
 
 @NgModule({
   declarations: [
