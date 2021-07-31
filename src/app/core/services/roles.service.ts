@@ -6,6 +6,7 @@ import { Rol } from '../Models/rol.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Permission } from '../Models/permission.model';
+import { Departamento } from '../Models/departamento.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,7 @@ export class RolesService {
     return response;
   }
 
-  getDepartamentos(): Observable<any> {
+  getDepartamentos(): Observable<Permission[]> {
     const token = 'Bearer ' + localStorage.getItem('token');
     const headers = {
       headers: new HttpHeaders({
@@ -39,6 +40,18 @@ export class RolesService {
       })
     };
     return this.http.get<Permission[]>(`${environment.apiUrl}` + 'departamentos/', headers);
+  }
+
+  searchDepartamento( nombre: string ): Observable<Departamento[]> {
+    const token = 'Bearer ' + localStorage.getItem('token');
+    const headers = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
+        'Authorization': token
+      })
+    };
+    return this.http.get<Departamento[]>(`${environment.apiUrl}` + 'departamentos/search?consulta=' + nombre, headers);
   }
 
   getPermisos( idRole: number ): Observable<Permission[]> {

@@ -12,6 +12,7 @@ const httpOptions = {
 
 export interface LoginResponse {
   token: string;
+  password_status: string;
   tokenType: string;
   mensaje: string;
 }
@@ -27,6 +28,7 @@ export interface SignUpResponse {
 export class LoginEmpresasService {
 
   urlLogin = `${environment.apiUrl}` + 'loginEmpresa';
+  urlFirstPassChange = `${environment.apiUrl}` + 'changePwdFirstLogin';
   urlSignUp = `${environment.apiUrl}` + 'registrarEmpresa';
   private endpoint = 'registrarEmpresa';
 
@@ -74,6 +76,21 @@ export class LoginEmpresasService {
       nitReverso: nitReverso
     };
     return this.http.post<SignUpResponse>(this.urlSignUp, httpBody, httpOptions);
+  }
+
+  firstPasswordChange( password: string, confirmPassword: string ): Observable<any> {
+    const changePassToken = 'Bearer ' + localStorage.getItem('change-password');
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': changePassToken
+      })
+    };
+    const httpBody = {
+      password: password,
+      password_confirmation: confirmPassword
+    };
+    return this.http.post<any>(this.urlFirstPassChange, httpBody, httpHeaders);
   }
 
 }

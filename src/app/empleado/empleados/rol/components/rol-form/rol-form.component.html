@@ -1,4 +1,4 @@
-<div mat-dialog-content>
+<div style="position: relative;">
     <mat-horizontal-stepper>
         <mat-step label="General" state="phone">
             <mat-card class="mat-step">
@@ -20,30 +20,32 @@
 
                     <mat-form-field class="col">
                         <mat-label>Departamento</mat-label>
-                        <mat-chip-list #chipList aria-label="Seleccion departamento">
+                        <!-- <mat-chip-list #chipList aria-label="Seleccion departamento">
                             <mat-chip *ngIf="departamento !== ''" [selectable]="selectable" [removable]="removable" (removed)="quitarDepartamento()">
                                 {{ departamento }}
                                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                             </mat-chip>
                             <input [matChipInputFor]="chipList" [matChipInputAddOnBlur]="true" disabled>
                             <mat-error *ngIf="departamentoNoValido">{{ getErrorDepartamentoMessage() }}</mat-error>
-                        </mat-chip-list>
+                        </mat-chip-list> -->
+                        <input matInput formControlName='departamento' placeholder="Buscar" [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                            <mat-option *ngFor="let option of filteredDepartamentos | async" [value]="option">
+                                {{option.nombre}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="descripcionNoValido">{{ getErrorDescripcionMessage() }}</mat-error>
                     </mat-form-field>
-                    <div>
+                    <!-- <div>
                         <table mat-table [dataSource]="dataSource" class="mat-elevation-z1 demo-table">
-                            <!-- ID Column -->
                             <ng-container matColumnDef="id">
                                 <th mat-header-cell *matHeaderCellDef>ID</th>
                                 <td mat-cell *matCellDef="let element">{{element.id}}</td>
                             </ng-container>
-
-                            <!-- Nombre Column -->
                             <ng-container matColumnDef="nombre">
                                 <th mat-header-cell *matHeaderCellDef>Nombre</th>
                                 <td mat-cell *matCellDef="let element">{{element.nombre}}</td>
                             </ng-container>
-
-                            <!-- Descripción Column -->
                             <ng-container matColumnDef="descripcion">
                                 <th mat-header-cell *matHeaderCellDef>Descripción</th>
                                 <td mat-cell *matCellDef="let element">{{element.descripcion}}</td>
@@ -52,15 +54,11 @@
                             <tr mat-row (click)="seleccionarDepartamento(row)" [class.demo-row-is-clicked]="filasSeleccionadas.has(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
                         </table>
                         <app-paginator [urlData]="url" (pageDataChange$)="addDataToTable($event)"></app-paginator>
-                    </div>
-
+                    </div> -->
                 </form>
             </mat-card>
             <div style="position: relative; margin-top: 10px;">
                 <button mat-button type="button" matStepperNext>Siguiente</button>
-                <button mat-button type="button" (click)="editar()" *ngIf="!enableEdit" style="position: absolute; right: 10px;">
-                    <mat-icon>edit</mat-icon> Editar
-                </button>
             </div>
         </mat-step>
         <mat-step label="Permisos" state="chat">
@@ -188,9 +186,6 @@
             <div style="margin-top: 10px; position: relative;">
                 <button mat-button type="button" matStepperPrevious>Regresar</button>
                 <button mat-button type="button" *ngIf="enableEdit" [disabled]="rolForm.invalid" (click)="enviar()" matStepperNext>Enviar</button>
-                <button mat-button type="button" (click)="editar()" *ngIf="!enableEdit" style="position: absolute; right: 10px;">
-                    <mat-icon>edit</mat-icon> Editar
-                </button>
             </div>
         </mat-step>
 
@@ -202,7 +197,12 @@
             <mat-icon>shield</mat-icon>
         </ng-template>
     </mat-horizontal-stepper>
-</div>
-<div mat-dialog-actions>
-    <button mat-button (click)="cerrarDialogo()" cdkFocusInitial>Cerrar</button>
+    <div style="display: block;">
+        <button mat-mini-fab color="primary" type="button" (click)="editar()" *ngIf="!enableEdit" style="position: absolute; right: 60px; bottom: 10px;">
+            <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-mini-fab color="warn" type="button" (click)="cerrarDialogo()" *ngIf="!enableEdit" style="position: absolute; right: 10px; bottom: 10px;">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
 </div>

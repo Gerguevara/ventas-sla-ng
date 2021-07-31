@@ -1,16 +1,16 @@
 <h2 mat-dialog-title>Solicitud Empresa</h2>
 <mat-dialog-content class="mat-typography">
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="mat-input">
         <mat-label>Nombre Comercial</mat-label>
-        <input matInput [value]="data.nombreComercial" disabled>
+        <input matInput [value]="data.nombreComercial" readonly>
     </mat-form-field>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="mat-input">
         <mat-label>Email</mat-label>
-        <input matInput [value]="data.email" disabled>
+        <input matInput [value]="data.email" readonly>
     </mat-form-field>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="mat-input">
         <mat-label>Fecha de Solicitud</mat-label>
-        <input matInput [value]="data.created_at | date:'medium'" disabled>
+        <input matInput [value]="data.created_at | date:'medium'" readonly>
     </mat-form-field>
     <mat-divider></mat-divider>
     <h4>NIT</h4>
