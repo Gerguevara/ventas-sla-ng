@@ -1,7 +1,11 @@
-<table class="products-container">
-    <tr>
-    <th *ngFor="let prod of productos">
-        <a [routerLink]="['/detalle',prod.id]"><mat-card><app-index-product-card [productoInput]="prod"></app-index-product-card></mat-card></a>
-    </th>
-    </tr>
-</table>
+
+<div *ngIf="rendered" class="categoria-container">
+  <h2>{{categoria.nombre}}</h2>
+    <mat-grid-list [cols]="columns" [rowHeight]="rowHeight">
+      <mat-grid-tile *ngFor="let prod of productos">
+        <a [routerLink]="['/detalle',prod.id]">
+            <app-index-product-card [productoInput]="prod"></app-index-product-card>
+        </a>
+      </mat-grid-tile>
+    </mat-grid-list>
+</div>

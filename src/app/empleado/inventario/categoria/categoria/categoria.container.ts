@@ -91,17 +91,17 @@ export class CategoriaContainer implements OnInit {
             //actualizarlo
             this.categoriaService.updateObject(categoriaDialogo).subscribe({
               //luego de actualizarlo
-              next:(categoriaActualizada : Categoria)=>{
+              next:({resultado:boolean,mensaje:string})=>{
                 //obtener el indice
                 const index = this.respuesta ? this.respuesta.data.findIndex(
                   //donde el id corresponda al de la categoria actualizada
-                  (categoriaABuscar : Categoria)=> categoriaABuscar.id === categoriaActualizada.id
+                  (categoriaABuscar : Categoria)=> categoriaABuscar.id === categoriaDialogo.id
                 //si el indice no esta, retornar -1
                 ) : -1
                 //si el objeto se encontro
                 if(index >= 0) {
                   //actualizar el arreglo de categorias en la respuesta
-                  if(this.respuesta) this.respuesta.data[index] = categoriaActualizada;
+                  if(this.respuesta) this.respuesta.data[index] = categoriaDialogo;
                 }
               },
               complete:()=> this.getCategorias(this.paginator.pageIndex)
@@ -117,8 +117,8 @@ export class CategoriaContainer implements OnInit {
           }
         }
       },
-      error: ()=>{},
-      complete: ()=>{}
+      error: ()=>{console.log('error')},
+      complete: ()=>{console.log('complete')}
     })
   }
   openConfirmation(categoria : Categoria){

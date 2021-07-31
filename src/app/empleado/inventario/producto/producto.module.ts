@@ -1,3 +1,4 @@
+import { MatExpansionModule } from '@angular/material/expansion';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -24,6 +25,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { IndexProductoComponent } from './components/index-producto/index-producto.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DialogEliminarProductoComponent } from './components/dialog-eliminar-producto/dialog-eliminar-producto.component';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { DialogEliminarProductoComponent } from './components/dialog-eliminar-pr
     ToolsModule,
     MatSnackBarModule,
     MatChipsModule,
-    MatProgressSpinnerModule
+    MatExpansionModule,
+    MatProgressSpinnerModule,
+    NgxPermissionsModule.forChild()
   ],
   providers: [
     ProductoService,

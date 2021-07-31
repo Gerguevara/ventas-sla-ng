@@ -6,6 +6,7 @@ import { Producto } from 'src/app/core/Models/producto.model';
 import { ProductoService } from 'src/app/core/services/producto.service';
 import { DialogEliminarProductoComponent } from '../dialog-eliminar-producto/dialog-eliminar-producto.component';
 import { environment } from 'src/environments/environment';
+import { NgxPermissionsService } from 'ngx-permissions';
 
 @Component({
   selector: 'app-table-producto',
@@ -15,6 +16,7 @@ import { environment } from 'src/environments/environment';
 export class TableProductoComponent implements OnInit {
 
   displayedColumns: string[] = ['ID', 'Nombre', 'Descripción', 'Precio', 'Acciones'];
+
   dataSource!: MatTableDataSource<Producto>;
   filasSeleccionadas = new Set<Producto>();
 
@@ -32,11 +34,11 @@ export class TableProductoComponent implements OnInit {
 
   constructor(
     private productoService: ProductoService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private permissions: NgxPermissionsService
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   // Obtenemos todos los cambios que nos envíe el paginador con la data de la página
   addDataToTable( event: Producto[] ): void {
@@ -45,8 +47,12 @@ export class TableProductoComponent implements OnInit {
   }
 
   seleccionarProducto( row: Producto): void {
-    this.clickTabla.emit();
-    this.productoService.productoChange$.emit(row);
+    this.permissions.hasPermission('productos.show').then((response: boolean) => {
+      if (response) {
+        this.clickTabla.emit(row);
+        this.productoService.productoChange$.emit(row);
+      }
+    });
   }
 
   quitarProducto( element: Producto ): void {

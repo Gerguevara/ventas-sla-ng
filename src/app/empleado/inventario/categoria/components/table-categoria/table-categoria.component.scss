@@ -1,17 +1,51 @@
-.header h1{
-    text-align: center;
-}
-
+@import 'variables';
 .mat-table{
-    margin: 0px auto;
+  min-width: 100%;
+  text-align: center;
+}
+.mat-cell{
+  margin: 0 auto;
 }
 
-.mat-cell {
-    min-width: 100px;
-    max-width: 350px;
-    text-align: center;
+mat-row:hover{
+  background-color: $accent;
+  cursor: pointer;
+}
+.mat-column-id{
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 15% !important;
+  width: 15% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
-.mat-header-cell {
-    text-align: center;
+
+.mat-column-nombre{
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 25% !important;
+  width: 25% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+
+.mat-column-descripcion{
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 40% !important;
+  width: 40% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+
+.mat-column-acciones{
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 20% !important;
+  width: 20% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }

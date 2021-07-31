@@ -1,6 +1,6 @@
-<ng-container *ngFor="let cat of categorias">
-    <div class="categoria-container">
-        <h1>{{cat.nombre}}</h1>
-        <app-index-table [categoriaId]="cat.id"></app-index-table>
-    </div>
+<!-- <h1>Servicios de Limpieza Ambiental S.A. de C.V.</h1> -->
+<ng-container *ngIf="categorias">
+  <ng-container *ngFor="let cat of categorias">
+    <app-index-table [categoria]="cat"></app-index-table>
+  </ng-container>
 </ng-container>

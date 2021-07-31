@@ -1,0 +1,21 @@
+<div mat-dialog-content>
+  <p>
+    {{context.paramsText[0]}} {{context.data.nombre}} ¿Deseas continuar?
+  </p>
+</div>
+<div mat-dialog-actions>
+  <button
+    mat-button
+    color="accent"
+    cdkFocusInitial
+    mat-dialog-close>
+    NO
+  </button>
+  <button
+    type="submit"
+    color="primary"
+    mat-raised-button
+    [mat-dialog-close]="context.data.id">
+    Sí
+  </button>
+</div>

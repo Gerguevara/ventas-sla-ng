@@ -126,4 +126,8 @@ export class ProductoService  extends RecursoService<Producto>{
     };
     return this.httpClient.get<Resultado<Producto>>(`${environment.apiUrl}${this.endpoint}?status=1`, options);
   }
+
+  getImage(producto: Producto){
+    return this.httpClient.get<any>(producto.imagen);
+  }
 }

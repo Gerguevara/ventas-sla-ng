@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
@@ -22,6 +22,10 @@ import { environment } from 'src/environments/environment';
   }]
 })
 export class FormProductoComponent implements OnInit {
+  @Output()
+  actualizarTabla = new EventEmitter<boolean>();
+  @Output()
+  insertarProducto = new EventEmitter<boolean>();
 
   // Valores de entrada en caso que el formulario solo sea para previsualización
   nombre = '';
@@ -42,7 +46,7 @@ export class FormProductoComponent implements OnInit {
   habilitarGuardar = false;
   habilitarCancelar = false;
   habilitarEnviar = false;
-  editable = false;
+  editable = true;
   deshabilitarImagen = true;
   mostrarImagen = false;
   formularioLleno = false;
@@ -123,22 +127,19 @@ export class FormProductoComponent implements OnInit {
       estado: '1',
       cantidad: '0'
     });
+    this.insertarProducto.emit(true);
   }
 
   crearProducto(): void {
-    this.habilitarEditar = false;
     this.editable = true;
+    this.habilitarEditar = false;
     this.habilitarGuardar = false;
     this.habilitarCancelar = true;
     this.habilitarEnviar = true;
     this.deshabilitarImagen = false;
     this.formularioLleno = false;
     this.deshabilitarImagen = false;
-    this.editable = true;
     this.mostrarImagen = false;
-    this.generalForm.enable();
-    this.designForm.enable();
-    this.inventarioForm.enable();
     this.limpiarFormulario();
   }
 
@@ -150,26 +151,14 @@ export class FormProductoComponent implements OnInit {
     this.habilitarCrear = false;
     this.deshabilitarImagen = false;
     this.editable = true;
-    this.generalForm.enable();
-    this.designForm.enable();
-    this.inventarioForm.enable();
   }
 
   cancelar(): void {
     // Deshabilitamos los controles de nuevo
     this.habilitarCancelar = false;
-    this.editable = false;
     this.habilitarGuardar = false;
     this.habilitarCrear = true;
-    this.deshabilitarImagen = true;
-    this.generalForm.disable();
-    this.designForm.disable();
-    this.inventarioForm.disable();
-    if (this.formularioLleno) {
-      this.habilitarEditar = true;
-    } else {
-      this.habilitarEditar = false;
-    }
+    this.limpiarFormulario();
   }
 
   // Método para añadir una categoría a la tabla y a la ChipList
@@ -300,10 +289,6 @@ export class FormProductoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Deshabilitar todos los controles al cargar la pantalla
-    this.generalForm.disable();
-    this.designForm.disable();
-    this.inventarioForm.disable();
     // Nos subscribimos a los cambios de los productos seleccionados de la tabla
     this.productoService.productoChange$.subscribe((data: Producto) => {
       this.mostrarImagen = true;
@@ -312,6 +297,7 @@ export class FormProductoComponent implements OnInit {
       }
       this.cargarData( data );
     });
+    this.crearProducto();
   }
 
   cargarData( data: Producto ): void{
@@ -343,14 +329,14 @@ export class FormProductoComponent implements OnInit {
       Object.values( this.generalForm.controls ).forEach(element => {
         element.markAsTouched();
       });
-      this.snackBar.open('Datos no válidos', 'Cerrar', {
+      this.snackBar.open('Datos del producto inválidos', 'Cerrar', {
         duration: 5000
       });
     } else if ( this.designForm.invalid ) {
       Object.values( this.designForm.controls ).forEach(element => {
         element.markAsTouched();
       });
-      this.snackBar.open('Datos no válidos', 'Cerrar', {
+      this.snackBar.open('Imagen del producto inválida', 'Cerrar', {
         duration: 5000
       });
     } else if ( this.inventarioForm.invalid ) {
@@ -386,6 +372,7 @@ export class FormProductoComponent implements OnInit {
         this.snackBar.open(response.mensaje, 'Cerrar', {
           duration: 5000
         });
+        this.actualizarTabla.emit(true);
       },
       (error: any) => {
         this.dialog.closeAll();

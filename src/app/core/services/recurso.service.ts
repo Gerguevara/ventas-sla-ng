@@ -8,7 +8,7 @@ import { Recurso } from './../Models/recurso.model';
 
 export abstract class RecursoService<T extends Recurso> {
 
-  private API_URL = environment.apiUrl;
+  protected API_URL = environment.apiUrl;
 
   constructor(
     endpoint: string,
@@ -29,10 +29,16 @@ export abstract class RecursoService<T extends Recurso> {
     return httpOptions
   }
 
-  getObjects(page: number = 1, page_size: number = 10): Observable<Resultado<T>> {
+  getObjects(page: number = 1, page_size: number = 10, non_empty?: boolean): Observable<Resultado<T>> {
     const token = 'Bearer ' + localStorage.getItem('token');
+    let params = Object.create(null);
+    params['page']= page.toString();
+    params['page_size']= page_size.toString();
+    if(non_empty){
+      params['non_empty']= non_empty;
+    }
     return this.httpClient.get<Resultado<T>>(this.API_URL, {
-      params: { page: page.toString(), page_size: page_size.toString()},
+      params: params,
       headers: new HttpHeaders({
         'Content-Type':'application/json',
         'Access-Control-Allow-Origin': environment.allowedOrigin,
@@ -46,9 +52,9 @@ export abstract class RecursoService<T extends Recurso> {
     return this.httpClient.get<T>(`${this.API_URL}/${id}`,options);
   }
 
-  updateObject(resource: T): Observable<T> {
+  updateObject(resource: T): Observable<{resultado:boolean,mensaje:string}>  {
     const options = this.setOptions();
-    return this.httpClient.put<T>(`${this.API_URL}/${resource.id}`,resource, options);
+    return this.httpClient.put<{resultado:boolean,mensaje:string}>(`${this.API_URL}/${resource.id}`,resource, options);
   }
 
   postObject(resource: T): Observable<T> {

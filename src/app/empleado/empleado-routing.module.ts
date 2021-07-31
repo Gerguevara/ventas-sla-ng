@@ -9,6 +9,10 @@ const routes: Routes = [
     children:
     [
       {
+        path: 'empleados',
+        loadChildren: () => import('./empleados/empleados.module').then(m => m.EmpleadosModule)
+      },
+      {
         path: 'inventario',
         loadChildren: () => import('./inventario/inventario.module').then(m => m.InventarioModule)
       },
@@ -17,9 +21,13 @@ const routes: Routes = [
         loadChildren: () => import('./solicitudes-empresa/solicitudes-empresa.module').then(m => m.SolicitudesEmpresaModule)
       },
       {
+        path: 'empleados',
+        loadChildren: () => import('./empleados/empleados.module').then(m => m.EmpleadosModule)
+      },
+      {
         path: '**',
         pathMatch: 'full',
-        redirectTo: 'inventario'
+        redirectTo: 'empleados'
       }
     ]
   }

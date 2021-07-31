@@ -1,21 +1,47 @@
 <mat-toolbar color="primary">
-    <button 
-        mat-icon-button 
-        aria-label="Menú"
-        (click)="sidenav.toggle()">
+  <div class="toolbar-items-left">
+    <!-- items izquierda toolbar principal -->
+    <button
+      class="toolbar-item"
+      mat-icon-button
+      aria-label="Menú"
+      (click)="sidenav.toggle()">
         <mat-icon class="white-icon">menu</mat-icon>
     </button>
-    <a class="logo-link" [routerLink]="['/']"><img class="logo-img" src="assets/logo.png"><span class="titulo-navbar">{{title}}</span></a>
-    <span class="example-spacer"></span>
-    <button mat-raised-button style="margin-right: 10px;" (click)="adminArea()" *ngIf="rolAdmin" color="accent" class="example-icon">
-        <mat-icon>shield</mat-icon><ng-container *ngIf="window.matchMedia('(min-width: 700px)').matches"> Admin Área</ng-container>
-    </button>
-    <button mat-raised-button (click)="iniciarSesionClick()" *ngIf="iniciarSesion" color="accent" class="example-icon">
-        <mat-icon>login</mat-icon><ng-container *ngIf="window.matchMedia('(min-width: 700px)').matches"> Iniciar Sesión</ng-container>
-    </button>
-    <button mat-raised-button (click)="cerrarSesionClick()" *ngIf="!iniciarSesion" color="accent" class="example-icon">
-        <mat-icon>logout</mat-icon><ng-container *ngIf="window.matchMedia('(min-width: 700px)').matches"> Cerrar Sesión</ng-container>
-    </button>
+    <a class="toolbar-item-left" [routerLink]="['/']">
+      <img class="logo-img" src="assets/logo.png">
+    </a>
+    <a class="toolbar-item-left" [routerLink]="['/']">
+      <h1>{{title}}</h1>
+    </a>
+  <!-- fin items izquierda toolbar principal -->
+  </div>
+
+    <div class="toolbar-items-right">
+    <!-- items derecha toolbar principal -->
+      <!-- icon trigger para menu #menu -->
+      <button mat-icon-button [matMenuTriggerFor]="menu" color="accent" aria-label="Menu button">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <!-- fin icon trigger para menu #menu -->
+      <!-- definicion de contenido de menu #menu -->
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item style="margin-right: 10px;" (click)="adminArea()" *ngIf="rolAdmin" color="accent" class="example-icon">
+            <mat-icon>admin_panel_settings</mat-icon>
+            <ng-container *ngIf="window.matchMedia('(min-width: 700px)').matches"> Admin Área</ng-container>
+        </button>
+        <button mat-menu-item (click)="iniciarSesionClick()" *ngIf="iniciarSesion" color="accent" class="example-icon">
+            <mat-icon>login</mat-icon>
+            <ng-container *ngIf="window.matchMedia('(min-width: 700px)').matches"> Iniciar Sesión</ng-container>
+        </button>
+        <button mat-menu-item (click)="cerrarSesionClick()" *ngIf="!iniciarSesion" color="accent" class="example-icon">
+            <mat-icon>logout</mat-icon>
+            <ng-container *ngIf="window.matchMedia('(min-width: 700px)').matches"> Cerrar Sesión</ng-container>
+        </button>
+      </mat-menu>
+      <!-- fin definicion de contenido menu #menu -->
+    <!-- fin items derecha toolbar principal -->
+    </div>
 </mat-toolbar>
 <mat-sidenav-container>
     <mat-sidenav [opened]="false" [mode]="'side'" role="directory" #sidenav>
@@ -33,6 +59,9 @@
 
     </mat-sidenav>
     <mat-sidenav-content>
+      <mat-toolbar color="accent">
+        <h1>{{bannerText}}</h1>
+      </mat-toolbar>
         <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>

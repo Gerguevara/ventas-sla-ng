@@ -15,14 +15,11 @@ export class IndexContainer implements OnInit {
   constructor(private categoriaService : CategoriaService) { }
 
   ngOnInit(): void {
-    this.categoriaService.getObjects().subscribe(
-      (result : Resultado<Categoria>) => {
-        this.categorias=new Set<Categoria>(result.data);
-        this.categoriasRemover?.forEach(
-          (categoriaQuitar : Categoria) => {
-            this.categorias?.delete(categoriaQuitar);
-          }
-        )
+    this.categoriaService.getObjects(undefined,undefined,true).subscribe(
+      (result : Resultado<Categoria>) => { //seria bueno tener un parametro que permita obtener solo las que tienen mas de cero productos
+        if(result.total>0){
+          this.categorias=new Set<Categoria>(result.data);
+        }
       },
     )
   }
