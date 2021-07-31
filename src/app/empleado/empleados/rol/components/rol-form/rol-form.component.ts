@@ -109,14 +109,6 @@ export class RolFormComponent implements OnInit {
     return this.roleService.searchDepartamento(name);
   }
 
-  /*async buscarDepartamento( name: string ): Promise<Departamento[]> {
-    return await new Promise((resolve) => {
-      setTimeout(() => {
-        return this.roleService.searchDepartamento(name);
-      }, 1000);
-    });
-  }*/
-
   // Obtenemos todos los cambios que nos envíe el paginador con la data de la página
   addDataToTable( event: any[] ): void {
     // Seteamos estos datos a la tabla

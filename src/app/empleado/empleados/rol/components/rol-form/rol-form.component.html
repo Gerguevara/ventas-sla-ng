@@ -28,7 +28,7 @@
                             <input [matChipInputFor]="chipList" [matChipInputAddOnBlur]="true" disabled>
                             <mat-error *ngIf="departamentoNoValido">{{ getErrorDepartamentoMessage() }}</mat-error>
                         </mat-chip-list> -->
-                        <input matInput formControlName='departamento' placeholder="Departamento" [matAutocomplete]="auto">
+                        <input matInput formControlName='departamento' placeholder="Buscar" [matAutocomplete]="auto">
                         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                             <mat-option *ngFor="let option of filteredDepartamentos | async" [value]="option">
                                 {{option.nombre}}
