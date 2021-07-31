@@ -1,3 +1,4 @@
+import { ResultadoIndex } from './../../../core/Models/resultado-index.model';
 import { Component, Input, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 
@@ -13,38 +14,18 @@ import { IndexService } from '@global-services/index.service';
 })
 export class IndexTableComponent implements OnInit {
   @Input()
-  categoria! : Categoria;
-  productos : Producto[] = [];
+  resultado! : ResultadoIndex;
   currentMaxProduct = 4;
   columns!: number;
   rowHeight = "1:1";
   rendered = true;
   constructor(
-    private indexService: IndexService,
     private breakpointObserver: BreakpointObserver
     ) {
       this.getColumns();
   }
 
   ngOnInit(): void {
-    this.getData();
-  }
-
-  getData(){
-    this.indexService.getObjects().subscribe({
-      next: (res : Resultado<Producto>)=>{
-        this.productos = res.data.filter((prod:Producto)=>prod.id_categoria===this.categoria.id)//cambiar por servicio que filtre productos por categorias
-        if(this.productos.length > 0){
-          this.rendered = true;
-          this.productos=this.productos.sort(this.comparador);
-          if(this.productos.length > this.currentMaxProduct){
-            this.productos = this.productos.slice(0,this.currentMaxProduct);
-          }
-        } else {
-          this.rendered = false;
-        }
-      }
-    });
   }
 
   getColumns(){
@@ -67,8 +48,14 @@ export class IndexTableComponent implements OnInit {
         } else if(breakpointState.breakpoints[Breakpoints.Medium]){
           this.columns = 3;
           this.setRowHeightSide();
-        } else {
+        } else if(breakpointState.breakpoints[Breakpoints.Large]){
           this.columns = 4;
+          this.setRowHeightSide();
+        } else if(breakpointState.breakpoints[Breakpoints.XLarge]){
+          this.columns = 8;
+          this.setRowHeightSide();
+        } else {
+          this.columns = 1;
           this.setRowHeightSide();
         }
     }})

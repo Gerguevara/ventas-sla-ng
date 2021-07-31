@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { PreflightService } from '@tools/services/preflight-service';
+import { PreflightService } from '@tool-services/preflight-service';
 import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';

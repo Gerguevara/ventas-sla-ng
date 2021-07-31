@@ -8,8 +8,9 @@ import { NgxPermissionsService } from 'ngx-permissions';
 
 import { environment } from '@environments/environment';
 import { Categoria } from '@models/categoria.model';
-import { Resultado } from '@models/resultado.model';
+import { ResultadoIndex } from '@models/resultado-index.model';
 
+import { IndexService } from '@global-services/index.service';
 import { CategoriaService } from '@global-services/categoria.service';
 import { LoginClienteService } from '@global-services/login-cliente.service';
 
@@ -43,17 +44,22 @@ export class ClienteComponent implements OnInit {
     private authCliente: LoginClienteService,
     private dialog: MatDialog,
     private permissions: NgxPermissionsService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private indexService: IndexService
     ) {
   }
 
   ngOnInit(): void {
     this.iniciarSesion = true;
     this.rolAdmin = false;
-    this.categoriaService.getObjects().subscribe(
+    this.indexService.obtenerProductos().subscribe(
       {
-        next: (result : Resultado<Categoria>) => this.categorias=result.data,
-        complete: () => this.sidenavMode(),
+        next: (result : ResultadoIndex[]) => {
+          this.categorias = [];
+          result.forEach(resultado => {
+            this.categorias.push(resultado.categoria);
+          });
+        }
       });
     // Validación de usuario logeado
     if (localStorage.getItem('token')) {

@@ -1,3 +1,4 @@
+import { ResultadoIndex } from './../../../core/Models/resultado-index.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
@@ -31,14 +32,16 @@ export class IndexCategoriaContainer implements OnInit {
       (params: ParamMap) => {
         let idObtenido = params.get('id')
         if(idObtenido) this.idActual = Number(params.get('id'));
-        this.indexService.obtenerCategoriaProducto(this.idActual).subscribe(
-          (result:Categoria)=>{this.catTitle=result.nombre}
+        this.indexService.obtenerCategoria(this.idActual).subscribe(
+          (result:ResultadoIndex)=>{
+            this.catTitle=result.categoria.nombre
+            this.listaProductos = result.productos;
+            this.listaProductos = this.listaProductos.filter((producto:Producto)=>producto.id_categoria===this.idActual)
+            this.onResize();
+          }
         )
         this.indexService.getObjects().subscribe({
           next:(result : Resultado<Producto>)=>{
-              this.listaProductos = result.data;
-              this.listaProductos = this.listaProductos.filter((producto:Producto)=>producto.id_categoria===this.idActual)
-              this.onResize();
           }
         })
       }

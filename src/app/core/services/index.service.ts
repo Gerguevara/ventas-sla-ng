@@ -1,10 +1,12 @@
-import { environment } from './../../../environments/environment';
-import { Producto } from '../Models/producto.model';
 import { Injectable } from '@angular/core';
-import { RecursoService } from './recurso.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Categoria } from '../Models/categoria.model';
+
+import { RecursoService } from './recurso.service';
+import { Producto } from '@models/producto.model';
+import { Categoria } from '@models/categoria.model';
+import { ResultadoIndex } from '@models/resultado-index.model';
+import { environment } from '@environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +22,7 @@ export class IndexService extends RecursoService<Producto> {
     return this.httpClient.get<Producto>(`${environment.apiUrl}index/${id}`,options);
   }
 
-  obtenerCategoriaProducto( id: number ): Observable<Categoria> {
+  obtenerCategoria( id: number ): Observable<ResultadoIndex> {
     const token = 'Bearer ' + localStorage.getItem('token');
     const httpHeaders = {
       headers: new HttpHeaders({
@@ -29,6 +31,12 @@ export class IndexService extends RecursoService<Producto> {
         'Authorization': token
       })
     };
-    return this.httpClient.get<Categoria>(`${environment.apiUrl}categorias/` + id, httpHeaders);
+    return this.httpClient.get<ResultadoIndex>(`${environment.apiUrl}index/categoria/` + id, httpHeaders);
+  }
+  obtenerProductos(): Observable<ResultadoIndex[]> {
+    const token = 'Bearer ' + localStorage.getItem('token');
+    const httpHeaders = {
+    };
+    return this.httpClient.get<ResultadoIndex[]>(`${environment.apiUrl}index`, httpHeaders);
   }
 }
