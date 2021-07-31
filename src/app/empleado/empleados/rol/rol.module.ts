@@ -19,6 +19,7 @@ import { ToolsModule } from 'src/app/tools/tools.module';
 import { RolesService } from '../../../core/services/roles.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { MatChipsModule } from '@angular/material/chips';
     MatGridListModule,
     MatTableModule,
     MatSnackBarModule,
-    MatChipsModule
+    MatChipsModule,
+    MatAutocompleteModule
   ],
   providers: [
     RolesService
