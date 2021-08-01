@@ -15,6 +15,10 @@ mat-list-item:hover {
     background-color: $hover-white;
 }
 
+mat-sidenav{
+  min-width: 20vw;
+}
+
 mat-sidenav h1 {
     margin: 20px;
 }

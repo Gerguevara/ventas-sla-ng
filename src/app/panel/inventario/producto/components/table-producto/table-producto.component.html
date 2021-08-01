@@ -1,0 +1,44 @@
+<div>
+    <mat-table [dataSource]="dataSource">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="ID">
+            <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+            <mat-cell *matCellDef="let producto"> {{producto.id}} </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="Nombre">
+            <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+            <mat-cell *matCellDef="let producto"> {{producto.nombre_producto}} </mat-cell>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="Descripción">
+            <mat-header-cell *matHeaderCellDef> Descripción </mat-header-cell>
+            <mat-cell *matCellDef="let producto"> {{producto.descripcion_producto}} </mat-cell>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="Precio">
+            <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>
+            <mat-cell *matCellDef="let producto"> {{producto.precio}} </mat-cell>
+        </ng-container>
+
+        <!-- Acciones Column -->
+        <ng-container matColumnDef="Acciones">
+            <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button *ngxPermissionsOnly="['productos.destroy','productos.desactivar']" (click)="quitarProducto(element)" style="margin-right: 5px; cursor: pointer;" mat-icon-button color="primary" aria-label="delete_icon">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="seleccionarProducto(row)"></mat-row>
+    </mat-table>
+
+    <app-paginator [urlData]="url" [params]="params" (pageDataChange$)="addDataToTable($event)"></app-paginator>
+
+</div>

@@ -19,8 +19,8 @@
       "@core/*": [
         "src/app/core/*"
       ],
-      "@empleado/*": [
-        "src/app/empleado/*"
+      "@panel/*": [
+        "src/app/panel/*"
       ],
       "@guards/*": [
         "src/app/guards/*"
@@ -29,7 +29,7 @@
         "src/app/tools/*"
       ],
       "@models/*": [
-        "src/app/core/Models/*"
+        "src/app/core/models/*"
       ],
       "@global-services/*": [
         "src/app/core/services/*"

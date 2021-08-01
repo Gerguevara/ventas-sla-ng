@@ -1,11 +1,12 @@
-import { Resultado } from './../Models/resultado.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Categoria } from './../Models/categoria.model';
-import { Producto } from './../Models/producto.model';
+
+import { Categoria } from '@models/categoria.model';
+import { Producto } from '@models/producto.model';
+import { Resultado } from '@models/resultados/resultado.model';
 import { RecursoService } from './recurso.service';
-import { environment } from 'src/environments/environment';
+import { environment } from '@environments/environment';
 
 export interface ProductoPost {
   id_categoria: number;

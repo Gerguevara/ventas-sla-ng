@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
+
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { LoginEmpresasService, SignUpResponse } from '@global-services/login-empresas.service';
 import { DialogMessageComponent } from '@tool-components/dialog-message/dialog-message.component';
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
-import { LoginEmpresasService, SignUpResponse } from '@global-services/login-empresas.service';
 export interface DialogData {
   email: string;
 }

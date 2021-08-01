@@ -2,13 +2,13 @@ import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSidenav } from '@angular/material/sidenav';
+import { MatDrawer, MatDrawerMode, MatSidenav } from '@angular/material/sidenav';
 
 import { NgxPermissionsService } from 'ngx-permissions';
 
 import { environment } from '@environments/environment';
 import { Categoria } from '@models/categoria.model';
-import { ResultadoIndex } from '@models/resultado-index.model';
+import { ResultadoIndex } from '@core/models/resultados/resultado-index.model';
 
 import { IndexService } from '@global-services/index.service';
 import { CategoriaService } from '@global-services/categoria.service';
@@ -23,20 +23,18 @@ import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-s
 })
 export class ClienteComponent implements OnInit {
   @ViewChild('sidenav') sidenav! : MatSidenav;
+  categorias: Categoria[] = [];
+  openDefault: boolean = true;
+  mode: MatDrawerMode = 'side';
+
   title = environment.appTitle;
   bannerText = environment.bannerText;
-  categorias : Categoria[] = [];
-  smolWindow : boolean = true;
   window = window;
 
   // Bandera para inicio de sesión
   iniciarSesion!: boolean;
   rolAdmin!: boolean;
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: UIEvent) {
-    this.sidenavMode()
-  }
 
   constructor(
     private categoriaService : CategoriaService,
@@ -47,18 +45,17 @@ export class ClienteComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private indexService: IndexService
     ) {
+    this.sidenavMode();
   }
 
   ngOnInit(): void {
     this.iniciarSesion = true;
     this.rolAdmin = false;
-    this.indexService.obtenerProductos().subscribe(
+    this.indexService.obtenerCategorias().subscribe(
       {
-        next: (result : ResultadoIndex[]) => {
-          this.categorias = [];
-          result.forEach(resultado => {
-            this.categorias.push(resultado.categoria);
-          });
+        next: (result : Categoria[]) => {
+          this.categorias = result;
+          console.log(result);
         }
       });
     // Validación de usuario logeado
@@ -122,8 +119,6 @@ export class ClienteComponent implements OnInit {
             this.setSideSidenav();
           } else if (breakpointState.breakpoints[Breakpoints.XLarge]) {
             this.setSideSidenav();
-          } else {
-            this.setOverSidenav();
           }
         }
       }
@@ -132,13 +127,13 @@ export class ClienteComponent implements OnInit {
 
   setSideSidenav(){
     this.sidenav.open();
-    this.sidenav.mode="side";
-    this.smolWindow=false;
+    this.mode= 'side';
+    this.openDefault=true;
   }
 
   setOverSidenav(){
     this.sidenav.close();
-    this.sidenav.mode="over";
-    this.smolWindow=true;
+    this.mode='over';
+    this.openDefault=false;
   }
 }

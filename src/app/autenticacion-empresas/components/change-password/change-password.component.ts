@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { ValidatorsService } from 'src/app/core/services/validators.service';
-import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
-import { LoginEmpresasService } from '../../../core/services/login-empresas.service';
+
+import { MatDialog } from '@angular/material/dialog';
+
+import { ValidatorsService } from '@global-services/validators.service';
+import { LoginEmpresasService } from '@global-services/login-empresas.service';
+import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 
 @Component({
   selector: 'app-change-password',

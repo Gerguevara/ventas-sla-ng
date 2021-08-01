@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Etiqueta } from './../Models/etiqueta.model';
-import { Resultado } from '../Models/resultado.model';
+
 import { RecursoService } from './recurso.service';
-import { environment } from 'src/environments/environment';
-import { Categoria } from '../Models/categoria.model';
+import { Etiqueta } from '@models/etiqueta.model';
+import { Categoria } from '@models/categoria.model';
+import { Resultado } from '@models/resultados/resultado.model';
+import { environment } from '@environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class EtiquetaService extends RecursoService<Etiqueta> {
 
   private API_URL_config = `${environment.apiUrl}`;
 
-  constructor(protected httpClient: HttpClient) { 
+  constructor(protected httpClient: HttpClient) {
     super('etiquetas',httpClient);
   }
 

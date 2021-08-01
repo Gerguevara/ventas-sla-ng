@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { Resultado } from '../Models/resultado.model';
-import { Rol } from '../Models/rol.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Permission } from '../Models/permission.model';
-import { Departamento } from '../Models/departamento.model';
+
+import { Rol } from '@models/rol.model';
+import { Permission } from '@models/permission.model';
+import { Departamento } from '@models/departamento.model';
+import { Resultado } from '@models/resultados/resultado.model';
+import { environment } from '@environments/environment';
 
 @Injectable({
   providedIn: 'root'

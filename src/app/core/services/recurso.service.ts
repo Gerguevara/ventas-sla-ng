@@ -1,11 +1,11 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { PreflightService } from '@tool-services/preflight-service';
 import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
-import { Resultado } from '../Models/resultado.model';
-import { Recurso } from './../Models/recurso.model';
+import { Resultado } from '@models/resultados/resultado.model';
+import { Recurso } from '@models/recurso.model';
+import { PreflightService } from '@tool-services/preflight-service';
 
 export abstract class RecursoService<T extends Recurso> extends PreflightService {
 

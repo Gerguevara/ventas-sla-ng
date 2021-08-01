@@ -21,7 +21,7 @@ const routes: Routes = [
   },
   {
     path: 'panel',
-    loadChildren: () => import('./empleado/empleado.module').then(m => m.EmpleadoModule),
+    loadChildren: () => import('./panel/empleado.module').then(m => m.EmpleadoModule),
     canLoad: [AuthGuard, RolGuard]
   },
   {

@@ -44,7 +44,7 @@
     </div>
 </mat-toolbar>
 <mat-sidenav-container>
-    <mat-sidenav [opened]="false" [mode]="'side'" role="directory" #sidenav>
+    <mat-sidenav [opened]="openDefault" [mode]="mode" role="directory" #sidenav>
         <h1> Categorías </h1>
         <mat-list>
             <ng-container *ngFor="let cat of categorias">

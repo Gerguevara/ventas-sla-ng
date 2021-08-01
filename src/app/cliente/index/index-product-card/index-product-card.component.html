@@ -1,5 +1,5 @@
-<div class="card-container">
-  <mat-card >
+<div class="card-container" #main>
+  <mat-card>
     <mat-card-title>
       <ng-container *ngIf="hasImage;">
         <img mat-card-image src="{{productoInput?.imagen}}" alt="{{productoInput?.nombre_producto}} - {{productoInput?.descripcion_producto}}">

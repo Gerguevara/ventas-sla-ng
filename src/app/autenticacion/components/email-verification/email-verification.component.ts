@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { LoginClienteService, EmailVerificationResponse } from '@global-services/login-cliente.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogSpinnerComponent } from 'src/app/tools/components/dialog-spinner/dialog-spinner.component';
-import { DialogMessageComponent } from 'src/app/tools/components/dialog-message/dialog-message.component';
+import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
+import { DialogMessageComponent } from '@tool-components/dialog-message/dialog-message.component';
+import { LoginClienteService, EmailVerificationResponse } from '@global-services/login-cliente.service';
 
 export interface DialogData {
   message: string;

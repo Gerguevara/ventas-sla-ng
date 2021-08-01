@@ -1,8 +1,12 @@
 @import 'variables';
 
 .card-container{
-  max-height: 99.5%;
-  max-width: 90%;
+  max-height: 100%;
+  max-width: 100%;
+ }
+
+ mat-card{
+  margin: 15px 0.5vw
  }
 
  mat-list{

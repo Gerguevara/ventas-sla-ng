@@ -1,8 +1,9 @@
-import { ResultadoIndex } from './../../../core/Models/resultado-index.model';
-import { IndexService } from 'src/app/core/services/index.service';
 import { Component, OnInit } from '@angular/core';
+
 import { Categoria } from '@models/categoria.model';
-import { Resultado } from '@models/resultado.model';
+import { ResultadoIndex } from '@models/resultados/resultado-index.model';
+
+import { IndexService } from '@global-services/index.service';
 import { CategoriaService } from '@global-services/categoria.service';
 
 @Component({

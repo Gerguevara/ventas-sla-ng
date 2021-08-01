@@ -1,11 +1,10 @@
-import { ResultadoIndex } from './../../../core/Models/resultado-index.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 
-import { Categoria } from '@models/categoria.model';
 import { Producto } from '@models/producto.model';
-import { Resultado } from '@models/resultado.model';
+import { ResultadoIndex } from '@models/resultados/resultado-index.model';
+import { Resultado } from '@models/resultados/resultado.model';
 import { IndexService } from '@global-services/index.service';
 
 @Component({
