@@ -23,22 +23,16 @@ export class PermissionService {
 
   constructor( private http: HttpClient ) { }
 
-  async getAllPermissions(): Promise<string[]> {
-    const resp = await this.http.get<{ [key:number] : Permission[] }>(this.API_URL + 'getAllPermissions', httpHeaders).pipe(
+  getAllPermissions(): Observable<string[]> {
+    const response = this.http.get<{ [key:number] : Permission[] }>(this.API_URL + 'getAllPermissions', httpHeaders).pipe(
       map( //{ [key:number] : Permission[] } por ahora lo he dejado asi, considera hacer un modelo de esto, resultado-permission o algo asi, como en la carpeta resultados
-        (response: { [key:number] : Permission[] }) => response[0],
+        (response: { [key:number] : Permission[] }) => response[0]
       ),
       map(
-        (array: Permission[]) => {
-          let namesArray: string[]= [];
-          array.forEach((permission: Permission)=>{
-            namesArray.push(permission.name);
-          })
-          return namesArray;
-        }
+        (array: Permission[]) => array.map(({ name }) => name)
       )
-      ).toPromise();
-    return resp;
+      );
+    return response;
   }
 
   verifyPermission( permission: string ): Observable<any>{
