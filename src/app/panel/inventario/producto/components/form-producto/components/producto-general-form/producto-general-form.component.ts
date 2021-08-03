@@ -17,70 +17,39 @@ export class ProductoGeneralFormComponent implements OnInit {
   generalForm!: FormGroup;
   @Input()
   editable!: boolean;
-  categorias!: Categoria[];
+  categoriasObservable!: Observable<Categoria[]> | Observable<Resultado<Categoria>>;
   selectable = true;
   removable = true;
   categoriasFiltradas: Observable<Categoria[]> = of<Categoria[]>([]);
 
   constructor(private categoriaService: CategoriaService) {
-    this.getCategories();
   }
 
   ngOnInit(): void {
     if(this.categoriaControl){
-      if(this.categoriaControl.value.length > 0){
-        this.categoriasFiltradas= this.categoriaControl.valueChanges.pipe(
-          debounceTime(350),
-          startWith(''),
-          map((value: string | Categoria) => (typeof value === 'string'? value : value.nombre)),
-          switchMap((name: string)=> this.getCategoriesObservable(name))
-        );
-      } else {
-        this.categoriasFiltradas = this.categoriaControl.valueChanges.pipe(
-          startWith(''),
-          switchMap(()=> this.getCategoriesObservable())
-        );
-        }
-    }
-  }
-
-  getCategories(event?: string){
-    if(event){
-      console.log('event triggered');
-      if(event !== ""){
-        this.categoriaService.buscarCategoria(event).subscribe({
-          next: (result: Categoria[]) => {
-            this.categorias = result;
-          },
-          error: (message: any) => console.log(message),
-        })
-      }
-    } else {
-      console.log('event not triggered');
-      this.categoriaService.getObjects().subscribe({
-        next: (result: Resultado<Categoria>) => {
-          this.categorias = result.data;
-        },
-        error: (message: any) => console.log(message),
-      })
+      this.categoriasFiltradas= this.categoriaControl.valueChanges.pipe(
+        debounceTime(250),
+        startWith(''),
+        map((value: string | Categoria) => (typeof value === 'string'? value : value.nombre)),
+        switchMap((name: string)=> this.getCategoriesObservable(name))
+      );
     }
   }
 
   getCategoriesObservable(searchValue?: string): Observable<Categoria[]> {
     if(!searchValue || searchValue === ''){
-      return this.categoriaService.buscarCategoria().pipe(
+      console.log('search value empty');
+      this.categoriasObservable = this.categoriaService.getObjects();
+      return this.categoriasObservable.pipe(
         map(( value:any )=>value.data)
-      )
+      ) as Observable<Categoria[]>;
+    } else if(searchValue){
+      console.log('search value is not empty');
+      if(searchValue !== ""){
+        this.categoriasObservable = this.categoriaService.buscarCategoria(searchValue);
+      }
     }
-    return this.categoriaService.buscarCategoria(searchValue);
-  }
-
-  // Método para quitar una categoría de la tabla y del ChipList
-  quitarCategoria(): void {
-    if (this.editable) {
-      this.categorias = [];
-      this.generalForm.get('categoria')?.setValue('');
-    }
+    return this.categoriasObservable as Observable<Categoria[]>;
   }
 
   private getControl(key: string): AbstractControl{
