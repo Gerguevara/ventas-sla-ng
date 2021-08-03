@@ -40,21 +40,13 @@ export class ProductoGeneralFormComponent implements OnInit {
           startWith(''),
           switchMap(()=> this.getCategoriesObservable())
         );
-      }
+        }
     }
   }
 
-  getCategories(){
-    this.categoriaService.getObjects().subscribe({
-      next: (result: Resultado<Categoria>) => {
-        this.categorias = result.data;
-      },
-      error: (message: any) => console.log(message),
-    })
-  }
-
-  searchCategories(event?: string){
+  getCategories(event?: string){
     if(event){
+      console.log('event triggered');
       if(event !== ""){
         this.categoriaService.buscarCategoria(event).subscribe({
           next: (result: Categoria[]) => {
@@ -64,12 +56,18 @@ export class ProductoGeneralFormComponent implements OnInit {
         })
       }
     } else {
-        this.getCategories();
+      console.log('event not triggered');
+      this.categoriaService.getObjects().subscribe({
+        next: (result: Resultado<Categoria>) => {
+          this.categorias = result.data;
+        },
+        error: (message: any) => console.log(message),
+      })
     }
   }
 
   getCategoriesObservable(searchValue?: string): Observable<Categoria[]> {
-    if(!searchValue){
+    if(!searchValue || searchValue === ''){
       return this.categoriaService.buscarCategoria().pipe(
         map(( value:any )=>value.data)
       )

@@ -5,13 +5,13 @@
 export const environment = {
   production: false,
   appTitle: "SLA S.A. de C.V.",
+  bannerText: "Las mejores marcas",
   //con / final
   apiUrl: "http://localhost:8000/api/",
   allowedOrigin:"http://localhost:4200",
+  defaultProductImage: "/assets/images/placeholder-product-image.svg",
   uploadUrl: "https://prueba-pp15001.000webhostapp.com/upload.php",
   uploadDir: "https://prueba-pp15001.000webhostapp.com/uploads/",
-  bannerText: "Las mejores marcas",
-  defaultProductImage: "/assets/images/placeholder-product-image.svg",
   patterns:
   {
     allLetters: /^[a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ\s+]+$/,
