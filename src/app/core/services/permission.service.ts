@@ -1,3 +1,4 @@
+import { Permission } from './../models/permission.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -22,17 +23,21 @@ export class PermissionService {
 
   constructor( private http: HttpClient ) { }
 
-  async getAllPermissions(): Promise<any> {
-    const resp = await this.http.get<string[]>(this.API_URL + 'getAllPermissions', httpHeaders).pipe(
+  async getAllPermissions(): Promise<string[]> {
+    const resp = await this.http.get<{ [key:number] : Permission[] }>(this.API_URL + 'getAllPermissions', httpHeaders).pipe(
+      map( //{ [key:number] : Permission[] } por ahora lo he dejado asi, considera hacer un modelo de esto, resultado-permission o algo asi, como en la carpeta resultados
+        (response: { [key:number] : Permission[] }) => response[0],
+      ),
       map(
-        (response: any) => {
-          const list: string[] = [];
-          for (const item of response[0]) {
-            list.push(item.name);
-          }
-          return list;
+        (array: Permission[]) => {
+          let namesArray: string[]= [];
+          array.forEach((permission: Permission)=>{
+            namesArray.push(permission.name);
+          })
+          return namesArray;
         }
-      )).toPromise();
+      )
+      ).toPromise();
     return resp;
   }
 

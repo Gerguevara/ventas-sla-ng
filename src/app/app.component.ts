@@ -18,6 +18,7 @@ export class AppComponent {
     const perm = [''];
     if ( localStorage.getItem('token') ) {
       this.permissionService.getAllPermissions().then((response: string[]) => {
+        console.log( response );
         this.permissionsService.loadPermissions(response);
       }).catch((error: any) => { console.log( error ); });
     } else {
