@@ -10,6 +10,7 @@ export const environment = {
   apiUrl: "http://localhost:8000/api/",
   allowedOrigin:"http://localhost:4200",
   defaultProductImage: "/assets/images/placeholder-product-image.svg",
+  defaultUserPhotoImage: "/assets/images/portrait-placeholder.png",
   uploadUrl: "https://prueba-pp15001.000webhostapp.com/upload.php",
   uploadDir: "https://prueba-pp15001.000webhostapp.com/uploads/",
   patterns:

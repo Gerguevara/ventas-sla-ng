@@ -1,1 +1,11 @@
-<p>empleado-index works!</p>
+<div class="header">
+  <h1>
+    Empleados
+  </h1>
+</div>
+<app-empleado-list
+  [empleados]="empleados"
+  (viewEmpleadoEvent)="empleadoView($event)"
+  (updateEmpleadoEvent)="empleadoUpdate($event)"
+  (removeEmpleadoEvent)="empleadoDelete($event)"
+  ></app-empleado-list>

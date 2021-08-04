@@ -2,8 +2,8 @@
   <mat-grid-list cols="2" rowHeight="341.5:70.13">
     <mat-grid-tile>
       <mat-form-field appearance="fill">
-        <mat-label>Ingresa su sexo</mat-label>
-        <input matInput placeholder="Vilma Juana" formControlName="genero" required>
+        <mat-label>Ingresa su genero</mat-label>
+        <input matInput placeholder="Masculino" formControlName="genero" required>
         <mat-error *ngIf="generoControl.invalid">{{getErrorMessage(generoControl)}}</mat-error>
       </mat-form-field>
     </mat-grid-tile>

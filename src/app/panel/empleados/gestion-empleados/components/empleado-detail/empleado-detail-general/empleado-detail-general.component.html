@@ -1,0 +1,33 @@
+<mat-dialog-content [ngStyle]="{'flex-direction':flexDirection}">
+  <mat-list>
+    <mat-list-item>
+      <h2 matLine> Genero </h2>
+      <p matLine>
+        <span>{{empleado.genero}} </span>
+      </p>
+    </mat-list-item>
+    <mat-list-item>
+      <h2 matLine> Direccion </h2>
+      <p matLine>
+        <span> {{empleado.direccion}} </span>
+      </p>
+    </mat-list-item>
+  </mat-list>
+  <mat-list>
+    <mat-list-item>
+      <h2 matLine> Telefono </h2>
+      <p matLine>
+        <span>{{empleado.telefono}} </span>
+      </p>
+    </mat-list-item>
+    <mat-list-item>
+      <h2 matLine> Estado Civil </h2>
+      <p matLine>
+        <span>{{empleado.estadoCivil}} </span>
+      </p>
+    </mat-list-item>
+  </mat-list>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <mat-slide-toggle [checked]="false" (change)="toggleEdit($event)">Editar</mat-slide-toggle>
+</mat-dialog-actions>

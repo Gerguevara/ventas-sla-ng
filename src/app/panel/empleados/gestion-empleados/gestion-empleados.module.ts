@@ -1,3 +1,4 @@
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -18,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatTabsModule} from '@angular/material/tabs';
 
 import { GestionEmpleadosRoutingModule } from './gestion-empleados-routing.module';
 import { EmpleadoContainerComponent } from './empleado-container/empleado-container.component';
@@ -29,6 +31,12 @@ import { EmpleadoRegisterFormAccessComponent } from './components/empleado-regis
 import { EmpleadoRegisterFormGeneralComponent } from './components/empleado-register-form/empleado-register-form-general/empleado-register-form-general.component';
 import { EmpleadoRegisterFormDocumentsComponent } from './components/empleado-register-form/empleado-register-form-documents/empleado-register-form-documents.component';
 import { EmpleadoRegisterFormCorporateComponent } from './components/empleado-register-form/empleado-register-form-corporate/empleado-register-form-corporate.component';
+import { EmpleadoListComponent } from './components/empleado-index/empleado-list/empleado-list.component';
+import { NgxPermissionsModule } from 'ngx-permissions';
+import { EmpleadoDetailGeneralComponent } from './components/empleado-detail/empleado-detail-general/empleado-detail-general.component';
+import { EmpleadoDetailDocumentsComponent } from './components/empleado-detail/empleado-detail-documents/empleado-detail-documents.component';
+import { EmpleadoDetailCorporateComponent } from './components/empleado-detail/empleado-detail-corporate/empleado-detail-corporate.component';
+import { EmpleadoDetailProfileComponent } from './components/empleado-detail/empleado-detail-profile/empleado-detail-profile.component';
 
 
 @NgModule({
@@ -41,7 +49,12 @@ import { EmpleadoRegisterFormCorporateComponent } from './components/empleado-re
     EmpleadoRegisterFormAccessComponent,
     EmpleadoRegisterFormGeneralComponent,
     EmpleadoRegisterFormDocumentsComponent,
-    EmpleadoRegisterFormCorporateComponent
+    EmpleadoRegisterFormCorporateComponent,
+    EmpleadoListComponent,
+    EmpleadoDetailGeneralComponent,
+    EmpleadoDetailDocumentsComponent,
+    EmpleadoDetailCorporateComponent,
+    EmpleadoDetailProfileComponent
   ],
   imports: [
     CommonModule,
@@ -62,7 +75,10 @@ import { EmpleadoRegisterFormCorporateComponent } from './components/empleado-re
     MatDividerModule,
     MatTooltipModule,
     MatAutocompleteModule,
-    MatGridListModule
+    MatGridListModule,
+    MatTabsModule,
+    MatSlideToggleModule,
+    NgxPermissionsModule.forChild()
   ]
 })
 export class GestionEmpleadosModule { }

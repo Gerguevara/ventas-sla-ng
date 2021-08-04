@@ -1,1 +1,22 @@
-<p>empleado-detail works!</p>
+<mat-tab-group>
+  <mat-tab [label]="profileLabel">
+    <ng-template matTabContent>
+      <app-empleado-detail-profile [empleado]="empleado"></app-empleado-detail-profile>
+    </ng-template>
+  </mat-tab>
+  <mat-tab [label]="generalLabel">
+    <ng-template matTabContent>
+      <app-empleado-detail-general [empleado]="empleado"></app-empleado-detail-general>
+    </ng-template>
+  </mat-tab>
+  <mat-tab [label]="documentsLabel">
+    <ng-template matTabContent>
+      <app-empleado-detail-documents [empleado]="empleado"></app-empleado-detail-documents>
+    </ng-template>
+  </mat-tab>
+  <mat-tab [label]="corporateLabel">
+    <ng-template matTabContent>
+      <app-empleado-detail-corporate [empleado]="empleado"></app-empleado-detail-corporate>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>
