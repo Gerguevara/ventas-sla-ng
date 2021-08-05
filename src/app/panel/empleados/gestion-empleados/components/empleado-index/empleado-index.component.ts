@@ -1,14 +1,25 @@
-import { EmpleadoConfirmationDialogComponent } from './../empleado-confirmation-dialog/empleado-confirmation-dialog.component';
-import { ResultadoEmpleado } from '@core/models/resultados/resultado-empleado.model';
-import { map, startWith } from 'rxjs/operators';
-import { Component, OnInit } from '@angular/core';
-import { Observable, of, PartialObserver } from 'rxjs';
-import { Resultado } from '@models/resultados/resultado.model';
-import { PerfilEmpleado } from '@models/perfil.empleado.model';
-import { EmpleadoService } from '@global-services/empleado.service';
-import { MatDialog } from '@angular/material/dialog';
-import { EmpleadoDetailComponent } from '../empleado-detail/empleado-detail.component';
+import { FormControl } from '@angular/forms';
+import { MatInput } from '@angular/material/input';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { PartialObserver } from 'rxjs';
+
+import { MatDialog } from '@angular/material/dialog';
+
+import { Rol } from '@models/rol.model';
+import { PerfilEmpleado } from '@models/perfil.empleado.model';
+import { Resultado } from '@models/resultados/resultado.model';
+import { ResultadoEmpleado } from '@models/resultados/resultado-empleado.model';
+
+import { EmpleadoService } from '@global-services/empleado.service';
+import { RolesService } from '@global-services/roles.service';
+
+import { EmpleadoDetailComponent } from '../empleado-detail/empleado-detail.component';
+import { EmpleadoConfirmationDialogComponent } from './../empleado-confirmation-dialog/empleado-confirmation-dialog.component';
+import { MatSelect } from '@angular/material/select';
+import { MatOptionSelectionChange } from '@angular/material/core';
+import { MatFormField } from '@angular/material/form-field';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-empleado-index',
@@ -17,6 +28,26 @@ import { HttpResponse } from '@angular/common/http';
 })
 export class EmpleadoIndexComponent implements OnInit {
   empleados: PerfilEmpleado[] = [];
+  roles: Rol[] = [];
+  @ViewChild('search') search!: MatInput;
+  @ViewChild('filter') filter!: MatSelect;
+  currentPage: number = 0;
+  currentPageSize: number = 0;
+  dataLength : number = 0;
+  searching: boolean = false;
+  filtering: boolean = false;
+  searchingValue: string = '';
+
+  listObserver: PartialObserver<Resultado<PerfilEmpleado>> = {
+    next:(resultado: Resultado<PerfilEmpleado>)=>{
+      this.empleados = resultado.data;
+      this.dataLength = resultado.total;
+    },
+    error: (error: any)=>{
+      console.error('error occurred retrieving empleados, please check log: ');
+      console.error(error);
+    }
+  }
 
   viewObserver: PartialObserver<PerfilEmpleado> ={
     next:(resultado: PerfilEmpleado)=>{
@@ -33,21 +64,81 @@ export class EmpleadoIndexComponent implements OnInit {
 
   constructor(
     private empleadoService: EmpleadoService,
+    private rolesService: RolesService,
     private formDialog : MatDialog,
     private loadingDialog : MatDialog
     ) {
   }
 
   ngOnInit(): void {
-    this.empleadoService.getObjects().subscribe({
-      next:(resultado: Resultado<PerfilEmpleado>)=>{
-        this.empleados = resultado.data;
-      },
-      error: (error: any)=>{
-        console.error('error occurred retrieving empleados, please check log: ');
-        console.error(error);
+    this.getEmpleados(1);
+    this.rolesService.getObjects(0, 0, undefined, true).subscribe({
+      next: (result: Resultado<Rol>)=>{
+        this.roles = result.data;
       }
     })
+  }
+
+  ngAfterViewInit(){
+    this.filter.optionSelectionChanges.subscribe({
+      next: (change: MatOptionSelectionChange)=> {
+        const value = (change.source.value);
+        if(value){
+          if(typeof value === 'string'){
+            //caso en el que solo se busca empleados
+            this.empleadoService.searchEmpleados(this.searchingValue, this.currentPage, this.currentPageSize).subscribe(this.listObserver);
+          } else {
+            this.filtering = true;
+            if(this.searching){
+              //caso cuando se filtra y busca
+              this.empleadoService.getEmpleadosByRole(value.id,this.searchingValue,this.currentPage,this.currentPage).subscribe(this.listObserver);
+            } else {
+              //caso cuando solo se filtra
+              this.empleadoService.getEmpleadosByRole(value.id,undefined,this.currentPage,this.currentPageSize).subscribe(this.listObserver);
+            }
+          }
+        } else {
+          this.filtering = false;
+        }
+      }
+    })
+  }
+
+  getEmpleados(pagina : PageEvent | number){
+    //obtener el numero de pagina segun el tipo del parametro
+    const numeroDePagina = (typeof pagina === "number" ? pagina : pagina.pageIndex + 1)
+    //obtener el tamano de pagina
+    let pageSize = 10;
+    if(typeof pagina !== "number") {
+      pageSize = pagina.pageSize;
+      this.currentPage = pagina.pageIndex;
+    } else {
+      this.currentPage = pagina;
+    }
+    this.currentPageSize = pageSize
+    //obtener las categorias
+    this.empleadoService.getEmpleados(numeroDePagina, pageSize).subscribe(this.listObserver);
+  }
+
+  filterEmpleados(target: EventTarget | null){
+    if(target) {
+      const value = (target as HTMLInputElement).value;
+      if(value){
+        this.searching=true;
+        this.searchingValue = value;
+        if(this.filtering){
+          //caso en el que se busca y filtran empleados
+          this.empleadoService.getEmpleadosByRole(this.filter.value.id,value,this.currentPage, this.currentPageSize).subscribe(this.listObserver);
+
+        } else {
+          //caso en el que solo se busca empleados
+          this.empleadoService.searchEmpleados(value, this.currentPage, this.currentPageSize).subscribe(this.listObserver);
+        }
+      } else {
+        this.searching=false;
+        this.searchingValue='';
+      }
+    }
   }
 
   empleadoView(id: number){

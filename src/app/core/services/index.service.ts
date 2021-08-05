@@ -14,7 +14,7 @@ import { environment } from '@environments/environment';
 export class IndexService extends RecursoService<Producto> {
 
   constructor(protected httpClient: HttpClient) {
-    super('index', httpClient);
+    super(environment.endpoints.index, httpClient);
   }
 
   obtenerCategoria( id: number ): Observable<ResultadoIndex> {

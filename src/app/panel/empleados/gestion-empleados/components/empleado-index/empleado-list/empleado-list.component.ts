@@ -25,7 +25,6 @@ export class EmpleadoListComponent implements OnChanges {
     'id',
     'nombres',
     'apellidos',
-    'email',
     'acciones',
   ]
 
@@ -48,4 +47,9 @@ export class EmpleadoListComponent implements OnChanges {
 
   }
 
+  detailAction($event: MouseEvent, row: PerfilEmpleado){
+    const element = $event.target as HTMLElement;
+    if(!element.classList.contains('mat-icon') && !element.classList.contains('mat-icon-button'))
+      this.viewEmpleadoEvent.emit(row.id);
+  }
 }

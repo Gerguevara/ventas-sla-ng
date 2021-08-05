@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { RecursoService } from './recurso.service';
 import { HttpClient } from '@angular/common/http';
 import { Departamento } from '@models/departamento.model';
-import { Observable } from 'rxjs';
+import { environment } from '@environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,6 @@ import { Observable } from 'rxjs';
 export class DepartamentoService extends RecursoService<Departamento> {
 
   constructor(protected httpClient: HttpClient) {
-    super('departamentos', httpClient);
+    super(environment.endpoints.departamentos, httpClient);
   }
 }

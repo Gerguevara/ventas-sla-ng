@@ -6,13 +6,21 @@ export const environment = {
   production: false,
   appTitle: "SLA S.A. de C.V.",
   bannerText: "Las mejores marcas",
-  //con / final
-  apiUrl: "http://localhost:8000/api/",
-  allowedOrigin:"http://localhost:4200",
+  apiUrl: "http://localhost:8000/api/", //con / final
+  allowedOrigin:"http://localhost:4200", //tiene que coincidir con el que esta en el api
   defaultProductImage: "/assets/images/placeholder-product-image.svg",
   defaultUserPhotoImage: "/assets/images/portrait-placeholder.png",
   uploadUrl: "https://prueba-pp15001.000webhostapp.com/upload.php",
   uploadDir: "https://prueba-pp15001.000webhostapp.com/uploads/",
+  endpoints: {
+    roles: 'roles',
+    departamentos: 'departamentos',
+    empleados: 'empleados',
+    productos: 'productos',
+    categorias: 'categorias',
+    etiquetas: 'etiquetas',
+    index: 'index',
+  },
   patterns:
   {
     allLetters: /^[a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ\s+]+$/,

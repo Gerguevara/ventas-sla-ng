@@ -8,15 +8,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+import { Rol } from '@models/rol.model';
 import { Departamento } from '@models/departamento.model';
 import { Permission } from '@models/permission.model';
+
+import { PermissionService } from '@global-services/permission.service';
 import { PermissionsByPanel, RolesService } from '@global-services/roles.service';
 
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 import { environment } from '@environments/environment';
-import { Rol } from '@core/models/rol.model';
-import { Panel } from '@core/Models/panel.model';
-import { PermissionService } from '../../../../../core/services/permission.service';
 
 export interface User {
   name: string;
