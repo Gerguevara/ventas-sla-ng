@@ -31,13 +31,6 @@ export class EmpleadoIndexComponent implements OnInit {
     error: ()=>console.log('couldnt update empleado'),
   }
 
-
-  deleteObserver: PartialObserver<HttpResponse<never>> = {
-    next:(resultado: HttpResponse<never>)=>{
-    },
-    error: ()=>console.log('couldnt delete empleado'),
-  }
-
   constructor(
     private empleadoService: EmpleadoService,
     private formDialog : MatDialog,
@@ -65,8 +58,8 @@ export class EmpleadoIndexComponent implements OnInit {
     this.empleadoService.updateObject(empleado).subscribe(this.updateObserver);
   }
 
-  empleadoDelete(id: number){
-    this.empleadoService.deleteObject(id).subscribe(this.deleteObserver);
+  empleadoDelete(empleado: PerfilEmpleado){
+    this.openConfirmationDialog(empleado);
   }
 
   openViewDialog(empleado: PerfilEmpleado){

@@ -13,7 +13,7 @@ export class EmpleadoListComponent implements OnChanges {
   @Output()
   updateEmpleadoEvent: EventEmitter<PerfilEmpleado> = new EventEmitter();
   @Output()
-  removeEmpleadoEvent: EventEmitter<number> = new EventEmitter();
+  removeEmpleadoEvent: EventEmitter<PerfilEmpleado> = new EventEmitter();
 
   @Input()
   empleados!: PerfilEmpleado[];
