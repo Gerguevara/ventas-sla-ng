@@ -1,9 +1,10 @@
+import { EmpleadoConfirmationDialogComponent } from './../empleado-confirmation-dialog/empleado-confirmation-dialog.component';
 import { ResultadoEmpleado } from '@core/models/resultados/resultado-empleado.model';
 import { map, startWith } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { Observable, of, PartialObserver } from 'rxjs';
-import { PerfilEmpleado } from '@core/models/perfil.empleado.model';
 import { Resultado } from '@models/resultados/resultado.model';
+import { PerfilEmpleado } from '@models/perfil.empleado.model';
 import { EmpleadoService } from '@global-services/empleado.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EmpleadoDetailComponent } from '../empleado-detail/empleado-detail.component';
@@ -121,6 +122,35 @@ export class EmpleadoIndexComponent implements OnInit {
       }
     )
 
+  }
+
+  openConfirmationDialog(empleado: PerfilEmpleado){
+    //abrir dialogo con componente de confirmacion de borrado de categoria
+    const dialogoFormRef = this.formDialog.open(EmpleadoConfirmationDialogComponent, {
+      data: empleado,
+    });
+    //subscribirse al observable obtenido de cerrar el dialogo
+    dialogoFormRef.afterClosed().subscribe((id? : number) => {
+        //si el id no es undefined
+        if(id) {
+          //subscribirse al servicio de eliminacion de categoria
+          this.empleadoService.deleteObject(id).subscribe(
+            {
+              //caso exito
+              next: (response: HttpResponse<never>) => {
+                //si el result existe
+                if(this.empleados){
+                  //asigna a result.results, un arreglo tal que ninguno de sus elementos contiene id
+                  this.empleados = this.empleados.filter((empleado: PerfilEmpleado) => empleado.id !== id);
+                }
+              },
+              //caso error
+              error: () => {},
+              complete:()=> {},
+            }
+          )
+        }
+     });
   }
 
 }

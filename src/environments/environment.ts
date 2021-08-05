@@ -24,7 +24,7 @@ export const environment = {
   },
   appFonts: [
     "Merriweather Sans",
-    "Oswald"
+    "Open Sans"
   ],
 };
 

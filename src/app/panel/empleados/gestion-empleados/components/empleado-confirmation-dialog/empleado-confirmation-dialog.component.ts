@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { PerfilEmpleado } from '@models/perfil.empleado.model';
 
 @Component({
   selector: 'app-empleado-confirmation-dialog',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EmpleadoConfirmationDialogComponent implements OnInit {
 
-  constructor() { }
+  constructor(@Inject(MAT_DIALOG_DATA) public empleado : PerfilEmpleado) { }
 
   ngOnInit(): void {
   }
