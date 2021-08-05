@@ -17,7 +17,7 @@ export class AuthGuard implements CanLoad {
          Esto permite que no se carguen componentes hijos de forma perezosa
          si el usuario no ha iniciado sesión. */
       const token = localStorage.getItem('token');
-      if ( token !== undefined && token !== '' && token !== null ) {
+      if ( token ) {
         return this.auth.verificarToken().then((response: any) => {
           if (response.result) {
             return true;

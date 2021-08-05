@@ -27,8 +27,7 @@
   <ng-container matColumnDef="acciones">
     <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
     <mat-cell *matCellDef="let empleado">
-      <button mat-icon-button *ngxPermissionsOnly="['empleados.update']" color="primary" (click)="updateEmpleadoEvent.emit(empleado)"><mat-icon>edit</mat-icon></button>
-      <button mat-icon-button *ngxPermissionsOnly="['empleados.destroy']" color="primary" (click)="removeEmpleadoEvent.emit(empleado.id)"><mat-icon>delete</mat-icon></button>
+      <button mat-icon-button *ngxPermissionsOnly="['empleados.destroy']" color="primary" (click)="removeEmpleadoEvent.emit(empleado.user_id)"><mat-icon>delete</mat-icon></button>
     </mat-cell>
   </ng-container>
 

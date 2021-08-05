@@ -55,7 +55,6 @@ export class ClienteComponent implements OnInit {
       {
         next: (result : Categoria[]) => {
           this.categorias = result;
-          console.log(result);
         }
       });
     // Validación de usuario logeado
@@ -78,7 +77,6 @@ export class ClienteComponent implements OnInit {
   cerrarSesionClick(): void {
     this.dialog.open(DialogSpinnerComponent);
     this.authCliente.submitLogout().subscribe((response: any) => {
-      console.log(response);
       this.dialog.closeAll();
       this.permissions.flushPermissions();
       localStorage.removeItem('token');

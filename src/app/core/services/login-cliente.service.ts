@@ -44,9 +44,7 @@ export class LoginClienteService {
   urlResetPass = `${environment.apiUrl}` + 'resetPassword';
   urlTokenVerify = `${environment.apiUrl}` + 'tokenVerify';
 
-  constructor( private http: HttpClient ) {
-    console.log('Running Autentication Service...');
-  }
+  constructor( private http: HttpClient ) {  }
 
   submitLogin( email: string, password: string ): Observable<LoginResponse> {
     const httpBody = {

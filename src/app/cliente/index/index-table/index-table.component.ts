@@ -77,7 +77,5 @@ export class IndexTableComponent implements OnInit {
   setGridRatio() {
       const width = 236.25;
       const height = 457.44;
-      this.rowHeight = `${width}:${height}`;
-      console.log(`Ratio setted to ${width}:${height}`);
-  }
+      this.rowHeight = `${width}:${height}`;  }
 }
