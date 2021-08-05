@@ -8,13 +8,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { Rol } from '@models/rol.model';
 import { Departamento } from '@models/departamento.model';
 import { Permission } from '@models/permission.model';
-import { RolesService } from '@global-services/roles.service';
+import { PermissionsByPanel, RolesService } from '@global-services/roles.service';
 
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 import { environment } from '@environments/environment';
+import { Rol } from '@core/models/rol.model';
+import { Panel } from '@core/Models/panel.model';
+import { PermissionService } from '../../../../../core/services/permission.service';
 
 export interface User {
   name: string;
@@ -61,17 +63,15 @@ export class RolFormComponent implements OnInit {
   disableToggles = true;
   enableEdit = false;
   // Arreglo boolean que determina el valor de cada switch de permisos
-  toggles = [ false, false, false, false, false, false, false, false, false, false, false, false,
-              false, false, false, false, false, false, false, false, false, false, false, false,
-              false, false, false, false, false, false, false, false, false, false, false, false,
-              false ];
   permisos: number[] = [];
+  permisosPorPanel: PermissionsByPanel[] = [];
   newRol!: Rol;
 
   constructor( private formBuilder: FormBuilder,
                public dialogRef: MatDialogRef<RolFormComponent>,
                @Inject(MAT_DIALOG_DATA) public rol: Rol,
                private roleService: RolesService,
+               private permission: PermissionService,
                private snackBar: MatSnackBar,
                private dialog: MatDialog ) {
     // Inicializacion del formulario
@@ -81,6 +81,16 @@ export class RolFormComponent implements OnInit {
       descripcion: ['', [Validators.required, Validators.minLength(3)]],
       departamento: ['', Validators.required],
       permissions: [[]]
+    });
+    if (this.rol) {
+      this.roleService.getPermisos( this.rol.id ).subscribe((response: Permission[]) => {
+        for (const item of response) {
+         this.permisos.push(item.id);
+        }
+      });
+    }
+    this.roleService.getPanels().subscribe(( response: PermissionsByPanel[] ) => {
+      this.permisosPorPanel = response;
     });
   }
 
@@ -102,6 +112,7 @@ export class RolFormComponent implements OnInit {
       // Sino se abre el formulario para crear un nuevo rol
       this.editar();
     }
+    this.rolForm.get('permissions')?.setValue(this.permisos);
   }
 
   displayFn(dep: Departamento): string {
@@ -127,16 +138,6 @@ export class RolFormComponent implements OnInit {
     this.roleService.getDepartamento( Number(rol.id_departamento) ).then((response: any) => {
       this.filasSeleccionadas.add( response.producto );
       this.departamento = response.producto.nombre;
-    });
-    this.roleService.getPermisos( rol.id ).subscribe((response: Permission[]) => {
-      // Se recogen los permisos del rol seleccionado y se atribuye a cada switch a través del array
-      const data = [];
-      for ( const item of response ) {
-        this.toggles[ item.id - 1 ] = true;
-        data.push(item.id);
-      }
-      this.rolForm.get('permissions')?.setValue(data);
-      this.permisos = data;
     });
   }
 

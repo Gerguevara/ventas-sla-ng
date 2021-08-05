@@ -3,11 +3,17 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Rol } from '@models/rol.model';
 import { Permission } from '@models/permission.model';
 import { Departamento } from '@models/departamento.model';
 import { Resultado } from '@models/resultados/resultado.model';
 import { environment } from '@environments/environment';
+import { Rol } from '@core/models/rol.model';
+import { Panel } from '../Models/panel.model';
+
+export interface PermissionsByPanel {
+  panel: Panel;
+  permisos: Permission[];
+}
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +59,18 @@ export class RolesService {
       })
     };
     return this.http.get<Departamento[]>(`${environment.apiUrl}` + 'departamentos/search?consulta=' + nombre, headers);
+  }
+
+  getPanels(): Observable<PermissionsByPanel[]> {
+    const token = 'Bearer ' + localStorage.getItem('token');
+    const headers = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
+        'Authorization': token
+      })
+    };
+    return this.http.get<PermissionsByPanel[]>(`${environment.apiUrl}` + 'panels/', headers);
   }
 
   getPermisos( idRole: number ): Observable<Permission[]> {
