@@ -1,9 +1,9 @@
-import { Permission } from './../models/permission.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from '@environments/environment';
 import { Observable } from 'rxjs';
+import { Permission } from '@core/models/permission.model';
 
 const token = 'Bearer ' + localStorage.getItem('token');
 const httpHeaders = {
@@ -23,8 +23,8 @@ export class PermissionService {
 
   constructor( private http: HttpClient ) { }
 
-  getAllPermissions(): Observable<string[]> {
-    const response = this.http.get<{ [key:number] : Permission[] }>(this.API_URL + 'getAllPermissions', httpHeaders).pipe(
+  getPermissionsUser(): Observable<string[]> {
+    const response = this.http.get<{ [key:number] : Permission[] }>(this.API_URL + 'getPermissionsUser', httpHeaders).pipe(
       map( //{ [key:number] : Permission[] } por ahora lo he dejado asi, considera hacer un modelo de esto, resultado-permission o algo asi, como en la carpeta resultados
         (response: { [key:number] : Permission[] }) => response[0]
       ),
@@ -33,6 +33,10 @@ export class PermissionService {
       )
       );
     return response;
+  }
+
+  getAllPermissions(): Observable<Permission[]> {
+    return this.http.get<Permission[]>(this.API_URL + 'getAllPermissions/', httpHeaders);
   }
 
   verifyPermission( permission: string ): Observable<any>{

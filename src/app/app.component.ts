@@ -17,7 +17,7 @@ export class AppComponent {
     // Añadimos los permisos por defecto del usuario no autenticado
     const perm = [''];
     if ( localStorage.getItem('token') ) {
-      this.permissionService.getAllPermissions().subscribe({
+      this.permissionService.getPermissionsUser().subscribe({
         next: (response: string[]) => this.permissionsService.loadPermissions(response),
         error: (error: any) => console.log( error ),
       });
