@@ -4,6 +4,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { environment } from '@environments/environment';
 import { Planilla } from '../../../../../core/Models/planilla.model';
 import { LineaPlanillasTableComponent } from '../linea-planillas-table/linea-planillas-table.component';
+import { DialogSpinnerComponent } from '../../../../../tools/components/dialog-spinner/dialog-spinner.component';
+import { PlanillaService } from '../../../../../core/services/planilla.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-planillas-index',
@@ -20,7 +23,9 @@ export class PlanillasIndexComponent implements OnInit {
   url = `${environment.apiUrl}${this.endpoint}`;
   params = '';
 
-  constructor( private dialog: MatDialog ) { }
+  constructor( private dialog: MatDialog,
+               private planillaService: PlanillaService,
+               private snackBar: MatSnackBar ) { }
 
   ngOnInit(): void {
   }
@@ -32,7 +37,18 @@ export class PlanillasIndexComponent implements OnInit {
   }
 
   verPlanilla( planilla: Planilla ): void {
-    this.dialog.open( LineaPlanillasTableComponent, { data: planilla } );
+    this.dialog.open( LineaPlanillasTableComponent, { data: planilla, width: '60vw' } );
+  }
+
+  eliminarPlanilla( planilla: Planilla ): void {
+    this.dialog.open( DialogSpinnerComponent );
+    this.planillaService.eliminarPlanilla( planilla.id ).subscribe((response: any) => {
+      this.snackBar.open( 'La planilla ha sido eliminada', 'Cerrar', { duration: 5000 } );
+      this.dialog.closeAll();
+    },
+    (error: any) => {
+      console.log(error);
+    });
   }
 
 }

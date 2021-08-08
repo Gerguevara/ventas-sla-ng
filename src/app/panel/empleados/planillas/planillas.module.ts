@@ -9,6 +9,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { LineaPlanillasTableComponent } from './components/linea-planillas-table/linea-planillas-table.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { LineaPlanillasTableComponent } from './components/linea-planillas-table
     MatTableModule,
     MatIconModule,
     MatCardModule,
+    MatButtonModule,
+    MatSnackBarModule,
     PlanillasRoutingModule
   ]
 })

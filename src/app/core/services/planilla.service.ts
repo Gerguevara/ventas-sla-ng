@@ -25,7 +25,7 @@ export class PlanillaService {
   constructor( private http: HttpClient ) { }
 
   mostrarPlanilla( planilla: Planilla ): Observable<LineaPlanilla[]> {
-    return this.http.get<LineaPlanilla[]>(this.url + '/' + planilla, httpHeaders);
+    return this.http.get<LineaPlanilla[]>(this.url + '/' + planilla.id, httpHeaders);
   }
 
   eliminarPlanilla( id: number ): Observable<any> {
