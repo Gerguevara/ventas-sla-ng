@@ -1,3 +1,5 @@
+@import 'variables';
+
 .demo-table {
     width: 100%;
 }
@@ -14,4 +16,8 @@
 
 .demo-row-is-clicked {
     font-weight: bold;
+}
+
+mat-card{
+  margin: $mat-card-margin;
 }

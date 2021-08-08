@@ -19,7 +19,7 @@
       </p>
     </mat-list-item>
   </mat-list>
-  <img [src]="photo" alt="..." (error)="photoErrorHandler()">
+  <img [src]="photo" alt="{{empleado.nombres}} {{empleado.apellidos}}" (error)="photoErrorHandler()">
 </mat-dialog-content>
 <mat-dialog-actions>
   <mat-slide-toggle [checked]="false" (change)="toggleEdit($event)">Editar</mat-slide-toggle>

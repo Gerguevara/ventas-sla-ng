@@ -3,12 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { RecursoService } from './recurso.service';
 import { Permission } from '@models/permission.model';
 import { Departamento } from '@models/departamento.model';
 import { Resultado } from '@models/resultados/resultado.model';
 import { environment } from '@environments/environment';
-import { Rol } from '@core/models/rol.model';
-import { Panel } from '../Models/panel.model';
+import { Rol } from '@models/rol.model';
+import { Panel } from '@models/panel.model';
 
 export interface PermissionsByPanel {
   panel: Panel;
@@ -18,11 +19,13 @@ export interface PermissionsByPanel {
 @Injectable({
   providedIn: 'root'
 })
-export class RolesService {
+export class RolesService extends RecursoService<Rol> {
 
-  private endpoint = 'roles';
+  private endpoint = environment.endpoints.roles;
 
-  constructor( private http: HttpClient ) { }
+  constructor( private http: HttpClient ) {
+    super(environment.endpoints.roles,http);
+  }
 
   async getDepartamento( id: number ): Promise<Resultado<any>> {
     const token = 'Bearer ' + localStorage.getItem('token');

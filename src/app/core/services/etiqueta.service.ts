@@ -16,7 +16,7 @@ export class EtiquetaService extends RecursoService<Etiqueta> {
   private API_URL_config = `${environment.apiUrl}`;
 
   constructor(protected httpClient: HttpClient) {
-    super('etiquetas',httpClient);
+    super(environment.endpoints.etiquetas,httpClient);
   }
 
   getEtiquetas(page: number = 1, page_size?: number): {resultado:Observable<Resultado<Etiqueta>>,categorias:Observable<Resultado<Categoria>>} {

@@ -1,3 +1,4 @@
+import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
@@ -60,6 +61,7 @@ import { EmpleadoDetailProfileComponent } from './components/empleado-detail/emp
     CommonModule,
     GestionEmpleadosRoutingModule,
     ReactiveFormsModule,
+    MatSelectModule,
     MatStepperModule,
     MatFormFieldModule,
     MatInputModule,
