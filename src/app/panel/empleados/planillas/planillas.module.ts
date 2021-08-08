@@ -8,11 +8,13 @@ import { ToolsModule } from '../../../tools/tools.module';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { LineaPlanillasTableComponent } from './components/linea-planillas-table/linea-planillas-table.component';
 
 @NgModule({
   declarations: [
     PlanillasIndexComponent,
-    PlanillasFormComponent
+    PlanillasFormComponent,
+    LineaPlanillasTableComponent
   ],
   imports: [
     CommonModule,
