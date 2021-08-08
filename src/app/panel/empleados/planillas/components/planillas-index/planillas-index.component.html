@@ -29,7 +29,7 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row [class.demo-row-is-clicked]="clickedRows.has(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row (click)="verPlanilla(row)" [class.demo-row-is-clicked]="clickedRows.has(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     <app-paginator [urlData]="url" (pageDataChange$)="addDataToTable($event)"></app-paginator>
 </mat-card>

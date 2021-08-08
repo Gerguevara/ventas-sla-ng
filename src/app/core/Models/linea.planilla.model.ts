@@ -1,6 +1,5 @@
-import { Resultado } from "./resultados/resultado.model";
-
-export interface LineaPlanilla extends Resultado {
+export interface LineaPlanilla {
+    id: number;
     id_empleado: number;
     id_planilla: number;
     comisiones: number;
