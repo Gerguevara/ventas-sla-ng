@@ -61,7 +61,7 @@ export abstract class RecursoService<T extends Recurso> extends PreflightService
 
   updateObject(resource: T): Observable<{resultado:boolean,mensaje:string}>  {
     const options = this.setOptions();
-    return this.httpClient.put<{resultado:boolean,mensaje:string}>(`${this.API_URL}/${resource.id}`,resource, options);
+    return this.httpClient.patch<{resultado:boolean,mensaje:string}>(`${this.API_URL}/${resource.id}`,resource, options);
   }
 
   postObject(resource: T): Observable<T> {

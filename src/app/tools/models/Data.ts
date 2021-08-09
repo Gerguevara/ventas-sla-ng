@@ -1,5 +1,5 @@
 import { Recurso } from '@models/recurso.model';
-export interface IData <T extends Recurso> {
+export interface Data <T extends Recurso> {
   data: T,
   paramsText: string[]
 }

@@ -9,7 +9,7 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 import { Departamento } from '@models/departamento.model';
 import { DepartamentoService } from '@global-services/departamento.service';
-import { IData } from '@tool-interfaces/DataInterface';
+import { Data } from '@tools/models/Data';
 
 @Component({
   selector: 'app-departamento-details',
@@ -30,7 +30,7 @@ export class DepartamentoDetailsComponent implements OnInit {
   }
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public context : IData<Departamento>,
+    @Inject(MAT_DIALOG_DATA) public context : Data<Departamento>,
     private departamentoService: DepartamentoService,
     private snackBar: MatSnackBar
     ) {

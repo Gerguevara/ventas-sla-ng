@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Departamento } from '@models/departamento.model';
-import { IData } from '@tool-interfaces/DataInterface';
+import { Data } from '@tools/models/Data';
 
 @Component({
   selector: 'app-departamento-confirmation-dialog',
@@ -10,7 +10,7 @@ import { IData } from '@tool-interfaces/DataInterface';
 })
 export class DepartamentoConfirmationDialogComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public context : IData<Departamento>) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public context : Data<Departamento>) { }
 
   ngOnInit(): void {
   }
