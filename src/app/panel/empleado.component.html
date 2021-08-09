@@ -60,6 +60,12 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <mat-nav-list>
+                    <ng-template [ngxPermissionsOnly]="['empleados.index']">
+                        <a mat-list-item [routerLink]="['/panel/empleados/empleados']" class="list-item-container">
+                            <mat-icon color="primary">badge</mat-icon>&nbsp;&nbsp;Empleados
+                        </a>
+                    </ng-template>
+                    <mat-divider></mat-divider>
                     <ng-template [ngxPermissionsOnly]="['departamentos.index']">
                         <a mat-list-item [routerLink]="['/panel/empleados/departamentos']" class="list-item-container">
                             <mat-icon color="primary">groups</mat-icon>&nbsp;&nbsp;Departamentos
@@ -67,14 +73,14 @@
                     </ng-template>
                     <mat-divider></mat-divider>
                     <!-- <ng-template [ngxPermissionsOnly]="['roles.index']"> -->
-                    <a mat-list-item [routerLink]="['/panel/empleados/roles']" class="list-item-container">
-                        <mat-icon color="primary">badge</mat-icon>&nbsp;&nbsp;Roles
-                    </a>
-                    <mat-divider></mat-divider>
-                    <!-- </ng-template> -->
-                    <!-- <ng-template [ngxPermissionsOnly]="['roles.index']"> -->
                     <a mat-list-item [routerLink]="['/panel/empleados/planillas']" class="list-item-container">
                         <mat-icon color="primary">book</mat-icon>&nbsp;&nbsp;Planillas
+                    </a>
+                    <!-- </ng-template> -->
+                    <mat-divider></mat-divider>
+                    <!-- <ng-template [ngxPermissionsOnly]="['roles.index']"> -->
+                    <a mat-list-item [routerLink]="['/panel/empleados/roles']" class="list-item-container">
+                        <mat-icon color="primary">assignment_ind</mat-icon>&nbsp;&nbsp;Roles
                     </a>
                     <!-- </ng-template> -->
                 </mat-nav-list>

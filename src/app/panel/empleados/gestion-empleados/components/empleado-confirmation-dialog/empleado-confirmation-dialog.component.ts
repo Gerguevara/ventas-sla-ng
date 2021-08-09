@@ -7,11 +7,8 @@ import { PerfilEmpleado } from '@models/perfil.empleado.model';
   templateUrl: './empleado-confirmation-dialog.component.html',
   styleUrls: ['./empleado-confirmation-dialog.component.scss']
 })
-export class EmpleadoConfirmationDialogComponent implements OnInit {
+export class EmpleadoConfirmationDialogComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public empleado : PerfilEmpleado) { }
-
-  ngOnInit(): void {
-  }
 
 }

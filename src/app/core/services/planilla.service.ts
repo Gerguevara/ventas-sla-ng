@@ -29,13 +29,13 @@ export class PlanillaService {
     return this.http.get<LineaPlanilla[]>(this.url + '/' + planilla.id, httpHeaders);
   }
 
-  actualizarLineaPlanilla( lineaPlanilla: LineaPlanilla ): Observable<any> {
+  actualizarLineaPlanilla( lineadeplanilla: LineaPlanilla ): Observable<any> {
     const body = {
-      horas_extra_diurnas: lineaPlanilla.horas_extra_diurnas,
-      horas_extra_nocturnas: lineaPlanilla.horas_extra_nocturnas,
-      horas_extra_domingo: lineaPlanilla.horas_extra_domingo
+      horas_extra_diurnas: lineadeplanilla.horas_extra_diurnas,
+      horas_extra_nocturnas: lineadeplanilla.horas_extra_nocturnas,
+      horas_extra_domingo: lineadeplanilla.horas_extra_domingo
     };
-    return this.http.put<any> (this.urlLineaPlanilla + '/' + lineaPlanilla.id, body, httpHeaders);
+    return this.http.put<any> (this.urlLineaPlanilla + '/' + lineadeplanilla.id, JSON.stringify(lineadeplanilla), httpHeaders);
   }
 
   eliminarPlanilla( id: number ): Observable<any> {

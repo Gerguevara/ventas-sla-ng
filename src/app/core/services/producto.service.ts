@@ -23,10 +23,10 @@ export interface ProductoPost {
 })
 export class ProductoService  extends RecursoService<Producto>{
 
-  private endpoint = 'productos';
+  private endpoint = environment.endpoints.productos;
 
   constructor(protected httpClient: HttpClient) {
-    super('productos', httpClient);
+    super(environment.endpoints.productos, httpClient);
   }
   /*
   Emisor que nos servirá para comunicar el producto seleccionado en la tabla

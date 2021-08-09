@@ -12,7 +12,7 @@ import { environment } from '@environments/environment';
 export class CategoriaService extends RecursoService<Categoria> {
 
   constructor(protected httpClient: HttpClient) {
-    super('categorias', httpClient);
+    super(environment.endpoints.categorias, httpClient);
   }
 
   buscarCategoria(search?: string, non_empty?: boolean): Observable<Categoria[]> {
