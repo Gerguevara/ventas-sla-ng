@@ -26,14 +26,14 @@
       <!-- fin icon trigger para menu #menu -->
       <!-- definicion de contenido de menu #menu -->
       <mat-menu #menu="matMenu">
-        <button mat-menu-item style="margin-right: 10px;" (click)="adminArea()" *ngIf="rolAdmin" color="accent" class="example-icon">
+        <a mat-menu-item style="margin-right: 10px;" [routerLink]="['/panel/inventario/']" *ngIf="rolAdmin" color="accent" class="example-icon">
             <mat-icon>admin_panel_settings</mat-icon>
             <ng-container *ngIf="window.matchMedia('(min-width: 700px)').matches"> Admin Área</ng-container>
-        </button>
-        <button mat-menu-item (click)="iniciarSesionClick()" *ngIf="iniciarSesion" color="accent" class="example-icon">
+        </a>
+        <a mat-menu-item [routerLink]="['/autentication/login']" *ngIf="iniciarSesion" color="accent" class="example-icon">
             <mat-icon>login</mat-icon>
             <ng-container *ngIf="window.matchMedia('(min-width: 700px)').matches"> Iniciar Sesión</ng-container>
-        </button>
+        </a>
         <button mat-menu-item (click)="cerrarSesionClick()" *ngIf="!iniciarSesion" color="accent" class="example-icon">
             <mat-icon>logout</mat-icon>
             <ng-container *ngIf="window.matchMedia('(min-width: 700px)').matches"> Cerrar Sesión</ng-container>

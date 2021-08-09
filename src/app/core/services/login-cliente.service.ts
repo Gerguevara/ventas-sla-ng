@@ -1,16 +1,10 @@
+import { PreflightService } from '@tool-services/preflight-service';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Usuario } from '@models/usuario.model';
 import { environment } from '@environments/environment';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type':  'application/json',
-    'Access-Control-Allow-Origin': '*'
-  })
-};
 
 export interface LoginResponse {
   response: string;
@@ -34,7 +28,7 @@ export interface EmailVerificationResponse {
 @Injectable({
   providedIn: 'root'
 })
-export class LoginClienteService {
+export class LoginClienteService extends PreflightService{
 
   urlLogin = `${environment.apiUrl}` + 'login';
   urlLogout = `${environment.apiUrl}` + 'logout';
@@ -44,26 +38,20 @@ export class LoginClienteService {
   urlResetPass = `${environment.apiUrl}` + 'resetPassword';
   urlTokenVerify = `${environment.apiUrl}` + 'tokenVerify';
 
-  constructor( private http: HttpClient ) {  }
+  constructor(private http: HttpClient ) {
+    super();
+   }
 
   submitLogin( email: string, password: string ): Observable<LoginResponse> {
     const httpBody = {
       email,
       password
     };
-    return this.http.post<LoginResponse>(this.urlLogin, httpBody, httpOptions);
+    return this.http.post<LoginResponse>(this.urlLogin, httpBody, this.setOptions(false));
   }
 
   submitLogout(): Observable<any> {
-    const token = 'Bearer ' + localStorage.getItem('token');
-    const httpHeaders = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': token
-      })
-    };
-    return this.http.post<any>(this.urlLogout, {}, httpHeaders);
+    return this.http.post<any>(this.urlLogout, {}, this.setOptions());
   }
 
   submitRegistro( email: string, password: string, password_confirmation: string ): Observable<SignUpResponse> {
@@ -72,14 +60,14 @@ export class LoginClienteService {
       password,
       password_confirmation
     };
-    return this.http.post<SignUpResponse>(this.urlSignUp, httpBody, httpOptions);
+    return this.http.post<SignUpResponse>(this.urlSignUp, httpBody, this.setOptions(false));
   }
 
   submitForgot( email: string ): Observable<any> {
     const httpBody = {
       email
     };
-    return this.http.post<any>(this.urlForgotPass, httpBody, httpOptions);
+    return this.http.post<any>(this.urlForgotPass, httpBody, this.setOptions(false));
   }
 
   submitResetPassword( token: string, password: string, password_confirmation: string ): Observable<any> {
@@ -90,33 +78,16 @@ export class LoginClienteService {
       password_confirmation: password_confirmation
     };
     console.log(httpBody);
-    return this.http.post<any>(this.urlResetPass, httpBody, httpOptions);
+    return this.http.post<any>(this.urlResetPass, httpBody, this.setOptions(false));
   }
 
   emailVerification( id: string, hash: string ): Observable<EmailVerificationResponse> {
-    const token = localStorage.getItem('token-registro');
-    const tokenRegistro = 'Bearer ' + token;
-    const httpHeaders = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': tokenRegistro
-      })
-    };
     const url = this.urlEmailVerification + id + '/' + hash;
-    return this.http.get<EmailVerificationResponse>(url, httpHeaders);
+    return this.http.get<EmailVerificationResponse>(url, this.setOptions(true,true));
   }
 
-  async verificarToken(): Promise<any> {
-    const token = 'Bearer ' + localStorage.getItem('token');
-    const httpHeaders = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': token
-      })
-    };
-    const response = await this.http.get<any>(this.urlTokenVerify, httpHeaders).toPromise();
+  verificarToken(): Observable<any> {
+    const response = this.http.get<any>(this.urlTokenVerify, this.setOptions());
     return response;
   }
 

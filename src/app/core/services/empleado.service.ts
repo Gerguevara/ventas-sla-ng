@@ -1,4 +1,4 @@
-import { PerfilUsuario } from './../models/perfil.usuario.model';
+import { debounceTime } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -6,8 +6,6 @@ import { Observable } from 'rxjs';
 import { PerfilEmpleado } from '@models/perfil.empleado.model';
 import { environment } from '@environments/environment';
 import { RecursoService } from './recurso.service';
-import { ResultadoEmpleado } from '@core/models/resultados/resultado-empleado.model';
-import { map, debounceTime } from 'rxjs/operators';
 import { Resultado } from '@core/models/resultados/resultado.model';
 
 @Injectable({
@@ -22,21 +20,6 @@ export class EmpleadoService extends RecursoService<PerfilEmpleado>{
     ) {
       super(environment.endpoints.empleados,httpClient);
       this.API_URL = this.API_URL.concat(`${this.endpoint}`)
-  }
-
-  getEmpleado(id: number): Observable<PerfilEmpleado> {
-    const options = this.setOptions();
-    return this.httpClient.get<ResultadoEmpleado>(`${this.API_URL}/${id}`,options).pipe(
-      map(
-        (resultado: ResultadoEmpleado)=>{
-          const empleadoId = resultado.perfilempleado.id;
-          Object.assign(resultado.perfilempleado, resultado.usuario);
-          Object.assign(resultado.perfilempleado, resultado.perfilusuario);
-          resultado.perfilempleado.id = empleadoId;
-          return resultado.perfilempleado;
-        }
-      )
-    )
   }
 
   getEmpleados(page: number = 1, page_size: number = 10, no_pagination?: boolean, search?: string, roleId?: number){

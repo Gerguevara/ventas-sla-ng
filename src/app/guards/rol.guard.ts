@@ -15,14 +15,12 @@ export class RolGuard implements CanLoad {
     /* Este es un Guard no permite entrar al modulo de autenticación si
        la sesión está iniciada. */
        const rol = localStorage.getItem('rol');
-       if ( rol !== 'E' ) {
-       // Si existe el token, redireccionamos a index
-         this.router.navigate(['/']);
-         return false;
+       if ( rol === 'E' ) {
+        // Si es
+          return true;
        } else {
-         // Si no, dejamos acceder al auth
-         console.log(false);
-         return true;
+        // Si el rol no es de Empleado, regresar a index
+          return this.router.createUrlTree(['/']);
        }
   }
 }

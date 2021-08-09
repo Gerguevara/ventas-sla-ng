@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanLoad, Route, UrlSegment, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LoginClienteService } from '@global-services/login-cliente.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,20 +19,21 @@ export class AuthGuard implements CanLoad {
          si el usuario no ha iniciado sesión. */
       const token = localStorage.getItem('token');
       if ( token ) {
-        return this.auth.verificarToken().then((response: any) => {
-          if (response.result) {
-            return true;
-          } else {
-            localStorage.removeItem('token');
-            localStorage.removeItem('rol');
-            window.location.reload();
-            return false;
-          }
-        });
+        return this.auth.verificarToken().pipe(
+          map((response: any) => {
+            if (response.result) {
+              return true;
+            } else {
+              localStorage.removeItem('token');
+              localStorage.removeItem('rol');
+              console.error('invalid token')
+              // Redireccionamos a index en caso de resultado invalido
+              return this.router.createUrlTree(['/']);
+            }
+          }));
       } else {
         // Redireccionamos a login en caso de no poseer token
-        this.router.navigate(['/autentication/login']);
-        return false;
+        return this.router.createUrlTree(['/autentication/login']);
       }
   }
 }
