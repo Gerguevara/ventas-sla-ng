@@ -11,6 +11,10 @@ import { MatCardModule } from '@angular/material/card';
 import { LineaPlanillasTableComponent } from './components/linea-planillas-table/linea-planillas-table.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -20,12 +24,16 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     ToolsModule,
     MatTableModule,
     MatIconModule,
     MatCardModule,
     MatButtonModule,
     MatSnackBarModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
     PlanillasRoutingModule
   ]
 })

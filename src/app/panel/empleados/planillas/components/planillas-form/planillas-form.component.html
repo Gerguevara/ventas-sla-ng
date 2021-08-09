@@ -1,1 +1,86 @@
-<p>planillas-form works!</p>
+<h2 mat-dialog-title>Líneas de Planilla</h2>
+<mat-dialog-content>
+    <form [formGroup]='lineaPlanillaForm'>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Comisiones</mat-label>
+            <input matInput formControlName='comisiones' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Horas extras diurnas</mat-label>
+            <input matInput formControlName='horas_extras_diurnas' type="number" class="example-right-align" placeholder="0">
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Valor horas extras diurnas</mat-label>
+            <input matInput formControlName='valor_horas_extras_diurnas' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Horas extras nocturnas</mat-label>
+            <input matInput formControlName='horas_extras_nocturnas' type="number" class="example-right-align" placeholder="0">
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Valor horas extras nocturnas</mat-label>
+            <input matInput formControlName='valor_horas_extras_nocturnas' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Horas extras domingo</mat-label>
+            <input matInput formControlName='horas_extras_domingo' type="number" class="example-right-align" placeholder="0">
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Valor horas extras domingo</mat-label>
+            <input matInput formControlName='valor_horas_extras_domingo' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Total horas extras</mat-label>
+            <input matInput formControlName='total_horas_extras' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Otros Ingresos</mat-label>
+            <input matInput formControlName='otros_ingresos' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Total Ingresos</mat-label>
+            <input matInput formControlName='total_ingresos' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>ISSS</mat-label>
+            <input matInput formControlName='isss' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>AFP</mat-label>
+            <input matInput formControlName='afp' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Otras Deducciones</mat-label>
+            <input matInput formControlName='otras_deducciones' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Total Descuentos</mat-label>
+            <input matInput formControlName='total_descuentos' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Renta</mat-label>
+            <input matInput formControlName='renta' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>A recibir</mat-label>
+            <input matInput formControlName='a_recibir' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-button color='primary' [mat-dialog-close]="true" cdkFocusInitial>Editar</button>
+</mat-dialog-actions>

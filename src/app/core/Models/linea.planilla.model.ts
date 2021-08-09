@@ -3,12 +3,12 @@ export interface LineaPlanilla {
     id_empleado: number;
     id_planilla: number;
     comisiones: number;
-    horas_extras_diurnas: number;
-    valor_horas_extras_diurnas: number;
-    horas_extras_nocturnas: number;
-    valor_horas_extras_nocturnas: number;
-    horas_extras_domingo: number;
-    valor_horas_extras_domingo: number;
+    horas_extra_diurnas: number;
+    valor_horas_extra_diurnas: number;
+    horas_extra_nocturnas: number;
+    valor_horas_extra_nocturnas: number;
+    horas_extra_domingo: number;
+    valor_horas_extra_domingo: number;
     total_horas_extras: number;
     otros_ingresos: number;
     total_ingresos: number;
