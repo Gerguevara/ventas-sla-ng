@@ -16,6 +16,7 @@ export class LineaPlanillasTableComponent implements OnInit {
   displayedColumns: string[] = ['id_empleado', 'total_horas_extras', 'total_ingresos', 'total_descuentos', 'a_recibir'];
   dataSource!: MatTableDataSource<LineaPlanilla>;
   clickedRows = new Set<LineaPlanilla>();
+  lineasDePlanilla: LineaPlanilla[] = [];
 
   constructor( public dialogRef: MatDialogRef<LineaPlanillasTableComponent>,
                @Inject(MAT_DIALOG_DATA) public planilla: Planilla,
@@ -32,12 +33,23 @@ export class LineaPlanillasTableComponent implements OnInit {
 
   // Obtenemos todos los cambios que nos envíe el paginador con la data de la página
   addDataToTable( lineasPlanilla: LineaPlanilla[] ): void {
+    this.lineasDePlanilla = lineasPlanilla;
     // Seteamos estos datos a la tabla
     this.dataSource = new MatTableDataSource<LineaPlanilla>(lineasPlanilla);
   }
 
   verLineaPlanilla( lineaPlanilla: LineaPlanilla ): void {
-    this.dialog.open( PlanillasFormComponent, { data: lineaPlanilla, width: '50vw' } );
+    const dialogFormRef = this.dialog.open( PlanillasFormComponent, { data: lineaPlanilla, width: '50vw' } );
+    dialogFormRef.afterClosed().subscribe(( lineaPlanillaUpdate?: LineaPlanilla ) => {
+      if ( lineaPlanillaUpdate ) {
+        for ( let i = 0; i < this.lineasDePlanilla.length; i++ ) {
+          if ( this.lineasDePlanilla[i].id === lineaPlanillaUpdate.id ) {
+            this.lineasDePlanilla[i] = lineaPlanillaUpdate;
+          }
+        }
+        this.dataSource = new MatTableDataSource<LineaPlanilla>(this.lineasDePlanilla);
+      }
+    });
   }
 
 }

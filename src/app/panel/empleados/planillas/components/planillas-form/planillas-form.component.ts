@@ -25,22 +25,22 @@ export class PlanillasFormComponent implements OnInit {
                  this.lineaPlanillaForm = this.formBuilder.group({
                   id: [],
                   id_empleado: [],
-                  comisiones: [0.00, [Validators.required]],
+                  comisiones: [0.00, [Validators.required, Validators.maxLength(5)]],
                   horas_extra_diurnas: [0, [Validators.required]],
-                  valor_horas_extra_diurnas: [0.00, [Validators.required]],
+                  valor_horas_extra_diurnas: [0.00, [Validators.required, Validators.maxLength(5)]],
                   horas_extra_nocturnas: [0, [Validators.required]],
-                  valor_horas_extra_nocturnas: [0.00, [Validators.required]],
+                  valor_horas_extra_nocturnas: [0.00, [Validators.required, Validators.maxLength(5)]],
                   horas_extra_domingo: [0, [Validators.required]],
-                  valor_horas_extra_domingo: [0.00, [Validators.required]],
-                  total_horas_extras: [0.00, [Validators.required]],
-                  otros_ingresos: [0.00, [Validators.required]],
-                  total_ingresos: [0.00, [Validators.required]],
-                  isss: [0.00, [Validators.required]],
-                  afp: [0.00, [Validators.required]],
-                  otras_deducciones: [0.00, [Validators.required]],
-                  total_descuentos: [0.00, [Validators.required]],
-                  renta: [0.00, [Validators.required]],
-                  a_recibir: [0.00, [Validators.required]],
+                  valor_horas_extra_domingo: [0.00, [Validators.required, Validators.maxLength(5)]],
+                  total_horas_extras: [0.00, [Validators.required, Validators.maxLength(5)]],
+                  otros_ingresos: [0.00, [Validators.required, Validators.maxLength(5)]],
+                  total_ingresos: [0.00, [Validators.required, Validators.maxLength(5)]],
+                  isss: [0.00, [Validators.required, Validators.maxLength(5)]],
+                  afp: [0.00, [Validators.required, Validators.maxLength(5)]],
+                  otras_deducciones: [0.00, [Validators.required, Validators.maxLength(5)]],
+                  total_descuentos: [0.00, [Validators.required, Validators.maxLength(5)]],
+                  renta: [0.00, [Validators.required, Validators.maxLength(5)]],
+                  a_recibir: [0.00, [Validators.required, Validators.maxLength(5)]],
                  });
                }
 
@@ -55,11 +55,11 @@ export class PlanillasFormComponent implements OnInit {
     this.lineaPlanillaForm.get('id')?.setValue(planilla.id);
     this.lineaPlanillaForm.get('id_empleado')?.setValue(planilla.id_empleado);
     this.lineaPlanillaForm.get('comisiones')?.setValue(planilla.comisiones);
-    this.lineaPlanillaForm.get('horas_extra_diurnas')?.setValue(planilla.horas_extra_diurnas);
+    this.lineaPlanillaForm.get('horas_extra_diurnas')?.setValue(Number(planilla.horas_extra_diurnas));
     this.lineaPlanillaForm.get('valor_horas_extra_diurnas')?.setValue(planilla.valor_horas_extra_diurnas);
-    this.lineaPlanillaForm.get('horas_extra_nocturnas')?.setValue(planilla.horas_extra_nocturnas);
+    this.lineaPlanillaForm.get('horas_extra_nocturnas')?.setValue(Number(planilla.horas_extra_nocturnas));
     this.lineaPlanillaForm.get('valor_horas_extra_nocturnas')?.setValue(planilla.valor_horas_extra_nocturnas);
-    this.lineaPlanillaForm.get('horas_extra_domingo')?.setValue(planilla.horas_extra_domingo);
+    this.lineaPlanillaForm.get('horas_extra_domingo')?.setValue(Number(planilla.horas_extra_domingo));
     this.lineaPlanillaForm.get('valor_horas_extra_domingo')?.setValue(planilla.valor_horas_extra_domingo);
     this.lineaPlanillaForm.get('total_horas_extras')?.setValue(planilla.total_horas_extras);
     this.lineaPlanillaForm.get('otros_ingresos')?.setValue(planilla.otros_ingresos);
@@ -79,13 +79,11 @@ export class PlanillasFormComponent implements OnInit {
 
   actualizarLineaPlanilla(): void {
     const spinner = this.dialog.open( DialogSpinnerComponent );
-    console.log(this.lineaPlanillaForm.value);
     this.planillaService.actualizarLineaPlanilla( this.lineaPlanillaForm.value as LineaPlanilla )
     .subscribe((response: any) => {
       this.snackBar.open( 'Planilla actualizada correctamente', 'Cerrar', { duration: 5000 } );
-      // spinner.close();
-      // this.dialogRef.close();
-      this.dialog.closeAll();
+      spinner.close();
+      this.dialogRef.close( response.Planilla );
     },
     (error: any) => {
       console.log(error);
