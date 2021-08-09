@@ -82,10 +82,10 @@ export class PlanillasFormComponent implements OnInit {
     console.log(this.lineaPlanillaForm.value);
     this.planillaService.actualizarLineaPlanilla( this.lineaPlanillaForm.value as LineaPlanilla )
     .subscribe((response: any) => {
-      console.log(response);
       this.snackBar.open( 'Planilla actualizada correctamente', 'Cerrar', { duration: 5000 } );
-      spinner.close();
-      this.dialogRef.close();
+      // spinner.close();
+      // this.dialogRef.close();
+      this.dialog.closeAll();
     },
     (error: any) => {
       console.log(error);

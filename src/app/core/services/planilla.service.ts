@@ -30,7 +30,6 @@ export class PlanillaService {
   }
 
   actualizarLineaPlanilla( lineadeplanilla: LineaPlanilla ): Observable<any> {
-    console.log(JSON.stringify(lineadeplanilla));
     return this.http.post<any> (this.urlLineaPlanilla + '/' + lineadeplanilla.id, JSON.stringify(lineadeplanilla), httpHeaders);
   }
 
