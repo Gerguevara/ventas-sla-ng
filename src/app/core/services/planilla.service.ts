@@ -21,11 +21,21 @@ export class PlanillaService {
 
   private endpoint = 'planillas';
   private url = `${environment.apiUrl}${this.endpoint}`;
+  private urlLineaPlanilla = `${environment.apiUrl}` + 'lineasdeplanillas';
 
   constructor( private http: HttpClient ) { }
 
   mostrarPlanilla( planilla: Planilla ): Observable<LineaPlanilla[]> {
     return this.http.get<LineaPlanilla[]>(this.url + '/' + planilla.id, httpHeaders);
+  }
+
+  actualizarLineaPlanilla( lineaPlanilla: LineaPlanilla ): Observable<any> {
+    const body = {
+      horas_extra_diurnas: lineaPlanilla.horas_extra_diurnas,
+      horas_extra_nocturnas: lineaPlanilla.horas_extra_nocturnas,
+      horas_extra_domingo: lineaPlanilla.horas_extra_domingo
+    };
+    return this.http.put<any> (this.urlLineaPlanilla + '/' + lineaPlanilla.id, body, httpHeaders);
   }
 
   eliminarPlanilla( id: number ): Observable<any> {
