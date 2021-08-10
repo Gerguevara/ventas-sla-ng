@@ -42,12 +42,15 @@ export class LineaPlanillasTableComponent implements OnInit {
     const dialogFormRef = this.dialog.open( PlanillasFormComponent, { data: lineaPlanilla, width: '50vw' } );
     dialogFormRef.afterClosed().subscribe(( lineaPlanillaUpdate?: LineaPlanilla ) => {
       if ( lineaPlanillaUpdate ) {
-        for ( let i = 0; i < this.lineasDePlanilla.length; i++ ) {
+        /*for ( let i = 0; i < this.lineasDePlanilla.length; i++ ) {
           if ( this.lineasDePlanilla[i].id === lineaPlanillaUpdate.id ) {
             this.lineasDePlanilla[i] = lineaPlanillaUpdate;
           }
-        }
-        this.dataSource = new MatTableDataSource<LineaPlanilla>(this.lineasDePlanilla);
+        }*/
+        this.dataSource.data.splice( lineaPlanillaUpdate.id - 1, 1 );
+        this.dataSource.data.push( lineaPlanillaUpdate );
+        this.dataSource.data = this.dataSource.data;
+        // this.dataSource = new MatTableDataSource<LineaPlanilla>(this.lineasDePlanilla);
       }
     });
   }
