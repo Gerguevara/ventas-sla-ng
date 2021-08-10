@@ -69,30 +69,18 @@ export class ClienteComponent implements OnInit {
     }
   }
 
-  // Método para iniciar sesión
-  iniciarSesionClick(): void {
-    this.router.navigate(['/autentication/login']);
-  }
   // Método para cerrar sesión
   cerrarSesionClick(): void {
-    this.dialog.open(DialogSpinnerComponent);
     this.authCliente.submitLogout().subscribe((response: any) => {
-      this.dialog.closeAll();
       this.permissions.flushPermissions();
       localStorage.removeItem('token');
       localStorage.removeItem('rol');
-      window.location.reload();
+      this.router.navigate([this.router.url]);
     });
   }
 
   flushLocalStorage(){
     localStorage.clear();
-  }
-
-  adminArea(): void {
-    this.dialog.open(DialogSpinnerComponent);
-    this.router.navigate(['/panel/inventario/']);
-    this.dialog.closeAll();
   }
 
   sidenavMode(){

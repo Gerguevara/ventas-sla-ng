@@ -1,5 +1,5 @@
 import { MatTableDataSource } from '@angular/material/table';
-import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { PerfilEmpleado } from '@models/perfil.empleado.model';
 
 @Component({
@@ -28,7 +28,7 @@ export class EmpleadoListComponent implements OnChanges {
     'acciones',
   ]
 
-  constructor() {
+  constructor(private changeDetectorRefs: ChangeDetectorRef) {
 
    }
 
@@ -44,12 +44,13 @@ export class EmpleadoListComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     const { empleados } = changes;
     this.dataSource.data = empleados.currentValue;
+    console.log(this.dataSource.data)
 
   }
 
   detailAction($event: MouseEvent, row: PerfilEmpleado){
     const element = $event.target as HTMLElement;
     if(!element.classList.contains('mat-icon') && !element.classList.contains('mat-icon-button'))
-      this.viewEmpleadoEvent.emit(row.id);
+      this.viewEmpleadoEvent.emit(row.user_id);
   }
 }

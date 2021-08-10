@@ -1,26 +1,14 @@
 <mat-dialog-content [ngStyle]="{'flex-direction':flexDirection}">
-  <mat-list>
-    <mat-list-item>
-      <h2 matLine> Nombres </h2>
-      <p matLine>
-        <span>{{empleado.nombres}} </span>
-      </p>
-    </mat-list-item>
-    <mat-list-item>
-      <h2 matLine> Apellidos </h2>
-      <p matLine>
-        <span> {{empleado.apellidos}} </span>
-      </p>
-    </mat-list-item>
-    <mat-list-item>
-      <h2 matLine> Correo Electronico </h2>
-      <p matLine>
-        <span>{{empleado.email}} </span>
-      </p>
-    </mat-list-item>
-  </mat-list>
+  <div class="input-container">
+    <ng-container *ngFor="let context of contexts">
+      <lib-full-letter-input
+        [context]="context"
+        [editableState]="editableState"
+        [globalSwitch]="globalSwitch"
+        (editableModeEnabled)="editingModeHandler($event)"
+        (valueChanged)="valueUpdateHandler($event)"
+      ></lib-full-letter-input>
+    </ng-container>
+  </div>
   <img [src]="photo" alt="{{empleado.nombres}} {{empleado.apellidos}}" (error)="photoErrorHandler()">
 </mat-dialog-content>
-<mat-dialog-actions>
-  <mat-slide-toggle [checked]="false" (change)="toggleEdit($event)">Editar</mat-slide-toggle>
-</mat-dialog-actions>

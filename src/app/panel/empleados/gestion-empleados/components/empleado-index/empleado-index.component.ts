@@ -1,6 +1,6 @@
 import { FormControl } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { PartialObserver } from 'rxjs';
 
@@ -19,7 +19,7 @@ import { EmpleadoConfirmationDialogComponent } from './../empleado-confirmation-
 import { MatSelect } from '@angular/material/select';
 import { MatOptionSelectionChange } from '@angular/material/core';
 import { MatFormField } from '@angular/material/form-field';
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-empleado-index',
@@ -31,6 +31,7 @@ export class EmpleadoIndexComponent implements OnInit {
   roles: Rol[] = [];
   @ViewChild('search') search!: MatInput;
   @ViewChild('filter') filter!: MatSelect;
+  @ViewChild('paginator') paginator!: MatPaginator;
   currentPage: number = 0;
   currentPageSize: number = 0;
   dataLength : number = 0;
@@ -66,7 +67,8 @@ export class EmpleadoIndexComponent implements OnInit {
     private empleadoService: EmpleadoService,
     private rolesService: RolesService,
     private formDialog : MatDialog,
-    private loadingDialog : MatDialog
+    private loadingDialog : MatDialog,
+    private changeDetectorRefs: ChangeDetectorRef
     ) {
   }
 
@@ -142,7 +144,7 @@ export class EmpleadoIndexComponent implements OnInit {
   }
 
   empleadoView(id: number){
-    this.empleadoService.getEmpleado(id).subscribe(this.viewObserver);
+    this.empleadoService.getObject(id).subscribe(this.viewObserver);
   }
 
   empleadoUpdate(empleado: PerfilEmpleado){
@@ -164,20 +166,15 @@ export class EmpleadoIndexComponent implements OnInit {
         autoFocus: false
       }
     );
-      //luego de cerrar el dialogo, subscribirse
-    dialogoDetalleRef.afterClosed().subscribe(
-      {
-        //la respuesta que reciba, debe ser un booleano como parametro 'editado'
-        next: (respuesta: { editado: boolean }) => {
-          //si del form se recibe que el usuario quiere editar
-          if (respuesta?.editado)
-            //abrir form
-            this.openForm(empleado);
+    dialogoDetalleRef.componentInstance.empleadoEdited.subscribe({
+        next: (empleado: PerfilEmpleado) => {
+          const index = this.empleados.findIndex((empleadoBuscar:PerfilEmpleado)=>empleadoBuscar.id == empleado.id);
+          this.empleados[index]=empleado as PerfilEmpleado;
+          this.getEmpleados(this.paginator.pageIndex + 1);
         },
         //caso de error
-        error: () => {}
-      }
-    )
+        error: (error:any) => {console.error(error)}
+    });
   }
 
   openForm(empleado?: PerfilEmpleado){

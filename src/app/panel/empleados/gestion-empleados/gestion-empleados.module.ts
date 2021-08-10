@@ -38,6 +38,7 @@ import { EmpleadoDetailGeneralComponent } from './components/empleado-detail/emp
 import { EmpleadoDetailDocumentsComponent } from './components/empleado-detail/empleado-detail-documents/empleado-detail-documents.component';
 import { EmpleadoDetailCorporateComponent } from './components/empleado-detail/empleado-detail-corporate/empleado-detail-corporate.component';
 import { EmpleadoDetailProfileComponent } from './components/empleado-detail/empleado-detail-profile/empleado-detail-profile.component';
+import { FullLetterInputComponent } from './components/full-letter-input/full-letter-input/full-letter-input.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { EmpleadoDetailProfileComponent } from './components/empleado-detail/emp
     EmpleadoDetailGeneralComponent,
     EmpleadoDetailDocumentsComponent,
     EmpleadoDetailCorporateComponent,
-    EmpleadoDetailProfileComponent
+    EmpleadoDetailProfileComponent,
+    FullLetterInputComponent
   ],
   imports: [
     CommonModule,
