@@ -1,0 +1,87 @@
+<h2 mat-dialog-title>Líneas de Planilla</h2>
+<mat-dialog-content>
+    <form [formGroup]='lineaPlanillaForm'>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Comisiones</mat-label>
+            <input readonly matInput formControlName='comisiones' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Horas extras diurnas</mat-label>
+            <input matInput formControlName='horas_extra_diurnas' type="number" class="example-right-align" placeholder="0">
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Valor horas extras diurnas</mat-label>
+            <input readonly matInput formControlName='valor_horas_extra_diurnas' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Horas extras nocturnas</mat-label>
+            <input matInput formControlName='horas_extra_nocturnas' type="number" class="example-right-align" placeholder="0">
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Valor horas extras nocturnas</mat-label>
+            <input readonly matInput formControlName='valor_horas_extra_nocturnas' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Horas extras domingo</mat-label>
+            <input matInput formControlName='horas_extra_domingo' type="number" class="example-right-align" placeholder="0">
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Valor horas extras domingo</mat-label>
+            <input readonly matInput formControlName='valor_horas_extra_domingo' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Total horas extras</mat-label>
+            <input readonly matInput formControlName='total_horas_extras' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Otros Ingresos</mat-label>
+            <input readonly matInput formControlName='otros_ingresos' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Total Ingresos</mat-label>
+            <input readonly matInput formControlName='total_ingresos' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>ISSS</mat-label>
+            <input readonly matInput formControlName='isss' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>AFP</mat-label>
+            <input readonly matInput formControlName='afp' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Otras Deducciones</mat-label>
+            <input readonly matInput formControlName='otras_deducciones' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Total Descuentos</mat-label>
+            <input readonly matInput formControlName='total_descuentos' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>Renta</mat-label>
+            <input readonly matInput formControlName='renta' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="always" class="input">
+            <mat-label>A recibir</mat-label>
+            <input readonly matInput formControlName='a_recibir' type="number" class="example-right-align" placeholder="0">
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-button *ngIf="habilitarEditar" (click)="editarFormulario()" color='primary' cdkFocusInitial>Editar</button>
+    <button mat-button *ngIf="!habilitarEditar" (click)="actualizarLineaPlanilla()" color='primary' cdkFocusInitial>Guardar</button>
+</mat-dialog-actions>
