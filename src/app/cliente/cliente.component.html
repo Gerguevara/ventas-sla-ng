@@ -22,7 +22,7 @@
         <!-- fin icon trigger para menu #menu -->
         <!-- definicion de contenido de menu #menu -->
         <mat-menu #menu="matMenu">
-            <a mat-menu-item style="margin-right: 10px;" [routerLink]="['/panel/inventario/']" *ngIf="rolAdmin" color="accent" class="example-icon">
+            <a mat-menu-item style="margin-right: 10px;" (click)="mostrarPerfil()" *ngIf="rolAdmin" color="accent" class="example-icon">
                 <mat-icon>account_circle</mat-icon>
                 <ng-container *ngIf="window.matchMedia('(min-width: 700px)').matches"> Mi Perfil</ng-container>
             </a>

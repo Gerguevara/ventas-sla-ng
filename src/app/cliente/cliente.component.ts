@@ -13,8 +13,7 @@ import { ResultadoIndex } from '@core/models/resultados/resultado-index.model';
 import { IndexService } from '@global-services/index.service';
 import { CategoriaService } from '@global-services/categoria.service';
 import { LoginClienteService } from '@global-services/login-cliente.service';
-
-import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
+import { IndexPerfilComponent } from './perfil-usuario/index-perfil.component';
 
 @Component({
   selector: 'app-cliente',
@@ -77,6 +76,10 @@ export class ClienteComponent implements OnInit {
       localStorage.removeItem('rol');
       this.router.navigate([this.router.url]);
     });
+  }
+
+  mostrarPerfil(): void {
+    this.dialog.open( IndexPerfilComponent, { width: '40vw' } );
   }
 
   flushLocalStorage(){

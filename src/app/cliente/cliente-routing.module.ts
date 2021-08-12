@@ -26,11 +26,6 @@ const routes: Routes = [
         loadChildren: () => import('./index-producto/index-producto.module').then(m => m.IndexProductoModule),
         canLoad: [AuthGuard]
       },
-      {
-        path:'profile',
-        loadChildren: () => import('./perfil-usuario/perfil-usuario.module').then(m => m.PerfilUsuarioModule),
-        canLoad: [AuthGuard]
-      },
     ]
   },
 ];
