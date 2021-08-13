@@ -29,6 +29,7 @@
             <mat-select formControlName='genero'>
                 <mat-option value="Femenino">Femenino</mat-option>
                 <mat-option value="Masculino">Masculino</mat-option>
+                <mat-option value="Masculino">Arely</mat-option>
                 <mat-option value="Prefiero no decirlo">Prefiero no decirlo</mat-option>
             </mat-select>
         </mat-form-field>
@@ -37,5 +38,5 @@
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cerrar</button>
     <button mat-button *ngIf="habilitarEditar" (click)="editarFormulario()" color='primary' cdkFocusInitial>Editar</button>
-    <button mat-button *ngIf="!habilitarEditar" color='primary' cdkFocusInitial>Guardar</button>
+    <button mat-button *ngIf="!habilitarEditar" [disabled]='perfilForm.invalid' (click)="actualizarFormulario()" color='primary' cdkFocusInitial>Guardar</button>
 </mat-dialog-actions>

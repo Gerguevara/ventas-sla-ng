@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatListModule,
     MatMenuModule,
     MatInputModule,
+    MatSnackBarModule,
   ]
 })
 export class ClienteModule { }

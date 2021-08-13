@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { PerfilUsuario } from '@core/models/perfil.usuario.model';
 import { PerfilUsuarioService } from '@core/services/perfil-usuario.service';
 
@@ -13,11 +14,12 @@ export class PerfilUsuarioComponent implements OnInit {
   habilitarEditar = true;
   perfilForm: FormGroup;
 
-  constructor( private formBuilder: FormBuilder, private perfilService: PerfilUsuarioService ) {
+  constructor( private formBuilder: FormBuilder, private perfilService: PerfilUsuarioService,
+               private snackBar: MatSnackBar ) {
     this.perfilForm = this.formBuilder.group({
-      nombres: ['', Validators.required],
-      apellidos: ['', Validators.required],
-      telefono: ['', Validators.required],
+      nombres: ['', [Validators.required, Validators.pattern(/^([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú]+[\s]*)+$/)]],
+      apellidos: ['', [Validators.required, Validators.pattern(/^([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú]+[\s]*)+$/)]],
+      telefono: ['', [Validators.required, Validators.pattern(/^(\(\+?\d{2,3}\)[\*|\s|\-|\.]?(([\d][\*|\s|\-|\.]?){6})(([\d][\s|\-|\.]?){2})?|(\+?[\d][\s|\-|\.]?){8}(([\d][\s|\-|\.]?){2}(([\d][\s|\-|\.]?){2})?)?)$/)]],
       direccion: ['', Validators.required],
       estadoCivil: ['', Validators.required],
       genero: ['', Validators.required],
@@ -34,6 +36,8 @@ export class PerfilUsuarioComponent implements OnInit {
       (error: any) => {
         console.log(error);
       });
+    } else {
+      this.snackBar.open('Usuario no autenticado', 'Cerrar', { duration: 5000 });
     }
   }
 
@@ -49,5 +53,9 @@ export class PerfilUsuarioComponent implements OnInit {
   editarFormulario(): void {
     this.perfilForm.enable();
     this.habilitarEditar = false;
+  }
+
+  actualizarFormulario(): void {
+    console.log(this.perfilForm.value);
   }
 }
