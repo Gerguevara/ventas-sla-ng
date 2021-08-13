@@ -53,6 +53,7 @@ export class LoginComponent {
         // Cerramos todos los dialogos abiertos hasta el momento
         this.dialog.closeAll();
         localStorage.setItem('token', response.token);
+        localStorage.setItem('user_identity', response.user.id.toString());
         localStorage.setItem('rol', response.user.tipoUsuario);
         this.router.navigate(['/']);
       },
