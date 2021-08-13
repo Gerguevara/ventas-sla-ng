@@ -26,4 +26,8 @@ export class PerfilUsuarioService {
   obtenerPerfilUsuario( id: number ): Observable<PerfilUsuario[]> {
     return this.http.get<PerfilUsuario[]>(this.url + '/' + id, httpHeaders);
   }
+
+  actualizarPerfilUsuario( perfil: PerfilUsuario ): Observable<any> {
+    return this.http.put<any>(this.url + '/' + localStorage.getItem('user_identity'), perfil, httpHeaders);
+  }
 }

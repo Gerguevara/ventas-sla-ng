@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PerfilUsuario } from '@core/models/perfil.usuario.model';
 import { PerfilUsuarioService } from '@core/services/perfil-usuario.service';
+import { DialogSpinnerComponent } from '../../tools/components/dialog-spinner/dialog-spinner.component';
 
 @Component({
   selector: 'sla-perfil-usuario',
@@ -15,7 +17,8 @@ export class PerfilUsuarioComponent implements OnInit {
   perfilForm: FormGroup;
 
   constructor( private formBuilder: FormBuilder, private perfilService: PerfilUsuarioService,
-               private snackBar: MatSnackBar ) {
+               private snackBar: MatSnackBar,
+               private dialog: MatDialog ) {
     this.perfilForm = this.formBuilder.group({
       nombres: ['', [Validators.required, Validators.pattern(/^([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú]+[\s]*)+$/)]],
       apellidos: ['', [Validators.required, Validators.pattern(/^([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú]+[\s]*)+$/)]],
@@ -56,6 +59,15 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
   actualizarFormulario(): void {
-    console.log(this.perfilForm.value);
+    this.dialog.open( DialogSpinnerComponent );
+    this.perfilService.actualizarPerfilUsuario(this.perfilForm.value as PerfilUsuario).subscribe((response: any) => {
+      this.snackBar.open('Has actualizado tu perfil', 'Cerrar', { duration: 5000 });
+      this.dialog.closeAll();
+    },
+    (error: any) => {
+      console.log(error);
+      this.snackBar.open('Ha ocurrido un error', 'Cerrar', { duration: 5000 });
+      this.dialog.closeAll();
+    });
   }
 }
