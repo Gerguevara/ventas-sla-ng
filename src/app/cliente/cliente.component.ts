@@ -13,7 +13,7 @@ import { ResultadoIndex } from '@core/models/resultados/resultado-index.model';
 import { IndexService } from '@global-services/index.service';
 import { CategoriaService } from '@global-services/categoria.service';
 import { LoginClienteService } from '@global-services/login-cliente.service';
-import { IndexPerfilComponent } from './perfil-usuario-old/index-perfil.component';
+import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 
 @Component({
   selector: 'app-cliente',
@@ -79,7 +79,7 @@ export class ClienteComponent implements OnInit {
   }
 
   mostrarPerfil(): void {
-    this.dialog.open( IndexPerfilComponent, { width: '40vw' } );
+    this.dialog.open( PerfilUsuarioComponent, { width: '40vw' } );
   }
 
   flushLocalStorage(){

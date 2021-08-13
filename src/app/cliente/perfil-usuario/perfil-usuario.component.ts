@@ -25,10 +25,16 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.perfilService.obtenerPerfilUsuario(1).subscribe((response: PerfilUsuario[]) => {
-      this.cargarDatos( response[0] );
-      console.log(response[0]);
-    });
+    this.perfilForm.disable();
+    const id = localStorage.getItem('user_identity');
+    if ( id ) {
+      this.perfilService.obtenerPerfilUsuario( Number(id) ).subscribe((response: PerfilUsuario[]) => {
+        this.cargarDatos( response[0] );
+      },
+      (error: any) => {
+        console.log(error);
+      });
+    }
   }
 
   cargarDatos( perfil: PerfilUsuario ): void {
@@ -38,5 +44,10 @@ export class PerfilUsuarioComponent implements OnInit {
     this.perfilForm.get('direccion')?.setValue(perfil.direccion);
     this.perfilForm.get('estadoCivil')?.setValue(perfil.estadoCivil);
     this.perfilForm.get('genero')?.setValue(perfil.genero);
+  }
+
+  editarFormulario(): void {
+    this.perfilForm.enable();
+    this.habilitarEditar = false;
   }
 }

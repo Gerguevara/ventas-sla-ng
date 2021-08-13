@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.componen
     MatIconModule,
     MatToolbarModule,
     MatFormFieldModule,
+    MatSelectModule,
     MatButtonModule,
     MatListModule,
     MatMenuModule,

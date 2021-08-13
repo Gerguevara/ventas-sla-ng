@@ -15,16 +15,27 @@
         </mat-form-field>
         <mat-form-field class='input' appearance="fill" class="input">
             <mat-label>Estado Civil</mat-label>
-            <input matInput formControlName='estadoCivil'>
+            <!-- <input matInput formControlName='estadoCivil'> -->
+            <mat-select formControlName='estadoCivil'>
+                <mat-option value="Casado/a">Casado/a</mat-option>
+                <mat-option value="Viudo/a">Viudo/a</mat-option>
+                <mat-option value="Divorciado/a">Divorciado/a</mat-option>
+                <mat-option value="Soltero/a">Soltero/a</mat-option>
+            </mat-select>
         </mat-form-field>
         <mat-form-field class='input' appearance="fill" class="input">
             <mat-label>Género</mat-label>
-            <input matInput formControlName='genero'>
+            <!-- <input matInput formControlName='genero'> -->
+            <mat-select formControlName='genero'>
+                <mat-option value="Femenino">Femenino</mat-option>
+                <mat-option value="Masculino">Masculino</mat-option>
+                <mat-option value="Prefiero no decirlo">Prefiero no decirlo</mat-option>
+            </mat-select>
         </mat-form-field>
     </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cerrar</button>
-    <button mat-button *ngIf="habilitarEditar" color='primary' cdkFocusInitial>Editar</button>
+    <button mat-button *ngIf="habilitarEditar" (click)="editarFormulario()" color='primary' cdkFocusInitial>Editar</button>
     <button mat-button *ngIf="!habilitarEditar" color='primary' cdkFocusInitial>Guardar</button>
 </mat-dialog-actions>
