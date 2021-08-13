@@ -13,7 +13,7 @@ import { ResultadoIndex } from '@core/models/resultados/resultado-index.model';
 import { IndexService } from '@global-services/index.service';
 import { CategoriaService } from '@global-services/categoria.service';
 import { LoginClienteService } from '@global-services/login-cliente.service';
-import { IndexPerfilComponent } from './perfil-usuario/index-perfil.component';
+import { IndexPerfilComponent } from './perfil-usuario-old/index-perfil.component';
 
 @Component({
   selector: 'app-cliente',

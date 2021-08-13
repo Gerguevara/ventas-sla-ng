@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IndexPerfilComponent } from './index-perfil.component';
+import { PerfilUsuarioComponent } from './perfil-usuario.component';
 
-describe('IndexPerfilComponent', () => {
-  let component: IndexPerfilComponent;
-  let fixture: ComponentFixture<IndexPerfilComponent>;
+describe('PerfilUsuarioComponent', () => {
+  let component: PerfilUsuarioComponent;
+  let fixture: ComponentFixture<PerfilUsuarioComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IndexPerfilComponent ]
+      declarations: [ PerfilUsuarioComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IndexPerfilComponent);
+    fixture = TestBed.createComponent(PerfilUsuarioComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
