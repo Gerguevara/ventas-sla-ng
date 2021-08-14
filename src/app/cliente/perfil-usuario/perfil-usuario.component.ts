@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PerfilUsuario } from '@core/models/perfil.usuario.model';
@@ -15,6 +15,40 @@ export class PerfilUsuarioComponent implements OnInit {
 
   habilitarEditar = true;
   perfilForm: FormGroup;
+
+  // Getters de controles
+  get nombresControl(): AbstractControl {
+    return this.perfilForm.get('nombres') as FormControl;
+  }
+
+  get apellidosControl(): AbstractControl {
+    return this.perfilForm.get('apellidos') as FormControl;
+  }
+
+  get direccionControl(): AbstractControl {
+    return this.perfilForm.get('direccion') as FormControl;
+  }
+
+  get telefonoControl(): AbstractControl {
+    return this.perfilForm.get('telefono') as FormControl;
+  }
+
+  // Getters para validaciones de los controles
+  get nombresNoValido(): boolean | undefined {
+    return this.nombresControl.invalid && this.nombresControl.touched;
+  }
+
+  get apellidosNoValido(): boolean | undefined {
+    return this.apellidosControl.invalid && this.apellidosControl.touched;
+  }
+
+  get direccionNoValido(): boolean | undefined {
+    return this.direccionControl.invalid && this.direccionControl.touched;
+  }
+
+  get telefonoNoValido(): boolean | undefined {
+    return this.telefonoControl.invalid && this.telefonoControl.touched;
+  }
 
   constructor( private formBuilder: FormBuilder, private perfilService: PerfilUsuarioService,
                private snackBar: MatSnackBar,
@@ -70,4 +104,44 @@ export class PerfilUsuarioComponent implements OnInit {
       this.dialog.closeAll();
     });
   }
+
+  // Métodos para mostrar errores
+  getErrorNombresMessage(): string {
+    if (this.nombresControl.hasError('required')) {
+      return 'Este campo es obligatorio';
+    } else if (this.nombresControl.hasError('pattern')) {
+      return 'Debe escribir los nombres correctamente';
+    } else {
+      return '';
+    }
+  }
+
+  getErrorApellidosMessage(): string {
+    if (this.apellidosControl.hasError('required')) {
+      return 'Este campo es obligatorio';
+    } else if (this.apellidosControl.hasError('pattern')) {
+      return 'Debe escribir los apellidos correctamente';
+    } else {
+      return '';
+    }
+  }
+
+  getErrorDireccionMessage(): string {
+    if (this.direccionControl.hasError('required')) {
+      return 'Este campo es obligatorio';
+    } else {
+      return '';
+    }
+  }
+
+  getErrorTelefonoMessage(): string {
+    if (this.telefonoControl.hasError('required')) {
+      return 'Este campo es obligatorio';
+    } else if (this.telefonoControl.hasError('pattern')) {
+      return 'Debe escribir el número correctamente';
+    } else {
+      return '';
+    }
+  }
+
 }
