@@ -1,3 +1,4 @@
+import { TwoStepAuthService } from './services/2fa/two-step-auth.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -31,7 +32,8 @@ import { PaginatorService } from '@tool-services/paginator.service';
     PaginatorComponent
   ],
   providers: [
-    PaginatorService
+    PaginatorService,
+    TwoStepAuthService
   ]
 })
 export class ToolsModule { }
