@@ -42,21 +42,27 @@ export class IndexTableComponent implements OnInit {
       next: (breakpointState: BreakpointState)=>{
         if(breakpointState.breakpoints[Breakpoints.XSmall]){
           this.columns = 1;
+          this.currentMaxProduct = 2;
           // this.setRowHeightOver();
         } else if(breakpointState.breakpoints[Breakpoints.Small]){
           this.columns = 2;
+          this.currentMaxProduct = 2;
           // this.setRowHeightOver();
         } else if(breakpointState.breakpoints[Breakpoints.Medium]){
           this.columns = 3;
+          this.currentMaxProduct = 3;
           // this.setRowHeightSide();
         } else if(breakpointState.breakpoints[Breakpoints.Large]){
           this.columns = 4;
+          this.currentMaxProduct = 4;
           // this.setRowHeightSide();
         } else if(breakpointState.breakpoints[Breakpoints.XLarge]){
           this.columns = 8;
+          this.currentMaxProduct = 8;
           // this.setRowHeightSide();
         } else {
           this.columns = 1;
+          this.currentMaxProduct = 2;
           // this.setRowHeightSide();
         }
         this.setGridRatio();
@@ -75,7 +81,7 @@ export class IndexTableComponent implements OnInit {
   }
 
   setGridRatio() {
-      const width = 236.25;
-      const height = 457.44;
+      const width = 253;
+      const height = 421;
       this.rowHeight = `${width}:${height}`;  }
 }

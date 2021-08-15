@@ -20,9 +20,10 @@ export class AuthGuard implements CanLoad {
       const token = localStorage.getItem('token');
       if ( token ) {
         return this.auth.verificarToken().pipe(
-          map((response: any) => {
-            if (response.result) {
-              return true;
+          map((response: boolean) => {
+            console.log(response);
+            if (response) {
+              return response;
             } else {
               localStorage.removeItem('token');
               localStorage.removeItem('rol');

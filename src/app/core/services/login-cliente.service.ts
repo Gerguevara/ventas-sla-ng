@@ -86,9 +86,8 @@ export class LoginClienteService extends PreflightService{
     return this.http.get<EmailVerificationResponse>(url, this.setOptions(true,true));
   }
 
-  verificarToken(): Observable<any> {
-    const response = this.http.get<any>(this.urlTokenVerify, this.setOptions());
-    return response;
+  verificarToken(): Observable<boolean> {
+    return this.http.get<boolean>(this.urlTokenVerify, this.setOptions());
   }
 
 }
