@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { IndexComponent } from './components/index/index.component';
+import { VentasIndexComponent } from './components/ventas-index/ventas-index.component';
 
 const routes: Routes = [
-  { path: '', component: IndexComponent },
+  { path: '', component: VentasIndexComponent },
   { path: '**', pathMatch: 'full', redirectTo: '' }
 ];
 
