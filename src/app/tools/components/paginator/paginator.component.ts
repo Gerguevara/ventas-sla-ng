@@ -15,6 +15,8 @@ export class PaginatorComponent implements OnInit, AfterViewInit {
   @Input() urlData = '';
   // Esta es para parámetros adicionales opcionales
   @Input() params = '';
+  // Input opcional de objeto de tipo PaginatroResponse para que el componente lo pagine
+  @Input() inputPaginator!: PaginatorResponse;
   configPaginator!: PaginatorResponse;
   pageSizeOptions!: number[];
   length!: number;
@@ -29,15 +31,34 @@ export class PaginatorComponent implements OnInit, AfterViewInit {
   constructor( private paginatorService: PaginatorService ) { }
 
   ngOnInit(): void {
-    this.paginatorService.getAllData( this.urlData, 5, this.params ).then((response: PaginatorResponse) => {
-      this.configPaginator = response;
-      // Establecemos los valores de las variables con los datos de la Input
-      this.pageSizeOptions = [ 5, 10, 15, 20 ];
-      this.length = this.configPaginator.total;
-      this.pageSize = Number(this.configPaginator.per_page);
-      // Enviamos la data por el observable hacia el componente
-      this.pageDataChange$.emit(response.data);
-    });
+    if ( this.inputPaginator ) {
+      this.configPaginator = this.inputPaginator;
+      this.configurarPaginador( this.inputPaginator );
+    } else {
+      this.paginatorService.getAllData( this.urlData, 5, this.params ).then((response: PaginatorResponse) => {
+        this.configPaginator = response;
+        this.configurarPaginador( response );
+      });
+    }
+  }
+
+  /**
+   * @ngdoc method
+   * @name configurarPaginador
+   * @description
+   * Método para realizar la configuración de cantidad de items por página,
+   * longitud de la lista total, y realización del envío de la lista de la página
+   * actual al componente padre.
+   * @param response:PaginatorResponse
+   * @return void
+   */
+  configurarPaginador( response: PaginatorResponse ): void {
+    // Establecemos los valores de las variables con los datos de la Input
+    this.pageSizeOptions = [ 5, 10, 15, 20 ];
+    this.length = this.configPaginator.total;
+    this.pageSize = Number(this.configPaginator.per_page);
+    // Enviamos la data por el observable hacia el componente
+    this.pageDataChange$.emit(response.data);
   }
 
   ngAfterViewInit(): void {

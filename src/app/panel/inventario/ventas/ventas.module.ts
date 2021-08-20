@@ -10,12 +10,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { VentasFilterComponent } from './components/ventas-filter/ventas-filter.component';
 
 
 @NgModule({
   declarations: [
     VentasIndexComponent,
-    DialogVentaComponent
+    DialogVentaComponent,
+    VentasFilterComponent
   ],
   imports: [
     CommonModule,
