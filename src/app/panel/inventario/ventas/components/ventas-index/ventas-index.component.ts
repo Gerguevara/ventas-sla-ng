@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { environment } from '@environments/environment';
+import { DialogVentaComponent } from '../dialog-venta/dialog-venta.component';
 
 @Component({
   selector: 'sla-ventas-index',
@@ -16,7 +18,7 @@ export class VentasIndexComponent implements OnInit {
   private endpoint = '';
   url = `${environment.apiUrl}${this.endpoint}`;
 
-  constructor() { }
+  constructor( private dialog: MatDialog ) { }
 
   ngOnInit(): void {
   }
@@ -33,6 +35,20 @@ export class VentasIndexComponent implements OnInit {
    */
   addDataToTable( event: any[] ): void {
     this.dataSource = new MatTableDataSource<any>(event);
+  }
+
+  /**
+   * @ngdoc method
+   * @name mostrarVenta
+   * @description
+   * Recibe como parámetro el objeto Venta de la fila correspondiente seleccionada
+   * y abre un dialogo con el componente DialogVentaComponent, pasandole como parámetro
+   * dicho objeto, para que lo muestre en un formulario.
+   * @param venta
+   * @return void
+   */
+  mostrarVenta( venta: any ): void {
+    this.dialog.open( DialogVentaComponent, { width: '50vw', data: venta } );
   }
 
 }
