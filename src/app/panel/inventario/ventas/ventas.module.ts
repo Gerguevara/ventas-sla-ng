@@ -11,6 +11,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { VentasFilterComponent } from './components/ventas-filter/ventas-filter.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -26,6 +28,8 @@ import { VentasFilterComponent } from './components/ventas-filter/ventas-filter.
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
     ToolsModule,
     VentasRoutingModule
   ]

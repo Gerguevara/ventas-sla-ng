@@ -1,5 +1,12 @@
-<mat-card>
-    <mat-table [dataSource]="dataSource">
+<mat-card style="position: relative;">
+    <mat-form-field class="example-form-field" appearance="fill" style="position: absolute; right: 10px; top: 10px; width: 18vw;">
+        <mat-label>Buscar</mat-label>
+        <input matInput type="text">
+        <button matSuffix mat-icon-button aria-label="Buscar">
+          <mat-icon>search</mat-icon>
+        </button>
+    </mat-form-field>
+    <mat-table [dataSource]="dataSource" style="margin-top: 40px;">
         <!-- ID Column -->
         <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef>No.</mat-header-cell>
