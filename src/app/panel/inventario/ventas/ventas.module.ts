@@ -13,6 +13,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { VentasFilterComponent } from './components/ventas-filter/ventas-filter.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatDateRangePicker } from '@angular/material/datepicker';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { MatInputModule } from '@angular/material/input';
     MatTableModule,
     MatButtonModule,
     MatIconModule,
+    // MatDateRangePicker,
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,

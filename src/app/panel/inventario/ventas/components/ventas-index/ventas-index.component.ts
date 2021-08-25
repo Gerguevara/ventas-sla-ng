@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { environment } from '@environments/environment';
 import { DialogVentaComponent } from '../dialog-venta/dialog-venta.component';
+import { Orden } from '../../../../../core/Models/orden.model';
+import { VentasService } from '../../../../../core/services/ventas.service';
+import { PaginatorComponent } from '../../../../../tools/components/paginator/paginator.component';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'sla-ventas-index',
@@ -11,16 +15,29 @@ import { DialogVentaComponent } from '../dialog-venta/dialog-venta.component';
 })
 export class VentasIndexComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'departamento', 'acciones'];
-  dataSource!: MatTableDataSource<any>;
-  clickedRows = new Set<any>();
+  displayedColumns: string[] = ['id', 'estado', 'subtotal', 'total'];
+  dataSource!: MatTableDataSource<Orden>;
+  clickedRows = new Set<Orden>();
 
-  private endpoint = '';
-  url = `${environment.apiUrl}${this.endpoint}`;
+  url = `${environment.apiUrl}ordenes`;
+  params = '';
+  inputPaginator: Subject<any>;
 
-  constructor( private dialog: MatDialog ) { }
+  @ViewChildren(PaginatorComponent)
+  paginador!: PaginatorComponent;
+
+  constructor( private dialog: MatDialog,
+               private ventasService: VentasService ) {
+                this.inputPaginator = new Subject<any>();
+                this.ventasService.filtrarVentas( '' ).subscribe((response: any) => {
+                  this.inputPaginator.next(response);
+                });
+               }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.filtrarVentas();
+    }, 3000);
   }
 
   /**
@@ -33,8 +50,8 @@ export class VentasIndexComponent implements OnInit {
    * @param event
    * @return void
    */
-  addDataToTable( event: any[] ): void {
-    this.dataSource = new MatTableDataSource<any>(event);
+  addDataToTable( event: Orden[] ): void {
+    this.dataSource = new MatTableDataSource<Orden>(event);
   }
 
   /**
@@ -49,6 +66,12 @@ export class VentasIndexComponent implements OnInit {
    */
   mostrarVenta( venta: any ): void {
     this.dialog.open( DialogVentaComponent, { width: '50vw', data: venta } );
+  }
+
+  filtrarVentas(): void {
+    this.ventasService.filtrarVentas( 'F' ).subscribe((response: any) => {
+      this.inputPaginator.next(response);
+    });
   }
 
 }

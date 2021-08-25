@@ -3,6 +3,7 @@ import { PageEvent } from '@angular/material/paginator';
 
 import { PaginatorResponse } from '@models/resultados/resultado-paginator.model';
 import { PaginatorService } from '@tool-services/paginator.service';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-paginator',
@@ -16,7 +17,7 @@ export class PaginatorComponent implements OnInit, AfterViewInit {
   // Esta es para parámetros adicionales opcionales
   @Input() params = '';
   // Input opcional de objeto de tipo PaginatroResponse para que el componente lo pagine
-  @Input() inputPaginator!: PaginatorResponse;
+  @Input() inputPaginator!: Subject<PaginatorResponse>;
   configPaginator!: PaginatorResponse;
   pageSizeOptions!: number[];
   length!: number;
@@ -32,8 +33,10 @@ export class PaginatorComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     if ( this.inputPaginator ) {
-      this.configPaginator = this.inputPaginator;
-      this.configurarPaginador( this.inputPaginator );
+      this.inputPaginator.subscribe(( objeto: PaginatorResponse ) => {
+        this.configPaginator = objeto;
+        this.configurarPaginador( objeto );
+      });
     } else {
       this.paginatorService.getAllData( this.urlData, 5, this.params ).then((response: PaginatorResponse) => {
         this.configPaginator = response;
