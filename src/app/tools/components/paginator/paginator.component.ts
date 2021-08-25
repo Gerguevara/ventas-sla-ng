@@ -38,10 +38,12 @@ export class PaginatorComponent implements OnInit, AfterViewInit {
         this.configurarPaginador( objeto );
       });
     } else {
-      this.paginatorService.getAllData( this.urlData, 5, this.params ).then((response: PaginatorResponse) => {
-        this.configPaginator = response;
-        this.configurarPaginador( response );
-      });
+      if ( this.urlData ) {
+        this.paginatorService.getAllData( this.urlData, 5, this.params ).then((response: PaginatorResponse) => {
+          this.configPaginator = response;
+          this.configurarPaginador( response );
+        });
+      }
     }
   }
 

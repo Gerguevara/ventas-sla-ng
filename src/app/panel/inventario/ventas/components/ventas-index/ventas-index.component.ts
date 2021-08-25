@@ -19,7 +19,7 @@ export class VentasIndexComponent implements OnInit {
   dataSource!: MatTableDataSource<Orden>;
   clickedRows = new Set<Orden>();
 
-  url = `${environment.apiUrl}ordenes`;
+  url = ``;
   params = '';
   inputPaginator: Subject<any>;
 
@@ -35,9 +35,9 @@ export class VentasIndexComponent implements OnInit {
                }
 
   ngOnInit(): void {
-    setTimeout(() => {
+    /*setTimeout(() => {
       this.filtrarVentas();
-    }, 3000);
+    }, 3000);*/
   }
 
   /**
