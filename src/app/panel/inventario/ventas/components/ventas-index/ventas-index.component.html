@@ -1,0 +1,61 @@
+<mat-card style="position: relative;">
+    <div style="display: inline-block;">
+        <mat-form-field appearance="fill" style="width: 40%;">
+            <mat-label>Filtrar por rango de fechas</mat-label>
+            <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                <input matStartDate formControlName="start" placeholder="Start date">
+                <input matEndDate formControlName="end" placeholder="End date">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+            <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Fecha de inicio inválida</mat-error>
+            <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Fecha de fin inválida</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" style="width: 40%; margin-left: 10px;">
+            <mat-label>Filtrar por estado</mat-label>
+            <mat-select [(value)]="selected">
+                <mat-option value="">Todas</mat-option>
+                <mat-option value="P">Pendiente</mat-option>
+                <mat-option value="E">En Curso</mat-option>
+                <mat-option value="F">Finalizado</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-stroked-button [disabled]="range.invalid" (click)="filtrarVentas()" color="primary" style="margin-left: 10px; margin-bottom: 10px;">Filtrar</button>
+    </div>
+    <mat-divider></mat-divider>
+    <mat-table [dataSource]="dataSource">
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef>No.</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="estado">
+            <mat-header-cell *matHeaderCellDef>Estado</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.estado}}</mat-cell>
+        </ng-container>
+
+        <!-- Subtotal Column -->
+        <ng-container matColumnDef="subtotal">
+            <mat-header-cell *matHeaderCellDef>Subtotal</mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let element">{{ element.subtotal }}</mat-cell>
+        </ng-container>
+
+        <!-- Total Column -->
+        <ng-container matColumnDef="total">
+            <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let element">{{ element.total }}</mat-cell>
+        </ng-container>
+
+        <!-- Fecha Column -->
+        <ng-container matColumnDef="fecha">
+            <mat-header-cell *matHeaderCellDef>Fecha</mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let element">{{ element.created_at }}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row [class.demo-row-is-clicked]="clickedRows.has(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <app-paginator [inputPaginator]="inputPaginator" (pageDataChange$)="addDataToTable($event)"></app-paginator>
+</mat-card>

@@ -5,11 +5,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { CategoriaService } from './services/categoria.service';
 import { EtiquetaService } from './services/etiqueta.service';
 import { ProductoService } from './services/producto.service';
+import { EstadoOrdenPipe } from './pipes/estado-orden.pipe';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    EstadoOrdenPipe
+  ],
   imports: [
     CommonModule,
     HttpClientModule
