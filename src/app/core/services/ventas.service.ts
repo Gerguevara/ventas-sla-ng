@@ -31,7 +31,7 @@ export class VentasService {
    * @param input
    * @returns Observable<any>
    */
-  filtrarVentas( input: string ): Observable<any> {
-    return this.http.get<any>(`${this.url}?page_size=5&estado=${input}`, headers);
+  filtrarVentas( estado?: string, start?: string, end?: string ): Observable<any> {
+    return this.http.get<any>(`${this.url}?page_size=5&estado=${estado}&start=${start}&end=${end}`, headers);
   }
 }

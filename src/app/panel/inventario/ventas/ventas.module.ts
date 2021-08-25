@@ -13,7 +13,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { VentasFilterComponent } from './components/ventas-filter/ventas-filter.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatDateRangePicker } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -24,11 +28,15 @@ import { MatDateRangePicker } from '@angular/material/datepicker';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     MatCardModule,
     MatTableModule,
     MatButtonModule,
     MatIconModule,
-    // MatDateRangePicker,
+    MatDividerModule,
+    MatSelectModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,

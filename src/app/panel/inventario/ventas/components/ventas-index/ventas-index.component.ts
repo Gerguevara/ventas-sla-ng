@@ -7,6 +7,8 @@ import { Orden } from '../../../../../core/Models/orden.model';
 import { VentasService } from '../../../../../core/services/ventas.service';
 import { PaginatorComponent } from '../../../../../tools/components/paginator/paginator.component';
 import { Observable, Subject } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { debounceTime, map, startWith, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'sla-ventas-index',
@@ -15,29 +17,30 @@ import { Observable, Subject } from 'rxjs';
 })
 export class VentasIndexComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'estado', 'subtotal', 'total'];
+  // declaraciones para la tabla
+  displayedColumns: string[] = ['id', 'estado', 'subtotal', 'total', 'fecha'];
   dataSource!: MatTableDataSource<Orden>;
   clickedRows = new Set<Orden>();
-
-  url = ``;
-  params = '';
+  // Observable para manejar paginación
   inputPaginator: Subject<any>;
 
-  @ViewChildren(PaginatorComponent)
-  paginador!: PaginatorComponent;
+  selected = 'A';
+
+  // Rango de fechas del datepicker
+  range = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl()
+  });
 
   constructor( private dialog: MatDialog,
                private ventasService: VentasService ) {
                 this.inputPaginator = new Subject<any>();
-                this.ventasService.filtrarVentas( '' ).subscribe((response: any) => {
-                  this.inputPaginator.next(response);
-                });
                }
 
   ngOnInit(): void {
-    /*setTimeout(() => {
-      this.filtrarVentas();
-    }, 3000);*/
+    this.ventasService.filtrarVentas('', '', '').subscribe((response: any) => {
+      this.inputPaginator.next(response);
+    });
   }
 
   /**
@@ -69,7 +72,7 @@ export class VentasIndexComponent implements OnInit {
   }
 
   filtrarVentas(): void {
-    this.ventasService.filtrarVentas( 'F' ).subscribe((response: any) => {
+    this.ventasService.filtrarVentas('').subscribe((response: any) => {
       this.inputPaginator.next(response);
     });
   }
