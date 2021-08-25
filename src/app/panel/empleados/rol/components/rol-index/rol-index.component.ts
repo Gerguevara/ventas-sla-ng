@@ -8,6 +8,7 @@ import { Rol } from '@models/rol.model';
 import { RolesService } from '@global-services/roles.service';
 
 import { RolFormComponent } from '../rol-form/rol-form.component';
+import { DialogSpinnerComponent } from '@tools/components/dialog-spinner/dialog-spinner.component';
 
 @Component({
   selector: 'app-rol-index',
@@ -47,7 +48,7 @@ export class RolIndexComponent implements OnInit {
   }
 
   eliminarRol( id: number ): void {
-    /*this.formDialog.open( DialogSpinnerComponent );
+    this.formDialog.open( DialogSpinnerComponent );
     this.roles.deleteRol( id ).subscribe((response: any) => {
       this.formDialog.closeAll();
       this.snackBar.open(response.mensaje, 'Cerrar', {
@@ -59,7 +60,7 @@ export class RolIndexComponent implements OnInit {
       this.snackBar.open('Ah ocurrido un error!', 'Cerrar', {
         duration: 5000
       });
-    });*/
+    });
   }
 
   getDepartamento( id: number ): string {

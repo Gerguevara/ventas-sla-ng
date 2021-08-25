@@ -19,6 +19,16 @@ const routes: Routes = [
         }
       },
       {
+        path: 'ventas',
+        loadChildren: () => import('./ventas/ventas.module').then(m => m.VentasModule),
+        canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: {
+            only: 'categorias.index'
+          }
+        }
+      },
+      {
         path: 'categoria',
         loadChildren: () => import('./categoria/categoria.module').then(m => m.CategoriaModule),
         canActivate: [NgxPermissionsGuard],
