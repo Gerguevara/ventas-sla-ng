@@ -59,6 +59,7 @@ export class PaginatorComponent implements OnInit, AfterViewInit {
    */
   configurarPaginador( response: PaginatorResponse ): void {
     // Establecemos los valores de las variables con los datos de la Input
+    console.log(response);
     this.pageSizeOptions = [ 5, 10, 15, 20 ];
     this.length = this.configPaginator.total;
     this.pageSize = Number(this.configPaginator.per_page);

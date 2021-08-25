@@ -22,7 +22,7 @@ export class VentasIndexComponent implements OnInit {
   // Observable para manejar paginación
   inputPaginator: Subject<any>;
 
-  selected = 'A';
+  selected = '';
 
   // Rango de fechas del datepicker
   range = new FormGroup({

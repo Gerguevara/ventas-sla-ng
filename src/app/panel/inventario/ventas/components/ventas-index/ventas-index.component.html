@@ -12,9 +12,9 @@
             <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Fecha de fin inválida</mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill" style="width: 40%; margin-left: 10px;">
-            <mat-label>Select an option</mat-label>
+            <mat-label>Filtrar por estado</mat-label>
             <mat-select [(value)]="selected">
-                <mat-option value="A">Todas</mat-option>
+                <mat-option value="">Todas</mat-option>
                 <mat-option value="P">Pendiente</mat-option>
                 <mat-option value="E">En Curso</mat-option>
                 <mat-option value="F">Finalizado</mat-option>
