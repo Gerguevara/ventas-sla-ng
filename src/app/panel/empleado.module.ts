@@ -13,6 +13,7 @@ import { CoreModule } from '@core/core.module';
 
 import { EmpleadoComponent } from './empleado.component';
 import { EmpleadoRoutingModule } from './empleado-routing.module';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { EmpleadoRoutingModule } from './empleado-routing.module';
     MatIconModule,
     MatToolbarModule,
     MatButtonModule,
+    MatMenuModule,
     MatListModule,
     MatExpansionModule,
     NgxPermissionsModule.forChild()
