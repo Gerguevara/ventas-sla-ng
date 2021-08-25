@@ -1,14 +1,12 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, LOCALE_ID, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { environment } from '@environments/environment';
 import { DialogVentaComponent } from '../dialog-venta/dialog-venta.component';
 import { Orden } from '../../../../../core/Models/orden.model';
 import { VentasService } from '../../../../../core/services/ventas.service';
-import { PaginatorComponent } from '../../../../../tools/components/paginator/paginator.component';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { debounceTime, map, startWith, switchMap } from 'rxjs/operators';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'sla-ventas-index',
@@ -28,12 +26,13 @@ export class VentasIndexComponent implements OnInit {
 
   // Rango de fechas del datepicker
   range = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl()
+    start: new FormControl('', Validators.required),
+    end: new FormControl('', Validators.required)
   });
 
   constructor( private dialog: MatDialog,
-               private ventasService: VentasService ) {
+               private ventasService: VentasService,
+               @Inject(LOCALE_ID) public locale: string ) {
                 this.inputPaginator = new Subject<any>();
                }
 
@@ -72,7 +71,9 @@ export class VentasIndexComponent implements OnInit {
   }
 
   filtrarVentas(): void {
-    this.ventasService.filtrarVentas('').subscribe((response: any) => {
+    const fechaInicio = formatDate(this.range.get('start')?.value, 'yyyy-MM-dd HH:mm:ss', this.locale);
+    const fechaFin = formatDate(this.range.get('end')?.value, 'yyyy-MM-dd HH:mm:ss', this.locale);
+    this.ventasService.filtrarVentas( this.selected, fechaInicio?.toString(), fechaFin ).subscribe((response: any) => {
       this.inputPaginator.next(response);
     });
   }

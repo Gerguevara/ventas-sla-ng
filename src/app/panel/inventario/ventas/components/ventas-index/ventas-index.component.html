@@ -20,7 +20,7 @@
                 <mat-option value="F">Finalizado</mat-option>
             </mat-select>
         </mat-form-field>
-        <button mat-stroked-button color="primary" style="margin-left: 10px; margin-bottom: 10px;">Filtrar</button>
+        <button mat-stroked-button [disabled]="range.invalid" (click)="filtrarVentas()" color="primary" style="margin-left: 10px; margin-bottom: 10px;">Filtrar</button>
     </div>
     <mat-divider></mat-divider>
     <mat-table [dataSource]="dataSource">
