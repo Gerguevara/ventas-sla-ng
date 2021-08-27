@@ -66,8 +66,10 @@ export class VentasIndexComponent implements OnInit {
    * @param venta
    * @return void
    */
-  mostrarVenta( venta: any ): void {
-    this.dialog.open( DialogVentaComponent, { width: '50vw', data: venta } );
+  mostrarVenta( venta: Orden ): void {
+    this.ventasService.obtenerVenta( venta ).subscribe((response: Orden) => {
+      this.dialog.open( DialogVentaComponent, { width: '50vw', data: response } );
+    });
   }
 
   filtrarVentas(): void {
