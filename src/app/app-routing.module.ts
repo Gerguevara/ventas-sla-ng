@@ -10,7 +10,7 @@ const routes: Routes = [
     loadChildren: () => import('./cliente/cliente.module').then(m => m.ClienteModule)
   },
   {
-    path: 'autentication',
+    path: 'auth',
     loadChildren: () => import('./autenticacion/autenticacion.module').then(m => m.AutenticacionModule),
     canLoad: [LoginGuard]
   },

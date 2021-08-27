@@ -1,18 +1,19 @@
-<mat-list>
-  <mat-expansion-panel matLine>
-    <mat-expansion-panel-header>Cambiar email</mat-expansion-panel-header>
-    <sla-email></sla-email>
-  </mat-expansion-panel>
-  <mat-divider></mat-divider>
-  <mat-expansion-panel matLine>
-    <mat-expansion-panel-header>Cambiar contraseña</mat-expansion-panel-header>
-    <sla-password></sla-password>
-  </mat-expansion-panel>
-  <mat-divider></mat-divider>
-  <mat-expansion-panel matLine>
-    <mat-expansion-panel-header>Seguridad a dos pasos</mat-expansion-panel-header>
-    <sla-twofa></sla-twofa>
-  </mat-expansion-panel>
-  <mat-divider></mat-divider>
-</mat-list>
-config works
+<div class="header"><h1><mat-icon>settings</mat-icon> Configuración</h1></div>
+<mat-card>
+  <mat-card-content>
+      <mat-expansion-panel matLine class="mat-elevation-z0">
+        <mat-expansion-panel-header>Cambiar email</mat-expansion-panel-header>
+        <sla-email
+          [user]="user"
+          (emailChange)="emailChangeHandler($event)"></sla-email>
+      </mat-expansion-panel>
+      <mat-expansion-panel matLine class="mat-elevation-z0">
+        <mat-expansion-panel-header>Cambiar contraseña</mat-expansion-panel-header>
+        <sla-password [user]="user"></sla-password>
+      </mat-expansion-panel>
+      <mat-expansion-panel matLine class="mat-elevation-z0">
+        <mat-expansion-panel-header>Seguridad a dos pasos</mat-expansion-panel-header>
+        <sla-twofa [user]="user"></sla-twofa>
+      </mat-expansion-panel>
+  </mat-card-content>
+</mat-card>

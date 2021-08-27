@@ -35,8 +35,14 @@ export abstract class PreflightService{
       } else {
         token = localStorage.getItem('token-registro');
       }
-      const authHeader = `Bearer ${token}`;
-      headers.set('Authorization',authHeader);
+      const tokenType = localStorage.getItem('tokenType');
+      let authHeader = '';
+      if(tokenType){
+        authHeader = `${tokenType} ${token}`;
+      } else {
+        authHeader = `NO SE TRAJO TOKEN`;
+      }
+      headers=headers.set('Authorization',authHeader);
     }
     httpOptions['headers']=headers;
     if(params){

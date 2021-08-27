@@ -1,3 +1,5 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfigTab } from '@tools/abstracts/config-tab.abstract';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -5,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './twofa.component.html',
   styleUrls: ['./twofa.component.scss']
 })
-export class TwofaComponent implements OnInit {
+export class TwofaComponent extends ConfigTab implements OnInit {
 
-  constructor() { }
+  constructor(
+    protected matSnackBar: MatSnackBar
+    ) {
+    super(matSnackBar);
+  }
 
   ngOnInit(): void {
   }

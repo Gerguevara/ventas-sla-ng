@@ -1,3 +1,15 @@
-<form>
-
+<form [formGroup]="formGroup">
+  <h3>Tu actual correo:</h3>
+  <p>{{getCurrentMail()}}</p>
+  <mat-form-field appearance="fill">
+    <mat-label>Ingresa tu nuevo correo</mat-label>
+    <input matInput placeholder="example@sla.com" formControlName="new_email" required>
+    <mat-error *ngIf="newEmailControl.invalid">{{getErrorMessage(newEmailControl)}}</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Confirma tu nuevo correo</mat-label>
+    <input matInput placeholder="example@sla.com" formControlName="new_email_confirmation" required>
+    <mat-error *ngIf="newEmailConfirmationControl.invalid">{{getErrorMessage(newEmailConfirmationControl)}}</mat-error>
+  </mat-form-field>
+  <button mat-button (click)="changeMailHandler($event)"><mat-icon>email</mat-icon>Cambiar correo</button>
 </form>

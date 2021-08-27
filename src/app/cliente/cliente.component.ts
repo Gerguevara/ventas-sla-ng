@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
@@ -42,7 +43,8 @@ export class ClienteComponent implements OnInit {
     private dialog: MatDialog,
     private permissions: NgxPermissionsService,
     private breakpointObserver: BreakpointObserver,
-    private indexService: IndexService
+    private indexService: IndexService,
+    private matSnackBar: MatSnackBar,
     ) {
     this.sidenavMode();
   }
@@ -70,12 +72,19 @@ export class ClienteComponent implements OnInit {
 
   // Método para cerrar sesión
   cerrarSesionClick(): void {
-    this.authCliente.submitLogout().subscribe((response: any) => {
-      this.permissions.flushPermissions();
-      localStorage.removeItem('token');
-      localStorage.removeItem('rol');
-      this.router.navigate([this.router.url]);
-    });
+    this.authCliente.submitLogout().subscribe(
+      {
+        next: (response: any) => {
+          this.permissions.flushPermissions();
+          localStorage.removeItem('token');
+          localStorage.removeItem('rol');
+          this.router.navigate([this.router.url]);
+        },
+        error: (error: any)=>{
+          console.error(error);
+          this.matSnackBar.open("Error logging out, contact admin", "Close");
+        }
+      });
   }
 
   mostrarPerfil(): void {

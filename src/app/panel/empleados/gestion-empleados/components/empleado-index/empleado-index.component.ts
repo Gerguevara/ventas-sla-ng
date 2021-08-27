@@ -47,7 +47,7 @@ export class EmpleadoIndexComponent implements OnInit {
     error: (error: any)=>{
       console.error('error occurred retrieving empleados, please check log: ');
       console.error(error);
-    }
+    },
   }
 
   viewObserver: PartialObserver<PerfilEmpleado> ={

@@ -23,8 +23,7 @@ const routes: Routes = [
       },
       {
         path:'config',
-        loadChildren: () => import('./index-producto/index-producto.module').then(m => m.IndexProductoModule),
-        canLoad: [AuthGuard]
+        loadChildren: () => import('./config-usuario/config-usuario.module').then(m => m.ConfigUsuarioModule),
       },
     ]
   },

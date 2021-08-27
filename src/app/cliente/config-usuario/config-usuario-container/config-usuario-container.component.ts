@@ -1,4 +1,9 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
+import { PerfilUsuario } from '@models/perfil.usuario.model';
+import { UsuarioService } from '@global-services/usuario.service';
+import { PerfilUsuarioService } from '@global-services/perfil-usuario.service';
+import { PartialObserver } from 'rxjs';
 
 @Component({
   selector: 'sla-config-usuario-container',
@@ -7,9 +12,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfigUsuarioContainerComponent implements OnInit {
 
-  constructor() { }
+  user!: PerfilUsuario;
+  constructor(
+    protected perfilUsuarioService: PerfilUsuarioService,
+    protected usuarioService: UsuarioService,
+    private matSnackBar: MatSnackBar
+    ) {
+      this.getCurrentUser();
+    }
+
+  changeEmailObserver: PartialObserver<{resultado: boolean;mensaje: string;}>= {
+    next: (response: {resultado: boolean;mensaje: string;}) => {this.matSnackBar.open(response.mensaje,'Cerrar',{duration:3000})},
+  }
 
   ngOnInit(): void {
+  }
+
+  getCurrentUser(){
+    this.perfilUsuarioService.getCurrentUserProfile().subscribe({
+      next: (perfil: PerfilUsuario)=> this.user = perfil,
+    })
+  }
+
+  emailChangeHandler($event: string){
+    this.usuarioService.patchUser({ email: $event }).subscribe(this.changeEmailObserver);
   }
 
 }

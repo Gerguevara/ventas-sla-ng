@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LineaPlanilla } from '@core/Models/linea.planilla.model';
-import { Planilla } from '@core/Models/planilla.model';
+import { LineaPlanilla } from '@models/linea.planilla.model';
+import { Planilla } from '@models/planilla.model';
 import { environment } from '@environments/environment';
 import { Observable } from 'rxjs';
 

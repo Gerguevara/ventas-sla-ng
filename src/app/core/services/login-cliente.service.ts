@@ -1,42 +1,25 @@
-import { PreflightService } from '@tool-services/preflight-service';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Usuario } from '@models/usuario.model';
 import { environment } from '@environments/environment';
-
-export interface LoginResponse {
-  response: string;
-  rol: string;
-  token: string;
-  tokenType: string;
-  user: Usuario;
-}
-
-export interface SignUpResponse {
-  user: string;
-  token: string;
-  tokenType: string;
-  mensaje: string;
-}
-
-export interface EmailVerificationResponse {
-  mensaje: string;
-}
+import { LoginResponse } from '@tool-models/LoginResponse';
+import { SignUpResponse } from '@tool-models/SignUpResponse';
+import { EmailVerificationResponse } from '@tool-models/EmailVerificationResponse';
+import { PreflightService } from '@tool-services/preflight-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginClienteService extends PreflightService{
 
-  urlLogin = `${environment.apiUrl}` + 'login';
-  urlLogout = `${environment.apiUrl}` + 'logout';
-  urlSignUp = `${environment.apiUrl}` + 'register';
-  urlEmailVerification = `${environment.apiUrl}` + 'verifyEmail/';
-  urlForgotPass = `${environment.apiUrl}` + 'forgotPassword';
-  urlResetPass = `${environment.apiUrl}` + 'resetPassword';
-  urlTokenVerify = `${environment.apiUrl}` + 'tokenVerify';
+  urlLogin = `${environment.apiUrl}login`;
+  urlLogout = `${environment.apiUrl}logout`;
+  urlSignUp = `${environment.apiUrl}register`;
+  urlEmailVerification = `${environment.apiUrl}verifyEmail/`;
+  urlForgotPass = `${environment.apiUrl}forgotPassword`;
+  urlResetPass = `${environment.apiUrl}resetPassword`;
+  urlTokenVerify = `${environment.apiUrl}tokenVerify`;
 
   constructor(private http: HttpClient ) {
     super();
@@ -82,7 +65,7 @@ export class LoginClienteService extends PreflightService{
   }
 
   emailVerification( id: string, hash: string ): Observable<EmailVerificationResponse> {
-    const url = this.urlEmailVerification + id + '/' + hash;
+    const url = `${this.urlEmailVerification}${id}/${hash}`;
     return this.http.get<EmailVerificationResponse>(url, this.setOptions(true,true));
   }
 

@@ -3,7 +3,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 import { DialogMessageComponent } from '@tool-components/dialog-message/dialog-message.component';
-import { LoginClienteService, EmailVerificationResponse } from '@global-services/login-cliente.service';
+import { EmailVerificationResponse } from '@tool-models/EmailVerificationResponse';
+import { LoginClienteService } from '@global-services/login-cliente.service';
 
 export interface DialogData {
   message: string;

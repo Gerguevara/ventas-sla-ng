@@ -20,16 +20,22 @@ export class AuthGuard implements CanLoad {
       const token = localStorage.getItem('token');
       if ( token ) {
         return this.auth.verificarToken().pipe(
-          map((response: boolean) => {
-            console.log(response);
-            if (response) {
-              return response;
+          map((response: boolean | string) => {
+            if(typeof response === "boolean"){
+              if (response) {
+                return response;
+              } else {
+                localStorage.removeItem('token');
+                localStorage.removeItem('rol');
+                // Redireccionamos a index en caso de resultado invalido
+                return this.router.createUrlTree(['/']);
+              }
             } else {
-              localStorage.removeItem('token');
-              localStorage.removeItem('rol');
-              console.error('invalid token')
-              // Redireccionamos a index en caso de resultado invalido
-              return this.router.createUrlTree(['/']);
+              if(response === "2fa"){
+                return this.router.createUrlTree(['/confirm']);
+              } else {
+                return false;
+              }
             }
           }));
       } else {

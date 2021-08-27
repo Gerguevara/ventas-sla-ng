@@ -20,6 +20,8 @@ export const environment = {
     categorias: 'categorias',
     etiquetas: 'etiquetas',
     index: 'index',
+    perfilUsuario: 'perfilUsuario',
+    usuarios: 'usuarios',
   },
   patterns:
   {
