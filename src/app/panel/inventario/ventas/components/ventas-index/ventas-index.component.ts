@@ -1,4 +1,4 @@
-import { Component, OnInit, LOCALE_ID, Inject } from '@angular/core';
+import { Component, OnInit, LOCALE_ID, Inject, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogVentaComponent } from '../dialog-venta/dialog-venta.component';
@@ -14,7 +14,7 @@ import { environment } from '@environments/environment';
   templateUrl: './ventas-index.component.html',
   styleUrls: ['./ventas-index.component.scss']
 })
-export class VentasIndexComponent implements OnInit {
+export class VentasIndexComponent implements OnInit, AfterViewInit {
 
   // declaraciones para la tabla
   displayedColumns: string[] = ['id', 'estado', 'subtotal', 'total', 'fecha'];
@@ -25,7 +25,7 @@ export class VentasIndexComponent implements OnInit {
   urlData = `${environment.apiUrl}${this.endpoint}`;
   params = '&estado=&start=$end=';
   // Observable para manejar paginación
-  inputParams$: Subject<string>;
+  inputParams$: Subject<string> = new Subject<string>();
 
   selected = '';
 
@@ -38,16 +38,12 @@ export class VentasIndexComponent implements OnInit {
   constructor( private dialog: MatDialog,
                private ventasService: VentasService,
                @Inject(LOCALE_ID) public locale: string ) {
-                this.inputParams$ = new Subject<string>();
                }
-
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.inputParams$.next(this.params);
-    /*this.ventasService.filtrarVentas('', '', '').subscribe((response: any) => {
-      this.inputPaginator.next(response);
-      console.log(response);
-    });*/
   }
+
+  ngOnInit(): void { }
 
   /**
    * @ngdoc method
@@ -83,9 +79,6 @@ export class VentasIndexComponent implements OnInit {
     const fechaInicio = formatDate(this.range.get('start')?.value, 'yyyy-MM-dd HH:mm:ss', this.locale);
     const fechaFin = formatDate(this.range.get('end')?.value, 'yyyy-MM-dd HH:mm:ss', this.locale);
     this.inputParams$.next(`&estado=${this.selected}&start=${fechaInicio}$end=${fechaFin}`);
-    /*this.ventasService.filtrarVentas( this.selected, fechaInicio?.toString(), fechaFin ).subscribe((response: any) => {
-      this.inputPaginator.next(response);
-    });*/
   }
 
 }
