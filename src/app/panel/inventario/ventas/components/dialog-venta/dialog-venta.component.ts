@@ -2,6 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Orden } from '../../../../../core/Models/orden.model';
+import { Producto } from '@models/producto.model';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'sla-dialog-venta',
@@ -11,6 +13,7 @@ import { Orden } from '../../../../../core/Models/orden.model';
 export class DialogVentaComponent implements OnInit {
 
   ventaForm: FormGroup;
+  listaOrdenes!: Producto[];
 
   constructor( private formBuilder: FormBuilder, public dialogRef: MatDialogRef<DialogVentaComponent>,
                @Inject(MAT_DIALOG_DATA) public orden: Orden ) {
@@ -41,6 +44,7 @@ export class DialogVentaComponent implements OnInit {
     this.ventaForm.get('apellidos')?.setValue(cliente?.apellidos);
     this.ventaForm.get('direccion')?.setValue(cliente?.direccion);
     this.ventaForm.get('telefono')?.setValue(cliente?.telefono);
+    this.listaOrdenes = orden.productos ? orden.productos : [];
   }
 
 }

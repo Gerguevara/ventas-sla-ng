@@ -25,6 +25,9 @@
             <strong>Datos de Orden</strong>
         </h3>
         <mat-divider></mat-divider>
+        <mat-list role="list">
+            <mat-list-item role="listitem" *ngFor="let item of listaOrdenes"><strong>Producto: </strong> {{ item.nombre_producto }} <strong> - Precio: </strong> {{ item.precio | currency }} </mat-list-item>
+        </mat-list>
     </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
