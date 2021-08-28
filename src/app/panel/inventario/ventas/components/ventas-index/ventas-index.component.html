@@ -55,7 +55,7 @@
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row [class.demo-row-is-clicked]="clickedRows.has(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <mat-row (click)="mostrarVenta(row)" [class.demo-row-is-clicked]="clickedRows.has(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
-    <app-paginator [inputPaginator]="inputPaginator" (pageDataChange$)="addDataToTable($event)"></app-paginator>
+    <app-paginator [urlData]="urlData" [inputParams$]="inputParams$" (pageDataChange$)="addDataToTable($event)"></app-paginator>
 </mat-card>

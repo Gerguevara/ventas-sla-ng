@@ -3,7 +3,7 @@ import { PageEvent } from '@angular/material/paginator';
 
 import { PaginatorResponse } from '@models/resultados/resultado-paginator.model';
 import { PaginatorService } from '@tool-services/paginator.service';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-paginator',
@@ -17,7 +17,7 @@ export class PaginatorComponent implements OnInit, AfterViewInit {
   // Esta es para parámetros adicionales opcionales
   @Input() params = '';
   // Input opcional de objeto de tipo PaginatroResponse para que el componente lo pagine
-  @Input() inputPaginator!: Subject<PaginatorResponse>;
+  @Input() inputParams$!: Subject<any>;
   configPaginator!: PaginatorResponse;
   pageSizeOptions!: number[];
   length!: number;
@@ -32,19 +32,39 @@ export class PaginatorComponent implements OnInit, AfterViewInit {
   constructor( private paginatorService: PaginatorService ) { }
 
   ngOnInit(): void {
-    if ( this.inputPaginator ) {
-      this.inputPaginator.subscribe(( objeto: PaginatorResponse ) => {
-        this.configPaginator = objeto;
-        this.configurarPaginador( objeto );
-      });
-    } else {
-      if ( this.urlData ) {
-        this.paginatorService.getAllData( this.urlData, 5, this.params ).then((response: PaginatorResponse) => {
-          this.configPaginator = response;
-          this.configurarPaginador( response );
+    // Verificamos que exista la url de los datos al iniciar el componente
+    if ( this.urlData ) {
+      // Verificamos si se nos manda un obsrevable con parámetros que cambian constantemente
+      if ( this.inputParams$ ) {
+        // De ser así nos suscribimos a los cambios y obtenemos los datos del API cada vez que
+        // cambien dichos parámetros
+        this.inputParams$.subscribe((param: string) => {
+          this.params = param;
+          // Invocamos el método para obtener los datos y configurar el paginador
+          this.obtenerDatos( this.urlData );
         });
+      } else {
+        // De lo contrario invocamos el método enviando los parámetros que deben venir por defecto
+        this.obtenerDatos( this.urlData );
       }
     }
+  }
+
+  /**
+   * @ngdoc method
+   * @name obtenerDatos
+   * @description
+   * Obtiene todos los datos de la tabla al iniciar el componente, con su configuración de paginación
+   * e invoca le método para configurar el paginador con fichos datos
+   * @param urlData: string
+   * @param params: string
+   * @returns void
+   */
+  obtenerDatos( urlData: string ): void {
+    this.paginatorService.getAllData( urlData, 5, this.params ).then((response: PaginatorResponse) => {
+      this.configPaginator = response;
+      this.configurarPaginador( response );
+    });
   }
 
   /**
@@ -59,7 +79,6 @@ export class PaginatorComponent implements OnInit, AfterViewInit {
    */
   configurarPaginador( response: PaginatorResponse ): void {
     // Establecemos los valores de las variables con los datos de la Input
-    console.log(response);
     this.pageSizeOptions = [ 5, 10, 15, 20 ];
     this.length = this.configPaginator.total;
     this.pageSize = Number(this.configPaginator.per_page);

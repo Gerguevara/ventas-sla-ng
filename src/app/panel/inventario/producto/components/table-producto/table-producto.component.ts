@@ -65,4 +65,18 @@ export class TableProductoComponent implements OnInit {
     this.dialog.open( DialogEliminarProductoComponent, { data: element } );
   }
 
+  /**
+   * @ngdoc method
+   * @name buscarProducto
+   * @description
+   * Método que se ejecuta cuando el usuario ingresa un término de búsqueda
+   * de forma simultanea, envía ese valor al api y recoge el resultado paginado
+   * y lo pinta en la tabla
+   * @param input: string
+   * @return void
+   */
+  buscarProducto( input: string ): void {
+
+  }
+
 }
