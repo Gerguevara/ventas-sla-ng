@@ -14,7 +14,7 @@
         <mat-form-field appearance="fill" style="width: 40%; margin-left: 10px;">
             <mat-label>Filtrar por estado</mat-label>
             <mat-select [(value)]="selected">
-                <mat-option value="">Todas</mat-option>
+                <mat-option value="A">Todas</mat-option>
                 <mat-option value="P">Pendiente</mat-option>
                 <mat-option value="E">En Curso</mat-option>
                 <mat-option value="F">Finalizado</mat-option>
@@ -57,5 +57,5 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row (click)="mostrarVenta(row)" [class.demo-row-is-clicked]="clickedRows.has(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
-    <app-paginator [inputPaginator]="inputPaginator" (pageDataChange$)="addDataToTable($event)"></app-paginator>
+    <app-paginator [urlData]="urlData" [inputParams$]="inputParams$" (pageDataChange$)="addDataToTable($event)"></app-paginator>
 </mat-card>
