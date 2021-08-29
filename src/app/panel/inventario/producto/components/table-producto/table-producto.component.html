@@ -1,10 +1,7 @@
 <div>
-    <mat-form-field class="example-form-field" appearance="fill">
-        <mat-label>Buscar</mat-label>
-        <input matInput type="text">
-        <button matSuffix mat-icon-button aria-label="Clear">
-      <mat-icon>search</mat-icon>
-    </button>
+    <mat-form-field [formGroup]="filtro" appearance="fill" style="width: 40%;">
+        <mat-label>Nombre, descripción, etiqueta ...</mat-label>
+        <input matInput formControlName='valorBusqueda' type="text">
     </mat-form-field>
     <mat-table [dataSource]="dataSource">
 
@@ -46,6 +43,6 @@
         <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="seleccionarProducto(row)"></mat-row>
     </mat-table>
 
-    <app-paginator [urlData]="url" [params]="params" (pageDataChange$)="addDataToTable($event)"></app-paginator>
+    <app-paginator [urlData]="url" [inputParams$]="inputParams$" (pageDataChange$)="addDataToTable($event)"></app-paginator>
 
 </div>
