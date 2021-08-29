@@ -75,6 +75,13 @@ export class VentasIndexComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * @ngdoc method
+   * @name filtrarVentas
+   * @description
+   * Obtiene los valores del rango de fechas ingresado en el DateRangePicker y notifica al paginador
+   * a través del observable el cambio de los parámetros para que filtre los datos.
+   */
   filtrarVentas(): void {
     const fechaInicio = formatDate(this.range.get('start')?.value, 'yyyy-MM-dd HH:mm:ss', this.locale);
     const fechaFin = formatDate(this.range.get('end')?.value, 'yyyy-MM-dd HH:mm:ss', this.locale);

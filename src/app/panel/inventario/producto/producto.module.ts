@@ -32,6 +32,8 @@ import { ProductoService } from '@global-services/producto.service';
 import { ProductoGeneralFormComponent } from './components/form-producto/components/producto-general-form/producto-general-form.component';
 import { ProductoDesignFormComponent } from './components/form-producto/components/producto-design-form/producto-design-form.component';
 import { ProductoInventarioFormComponent } from './components/form-producto/components/producto-inventario-form/producto-inventario-form.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -63,6 +65,8 @@ import { ProductoInventarioFormComponent } from './components/form-producto/comp
     MatChipsModule,
     MatExpansionModule,
     MatProgressSpinnerModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
     MatAutocompleteModule,
     NgxPermissionsModule.forChild()
   ],
