@@ -204,10 +204,11 @@ export class RolFormComponent implements OnInit {
       });
     } else {
       // De lo contrario, se crea un nuevo rol
+      const departamentoSeleccionado = this.rolForm.get('departamento')?.value;
       const newRol = {
         name: this.rolForm.get('nombre')?.value,
         descripcion: this.rolForm.get('descripcion')?.value,
-        id_departamento: this.rolForm.get('departamento')?.value,
+        id_departamento: departamentoSeleccionado.id,
         permissions: this.rolForm.get('permissions')?.value
       };
       this.roleService.crearRol( newRol as Rol ).subscribe((response: any) => {

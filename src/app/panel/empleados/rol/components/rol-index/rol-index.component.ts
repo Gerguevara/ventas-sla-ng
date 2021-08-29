@@ -44,14 +44,17 @@ export class RolIndexComponent implements OnInit {
   }
 
   crearRol(): void{
-    this.formDialog.open( RolFormComponent );
+    const crearRolDialog = this.formDialog.open( RolFormComponent );
+    crearRolDialog.afterClosed().subscribe((rol: Rol) => {
+      this.dataSource.data.push(rol);
+    });
   }
 
   eliminarRol( id: number ): void {
     this.formDialog.open( DialogSpinnerComponent );
     this.roles.deleteRol( id ).subscribe((response: any) => {
       this.formDialog.closeAll();
-      this.snackBar.open(response.mensaje, 'Cerrar', {
+      this.snackBar.open('El rol se ha eliminado exitosamente', 'Cerrar', {
         duration: 5000
       });
     }, (error: any) => {
