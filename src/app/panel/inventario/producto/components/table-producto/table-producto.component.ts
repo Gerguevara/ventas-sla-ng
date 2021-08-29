@@ -11,9 +11,8 @@ import { ProductoService } from '@global-services/producto.service';
 import { DialogEliminarProductoComponent } from '../dialog-eliminar-producto/dialog-eliminar-producto.component';
 import { environment } from '@environments/environment';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { formatDate } from '@angular/common';
 import { Subject } from 'rxjs';
-import { tap, debounceTime } from 'rxjs/operators';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-table-producto',
@@ -33,7 +32,7 @@ export class TableProductoComponent implements OnInit, AfterViewInit {
 
   // Rango de fechas del datepicker
   filtro = new FormGroup({
-    valorBusqueda: new FormControl('', Validators.required),
+    valorBusqueda: new FormControl(''),
   });
 
   get valorBusquedaControl(): AbstractControl {

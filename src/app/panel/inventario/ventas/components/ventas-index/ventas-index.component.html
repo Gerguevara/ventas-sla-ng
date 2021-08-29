@@ -11,6 +11,7 @@
             <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Fecha de inicio inválida</mat-error>
             <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Fecha de fin inválida</mat-error>
         </mat-form-field>
+        <button mat-stroked-button *ngIf="limpiarFiltro" (click)="resetFiltro()" color='primary' style="margin-left: 10px; margin-bottom: 10px;">Limpiar Filtro</button>
         <mat-form-field appearance="fill" style="width: 40%; margin-left: 10px;">
             <mat-label>Filtrar por estado</mat-label>
             <mat-select [(value)]="selected">
@@ -20,7 +21,7 @@
                 <mat-option value="F">Finalizado</mat-option>
             </mat-select>
         </mat-form-field>
-        <button mat-stroked-button [disabled]="range.invalid" (click)="filtrarVentas()" color="primary" style="margin-left: 10px; margin-bottom: 10px;">Filtrar</button>
+        <button mat-stroked-button (click)="filtrarVentas()" color="primary" style="margin-left: 10px; margin-bottom: 10px;">Filtrar</button>
     </div>
     <mat-divider></mat-divider>
     <mat-table [dataSource]="dataSource">
