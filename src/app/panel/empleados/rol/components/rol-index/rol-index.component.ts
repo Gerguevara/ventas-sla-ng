@@ -38,15 +38,25 @@ export class RolIndexComponent implements OnInit {
   }
 
   verRol( rol: Rol ): void {
-    this.formDialog.open(
+    const verRolDialog = this.formDialog.open(
       RolFormComponent, { data: rol }
     );
+    verRolDialog.afterClosed().subscribe(( rolUpdate?: Rol) => {
+      if ( rolUpdate ) {
+        this.dataSource.data.splice( rolUpdate.id - 1, 1 );
+        this.dataSource.data.push( rolUpdate );
+        this.dataSource.data = this.dataSource.data;
+      }
+    });
   }
 
   crearRol(): void{
     const crearRolDialog = this.formDialog.open( RolFormComponent );
-    crearRolDialog.afterClosed().subscribe((rol: Rol) => {
-      this.dataSource.data.push(rol);
+    crearRolDialog.afterClosed().subscribe((rolCreate: Rol) => {
+      if ( rolCreate ) {
+        this.dataSource.data.push( rolCreate );
+        this.dataSource.data = this.dataSource.data;
+      }
     });
   }
 
@@ -54,6 +64,8 @@ export class RolIndexComponent implements OnInit {
     this.formDialog.open( DialogSpinnerComponent );
     this.roles.deleteRol( id ).subscribe((response: any) => {
       this.formDialog.closeAll();
+      this.dataSource.data.splice( id - 1, 1 );
+      this.dataSource.data = this.dataSource.data;
       this.snackBar.open('El rol se ha eliminado exitosamente', 'Cerrar', {
         duration: 5000
       });
