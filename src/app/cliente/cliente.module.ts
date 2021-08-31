@@ -16,6 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatMenuModule,
     MatInputModule,
     MatSnackBarModule,
+    NgxPermissionsModule.forChild()
   ]
 })
 export class ClienteModule { }
