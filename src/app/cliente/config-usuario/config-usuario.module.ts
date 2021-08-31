@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { EmailComponent } from './components/email/email.component';
 import { PasswordComponent } from './components/password/password.component';
@@ -35,6 +36,7 @@ import { ConfigUsuarioContainerComponent } from './config-usuario-container/conf
     MatCardModule,
     MatButtonModule,
     MatIconModule,
+    MatSlideToggleModule,
   ]
 })
 export class ConfigUsuarioModule { }

@@ -64,9 +64,11 @@ export class LoginComponent {
         const tokenType = 'Bearer';
         let url = ['/'];
         if(response.locked===1){
+          //no es un Item de bloqueo, es de funcionamiento de guard
+          //si el usuario lo cambia en DevTools, no se desbloquea el 2fa, sino que se rompe
+          localStorage.setItem('unblockToken', response.token);
           url = [
             '/',
-            'auth',
             'confirm'
           ]
         }

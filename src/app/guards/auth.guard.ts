@@ -28,11 +28,13 @@ export class AuthGuard implements CanLoad {
                 localStorage.removeItem('token');
                 localStorage.removeItem('rol');
                 // Redireccionamos a index en caso de resultado invalido
-                return this.router.createUrlTree(['/']);
+                this.router.navigate(['/']);
+                return false;
               }
             } else {
               if(response === "2fa"){
-                return this.router.createUrlTree(['/confirm']);
+                this.router.navigate(['/confirm']);
+                return true;
               } else {
                 return false;
               }

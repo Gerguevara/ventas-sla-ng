@@ -1,12 +1,15 @@
+<a [routerLink]="['/']">Home</a>
 <mat-card>
-  <form>
+  <form
+    [formGroup]="TOTPForm"
+    (ngSubmit)="onSubmit($event)">
     <mat-form-field appearance="standard">
       <mat-label>Ingresa el codigo de tu aplicacion</mat-label>
       <input matInput
-      [formControl]="codeControl"
+      formControlName="code"
       [placeholder]="codePlaceholder">
     </mat-form-field>
-    <button mat-button>Enviar</button>
+    <button mat-button type="submit">Enviar</button>
   </form>
 </mat-card>
 

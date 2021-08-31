@@ -22,9 +22,13 @@
         <!-- fin icon trigger para menu #menu -->
         <!-- definicion de contenido de menu #menu -->
         <mat-menu #menu="matMenu">
-            <a mat-menu-item style="margin-right: 10px;" (click)="mostrarPerfil()" *ngIf="rolAdmin" color="accent" class="example-icon">
+            <a mat-menu-item style="margin-right: 10px;" (click)="mostrarPerfil()" *ngIf="!iniciarSesion" color="accent" class="example-icon">
                 <mat-icon>perm_identity</mat-icon>
                 <ng-container *ngIf="window.matchMedia('(min-width: 700px)').matches"> Mi Perfil</ng-container>
+            </a>
+            <a mat-menu-item style="margin-right: 10px;" [routerLink]="['/config']" *ngIf="!iniciarSesion" color="accent" class="example-icon">
+                <mat-icon>settings</mat-icon>
+                <ng-container *ngIf="window.matchMedia('(min-width: 700px)').matches"> Configuración</ng-container>
             </a>
             <a mat-menu-item style="margin-right: 10px;" [routerLink]="['/panel/inventario/']" *ngIf="rolAdmin" color="accent" class="example-icon">
                 <mat-icon>admin_panel_settings</mat-icon>

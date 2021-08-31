@@ -22,6 +22,7 @@ export const environment = {
     index: 'index',
     perfilUsuario: 'perfilUsuario',
     usuarios: 'usuarios',
+    twofa: '2fa',
   },
   patterns:
   {

@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { Observable } from 'rxjs';
-import { Orden } from '../Models/orden.model';
+import { Orden } from '@models/orden.model';
 
 const token = 'Bearer ' + localStorage.getItem('token');
 const headers = {

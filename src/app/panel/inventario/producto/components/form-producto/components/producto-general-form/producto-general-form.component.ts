@@ -4,7 +4,6 @@ import { Resultado } from '@models/resultados/resultado.model';
 import { CategoriaService } from '@global-services/categoria.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
 import { Categoria } from '@core/models/categoria.model';
 
 @Component({

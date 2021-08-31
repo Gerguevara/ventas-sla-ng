@@ -1,1 +1,16 @@
-<p>twofa works!</p>
+<form
+  [formGroup]="formGroup"
+  (ngSubmit)="submitHandler()">
+  <mat-slide-toggle
+    [checked]="isChecked"
+    (change)="twoFaSwitchHandler($event)"></mat-slide-toggle>
+  <div *ngIf="isChecked" [innerHTML]="currentUserQr" class="qr-code"></div>
+  <div *ngIf="isChecked" [innerHTML]="currentUserCodes" class="recovery-codes"></div>
+  Almacena tus codigos de recuperacion en un lugar seguro
+  <mat-form-field appearance="fill">
+    <mat-label>Ingresa el código de tu aplicación de autenticación</mat-label>
+    <input matInput placeholder="example@sla.com" formControlName="new_email" required>
+    <mat-error *ngIf="codeControl.invalid">{{getErrorMessage(codeControl)}}</mat-error>
+  </mat-form-field>
+  <button mat-button type="submit"><mat-icon>email</mat-icon>Cambiar correo</button>
+</form>

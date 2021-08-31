@@ -17,11 +17,15 @@ export class EmailComponent extends ConfigTab implements OnInit {
     protected matSnackBar: MatSnackBar,
     ) {
       super(matSnackBar);
-      this.formGroup = formBuilder.group({
-        new_email : [],
-        new_email_confirmation : [],
-      },
-      { validators: this.emailConfirmation as ValidatorFn } as AbstractControlOptions)
+      this.formGroup = formBuilder.group(
+        {
+          new_email : [],
+          new_email_confirmation : [],
+        },
+        {
+          validators: this.emailConfirmation as ValidatorFn
+        } as AbstractControlOptions
+      )
   }
 
   ngOnInit(): void {
@@ -39,19 +43,6 @@ export class EmailComponent extends ConfigTab implements OnInit {
 
   getCurrentMail(): string{
     return this.user? this.user.email : '';
-  }
-
-  getErrorMessage(control: FormControl){
-    let message = '';
-    let { errors } = control;
-    if(errors){
-      const errorsKeys = Object.keys(errors);
-      errorsKeys.forEach((key: string) => {
-        const errorMessage = String(key);
-        message = message.concat(`${errorMessage} `);
-      });
-    }
-    return message;
   }
 
   emailConfirmation(c: AbstractControl): ValidationErrors | null {

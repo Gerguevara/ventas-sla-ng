@@ -20,7 +20,8 @@ export class RolGuard implements CanLoad {
         return true;
        } else {
         // Si el rol no es de Empleado, regresar a index
-        return this.router.createUrlTree(['/']);
+        this.router.navigate(['/']);
+        return false;
        }
   }
 }

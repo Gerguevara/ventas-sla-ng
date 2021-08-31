@@ -78,6 +78,9 @@ export class ClienteComponent implements OnInit {
           this.permissions.flushPermissions();
           localStorage.removeItem('token');
           localStorage.removeItem('rol');
+          if(localStorage.getItem('unblockToken')){
+            localStorage.removeItem('unblockToken');
+          }
           this.router.navigate([this.router.url]);
         },
         error: (error: any)=>{

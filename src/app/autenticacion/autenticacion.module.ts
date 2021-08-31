@@ -22,7 +22,6 @@ import { EmailVerificationComponent } from './components/email-verification/emai
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { LoginClienteService } from '@global-services/login-cliente.service';
 import { ValidatorsService } from '@global-services/validators.service';
-import { TwofaComponent } from './components/twofa/twofa.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +30,6 @@ import { TwofaComponent } from './components/twofa/twofa.component';
     ForgotComponent,
     EmailVerificationComponent,
     ResetPasswordComponent,
-    TwofaComponent
   ],
   imports: [
     CommonModule,
