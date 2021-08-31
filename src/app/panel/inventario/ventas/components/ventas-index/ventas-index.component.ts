@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DialogVentaComponent } from '../dialog-venta/dialog-venta.component';
 import { Orden } from '../../../../../core/Models/orden.model';
 import { VentasService } from '../../../../../core/services/ventas.service';
-import { Subject, Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { environment } from '@environments/environment';
@@ -26,8 +26,10 @@ export class VentasIndexComponent implements OnInit, AfterViewInit {
   params = '&estado=&start=$end=';
   // Observable para manejar paginación
   inputParams$: Subject<string> = new Subject<string>();
-
   selected = '';
+
+  // Bandera para limpiar filtro
+  limpiarFiltro = false;
 
   // Rango de fechas del datepicker
   range = new FormGroup({
@@ -75,10 +77,35 @@ export class VentasIndexComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * @ngdoc method
+   * @name filtrarVentas
+   * @description
+   * Obtiene los valores del rango de fechas ingresado en el DateRangePicker y notifica al paginador
+   * a través del observable el cambio de los parámetros para que filtre los datos.
+   */
   filtrarVentas(): void {
-    const fechaInicio = formatDate(this.range.get('start')?.value, 'yyyy-MM-dd HH:mm:ss', this.locale);
-    const fechaFin = formatDate(this.range.get('end')?.value, 'yyyy-MM-dd HH:mm:ss', this.locale);
-    this.inputParams$.next(`&estado=${this.selected}&start=${fechaInicio}$end=${fechaFin}`);
+    this.limpiarFiltro = true;
+    let fechaInicio = '';
+    let fechaFin = '';
+    if ( this.range.valid ) {
+      fechaInicio = formatDate(this.range.get('start')?.value, 'yyyy-MM-dd HH:mm:ss', this.locale);
+      fechaFin = formatDate(this.range.get('end')?.value, 'yyyy-MM-dd HH:mm:ss', this.locale);
+    }
+    this.inputParams$.next(`&estado=${this.selected}&start=${fechaInicio}&end=${fechaFin}`);
+  }
+
+  /**
+   * @ngdoc method
+   * @name resetFiltro
+   * @description
+   * Limpia el valor del DateRangePicker del formulario y reestablece los datos de la tabla
+   */
+  resetFiltro(): void {
+    this.range.reset();
+    this.selected = '';
+    this.filtrarVentas();
+    this.limpiarFiltro = false;
   }
 
 }
