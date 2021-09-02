@@ -1,13 +1,22 @@
 <h2 mat-dialog-title>Confirmar Envío de Orden</h2>
 <mat-dialog-content>
-    <mat-form-field>
-        <input matInput [ngxMatDatetimePicker]="picker1" placeholder="Choose a date" [formControl]="dateControl" [disabled]="disabled">
-        <mat-datepicker-toggle matSuffix [for]="$any(picker1)">
-        </mat-datepicker-toggle>
-        <ngx-mat-datetime-picker #picker1 [showSpinners]="showSpinners" [showSeconds]="showSeconds" [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color">
-        </ngx-mat-datetime-picker>
-    </mat-form-field>
+    <form [formGroup]="estadoOrdenForm">
+        <p>Fecha y hora de entrega de la orden:</p>
+        <mat-form-field appearance="fill" class="input">
+            <input matInput readonly formControlName="fechaHora" [ngxMatDatetimePicker]="picker1" placeholder="Seleccione una fecha" [formControl]="dateControl">
+            <mat-datepicker-toggle matSuffix [for]="$any(picker1)">
+            </mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #picker1 [showSpinners]="showSpinners" [enableMeridian]="enableMeridian" [showSeconds]="showSeconds" [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color">
+            </ngx-mat-datetime-picker>
+        </mat-form-field>
+        <p>Dirección de entrega:</p>
+        <mat-form-field appearance="fill" class="input">
+            <mat-label>Dirección</mat-label>
+            <input matInput formControlName="direccion">
+        </mat-form-field>
+    </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-button (click)="procesarOrden()" [disabled]="estadoOrdenForm.invalid" color="primary">Enviar</button>
 </mat-dialog-actions>

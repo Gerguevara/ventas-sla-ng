@@ -20,6 +20,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { DialogEstadoOrdenComponent } from './components/dialog-estado-orden/dialog-estado-orden.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { DialogEstadoOrdenComponent } from './components/dialog-estado-orden/dia
     MatIconModule,
     MatDividerModule,
     MatSelectModule,
+    MatSnackBarModule,
     MatNativeDateModule,
     MatDatepickerModule,
     MatDialogModule,
