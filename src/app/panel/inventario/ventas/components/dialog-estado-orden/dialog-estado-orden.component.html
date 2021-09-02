@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Confirmar Envío de Orden</h2>
+<mat-dialog-content>
+    <mat-form-field>
+        <input matInput [ngxMatDatetimePicker]="picker1" placeholder="Choose a date" [formControl]="dateControl" [disabled]="disabled">
+        <mat-datepicker-toggle matSuffix [for]="$any(picker1)">
+        </mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #picker1 [showSpinners]="showSpinners" [showSeconds]="showSeconds" [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color">
+        </ngx-mat-datetime-picker>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

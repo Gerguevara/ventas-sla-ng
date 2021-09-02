@@ -1,4 +1,4 @@
-import { Component, OnInit, LOCALE_ID, Inject, AfterViewInit } from '@angular/core';
+import { Component, OnInit, LOCALE_ID, Inject, AfterViewInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogVentaComponent } from '../dialog-venta/dialog-venta.component';
@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { environment } from '@environments/environment';
+import { ThemePalette } from '@angular/material/core';
 
 @Component({
   selector: 'sla-ventas-index',
