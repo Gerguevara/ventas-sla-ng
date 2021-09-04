@@ -1,17 +1,15 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { MatDrawer, MatDrawerMode, MatSidenav } from '@angular/material/sidenav';
+import { MatDrawerMode, MatSidenav } from '@angular/material/sidenav';
 
 import { NgxPermissionsService } from 'ngx-permissions';
 
 import { environment } from '@environments/environment';
 import { Categoria } from '@models/categoria.model';
-import { ResultadoIndex } from '@core/models/resultados/resultado-index.model';
 
 import { IndexService } from '@global-services/index.service';
-import { CategoriaService } from '@global-services/categoria.service';
 import { LoginClienteService } from '@global-services/login-cliente.service';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 
@@ -36,7 +34,6 @@ export class ClienteComponent implements OnInit {
 
 
   constructor(
-    private categoriaService : CategoriaService,
     private router: Router,
     private authCliente: LoginClienteService,
     private dialog: MatDialog,
@@ -49,7 +46,6 @@ export class ClienteComponent implements OnInit {
 
   ngOnInit(): void {
     this.iniciarSesion = true;
-    this.rolAdmin = false;
     this.indexService.obtenerCategorias().subscribe(
       {
         next: (result : Categoria[]) => {
@@ -59,12 +55,6 @@ export class ClienteComponent implements OnInit {
     // Validación de usuario logeado
     if (localStorage.getItem('token')) {
       this.iniciarSesion = false;
-    }
-    // Validación de rol usuario
-    if (localStorage.getItem('rol')) {
-      if (localStorage.getItem('rol') === 'E') {
-        this.rolAdmin = true;
-      }
     }
   }
 
