@@ -135,10 +135,8 @@ export class RolFormComponent implements OnInit {
     this.rolForm.get('id')?.setValue( rol.id );
     this.rolForm.get('nombre')?.setValue( rol.name );
     this.rolForm.get('descripcion')?.setValue( rol.descripcion );
-    this.rolForm.get('departamento')?.setValue( rol.id_departamento );
     this.roleService.getDepartamento( Number(rol.id_departamento) ).then((response: any) => {
-      this.filasSeleccionadas.add( response.producto );
-      this.departamento = response.producto.nombre;
+      this.rolForm.get('departamento')?.setValue( response.producto );
     });
   }
 
@@ -181,7 +179,7 @@ export class RolFormComponent implements OnInit {
   }
 
   enviar(): void {
-    this.dialog.open( DialogSpinnerComponent );
+    const dialogSpinnerRef = this.dialog.open( DialogSpinnerComponent );
     // Se verifica si el rol proviene de afuera
     if ( this.rol ) {
       // si es así, se actualiza
@@ -192,12 +190,13 @@ export class RolFormComponent implements OnInit {
         permissions: this.rolForm.get('permissions')?.value
       };
       this.roleService.actualizarRol( newRol as Rol, this.rolForm.get('id')?.value ).subscribe((response: any) => {
-        this.dialog.closeAll();
+        dialogSpinnerRef.close();
         this.snackBar.open(response.mensaje, 'Cerrar', {
           duration: 5000
         });
+        this.dialogRef.close( response.role );
       }, (error: any) => {
-        this.dialog.closeAll();
+        dialogSpinnerRef.close();
         console.log(error);
         this.snackBar.open('Ah ocurrido un error!', 'Cerrar', {
           duration: 5000
@@ -205,20 +204,21 @@ export class RolFormComponent implements OnInit {
       });
     } else {
       // De lo contrario, se crea un nuevo rol
+      const departamentoSeleccionado = this.rolForm.get('departamento')?.value;
       const newRol = {
         name: this.rolForm.get('nombre')?.value,
         descripcion: this.rolForm.get('descripcion')?.value,
-        id_departamento: this.rolForm.get('departamento')?.value,
+        id_departamento: departamentoSeleccionado.id,
         permissions: this.rolForm.get('permissions')?.value
       };
       this.roleService.crearRol( newRol as Rol ).subscribe((response: any) => {
-        this.dialog.closeAll();
+        dialogSpinnerRef.close();
         this.snackBar.open(response.mensaje, 'Cerrar', {
           duration: 5000
         });
-        this.dialogRef.close();
+        this.dialogRef.close( response.role );
       }, (error: any) => {
-        this.dialog.closeAll();
+        dialogSpinnerRef.close();
         console.log(error);
         this.snackBar.open('Ah ocurrido un error!', 'Cerrar', {
           duration: 5000

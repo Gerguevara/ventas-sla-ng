@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VentasFilterComponent } from './ventas-filter.component';
+import { DialogEstadoOrdenComponent } from './dialog-estado-orden.component';
 
-describe('VentasFilterComponent', () => {
-  let component: VentasFilterComponent;
-  let fixture: ComponentFixture<VentasFilterComponent>;
+describe('DialogEstadoOrdenComponent', () => {
+  let component: DialogEstadoOrdenComponent;
+  let fixture: ComponentFixture<DialogEstadoOrdenComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ VentasFilterComponent ]
+      declarations: [ DialogEstadoOrdenComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VentasFilterComponent);
+    fixture = TestBed.createComponent(DialogEstadoOrdenComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -3,9 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { TwofaComponent } from './twofa/twofa.component';
 import { AuthGuard } from '@guards/auth.guard';
 import { LoginGuard } from '@guards/login.guard';
-import { RolGuard } from '@guards/rol.guard';
 import { TwoFaGuard } from '@guards/two-fa.guard';
 import { TwoFaBlockGuard } from '@guards/two-fa-block.guard';
+import { NgxPermissionsGuard } from 'ngx-permissions';
 
 const routes: Routes = [
   {
@@ -26,7 +26,13 @@ const routes: Routes = [
   {
     path: 'panel',
     loadChildren: () => import('./panel/empleado.module').then(m => m.EmpleadoModule),
-    canLoad: [AuthGuard, RolGuard, TwoFaBlockGuard]
+    canLoad: [AuthGuard, TwoFaBlockGuard],
+    canActivate: [NgxPermissionsGuard],
+    data: {
+      permissions: {
+        only: 'panelAdministrativo'
+      }
+    }
   },
   {
     path: 'confirm',

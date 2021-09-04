@@ -48,4 +48,23 @@ export class VentasService {
   obtenerVenta(orden: Orden): Observable<Orden> {
     return this.http.get<Orden>(`${this.url}/${orden.id}`, headers);
   }
+
+  /**
+   * @ngdoc method
+   * @name actualizarEstadoOrden
+   * @description
+   * Actualiza el estado de la orden hacia la API a través de patch, enviando como parámetros, de ser necesario,
+   * el neuvo estado, la direccion y la fecha de entrega si el estado cambia a En Curso (E)
+   * @param estado
+   * @param direccion
+   * @param fecha
+   * @returns Obervable<Orden>
+   */
+  actualizarEstadoOrden(ordenId: number, estado: string, direccion?: string, fecha?: string): Observable<Orden> {
+    if ( estado === 'E' ) {
+      return this.http.patch<Orden>(`${this.url}/${ordenId}`, { estado: estado, direccion: direccion, entrega: fecha }, headers);
+    } else {
+      return this.http.patch<Orden>(`${this.url}/${ordenId}`, { estado: estado }, headers);
+    }
+  }
 }
