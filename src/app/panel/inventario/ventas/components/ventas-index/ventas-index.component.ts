@@ -1,4 +1,4 @@
-import { Component, OnInit, LOCALE_ID, Inject, AfterViewInit } from '@angular/core';
+import { Component, OnInit, LOCALE_ID, Inject, AfterViewInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogVentaComponent } from '../dialog-venta/dialog-venta.component';
@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { environment } from '@environments/environment';
+import { ThemePalette } from '@angular/material/core';
 
 @Component({
   selector: 'sla-ventas-index',
@@ -73,7 +74,14 @@ export class VentasIndexComponent implements OnInit, AfterViewInit {
    */
   mostrarVenta( venta: Orden ): void {
     this.ventasService.obtenerVenta( venta ).subscribe((response: Orden) => {
-      this.dialog.open( DialogVentaComponent, { width: '50vw', data: response } );
+      const dialogVentaRef = this.dialog.open( DialogVentaComponent, { width: '70vw', data: response } );
+      dialogVentaRef.afterClosed().subscribe((orden?: Orden) => {
+        if ( orden ) {
+          this.dataSource.data.splice( (orden.id % this.dataSource.data.length) - 1, 1 );
+          this.dataSource.data.push( orden );
+          this.dataSource.data = this.dataSource.data;
+        }
+      });
     });
   }
 

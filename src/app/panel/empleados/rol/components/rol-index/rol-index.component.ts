@@ -43,7 +43,7 @@ export class RolIndexComponent implements OnInit {
     );
     verRolDialog.afterClosed().subscribe(( rolUpdate?: Rol) => {
       if ( rolUpdate ) {
-        this.dataSource.data.splice( rolUpdate.id - 1, 1 );
+        this.dataSource.data.splice( (rolUpdate.id % this.dataSource.data.length) - 1, 1 );
         this.dataSource.data.push( rolUpdate );
         this.dataSource.data = this.dataSource.data;
       }
