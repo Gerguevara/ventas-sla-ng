@@ -77,7 +77,7 @@ export class VentasIndexComponent implements OnInit, AfterViewInit {
       const dialogVentaRef = this.dialog.open( DialogVentaComponent, { width: '70vw', data: response } );
       dialogVentaRef.afterClosed().subscribe((orden?: Orden) => {
         if ( orden ) {
-          this.dataSource.data.splice( orden.id - 1, 1 );
+          this.dataSource.data.splice( (orden.id % this.dataSource.data.length) - 1, 1 );
           this.dataSource.data.push( orden );
           this.dataSource.data = this.dataSource.data;
         }

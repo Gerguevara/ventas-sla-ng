@@ -4,6 +4,9 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { Orden } from '../../../../../core/Models/orden.model';
 import { Producto } from '@models/producto.model';
 import { DialogEstadoOrdenComponent } from '../dialog-estado-orden/dialog-estado-orden.component';
+import { DialogSpinnerComponent } from '../../../../../tools/components/dialog-spinner/dialog-spinner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { VentasService } from '../../../../../core/services/ventas.service';
 
 @Component({
   selector: 'sla-dialog-venta',
@@ -17,7 +20,9 @@ export class DialogVentaComponent implements OnInit {
 
   constructor( private formBuilder: FormBuilder, public dialogRef: MatDialogRef<DialogVentaComponent>,
                @Inject(MAT_DIALOG_DATA) public orden: Orden,
-               private dialog: MatDialog ) {
+               private dialog: MatDialog,
+               private snackBar: MatSnackBar,
+               private ventasService: VentasService ) {
     this.ventaForm = this.formBuilder.group({
       nombres: [''],
       apellidos: [''],
@@ -59,13 +64,19 @@ export class DialogVentaComponent implements OnInit {
    * una fecha y lugar de entrega. Para ello abre el dialogo de estado de orden.
    */
   procesarOrden(): void {
+    const spinnerRef = this.dialog.open( DialogSpinnerComponent );
     const dialogEstadoRef = this.dialog.open(DialogEstadoOrdenComponent, { width: '50vw', data: this.orden });
-    dialogEstadoRef.afterClosed().subscribe((orden?: Orden) => {
-      if ( orden ) {
-        // this.cargarDatos( orden );
-        console.log( orden );
-        this.dialogRef.close(orden);
-      }
+    dialogEstadoRef.afterClosed().subscribe((data: any) => {
+        this.ventasService.actualizarEstadoOrden(this.orden.id, 'E', data.direccion, data.date).subscribe((orden: Orden) => {
+          this.snackBar.open('El pedido está En Curso', 'Cerrar', { duration: 5000 });
+          spinnerRef.close();
+          this.dialogRef.close( orden );
+        },
+        (error: any) => {
+          console.log(error);
+          this.snackBar.open('Ah ocurrido un error!', 'Cerrar', { duration: 5000 });
+          this.dialog.closeAll();
+        });
     });
   }
 

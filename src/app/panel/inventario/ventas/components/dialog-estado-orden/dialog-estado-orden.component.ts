@@ -4,9 +4,7 @@ import { ThemePalette } from '@angular/material/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Orden } from '@core/Models/orden.model';
 import { DialogSpinnerComponent } from '../../../../../tools/components/dialog-spinner/dialog-spinner.component';
-import { VentasService } from '../../../../../core/services/ventas.service';
 import { formatDate } from '@angular/common';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'sla-dialog-estado-orden',
@@ -30,8 +28,6 @@ export class DialogEstadoOrdenComponent implements OnInit {
 
   constructor( private formBuilder: FormBuilder,
                private dialog: MatDialog,
-               private snackBar: MatSnackBar,
-               private ventasSerivce: VentasService,
                public dialogRef: MatDialogRef<DialogEstadoOrdenComponent>,
                @Inject(LOCALE_ID) public locale: string,
                @Inject(MAT_DIALOG_DATA) public orden: Orden, ) {
@@ -50,18 +46,11 @@ export class DialogEstadoOrdenComponent implements OnInit {
   }
 
   procesarOrden(): void {
-    const ref = this.dialog.open( DialogSpinnerComponent );
     const direccion = this.estadoOrdenForm.get('direccion')?.value;
     const date = formatDate( this.estadoOrdenForm.get('fechaHora')?.value, 'yyyy-MM-dd HH:mm:ss', this.locale );
-    this.ventasSerivce.actualizarEstadoOrden(this.orden.id, 'E', direccion, date).subscribe((orden: Orden) => {
-      this.snackBar.open('El pedido está En Curso', 'Cerrar', { duration: 5000 });
-      this.dialogRef.close( orden );
-      ref.close();
-    },
-    (error: any) => {
-      console.log(error);
-      this.snackBar.open('Ah ocurrido un error!', 'Cerrar', { duration: 5000 });
-      this.dialog.closeAll();
+    this.dialogRef.close({
+      direccion,
+      date
     });
   }
 
