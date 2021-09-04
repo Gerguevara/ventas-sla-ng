@@ -74,7 +74,14 @@ export class VentasIndexComponent implements OnInit, AfterViewInit {
    */
   mostrarVenta( venta: Orden ): void {
     this.ventasService.obtenerVenta( venta ).subscribe((response: Orden) => {
-      this.dialog.open( DialogVentaComponent, { width: '70vw', data: response } );
+      const dialogVentaRef = this.dialog.open( DialogVentaComponent, { width: '70vw', data: response } );
+      dialogVentaRef.afterClosed().subscribe((orden?: Orden) => {
+        if ( orden ) {
+          this.dataSource.data.splice( orden.id - 1, 1 );
+          this.dataSource.data.push( orden );
+          this.dataSource.data = this.dataSource.data;
+        }
+      });
     });
   }
 

@@ -50,14 +50,13 @@ export class DialogEstadoOrdenComponent implements OnInit {
   }
 
   procesarOrden(): void {
-    this.dialog.open( DialogSpinnerComponent );
+    const ref = this.dialog.open( DialogSpinnerComponent );
     const direccion = this.estadoOrdenForm.get('direccion')?.value;
     const date = formatDate( this.estadoOrdenForm.get('fechaHora')?.value, 'yyyy-MM-dd HH:mm:ss', this.locale );
-    this.dialog.open( DialogSpinnerComponent );
     this.ventasSerivce.actualizarEstadoOrden(this.orden.id, 'E', direccion, date).subscribe((orden: Orden) => {
       this.snackBar.open('El pedido está En Curso', 'Cerrar', { duration: 5000 });
       this.dialogRef.close( orden );
-      this.dialog.closeAll();
+      ref.close();
     },
     (error: any) => {
       console.log(error);

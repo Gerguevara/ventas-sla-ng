@@ -60,9 +60,11 @@ export class DialogVentaComponent implements OnInit {
    */
   procesarOrden(): void {
     const dialogEstadoRef = this.dialog.open(DialogEstadoOrdenComponent, { width: '50vw', data: this.orden });
-    dialogEstadoRef.afterClosed().subscribe((orden: Orden) => {
+    dialogEstadoRef.afterClosed().subscribe((orden?: Orden) => {
       if ( orden ) {
-        this.cargarDatos( orden );
+        // this.cargarDatos( orden );
+        console.log( orden );
+        this.dialogRef.close(orden);
       }
     });
   }
