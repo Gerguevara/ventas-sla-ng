@@ -1,4 +1,6 @@
-<div class="header"><h1 color="primary">Roles</h1></div>
+<div class="header">
+    <h1 color="primary">Roles</h1>
+</div>
 <button mat-button color="primary" (click)="crearRol()" type="button" style="margin: 10px;">
     <mat-icon>add</mat-icon> Crear
 </button>
@@ -26,6 +28,9 @@
         <ng-container matColumnDef="acciones">
             <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
             <mat-cell mat-cell *matCellDef="let element">
+                <button (click)="verRol(element)" type="button" style="margin-right: 5px; cursor: pointer;" mat-icon-button color="primary" aria-label="delete_icon">
+                  <mat-icon>visibility</mat-icon>
+                </button>
                 <button (click)="eliminarRol(element.id)" type="button" style="margin-right: 5px; cursor: pointer;" mat-icon-button color="primary" aria-label="delete_icon">
                     <mat-icon>delete</mat-icon>
                 </button>
@@ -33,7 +38,7 @@
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row (click)="verRol(row)" [class.demo-row-is-clicked]="clickedRows.has(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <mat-row [class.demo-row-is-clicked]="clickedRows.has(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
     <app-paginator [urlData]="url" (pageDataChange$)="addDataToTable($event)"></app-paginator>
 </mat-card>
