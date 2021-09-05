@@ -2,8 +2,8 @@ import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Orden } from '@core/Models/orden.model';
-import { DialogSpinnerComponent } from '../../../../../tools/components/dialog-spinner/dialog-spinner.component';
+import { Orden } from '@models/orden.model';
+import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 import { formatDate } from '@angular/common';
 
 @Component({

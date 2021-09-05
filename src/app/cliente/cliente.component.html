@@ -26,13 +26,17 @@
                 <mat-icon>perm_identity</mat-icon>
                 <ng-container *ngIf="window.matchMedia('(min-width: 700px)').matches"> Mi Perfil</ng-container>
             </a>
+            <a mat-menu-item style="margin-right: 10px;" [routerLink]="['/config']" *ngIf="!iniciarSesion" color="accent" class="example-icon">
+                <mat-icon>settings</mat-icon>
+                <ng-container *ngIf="window.matchMedia('(min-width: 700px)').matches"> Configuración</ng-container>
+            </a>
             <div *ngxPermissionsOnly="['panelAdministrativo']">
-                <a mat-menu-item style="margin-right: 10px;" [routerLink]="['/panel/inventario/']" color="accent" class="example-icon">
-                    <mat-icon>admin_panel_settings</mat-icon>
-                    <ng-container *ngIf="window.matchMedia('(min-width: 700px)').matches"> Panel Administrativo</ng-container>
-                </a>
+              <a mat-menu-item style="margin-right: 10px;" [routerLink]="['/panel/inventario/']" color="accent" class="example-icon">
+                  <mat-icon>admin_panel_settings</mat-icon>
+                  <ng-container *ngIf="window.matchMedia('(min-width: 700px)').matches"> Panel Administrativo</ng-container>
+              </a>
             </div>
-            <a mat-menu-item [routerLink]="['/autentication/login']" *ngIf="iniciarSesion" color="accent" class="example-icon">
+            <a mat-menu-item [routerLink]="['/auth/login']" *ngIf="iniciarSesion" color="accent" class="example-icon">
                 <mat-icon>login</mat-icon>
                 <ng-container *ngIf="window.matchMedia('(min-width: 700px)').matches"> Iniciar Sesión</ng-container>
             </a>

@@ -17,10 +17,11 @@ export class RolGuard implements CanLoad {
        const rol = localStorage.getItem('rol');
        if ( rol === 'E' ) {
         // Si es
-          return true;
+        return true;
        } else {
         // Si el rol no es de Empleado, regresar a index
-          return this.router.createUrlTree(['/']);
+        this.router.navigate(['/']);
+        return false;
        }
   }
 }

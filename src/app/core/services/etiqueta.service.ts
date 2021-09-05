@@ -13,7 +13,7 @@ import { environment } from '@environments/environment';
 })
 export class EtiquetaService extends RecursoService<Etiqueta> {
 
-  private API_URL_config = `${environment.apiUrl}`;
+  private API_URL_config = environment.apiUrl;
 
   constructor(protected httpClient: HttpClient) {
     super(environment.endpoints.etiquetas,httpClient);

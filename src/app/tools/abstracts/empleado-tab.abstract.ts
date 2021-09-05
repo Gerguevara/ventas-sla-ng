@@ -1,9 +1,8 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { EmpleadoService } from './../../core/services/empleado.service';
+import { EmpleadoService } from '@global-services/empleado.service';
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { BreakpointObserver, Breakpoints, BreakpointState } from "@angular/cdk/layout";
 import { FormControl, FormGroup } from "@angular/forms";
-import { MatSlideToggleChange } from "@angular/material/slide-toggle";
 import { PerfilEmpleado } from "@models/perfil.empleado.model";
 import { environment } from "@environments/environment";
 import { LetterInputContext } from "@tools/models/LetterInputContext";

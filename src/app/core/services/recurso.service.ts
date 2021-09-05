@@ -20,7 +20,6 @@ export abstract class RecursoService<T extends Recurso> extends PreflightService
     }
 
   getObjects(page: number = 1, page_size: number = 10, non_empty?: boolean, no_pagination?: boolean, search?: string): Observable<Resultado<T>> {
-    const token = 'Bearer ' + localStorage.getItem('token');
     let params = Object.create(null);
     if(non_empty){
       params['non_empty']= non_empty;
@@ -32,14 +31,8 @@ export abstract class RecursoService<T extends Recurso> extends PreflightService
     if(search){
       params['search']=search;
     }
-    return this.httpClient.get<Resultado<T>>(this.API_URL, {
-      params: params,
-      headers: new HttpHeaders({
-        'Content-Type':'application/json',
-        'Access-Control-Allow-Origin': environment.allowedOrigin,
-        'Authorization': token
-      })
-    });
+    return this.httpClient.get<Resultado<T>>(this.API_URL,
+      this.setOptions(params));
   }
 
   searchObject(search: string, page?: number, page_size?: number, non_empty?: boolean): Observable<Resultado<T>>{
@@ -55,8 +48,7 @@ export abstract class RecursoService<T extends Recurso> extends PreflightService
   }
 
   getObject(id: number): Observable<T> {
-    const options = this.setOptions();
-    return this.httpClient.get<T>(`${this.API_URL}/${id}`,options);
+    return this.httpClient.get<T>(`${this.API_URL}/${id}`, this.setOptions());
   }
 
   updateObject(resource: T): Observable<{resultado:boolean,mensaje:string}>  {

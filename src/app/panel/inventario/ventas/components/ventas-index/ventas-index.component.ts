@@ -2,8 +2,8 @@ import { Component, OnInit, LOCALE_ID, Inject, AfterViewInit, ViewChild } from '
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogVentaComponent } from '../dialog-venta/dialog-venta.component';
-import { Orden } from '../../../../../core/Models/orden.model';
-import { VentasService } from '../../../../../core/services/ventas.service';
+import { Orden } from '@models/orden.model';
+import { VentasService } from '@global-services/ventas.service';
 import { Subject } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';

@@ -3,8 +3,8 @@ import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-import { LoginClienteService, LoginResponse } from '@global-services/login-cliente.service';
+import { LoginResponse } from '@tool-models/LoginResponse';
+import { LoginClienteService } from '@global-services/login-cliente.service';
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 
 @Component({
@@ -52,10 +52,29 @@ export class LoginComponent {
         // El inicio de sesión es exitoso y guardamos el token en el LocalStorage
         // Cerramos todos los dialogos abiertos hasta el momento
         this.dialog.closeAll();
+        const previousToken = localStorage.getItem('token');
+        if(previousToken){
+          localStorage.removeItem('token');
+        }
+        const previousTokenType = localStorage.getItem('tokenType');
+        if(previousTokenType){
+          localStorage.removeItem('tokenType');
+        }
+
+        const tokenType = 'Bearer';
+        let url = ['/'];
+        if(response.locked===1){
+          //no es un Item de bloqueo, es de funcionamiento de guard
+          //si el usuario lo cambia en DevTools, no se desbloquea el 2fa, sino que se rompe
+          localStorage.setItem('unblockToken', response.token);
+          url = [
+            '/',
+            'confirm'
+          ]
+        }
         localStorage.setItem('token', response.token);
-        localStorage.setItem('user_identity', response.user.id.toString());
-        localStorage.setItem('rol', response.user.tipoUsuario);
-        this.router.navigate(['/']);
+        localStorage.setItem('tokenType', tokenType);
+        this.router.navigate(url);
       },
       error:(error: any) => {
         // Cerramos todos los dialogos abiertos hasta el momento

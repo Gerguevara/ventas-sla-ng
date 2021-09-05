@@ -13,8 +13,9 @@ import { Departamento } from '@models/departamento.model';
 import { Permission } from '@models/permission.model';
 
 import { PermissionService } from '@global-services/permission.service';
-import { PermissionsByPanel, RolesService } from '@global-services/roles.service';
+import { RolesService } from '@global-services/roles.service';
 
+import { PermissionsByPanel } from '@tool-models/PermissionsByPanel'
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 import { environment } from '@environments/environment';
 

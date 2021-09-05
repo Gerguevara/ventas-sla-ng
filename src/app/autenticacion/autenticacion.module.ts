@@ -29,7 +29,7 @@ import { ValidatorsService } from '@global-services/validators.service';
     SignupComponent,
     ForgotComponent,
     EmailVerificationComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
   ],
   imports: [
     CommonModule,

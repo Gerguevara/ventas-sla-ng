@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { environment } from '@environments/environment';
-import { Planilla } from '../../../../../core/Models/planilla.model';
+import { Planilla } from '@models/planilla.model';
 import { LineaPlanillasTableComponent } from '../linea-planillas-table/linea-planillas-table.component';
-import { DialogSpinnerComponent } from '../../../../../tools/components/dialog-spinner/dialog-spinner.component';
-import { PlanillaService } from '../../../../../core/services/planilla.service';
+import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
+import { PlanillaService } from '@global-services/planilla.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

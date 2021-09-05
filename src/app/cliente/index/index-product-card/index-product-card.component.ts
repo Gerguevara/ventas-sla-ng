@@ -18,12 +18,14 @@ export class IndexProductCardComponent implements OnInit {
   @Output()
   imageLoaded!: EventEmitter<IndexProductCardComponent>;
   hasImage: boolean;
+  calificacionProducto!: number;
   placeholderProductImage: string = environment.defaultProductImage;
 
   constructor(
     private productoService: ProductoService
     ) {
     this.hasImage=false;
+    this.calificacionProducto =0;
   }
 
 
@@ -37,6 +39,7 @@ export class IndexProductCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkImageStatus();
+    this.calificacionProducto = Number(this.productoInput.calificacion_promedio);
   }
 
   checkImageStatus(){
@@ -49,5 +52,11 @@ export class IndexProductCardComponent implements OnInit {
         this.imageLoaded.emit(this);
       }
     })
+  }
+
+  shoppingCartHandler($event:MouseEvent){
+    console.log($event);
+    $event.preventDefault();$event.stopPropagation();
+    //logica de agregar producto al carrito
   }
 }

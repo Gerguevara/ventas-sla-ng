@@ -1,5 +1,5 @@
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AfterContentInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 
 import { PerfilEmpleado } from '@core/models/perfil.empleado.model';

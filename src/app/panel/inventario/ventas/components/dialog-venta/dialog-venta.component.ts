@@ -1,12 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Orden } from '../../../../../core/Models/orden.model';
+import { Orden } from '@models/orden.model';
 import { Producto } from '@models/producto.model';
 import { DialogEstadoOrdenComponent } from '../dialog-estado-orden/dialog-estado-orden.component';
-import { DialogSpinnerComponent } from '../../../../../tools/components/dialog-spinner/dialog-spinner.component';
+import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { VentasService } from '../../../../../core/services/ventas.service';
+import { VentasService } from '@global-services/ventas.service';
 
 @Component({
   selector: 'sla-dialog-venta',

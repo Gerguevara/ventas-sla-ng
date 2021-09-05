@@ -9,12 +9,7 @@ import { Departamento } from '@models/departamento.model';
 import { Resultado } from '@models/resultados/resultado.model';
 import { environment } from '@environments/environment';
 import { Rol } from '@models/rol.model';
-import { Panel } from '@models/panel.model';
-
-export interface PermissionsByPanel {
-  panel: Panel;
-  permisos: Permission[];
-}
+import { PermissionsByPanel } from '@tool-models/PermissionsByPanel';
 
 @Injectable({
   providedIn: 'root'

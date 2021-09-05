@@ -1,6 +1,5 @@
-import { FormControl } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
-import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { PartialObserver } from 'rxjs';
 
@@ -18,7 +17,6 @@ import { EmpleadoDetailComponent } from '../empleado-detail/empleado-detail.comp
 import { EmpleadoConfirmationDialogComponent } from './../empleado-confirmation-dialog/empleado-confirmation-dialog.component';
 import { MatSelect } from '@angular/material/select';
 import { MatOptionSelectionChange } from '@angular/material/core';
-import { MatFormField } from '@angular/material/form-field';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
@@ -47,7 +45,7 @@ export class EmpleadoIndexComponent implements OnInit {
     error: (error: any)=>{
       console.error('error occurred retrieving empleados, please check log: ');
       console.error(error);
-    }
+    },
   }
 
   viewObserver: PartialObserver<PerfilEmpleado> ={

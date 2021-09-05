@@ -13,14 +13,13 @@ export class LoginGuard implements CanLoad {
     route: Route,
     segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     /* Este Guard es para Login, si ya esta autenticado redirije a index, sino entonces permite acceder a login. */
-       const token = localStorage.getItem('token');
-       if ( token ) {
-       // Si existe el token, redireccionamos a index
-         this.router.navigate(['/']);
-         return false;
+       if ( localStorage.getItem('token') ) {
+        // Si existe el token, redireccionamos a index
+        this.router.navigate(['/']);
+        return false;
        } else {
-         // Si no, dejamos acceder al auth
-         return true;
+        // Si no, dejamos acceder al auth
+        return true;
        }
   }
 }

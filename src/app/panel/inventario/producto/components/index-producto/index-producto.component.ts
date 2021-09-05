@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatExpansionPanel } from '@angular/material/expansion';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { Resultado } from '@models/resultados/resultado.model';
 import { Producto } from '@models/producto.model';
