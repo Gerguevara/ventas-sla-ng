@@ -1,7 +1,6 @@
 import { ClienteComponent } from './cliente.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginGuard } from '@guards/login.guard';
 import { AuthGuard } from '@guards/auth.guard';
 import { TwoFaBlockGuard } from '@guards/two-fa-block.guard';
 

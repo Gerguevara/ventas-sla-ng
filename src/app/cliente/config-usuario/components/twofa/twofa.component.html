@@ -4,13 +4,17 @@
   <mat-slide-toggle
     [checked]="isChecked"
     (change)="twoFaSwitchHandler($event)"></mat-slide-toggle>
-  <div *ngIf="isChecked" [innerHTML]="currentUserQr" class="qr-code"></div>
-  <div *ngIf="isChecked" [innerHTML]="currentUserCodes" class="recovery-codes"></div>
+    <mat-card>
+      <div class="qr-display" *ngIf="isChecked" [innerHTML]="currentUserQr"></div>
+    </mat-card>
+    <mat-card>
+      <div *ngIf="isChecked" [innerHTML]="currentUserCodes"></div>
+    </mat-card>
   Almacena tus codigos de recuperacion en un lugar seguro
-  <mat-form-field appearance="fill">
+  <!-- <mat-form-field appearance="fill">
     <mat-label>Ingresa el código de tu aplicación de autenticación</mat-label>
     <input matInput placeholder="example@sla.com" formControlName="new_email" required>
     <mat-error *ngIf="codeControl.invalid">{{getErrorMessage(codeControl)}}</mat-error>
   </mat-form-field>
-  <button mat-button type="submit"><mat-icon>email</mat-icon>Cambiar correo</button>
+  <button mat-button type="submit"><mat-icon>email</mat-icon>Cambiar correo</button> -->
 </form>

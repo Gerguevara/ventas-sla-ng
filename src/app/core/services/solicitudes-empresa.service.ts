@@ -10,8 +10,7 @@ import { environment } from '@environments/environment';
 })
 export class SolicitudesEmpresaService {
 
-  urlSolicitudes = `${environment.apiUrl}` + 'usuarioEmpresas';
-  urlCambiarEstadoSolicitudes = `${environment.apiUrl}` + 'usuarioEmpresas/';
+  urlSolicitudes = `${environment.apiUrl}${environment.endpoints.usuarioEmpresas}`;
 
   constructor( private http: HttpClient ) { }
 
@@ -37,7 +36,7 @@ export class SolicitudesEmpresaService {
     const httpBody = {
       estadoCuenta: estado
     };
-    return this.http.patch<any>(this.urlCambiarEstadoSolicitudes + id, httpBody, httpHeaders);
+    return this.http.patch<any>(`${this.urlSolicitudes}/id`, httpBody, httpHeaders);
   }
 
 }

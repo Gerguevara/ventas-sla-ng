@@ -22,12 +22,12 @@ export class IndexService extends RecursoService<Producto> {
     return this.httpClient.get<ResultadoIndex>(`${environment.apiUrl}index/categoria/` + id, this.setOptions());
   }
   obtenerCategorias(): Observable<Categoria[]>{
-    return this.httpClient.get<Categoria[]>(`${environment.apiUrl}index`, this.setOptions(true,false,{'solo_categorias': 'true'}));
+    return this.httpClient.get<Categoria[]>(`${environment.apiUrl}index`, this.setOptions({'solo_categorias': 'true'}));
   }
   obtenerProductos(pageSize?: number | undefined): Observable<ResultadoIndex[]> {
     let options: HttpOptions;
     if(pageSize){
-      options= this.setOptions(true,false,{
+      options= this.setOptions({
         'page_size': pageSize,
       });
     } else {

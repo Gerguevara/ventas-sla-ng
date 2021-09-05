@@ -26,13 +26,6 @@ export class CategoriaService extends RecursoService<Categoria> {
     if(non_empty){
       params['non_empty']= non_empty;
     }
-    return this.httpClient.get<Categoria[]>(this.API_URL, {
-      params: params,
-      headers: new HttpHeaders({
-        'Content-Type':'application/json',
-        'Access-Control-Allow-Origin': environment.allowedOrigin,
-        'Authorization': token
-      })
-    });
+    return this.httpClient.get<Categoria[]>(this.API_URL, this.setOptions(params));
   }
 }

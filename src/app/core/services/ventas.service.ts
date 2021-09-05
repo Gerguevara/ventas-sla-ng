@@ -18,7 +18,7 @@ const headers = {
 })
 export class VentasService {
 
-  private url = `${environment.apiUrl}ordenes`;
+  private url = `${environment.apiUrl}${environment.endpoints.ordenes}`;
 
   constructor( private http: HttpClient ) { }
 

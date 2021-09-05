@@ -32,7 +32,7 @@ export abstract class RecursoService<T extends Recurso> extends PreflightService
       params['search']=search;
     }
     return this.httpClient.get<Resultado<T>>(this.API_URL,
-      this.setOptions(true,false,params));
+      this.setOptions(params));
   }
 
   searchObject(search: string, page?: number, page_size?: number, non_empty?: boolean): Observable<Resultado<T>>{

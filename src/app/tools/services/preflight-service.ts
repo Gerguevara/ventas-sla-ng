@@ -22,7 +22,7 @@ export abstract class PreflightService{
    * Especifica parametros a agregar a las opciones
    * @returns HttpHeaders
    */
-  protected setOptions(withToken: boolean = true, registro: boolean = false, params: {[key:string]:string|number}|undefined = undefined) {
+  protected setOptions(params: {[key:string]:string|number}|undefined = undefined, withToken: boolean = true, registro: boolean = false) {
     let httpOptions: HttpOptions = {};
     let headers =  new HttpHeaders({
         'Content-Type':  'application/json',

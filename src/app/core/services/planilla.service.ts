@@ -18,10 +18,8 @@ const httpHeaders = {
   providedIn: 'root'
 })
 export class PlanillaService {
-
-  private endpoint = 'planillas';
-  private url = `${environment.apiUrl}${this.endpoint}`;
-  private urlLineaPlanilla = `${environment.apiUrl}` + 'lineasdeplanillas';
+  private url = `${environment.apiUrl}${environment.endpoints.planillas}`;
+  private urlLineaPlanilla = `${environment.apiUrl}${environment.endpoints.lineasdeplanillas}`;
 
   constructor( private http: HttpClient ) { }
 

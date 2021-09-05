@@ -31,7 +31,7 @@ export class EmailComponent extends ConfigTab implements OnInit {
   ngOnInit(): void {
   }
 
-  changeMailHandler($event: MouseEvent){
+  changeMailHandler(){
     if(this.formGroup.valid){
       this.emailChange.emit();
     } else {

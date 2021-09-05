@@ -35,14 +35,7 @@ export class EmpleadoService extends RecursoService<PerfilEmpleado>{
     if(roleId){
       params['role']=roleId;
     }
-    return this.httpClient.get<Resultado<PerfilEmpleado>>(this.API_URL, {
-      params: params,
-      headers: new HttpHeaders({
-        'Content-Type':'application/json',
-        'Access-Control-Allow-Origin': environment.allowedOrigin,
-        'Authorization': token
-      })
-    });  }
+    return this.httpClient.get<Resultado<PerfilEmpleado>>(this.API_URL, this.setOptions(params));  }
 
   searchEmpleados(search: string, page?: number, page_size?: number, roleId?: number){
     return this.getEmpleados(page, page_size, false, search, roleId).pipe(
@@ -57,7 +50,6 @@ export class EmpleadoService extends RecursoService<PerfilEmpleado>{
   }
 
   postEmpleado(empleado: PerfilEmpleado): Observable<PerfilEmpleado> {
-    const options = this.setOptions();
-    return this.httpClient.post<PerfilEmpleado>(`${this.API_URL}`, empleado, options);
+    return this.httpClient.post<PerfilEmpleado>(`${this.API_URL}`, empleado, this.setOptions());
   }
 }

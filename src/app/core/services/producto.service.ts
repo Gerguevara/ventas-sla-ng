@@ -49,7 +49,7 @@ export class ProductoService  extends RecursoService<Producto>{
       })
     };
     const response = await this.httpClient.post(
-      `${environment.apiUrl}${this.endpoint}` + '/uploadImage/', form, httpHeaders).toPromise();
+      `${environment.apiUrl}${this.endpoint}/uploadImage/`, form, httpHeaders).toPromise();
     return response;
   }
 
@@ -61,7 +61,7 @@ export class ProductoService  extends RecursoService<Producto>{
         'Authorization': token
       })
     };
-    return this.httpClient.post(`${environment.apiUrl}${this.endpoint}` + '/deleteImage', { path }, httpHeaders);
+    return this.httpClient.post(`${environment.apiUrl}${this.endpoint}/deleteImage`, { path }, httpHeaders);
   }
 
   /*
@@ -113,7 +113,7 @@ export class ProductoService  extends RecursoService<Producto>{
         'Authorization': token
       })
     };
-    return this.httpClient.get<Categoria>(`${environment.apiUrl}categorias` + '/' + id, httpHeaders);
+    return this.httpClient.get<Categoria>(`${environment.apiUrl}${environment.endpoints.categorias}/${id}`, httpHeaders);
   }
 
   obtenerListaProductos(): Observable<Resultado<Producto>> {

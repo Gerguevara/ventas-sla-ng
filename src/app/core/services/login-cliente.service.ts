@@ -13,13 +13,13 @@ import { PreflightService } from '@tool-services/preflight-service';
 })
 export class LoginClienteService extends PreflightService{
 
-  urlLogin = `${environment.apiUrl}login`;
-  urlLogout = `${environment.apiUrl}logout`;
-  urlSignUp = `${environment.apiUrl}register`;
-  urlEmailVerification = `${environment.apiUrl}verifyEmail/`;
-  urlForgotPass = `${environment.apiUrl}forgotPassword`;
-  urlResetPass = `${environment.apiUrl}resetPassword`;
-  urlTokenVerify = `${environment.apiUrl}tokenVerify`;
+  urlLogin = `${environment.apiUrl}${environment.endpoints.login}`;
+  urlLogout = `${environment.apiUrl}${environment.endpoints.logout}`;
+  urlSignUp = `${environment.apiUrl}${environment.endpoints.register}`;
+  urlEmailVerification = `${environment.apiUrl}${environment.endpoints.verifyEmail}`;
+  urlForgotPass = `${environment.apiUrl}${environment.endpoints.forgotPassword}`;
+  urlResetPass = `${environment.apiUrl}${environment.endpoints.resetPassword}`;
+  urlTokenVerify = `${environment.apiUrl}${environment.endpoints.tokenVerify}`;
 
   constructor(private http: HttpClient ) {
     super();
@@ -30,7 +30,7 @@ export class LoginClienteService extends PreflightService{
       email,
       password
     };
-    return this.http.post<LoginResponse>(this.urlLogin, httpBody, this.setOptions(false));
+    return this.http.post<LoginResponse>(this.urlLogin, httpBody, this.setOptions(undefined,false));
   }
 
   submitLogout(): Observable<any> {
@@ -43,14 +43,14 @@ export class LoginClienteService extends PreflightService{
       password,
       password_confirmation
     };
-    return this.http.post<SignUpResponse>(this.urlSignUp, httpBody, this.setOptions(false));
+    return this.http.post<SignUpResponse>(this.urlSignUp, httpBody, this.setOptions(undefined,false));
   }
 
   submitForgot( email: string ): Observable<any> {
     const httpBody = {
       email
     };
-    return this.http.post<any>(this.urlForgotPass, httpBody, this.setOptions(false));
+    return this.http.post<any>(this.urlForgotPass, httpBody, this.setOptions(undefined,false));
   }
 
   submitResetPassword( token: string, password: string, password_confirmation: string ): Observable<any> {
@@ -61,12 +61,12 @@ export class LoginClienteService extends PreflightService{
       password_confirmation: password_confirmation
     };
     console.log(httpBody);
-    return this.http.post<any>(this.urlResetPass, httpBody, this.setOptions(false));
+    return this.http.post<any>(this.urlResetPass, httpBody, this.setOptions(undefined,false));
   }
 
   emailVerification( id: string, hash: string ): Observable<EmailVerificationResponse> {
-    const url = `${this.urlEmailVerification}${id}/${hash}`;
-    return this.http.get<EmailVerificationResponse>(url, this.setOptions(true,true));
+    const url = `${this.urlEmailVerification}/${id}/${hash}`;
+    return this.http.get<EmailVerificationResponse>(url, this.setOptions(undefined,true,true));
   }
 
   verificarToken(): Observable<boolean> {
