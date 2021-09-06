@@ -1,38 +1,6 @@
-<mat-card class="card" [ngClass]="{'disabled-controls': !editable}">
-    <ng-template [ngxPermissionsOnly]="['productos.update']">
-        <button mat-flat-button *ngIf="habilitarEditar" style="margin-right: 10px;" color="primary" type="button" (click)="editarProducto()"><mat-icon>edit</mat-icon> Editar</button>
-    </ng-template>
-    <ng-template [ngxPermissionsOnly]="['productos.update','productos.store']">
-        <button mat-flat-button *ngIf="habilitarGuardar" style="margin-right: 10px;" color="primary" type="button" (click)="actualizarProducto()"><mat-icon>save</mat-icon> Guardar</button>
-    </ng-template>
-    <button mat-flat-button *ngIf="habilitarCancelar" style="margin-right: 10px;" color="accent" type="button" (click)="cancelar()"><mat-icon>cancel</mat-icon> Salir</button>
-    <mat-horizontal-stepper #stepper>
-        <!--Formulario General-->
-        <mat-step [stepControl]="generalForm" label="General" errorMessage="Datos generales no válidos">
-          <app-producto-general-form [generalForm]="generalForm" [editable]="editable"></app-producto-general-form>
-          <mat-divider></mat-divider>
-          <div>
-              <button type="button" mat-stroked-button matStepperNext class="button">Siguiente</button>
-          </div>
-        </mat-step>
-        <!--Formulario Diseño-->
-        <mat-step [stepControl]="designForm" label="Diseño" errorMessage="Debe insertar una imagen">
-          <app-producto-design-form [designForm]="designForm"></app-producto-design-form>
-          <mat-divider></mat-divider>
-          <div>
-              <button type="button" mat-stroked-button matStepperPrevious class="button">Regresar</button>
-              <button type="button" mat-stroked-button matStepperNext class="button">Siguiente</button>
-          </div>
-        </mat-step>
-        <!--Formulario Inventario-->
-        <mat-step [stepControl]="inventarioForm" label="Inventario" errorMessage="Datos no válidos">
-          <app-producto-inventario-form [inventarioForm]="inventarioForm"></app-producto-inventario-form>
-          <mat-divider></mat-divider>
-          <div>
-              <button type="button" mat-stroked-button matStepperPrevious class="button">Regresar</button>
-              <button mat-flat-button *ngIf="habilitarGuardar" style="margin-right: 10px;" color="primary" type="button" (click)="actualizarProducto()"><mat-icon>save</mat-icon> Guardar</button>
-              <button type="submit" *ngIf="habilitarEnviar" mat-flat-button (click)="enviar()" color="primary" class="button">Enviar</button>
-          </div>
-        </mat-step>
-    </mat-horizontal-stepper>
-</mat-card>
+<h2 mat-dialog-title>Confirmar Envío de Orden</h2>
+<mat-dialog-content>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

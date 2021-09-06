@@ -26,6 +26,7 @@ import { ToolsModule } from '@tools/tools.module';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { FormProductoComponent } from './form-producto.component';
 import { FormProductoContainerComponent } from './components/form-producto-container/form-producto-container.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { FormProductoContainerComponent } from './components/form-producto-conta
     FormProductoRoutingModule,
     ReactiveFormsModule,
     MatCardModule,
+    MatDialogModule,
     MatInputModule,
     MatStepperModule,
     MatButtonModule,
