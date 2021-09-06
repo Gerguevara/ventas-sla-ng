@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { Categoria } from '@models/categoria.model';
 import { Producto } from '@models/producto.model';
@@ -11,7 +11,7 @@ import { ProductoPost, ProductoService } from '@global-services/producto.service
 
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 import { environment } from '@environments/environment';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'sla-form-producto-container',
@@ -127,9 +127,13 @@ export class FormProductoContainerComponent implements OnInit {
   constructor(
     private activeRoute: ActivatedRoute,
     private snackBar: MatSnackBar,
+    private router: Router,
     private formBuilder: FormBuilder,
     private productoService: ProductoService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private dialogRef: MatDialogRef<FormProductoContainerComponent>) {
+
+    this.dialogRef.disableClose = true;
     // Creación del formulario
     // Formulario general
     this.generalForm = this.formBuilder.group({
@@ -291,5 +295,10 @@ export class FormProductoContainerComponent implements OnInit {
         });
       });
     }
+  }
+
+  cerrarFormulario(): void {
+    this.router.navigate(['/panel/inventario/producto']);
+    this.dialogRef.close();
   }
 }
