@@ -25,6 +25,7 @@ import { MatTableModule } from '@angular/material/table';
 import { ToolsModule } from '@tools/tools.module';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { FormProductoComponent } from './form-producto.component';
+import { FormProductoContainerComponent } from './components/form-producto-container/form-producto-container.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { FormProductoComponent } from './form-producto.component';
     ProductoGeneralFormComponent,
     ProductoDesignFormComponent,
     ProductoInventarioFormComponent,
+    FormProductoContainerComponent,
   ],
   imports: [
     CommonModule,
