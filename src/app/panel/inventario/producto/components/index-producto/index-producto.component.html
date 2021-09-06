@@ -11,5 +11,5 @@
 </div>
 <mat-card>
     <!-- <app-table-producto (clickTabla)="scroll(formProducto, $event)"></app-table-producto> -->
-    <app-table-producto></app-table-producto>
+    <app-table-producto (clickTabla)='mostrarProducto($event)'></app-table-producto>
 </mat-card>

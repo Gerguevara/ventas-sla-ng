@@ -5,12 +5,13 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 
-import { Categoria } from '@models/categoria.model'
+import { Categoria } from '@models/categoria.model';
 import { Producto } from '@models/producto.model';
 import { ProductoPost, ProductoService } from '@global-services/producto.service';
 
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 import { environment } from '@environments/environment';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-form-producto',
@@ -123,6 +124,7 @@ export class FormProductoComponent implements OnInit {
   }
 
   constructor(
+    private activeRoute: ActivatedRoute,
     private snackBar: MatSnackBar,
     private formBuilder: FormBuilder,
     private productoService: ProductoService,
@@ -158,6 +160,11 @@ export class FormProductoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.activeRoute.params.subscribe(params => {
+      if ( params.producto ) {
+        console.log(params.producto);
+      }
+    });
     // Nos subscribimos a los cambios de los productos seleccionados de la tabla
     this.productoService.productoChange$.subscribe((data: Producto) => {
       if (this.formularioLleno) {
