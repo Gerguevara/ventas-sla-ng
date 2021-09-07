@@ -21,6 +21,7 @@ export class IndexProductCardComponent implements OnInit {
   hasImage: boolean;
   calificacionProducto!: number;
   placeholderProductImage: string = environment.defaultProductImage;
+  isInCart!: boolean;
 
   constructor(
     private productoService: ProductoService,
@@ -42,6 +43,7 @@ export class IndexProductCardComponent implements OnInit {
   ngOnInit(): void {
     this.checkImageStatus();
     this.calificacionProducto = Number(this.productoInput.calificacion_promedio);
+    this.isInCart = this.carritoService.estaEnCarrito(this.productoInput);
   }
 
   checkImageStatus(){
@@ -60,6 +62,13 @@ export class IndexProductCardComponent implements OnInit {
     console.log($event);
     $event.preventDefault();$event.stopPropagation();
     //logica de agregar producto al carrito
-    this.carritoService.agregarCarrito(this.productoInput);
+    if(!this.isInCart){
+      this.carritoService.agregar(this.productoInput);
+      this.isInCart = true;
+    }
+    else{
+      this.carritoService.eliminar(this.productoInput);
+      this.isInCart = false;
+    }
   }
 }

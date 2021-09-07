@@ -3,6 +3,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import { Producto } from '@models/producto.model';
 import { IndexService } from '@global-services/index.service';
+import { CarritoService } from '@global-services/carrito.service';
 
 @Component({
   selector: 'app-index-producto',
@@ -11,9 +12,11 @@ import { IndexService } from '@global-services/index.service';
 })
 export class IndexProductoContainer implements OnInit {
   producto? : Producto;
+  isInCart!: boolean;
   constructor(
     private route : ActivatedRoute,
-    private indexService : IndexService
+    private indexService : IndexService,
+    private carritoService: CarritoService,
     ) { }
 
   ngOnInit(): void {
@@ -26,11 +29,24 @@ export class IndexProductoContainer implements OnInit {
         this.indexService.getObject(id).subscribe({
           next:(producto:Producto)=>{
             this.producto = producto;
+            this.isInCart = this.carritoService.estaEnCarrito(producto);
           }
         })
       },
     }
-    )
+    );
+  }
+
+  shoppingCartHandler($event: any){
+    const product = this.producto? this.producto: {} as Producto;
+    if(!this.isInCart){
+      this.carritoService.agregar(product);
+      this.isInCart = true;
+    }
+    else{
+      this.carritoService.eliminar(product);
+      this.isInCart = false;
+    }
   }
 
 }

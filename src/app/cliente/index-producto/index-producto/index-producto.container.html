@@ -21,6 +21,10 @@
                     <span> {{producto?.precio}} </span>
                 </p>
                 </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                <button mat-button (click)="shoppingCartHandler($event)"><div *ngIf="!isInCart"><mat-icon>add_shopping_cart</mat-icon> Agregar a carrito de compras</div><div *ngIf="isInCart"><mat-icon>remove_shopping_cart</mat-icon> Eliminar de carrito de compras</div></button>
+                </mat-list-item>
             </mat-list>
         </th>
     </tr>

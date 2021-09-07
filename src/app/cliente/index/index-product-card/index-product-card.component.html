@@ -32,7 +32,8 @@
         aria-label="Agregar al carrito de compras"
         (click)="shoppingCartHandler($event)"
         >
-        <mat-icon>add_shopping_cart</mat-icon>
+        <mat-icon *ngIf="!isInCart">add_shopping_cart</mat-icon>
+        <mat-icon *ngIf="isInCart">remove_shopping_cart</mat-icon>
       </button>
     </mat-card-actions>
   </mat-card>

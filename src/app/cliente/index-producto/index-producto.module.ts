@@ -1,3 +1,5 @@
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -13,7 +15,9 @@ import { IndexProductoContainer } from './index-producto/index-producto.containe
   imports: [
     CommonModule,
     IndexProductoRoutingModule,
-    MatListModule
+    MatListModule,
+    MatButtonModule,
+    MatIconModule,
   ]
 })
 export class IndexProductoModule { }
