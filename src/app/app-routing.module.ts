@@ -6,6 +6,7 @@ import { LoginGuard } from '@guards/login.guard';
 import { TwoFaGuard } from '@guards/two-fa.guard';
 import { TwoFaBlockGuard } from '@guards/two-fa-block.guard';
 import { NgxPermissionsGuard } from 'ngx-permissions';
+import { RecoverTwoFaComponent } from './twofa/recover-two-fa/recover-two-fa.component';
 
 const routes: Routes = [
   {
@@ -38,7 +39,14 @@ const routes: Routes = [
     path: 'confirm',
     component: TwofaComponent,
     canActivate: [TwoFaGuard],
-    canDeactivate: [TwoFaGuard]
+    canDeactivate: [TwoFaGuard],
+    children: [
+      {
+        path: 'recover',
+        component: RecoverTwoFaComponent,
+        canActivate: [TwoFaGuard]
+      }
+    ]
   },
   {
     path: '**',
