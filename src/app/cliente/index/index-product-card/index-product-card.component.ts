@@ -1,3 +1,4 @@
+import { CarritoService } from './../../../core/services/carrito.service';
 import { Component, Input, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 
 import { Producto } from '@models/producto.model';
@@ -22,7 +23,8 @@ export class IndexProductCardComponent implements OnInit {
   placeholderProductImage: string = environment.defaultProductImage;
 
   constructor(
-    private productoService: ProductoService
+    private productoService: ProductoService,
+    private carritoService: CarritoService
     ) {
     this.hasImage=false;
     this.calificacionProducto =0;
@@ -58,5 +60,6 @@ export class IndexProductCardComponent implements OnInit {
     console.log($event);
     $event.preventDefault();$event.stopPropagation();
     //logica de agregar producto al carrito
+    this.carritoService.agregarCarrito(this.productoInput);
   }
 }
