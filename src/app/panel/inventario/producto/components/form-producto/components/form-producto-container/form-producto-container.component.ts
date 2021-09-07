@@ -12,6 +12,7 @@ import { ProductoPost, ProductoService } from '@global-services/producto.service
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 import { environment } from '@environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormProductoService } from '../../../../../../../core/services/form-producto.service';
 
 @Component({
   selector: 'sla-form-producto-container',
@@ -125,12 +126,12 @@ export class FormProductoContainerComponent implements OnInit {
   }
 
   constructor(
-    private activeRoute: ActivatedRoute,
     private snackBar: MatSnackBar,
     private router: Router,
     private formBuilder: FormBuilder,
     private productoService: ProductoService,
     private dialog: MatDialog,
+    private formProductoService: FormProductoService,
     private dialogRef: MatDialogRef<FormProductoContainerComponent>) {
 
     this.dialogRef.disableClose = true;
@@ -165,11 +166,7 @@ export class FormProductoContainerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activeRoute.params.subscribe(params => {
-      if ( params.producto ) {
-        console.log(params.producto);
-      }
-    });
+    console.log(this.formProductoService.productoMostrarGet());
     // Nos subscribimos a los cambios de los productos seleccionados de la tabla
     this.productoService.productoChange$.subscribe((data: Producto) => {
       if (this.formularioLleno) {

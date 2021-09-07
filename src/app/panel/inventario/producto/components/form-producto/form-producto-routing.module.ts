@@ -4,7 +4,6 @@ import { FormProductoComponent } from './form-producto.component';
 
 const routes: Routes = [
   { path: '', component: FormProductoComponent },
-  { path: ':producto', component: FormProductoComponent },
   { path: '**', pathMatch: 'full', redirectTo: '' }
 ];
 
