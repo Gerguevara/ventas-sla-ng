@@ -1,4 +1,7 @@
-<a [routerLink]="['/']">Home</a>
+<div class="linklist">
+  <a [routerLink]="['/']">Home</a>
+  <a href="#" (click)="cerrarSesionHandler($event)">Cerrar Sesión</a>
+</div>
 <mat-card>
   <form
     [formGroup]="TOTPForm"
@@ -10,6 +13,7 @@
       [placeholder]="codePlaceholder">
     </mat-form-field>
     <button mat-button type="submit">Enviar</button>
+    <button mat-button type="button" (click)="recoverHandler($event)">Perdí acceso a mi aplicación autenticadora</button>
   </form>
 </mat-card>
 

@@ -1,0 +1,26 @@
+<div *ngIf="!validRecoveryCode">
+  <form
+    [formGroup]="RecoveryForm"
+    (ngSubmit)="onSubmit($event)">
+    <mat-form-field appearance="standard">
+      <mat-label>Ingresa UNO de los codigos de recuperación</mat-label>
+      <input matInput
+      formControlName="code"
+      [placeholder]="codePlaceholder">
+    </mat-form-field>
+    <button mat-button type="submit">Enviar</button>
+  </form>
+</div>
+<div *ngIf="validRecoveryCode">
+  <mat-card>
+    <mat-card-title>
+      QR two factor auth
+    </mat-card-title>
+    <mat-card-subtitle>
+      Escanea tu código QR con tu aplicación autenticadora, si no posees una puedes instalar Google Authenticator para tu teléfono <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&gl=US" target="_blank">android</a> o <a href="https://apps.apple.com/us/app/google-authenticator/id388497605" target="_blank">ios</a>.
+    </mat-card-subtitle>
+    <mat-card-content>
+      <div class="qr-display two-fa-config" [innerHTML]="currentUserQr"></div>
+    </mat-card-content>
+  </mat-card>
+</div>
