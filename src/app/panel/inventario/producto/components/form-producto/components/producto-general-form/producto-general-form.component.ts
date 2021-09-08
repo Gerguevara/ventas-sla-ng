@@ -3,8 +3,10 @@ import { Observable, of } from 'rxjs';
 import { Resultado } from '@models/resultados/resultado.model';
 import { CategoriaService } from '@global-services/categoria.service';
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Categoria } from '@core/models/categoria.model';
+import { ProductoService } from '../../../../../../../core/services/producto.service';
+import { Producto } from '@core/models/producto.model';
 
 @Component({
   selector: 'app-producto-general-form',
@@ -12,7 +14,7 @@ import { Categoria } from '@core/models/categoria.model';
   styleUrls: ['./producto-general-form.component.scss']
 })
 export class ProductoGeneralFormComponent implements OnInit {
-  @Input()
+
   generalForm!: FormGroup;
   @Input()
   editable!: boolean;
@@ -21,31 +23,57 @@ export class ProductoGeneralFormComponent implements OnInit {
   removable = true;
   categoriasFiltradas: Observable<Categoria[]> = of<Categoria[]>([]);
 
-  constructor(private categoriaService: CategoriaService) {
+  // Valores de entrada en caso que el formulario solo sea para previsualización
+  nombre = '';
+  descripcion = '';
+  categoria = '';
+  precio = '0.00';
+
+  constructor(private categoriaService: CategoriaService,
+              private formBuilder: FormBuilder,
+              private productoService: ProductoService) {
+    // Creación del formulario
+    // Formulario general
+    this.generalForm = this.formBuilder.group({
+      nombre     : [this.nombre, [Validators.required, Validators.minLength(5)]],
+      descripcion: [this.descripcion, [Validators.required, Validators.minLength(5)]],
+      categoria  : [this.categoria, Validators.required],
+      precio     : [this.precio, [Validators.required]]
+    });
   }
 
   ngOnInit(): void {
-    console.log(this.generalForm.value);
-    if(this.categoriaControl){
-      this.categoriasFiltradas= this.categoriaControl.valueChanges.pipe(
+    // Se carga la data ya almacenada en el servicio
+    this.cargarData( this.productoService.productoChange );
+    if (this.categoriaControl){
+      this.categoriasFiltradas = this.categoriaControl.valueChanges.pipe(
         debounceTime(250),
         startWith(''),
-        map((value: string | Categoria) => (typeof value === 'string'? value : value.nombre)),
-        switchMap((name: string)=> this.getCategoriesObservable(name))
+        map((value: string | Categoria) => (typeof value === 'string' ? value : value.nombre)),
+        switchMap((name: string) => this.getCategoriesObservable(name))
       );
     }
   }
 
+  cargarData( data: Producto ): void{
+    this.generalForm.get('nombre')?.setValue(data.nombre_producto);
+    this.generalForm.get('descripcion')?.setValue(data.descripcion_producto);
+    this.generalForm.get('precio')?.setValue(data.precio);
+    this.productoService.obtenerCategoriaProducto( data.id_categoria ).subscribe((response: Categoria) => {
+      this.generalForm.get('categoria')?.setValue(response);
+    });
+  }
+
   getCategoriesObservable(searchValue?: string): Observable<Categoria[]> {
-    if(!searchValue || searchValue === ''){
+    if (!searchValue || searchValue === ''){
       console.log('search value empty');
       this.categoriasObservable = this.categoriaService.getObjects();
       return this.categoriasObservable.pipe(
-        map(( value:any )=>value.data)
+        map(( value: any ) => value.data)
       ) as Observable<Categoria[]>;
-    } else if(searchValue){
+    } else if (searchValue){
       console.log('search value is not empty');
-      if(searchValue !== ""){
+      if (searchValue !== ''){
         this.categoriasObservable = this.categoriaService.buscarCategoria(searchValue);
       }
     }
@@ -53,9 +81,9 @@ export class ProductoGeneralFormComponent implements OnInit {
   }
 
   private getControl(key: string): AbstractControl{
-    if(this.generalForm){
-      let control = this.generalForm.get(key);
-      if(control){
+    if (this.generalForm){
+      const control = this.generalForm.get(key);
+      if (control){
         return control;
       } else {
         return new FormControl();
@@ -126,7 +154,7 @@ export class ProductoGeneralFormComponent implements OnInit {
     }
   }
 
-  displayCategoria(value: Categoria){
+  displayCategoria(value: Categoria): string{
     return value.nombre;
   }
 }

@@ -1,9 +1,9 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { Categoria } from '@models/categoria.model';
 import { Producto } from '@models/producto.model';
@@ -11,8 +11,7 @@ import { ProductoPost, ProductoService } from '@global-services/producto.service
 
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 import { environment } from '@environments/environment';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormProductoService } from '../../../../../../../core/services/form-producto.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'sla-form-producto-container',
@@ -59,7 +58,6 @@ export class FormProductoContainerComponent implements OnInit {
   urlImage = `${environment.uploadDir}`;
 
   idProductoSeleccionado!: number;
-  producto!: Producto;
 
   // Declaración de los formularios
   generalForm: FormGroup;
@@ -167,12 +165,12 @@ export class FormProductoContainerComponent implements OnInit {
 
   ngOnInit(): void {
     // Nos subscribimos a los cambios de los productos seleccionados de la tabla
-    this.productoService.productoChange$.subscribe((data: Producto) => {
+    /*this.productoService.productoChange$.subscribe((data: Producto) => {
       if (this.formularioLleno) {
         this.limpiarFormulario();
       }
       this.cargarData( data );
-    });
+    });*/
     this.crearProducto();
   }
 

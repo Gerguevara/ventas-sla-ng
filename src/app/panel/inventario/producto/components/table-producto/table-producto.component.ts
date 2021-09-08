@@ -83,7 +83,7 @@ export class TableProductoComponent implements OnInit, AfterViewInit {
     this.permissions.hasPermission('productos.show').then((response: boolean) => {
       if (response) {
         this.clickTabla.emit(row);
-        this.productoService.productoChange$.emit(row);
+        this.productoService.productoChange = row;
       }
     });
   }

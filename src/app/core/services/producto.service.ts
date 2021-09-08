@@ -32,7 +32,8 @@ export class ProductoService  extends RecursoService<Producto>{
   Emisor que nos servirá para comunicar el producto seleccionado en la tabla
   para que sea visualizado en el formulario
   */
-  productoChange$ = new EventEmitter<Producto>();
+  // productoChange$ = new EventEmitter<Producto>();
+  productoChange!: Producto;
 
   /*
   Este es un método para el manejo de la subida de la imagen del producto.

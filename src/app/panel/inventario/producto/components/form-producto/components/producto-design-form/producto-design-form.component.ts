@@ -1,6 +1,6 @@
 import { ProductoService } from '@global-services/producto.service';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-producto-design-form',
@@ -8,7 +8,7 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./producto-design-form.component.scss']
 })
 export class ProductoDesignFormComponent implements OnInit {
-  @Input()
+
   designForm!: FormGroup;
   // Variable que almacena el nombre del archivo al ser cargado
   imgUrl = '';
@@ -20,7 +20,23 @@ export class ProductoDesignFormComponent implements OnInit {
   // Variable para manejo de imagen
   fileInput!: File;
 
-  constructor(private productoService: ProductoService) { }
+  constructor(private productoService: ProductoService,
+              private formBuilder: FormBuilder) {
+    // Formulario de imagen
+    this.designForm = this.formBuilder.group({
+      fileInput  : ['', [Validators.required]],
+    });
+  }
+
+  // Método para obtener mensajes de errores de validaciones Imagen
+  getErrorImagenMessage(): string {
+    if (this.designForm.get('urlImagen')?.hasError('required') || this.designForm.get('urlImagen')?.value === '') {
+      return 'Debe insertar una imagen';
+    }
+    else {
+      return '';
+    }
+  }
 
   ngOnInit(): void {
     this.mostrarImagen = true;

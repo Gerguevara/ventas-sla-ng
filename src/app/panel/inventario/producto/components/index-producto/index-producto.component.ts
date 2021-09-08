@@ -6,7 +6,6 @@ import { Resultado } from '@models/resultados/resultado.model';
 import { Producto } from '@models/producto.model';
 import { ProductoService } from '@global-services/producto.service';
 import { Router } from '@angular/router';
-import { FormProductoService } from '../../../../../core/services/form-producto.service';
 
 @Component({
   selector: 'app-index-producto',
@@ -21,8 +20,7 @@ export class IndexProductoComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private productoService: ProductoService,
-    private formProductoService: FormProductoService
+    private productoService: ProductoService
     ) { }
 
   ngOnInit(): void {
@@ -37,7 +35,6 @@ export class IndexProductoComponent implements OnInit {
   }
 
   mostrarProducto( $event: any ): void {
-    this.formProductoService.productoMostrarSet( $event );
     this.router.navigate(['/panel/inventario/producto/mostrar']);
   }
 
