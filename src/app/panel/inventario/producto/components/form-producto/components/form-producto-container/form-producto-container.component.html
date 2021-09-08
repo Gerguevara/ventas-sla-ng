@@ -7,38 +7,23 @@
         <ng-template [ngxPermissionsOnly]="['productos.update','productos.store']">
             <button mat-flat-button *ngIf="habilitarGuardar" style="margin-right: 10px;" color="primary" type="button" (click)="actualizarProducto()"><mat-icon>save</mat-icon> Guardar</button>
         </ng-template>
-        <mat-horizontal-stepper #stepper>
+        <mat-horizontal-stepper linear #stepper>
             <!--Formulario General-->
             <mat-step #first_step [stepControl]="generalForm" label="General" errorMessage="Datos generales no válidos">
-                <ng-container *ngIf="stepper.selected === first_step">
-                    <app-producto-general-form [editable]="editable"></app-producto-general-form>
-                    <mat-divider></mat-divider>
-                    <div>
-                        <button type="button" mat-stroked-button matStepperNext class="button">Siguiente</button>
-                    </div>
+                <ng-container *ngIf="stepper.selected === null || stepper.selected === first_step">
+                    <app-producto-general-form (generalFormOutput$)='obtenerGeneralForm($event)' [editable]="editable"></app-producto-general-form>
                 </ng-container>
             </mat-step>
             <!--Formulario Diseño-->
             <mat-step #second_step [stepControl]="designForm" label="Diseño" errorMessage="Debe insertar una imagen">
-                <ng-container *ngIf="stepper.selected == second_step">
+                <ng-container *ngIf="stepper.selected === second_step">
                     <app-producto-design-form></app-producto-design-form>
-                    <mat-divider></mat-divider>
-                    <div>
-                        <button type="button" mat-stroked-button matStepperPrevious class="button">Regresar</button>
-                        <button type="button" mat-stroked-button matStepperNext class="button">Siguiente</button>
-                    </div>
                 </ng-container>
             </mat-step>
             <!--Formulario Inventario-->
             <mat-step #third_step [stepControl]="inventarioForm" label="Inventario" errorMessage="Datos no válidos">
-                <ng-container *ngIf="stepper.selected == third_step">
-                    <app-producto-inventario-form></app-producto-inventario-form>
-                    <mat-divider></mat-divider>
-                    <div>
-                        <button type="button" mat-stroked-button matStepperPrevious class="button">Regresar</button>
-                        <button mat-flat-button *ngIf="habilitarGuardar" style="margin-right: 10px;" color="primary" type="button" (click)="actualizarProducto()"><mat-icon>save</mat-icon> Guardar</button>
-                        <button type="submit" *ngIf="habilitarEnviar" mat-flat-button (click)="enviar()" color="primary" class="button">Enviar</button>
-                    </div>
+                <ng-container *ngIf="stepper.selected === third_step">
+                    <app-producto-inventario-form (inventarioFormOutput$)='obtenerInventarioForm($event)'></app-producto-inventario-form>
                 </ng-container>
             </mat-step>
         </mat-horizontal-stepper>

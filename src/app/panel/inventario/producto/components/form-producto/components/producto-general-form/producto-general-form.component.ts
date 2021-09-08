@@ -2,7 +2,7 @@ import { debounceTime, map, startWith, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Resultado } from '@models/resultados/resultado.model';
 import { CategoriaService } from '@global-services/categoria.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Categoria } from '@core/models/categoria.model';
 import { ProductoService } from '../../../../../../../core/services/producto.service';
@@ -28,6 +28,9 @@ export class ProductoGeneralFormComponent implements OnInit {
   descripcion = '';
   categoria = '';
   precio = '0.00';
+
+  // Salida de datos del formulario
+  @Output() generalFormOutput$ = new EventEmitter<FormGroup>();
 
   constructor(private categoriaService: CategoriaService,
               private formBuilder: FormBuilder,
@@ -156,5 +159,9 @@ export class ProductoGeneralFormComponent implements OnInit {
 
   displayCategoria(value: Categoria): string{
     return value.nombre;
+  }
+
+  submitGeneralForm(): void {
+    this.generalFormOutput$.emit(this.generalForm);
   }
 }

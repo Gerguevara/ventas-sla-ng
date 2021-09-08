@@ -39,6 +39,7 @@ export class ProductoDesignFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.imgUrl = this.productoService.productoChange.imagen;
     this.mostrarImagen = true;
   }
 

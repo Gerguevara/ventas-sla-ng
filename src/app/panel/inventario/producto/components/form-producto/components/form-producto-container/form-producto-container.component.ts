@@ -60,9 +60,9 @@ export class FormProductoContainerComponent implements OnInit {
   idProductoSeleccionado!: number;
 
   // Declaración de los formularios
-  generalForm: FormGroup;
+  generalForm!: FormGroup;
   designForm: FormGroup;
-  inventarioForm: FormGroup;
+  inventarioForm!: FormGroup;
 
   // Getters para validaciones
 
@@ -80,9 +80,9 @@ export class FormProductoContainerComponent implements OnInit {
 
   limpiarFormulario(): void{
     // Se resetea toda la información que esté cargada en el formulario
-    this.generalForm.reset();
+    // this.generalForm.reset();
     this.designForm.reset();
-    this.inventarioForm.reset();
+    // this.inventarioForm.reset();
     // Aquí se carga la data inicial
     this.generalForm.setValue({
       nombre: '',
@@ -135,21 +135,21 @@ export class FormProductoContainerComponent implements OnInit {
     this.dialogRef.disableClose = true;
     // Creación del formulario
     // Formulario general
-    this.generalForm = this.formBuilder.group({
+    /*this.generalForm = this.formBuilder.group({
       nombre     : [this.nombre, [Validators.required, Validators.minLength(5)]],
       descripcion: [this.descripcion, [Validators.required, Validators.minLength(5)]],
       categoria  : [this.categoria, Validators.required],
       precio     : [this.precio, [Validators.required]]
-    });
+    });*/
     // Formulario de imagen
     this.designForm = this.formBuilder.group({
       fileInput  : ['', [Validators.required]],
     });
     // Formulario de inventario
-    this.inventarioForm = this.formBuilder.group({
+    /*this.inventarioForm = this.formBuilder.group({
       estado     : [this.estado, [Validators.required]],
       cantidad   : [this.cantidad, [Validators.required]],
-    });
+    });*/
   }
 
 
@@ -174,7 +174,7 @@ export class FormProductoContainerComponent implements OnInit {
     this.crearProducto();
   }
 
-  cargarData( data: Producto ): void{
+  /*cargarData( data: Producto ): void{
     this.idProductoSeleccionado = data.id;
     this.generalForm.get('nombre')?.setValue(data.nombre_producto);
     this.generalForm.get('descripcion')?.setValue(data.descripcion_producto);
@@ -187,7 +187,7 @@ export class FormProductoContainerComponent implements OnInit {
     this.inventarioForm.get('cantidad')?.setValue(data.cantidad);
     this.formularioLleno = true;
     this.habilitarEditar = true;
-  }
+  }*/
 
   // Método para hacer submit del formulario
   enviar(): void{
@@ -289,6 +289,14 @@ export class FormProductoContainerComponent implements OnInit {
         });
       });
     }
+  }
+
+  obtenerGeneralForm( event: FormGroup ): void {
+    this.generalForm = event;
+  }
+
+  obtenerInventarioForm( event: FormGroup ): void {
+    this.inventarioForm = event;
   }
 
   cerrarFormulario(): void {

@@ -1,19 +1,25 @@
 <mat-card class="card-step">
-  <h3 class="subtitle">Inventario</h3>
-  <mat-divider></mat-divider>
-  <form [formGroup]="inventarioForm">
-      <mat-form-field class="col">
-          <mat-label>Estado</mat-label>
-          <mat-select formControlName="estado">
-              <mat-option value="0">Sin Stock</mat-option>
-              <mat-option value="1">En Stock</mat-option>
-          </mat-select>
-      </mat-form-field>
-      <mat-form-field class="col">
-          <mat-label>Cantidad Disponible</mat-label>
-          <input matInput type="number" placeholder="Ej. 12" formControlName="cantidad" min="10">
-          <span matSuffix>Unidades</span>
-          <mat-error *ngIf="fontSizeControl.invalid">Min size: 0 unidades</mat-error>
-      </mat-form-field>
-  </form>
+    <h3 class="subtitle">Inventario</h3>
+    <mat-divider></mat-divider>
+    <form [formGroup]="inventarioForm">
+        <mat-form-field class="col">
+            <mat-label>Estado</mat-label>
+            <mat-select formControlName="estado">
+                <mat-option value="0">Sin Stock</mat-option>
+                <mat-option value="1">En Stock</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col">
+            <mat-label>Cantidad Disponible</mat-label>
+            <input matInput readonly type="number" placeholder="Ej. 12" formControlName="cantidad" min="10">
+            <span matSuffix>Unidades</span>
+            <mat-error *ngIf="fontSizeControl.invalid">Min size: 0 unidades</mat-error>
+        </mat-form-field>
+    </form>
 </mat-card>
+<mat-divider></mat-divider>
+<div>
+    <button type="button" mat-stroked-button (click)="submitInventarioForm()" [disabled]='inventarioForm.invalid' matStepperPrevious class="button">Regresar</button>
+    <!-- <button mat-flat-button *ngIf="habilitarGuardar" style="margin-right: 10px;" color="primary" type="button" (click)="actualizarProducto()"><mat-icon>save</mat-icon> Guardar</button>
+    <button type="submit" *ngIf="habilitarEnviar" mat-flat-button (click)="enviar()" color="primary" class="button">Enviar</button> -->
+</div>

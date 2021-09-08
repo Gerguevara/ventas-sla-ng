@@ -1,25 +1,30 @@
 <mat-card class="card-step">
-  <h3 class="subtitle">Imágenes</h3>
-  <mat-divider></mat-divider>
-  <!-- Este iframe es para evitar la actualización de la página -->
-  <iframe name="imagen" style="display:none;"></iframe>
-  <!-- Se utilizó un form action normal debido a problemas con los inputs
+    <h3 class="subtitle">Imágenes</h3>
+    <mat-divider></mat-divider>
+    <!-- Este iframe es para evitar la actualización de la página -->
+    <iframe name="imagen" style="display:none;"></iframe>
+    <!-- Se utilizó un form action normal debido a problemas con los inputs
   ya que es más manejable el envío de imagenes de esta forma de momento -->
-  <label for="file-upload" style="margin-top: 10px;" class="custom-file-upload">
+    <label for="file-upload" style="margin-top: 10px;" class="custom-file-upload">
       {{ nombreArchivo }}
   </label>
-  <input id="file-upload" name="uploaded_file" type="file" (change)="cambioImagen($event)" [disabled]="deshabilitarImagen" />
-  <mat-divider></mat-divider>
-  <div *ngIf="cargandoImagen" style="margin-top: 10px; margin-left: 45.5%; display: block;">
-      <mat-spinner [strokeWidth]=5 [diameter]=70></mat-spinner>
-  </div>
-  <div style="margin: 10px;position: relative;">
-      <img *ngIf="imgUrl !== '' && mostrarImagen" [src]="imgUrl" alt="Imagen Producto" class="imagen-view">
-      <div>
-          <button type="button" (click)="quitarImagen()" mat-icon-button [disabled]="deshabilitarImagen" style="position: absolute; top: 10px; right: 10px;">
+    <input id="file-upload" name="uploaded_file" type="file" (change)="cambioImagen($event)" [disabled]="deshabilitarImagen" />
+    <mat-divider></mat-divider>
+    <div *ngIf="cargandoImagen" style="margin-top: 10px; margin-left: 45.5%; display: block;">
+        <mat-spinner [strokeWidth]=5 [diameter]=70></mat-spinner>
+    </div>
+    <div style="margin: 10px;position: relative;">
+        <img *ngIf="imgUrl !== '' && mostrarImagen" [src]="imgUrl" alt="Imagen Producto" class="imagen-view">
+        <div>
+            <button type="button" (click)="quitarImagen()" mat-icon-button [disabled]="deshabilitarImagen" style="position: absolute; top: 10px; right: 10px;">
               <mat-icon *ngIf="imgUrl !== '' && mostrarImagen" style="cursor: pointer; color: rgb(220,53,69);">delete</mat-icon>
           </button>
-      </div>
-  </div>
-  <h4 *ngIf="imgUrl === '' && mostrarImagen" style="margin-bottom: 10px; text-align: center;">{{ textoImagen }}</h4>
+        </div>
+    </div>
+    <h4 *ngIf="imgUrl === '' && mostrarImagen" style="margin-bottom: 10px; text-align: center;">{{ textoImagen }}</h4>
 </mat-card>
+<mat-divider></mat-divider>
+<div>
+    <button type="button" mat-stroked-button matStepperPrevious class="button">Regresar</button>
+    <button type="button" mat-stroked-button [disabled]='designForm.invalid' matStepperNext class="button">Siguiente</button>
+</div>

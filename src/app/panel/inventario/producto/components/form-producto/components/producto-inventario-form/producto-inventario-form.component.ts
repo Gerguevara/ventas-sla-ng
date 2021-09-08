@@ -1,5 +1,5 @@
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Producto } from '@models/producto.model';
 import { ProductoService } from '../../../../../../../core/services/producto.service';
 
@@ -11,6 +11,7 @@ import { ProductoService } from '../../../../../../../core/services/producto.ser
 export class ProductoInventarioFormComponent implements OnInit {
 
   inventarioForm!: FormGroup;
+  @Output() inventarioFormOutput$ = new EventEmitter<FormGroup>();
   fontSizeControl = new FormControl(0, Validators.min(0));
   estado = '1';
   cantidad = '0';
@@ -31,6 +32,10 @@ export class ProductoInventarioFormComponent implements OnInit {
   cargarData( data: Producto ): void {
     this.inventarioForm.get('estado')?.setValue(data.disponibilidad.toString());
     this.inventarioForm.get('cantidad')?.setValue(data.cantidad);
+  }
+
+  submitInventarioForm(): void {
+    this.inventarioFormOutput$.emit(this.inventarioForm);
   }
 
 }
