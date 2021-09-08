@@ -59,6 +59,7 @@ export class FormProductoContainerComponent implements OnInit {
   urlImage = `${environment.uploadDir}`;
 
   idProductoSeleccionado!: number;
+  producto!: Producto;
 
   // Declaración de los formularios
   generalForm: FormGroup;
@@ -131,7 +132,6 @@ export class FormProductoContainerComponent implements OnInit {
     private formBuilder: FormBuilder,
     private productoService: ProductoService,
     private dialog: MatDialog,
-    private formProductoService: FormProductoService,
     private dialogRef: MatDialogRef<FormProductoContainerComponent>) {
 
     this.dialogRef.disableClose = true;
@@ -166,7 +166,6 @@ export class FormProductoContainerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.formProductoService.productoMostrarGet());
     // Nos subscribimos a los cambios de los productos seleccionados de la tabla
     this.productoService.productoChange$.subscribe((data: Producto) => {
       if (this.formularioLleno) {

@@ -25,6 +25,7 @@ export class ProductoGeneralFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.generalForm.value);
     if(this.categoriaControl){
       this.categoriasFiltradas= this.categoriaControl.valueChanges.pipe(
         debounceTime(250),
