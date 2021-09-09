@@ -2,7 +2,7 @@
 <mat-dialog-content>
     <mat-card class="card" [ngClass]="{'disabled-controls': !editable}">
         <ng-template [ngxPermissionsOnly]="['productos.update']">
-            <button mat-flat-button *ngIf="habilitarEditar" style="margin-right: 10px;" color="primary" type="button" (click)="editarProducto()"><mat-icon>edit</mat-icon> Editar</button>
+            <button mat-flat-button *ngIf="habilitarEditar" style="margin-right: 10px;" color="primary" type="button"><mat-icon>edit</mat-icon> Editar</button>
         </ng-template>
         <ng-template [ngxPermissionsOnly]="['productos.update','productos.store']">
             <button mat-flat-button *ngIf="habilitarGuardar" style="margin-right: 10px;" color="primary" type="button" (click)="actualizarProducto()"><mat-icon>save</mat-icon> Guardar</button>
@@ -17,7 +17,7 @@
             <!--Formulario Diseño-->
             <mat-step #second_step [stepControl]="designForm" label="Diseño" errorMessage="Debe insertar una imagen">
                 <ng-container *ngIf="stepper.selected === second_step">
-                    <app-producto-design-form></app-producto-design-form>
+                    <app-producto-design-form (designFormOutput$)='obtenerDesignForm($event)'></app-producto-design-form>
                 </ng-container>
             </mat-step>
             <!--Formulario Inventario-->

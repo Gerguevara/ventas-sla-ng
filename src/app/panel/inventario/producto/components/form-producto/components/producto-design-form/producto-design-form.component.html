@@ -7,7 +7,7 @@
   ya que es más manejable el envío de imagenes de esta forma de momento -->
     <label for="file-upload" style="margin-top: 10px;" class="custom-file-upload">
       {{ nombreArchivo }}
-  </label>
+    </label>
     <input id="file-upload" name="uploaded_file" type="file" (change)="cambioImagen($event)" [disabled]="deshabilitarImagen" />
     <mat-divider></mat-divider>
     <div *ngIf="cargandoImagen" style="margin-top: 10px; margin-left: 45.5%; display: block;">
@@ -26,5 +26,5 @@
 <mat-divider></mat-divider>
 <div>
     <button type="button" mat-stroked-button matStepperPrevious class="button">Regresar</button>
-    <button type="button" mat-stroked-button [disabled]='designForm.invalid' matStepperNext class="button">Siguiente</button>
+    <button type="button" mat-stroked-button (click)="submitDesignForm()" [disabled]='designForm.invalid' matStepperNext class="button">Siguiente</button>
 </div>

@@ -1,6 +1,7 @@
 import { ProductoService } from '@global-services/producto.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-producto-design-form',
@@ -10,6 +11,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class ProductoDesignFormComponent implements OnInit {
 
   designForm!: FormGroup;
+  @Output() designFormOutput$ = new EventEmitter<FormGroup>();
   // Variable que almacena el nombre del archivo al ser cargado
   imgUrl = '';
   nombreArchivo = 'Seleccionar Imagen';
@@ -41,6 +43,7 @@ export class ProductoDesignFormComponent implements OnInit {
   ngOnInit(): void {
     this.imgUrl = this.productoService.productoChange.imagen;
     this.mostrarImagen = true;
+    this.deshabilitarImagen = false;
   }
 
   // Se ejecuta cuando la imagen cambia
@@ -55,8 +58,9 @@ export class ProductoDesignFormComponent implements OnInit {
       form.append('image', this.fileInput, this.fileInput.name);
 
       this.productoService.uploadImage( form ).then((response: any) => {
+        console.log(response);
         this.cargandoImagen = false;
-        this.imgUrl = 'http://localhost:8000/' + response.path;
+        this.imgUrl = `${environment.baseApiUrl}${response.path}`;
         this.mostrarImagen = true;
         this.designForm.get('fileInput')?.setValue(this.imgUrl);
       },
@@ -67,7 +71,6 @@ export class ProductoDesignFormComponent implements OnInit {
     }
   }
 
-
   quitarImagen(): void {
     this.productoService.deleteImage(this.imgUrl).subscribe((response: any) => {
       this.imgUrl = '';
@@ -76,6 +79,10 @@ export class ProductoDesignFormComponent implements OnInit {
     (error: any) => {
       console.log(error);
     });
+  }
+
+  submitDesignForm(): void {
+    this.designFormOutput$.emit(this.designForm);
   }
 
 }

@@ -29,17 +29,11 @@ export class FormProductoContainerComponent implements OnInit {
   insertarProducto = new EventEmitter<boolean>();
 
   // Valores de entrada en caso que el formulario solo sea para previsualización
-  nombre = '';
-  descripcion = '';
-  categoria = '';
-  precio = '0.00';
   estado = '1';
   cantidad = '0';
 
   // Tabla de categorias
   displayedColumns: string[] = ['ID', 'Nombre', 'Descripción'];
-
-
 
   // Banderas para manejar el formulario entre edición y visualización de datos
   habilitarCrear = true;
@@ -50,8 +44,6 @@ export class FormProductoContainerComponent implements OnInit {
   editable = true;
   formularioLleno = false;
 
-  // URL donde se consumen los datos
-  url = `${environment.apiUrl}categorias`;
   // URL de subida de imagenes
   urlImageUpload = `${environment.uploadUrl}`;
   // URL de lectura de imagenes
@@ -61,7 +53,7 @@ export class FormProductoContainerComponent implements OnInit {
 
   // Declaración de los formularios
   generalForm!: FormGroup;
-  designForm: FormGroup;
+  designForm!: FormGroup;
   inventarioForm!: FormGroup;
 
   // Getters para validaciones
@@ -78,52 +70,6 @@ export class FormProductoContainerComponent implements OnInit {
   addOnBlur = true;
   categorias: string[] = [];
 
-  limpiarFormulario(): void{
-    // Se resetea toda la información que esté cargada en el formulario
-    // this.generalForm.reset();
-    this.designForm.reset();
-    // this.inventarioForm.reset();
-    // Aquí se carga la data inicial
-    this.generalForm.setValue({
-      nombre: '',
-      descripcion: '',
-      categoria: '',
-      precio: '0.00'
-    });
-    this.inventarioForm.setValue({
-      estado: '1',
-      cantidad: '0'
-    });
-    this.insertarProducto.emit(true);
-  }
-
-  crearProducto(): void {
-    this.editable = true;
-    this.habilitarEditar = false;
-    this.habilitarGuardar = false;
-    this.habilitarCancelar = true;
-    this.habilitarEnviar = true;
-    this.formularioLleno = false;
-    this.limpiarFormulario();
-  }
-
-  editarProducto(): void {
-    this.habilitarEditar = false;
-    this.habilitarCancelar = true;
-    this.habilitarGuardar = true;
-    this.habilitarEnviar = false;
-    this.habilitarCrear = false;
-    this.editable = true;
-  }
-
-  cancelar(): void {
-    // Deshabilitamos los controles de nuevo
-    this.habilitarCancelar = false;
-    this.habilitarGuardar = false;
-    this.habilitarCrear = true;
-    this.limpiarFormulario();
-  }
-
   constructor(
     private snackBar: MatSnackBar,
     private router: Router,
@@ -133,23 +79,6 @@ export class FormProductoContainerComponent implements OnInit {
     private dialogRef: MatDialogRef<FormProductoContainerComponent>) {
 
     this.dialogRef.disableClose = true;
-    // Creación del formulario
-    // Formulario general
-    /*this.generalForm = this.formBuilder.group({
-      nombre     : [this.nombre, [Validators.required, Validators.minLength(5)]],
-      descripcion: [this.descripcion, [Validators.required, Validators.minLength(5)]],
-      categoria  : [this.categoria, Validators.required],
-      precio     : [this.precio, [Validators.required]]
-    });*/
-    // Formulario de imagen
-    this.designForm = this.formBuilder.group({
-      fileInput  : ['', [Validators.required]],
-    });
-    // Formulario de inventario
-    /*this.inventarioForm = this.formBuilder.group({
-      estado     : [this.estado, [Validators.required]],
-      cantidad   : [this.cantidad, [Validators.required]],
-    });*/
   }
 
 
@@ -163,31 +92,7 @@ export class FormProductoContainerComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-    // Nos subscribimos a los cambios de los productos seleccionados de la tabla
-    /*this.productoService.productoChange$.subscribe((data: Producto) => {
-      if (this.formularioLleno) {
-        this.limpiarFormulario();
-      }
-      this.cargarData( data );
-    });*/
-    this.crearProducto();
-  }
-
-  /*cargarData( data: Producto ): void{
-    this.idProductoSeleccionado = data.id;
-    this.generalForm.get('nombre')?.setValue(data.nombre_producto);
-    this.generalForm.get('descripcion')?.setValue(data.descripcion_producto);
-    this.generalForm.get('precio')?.setValue(data.precio);
-    this.generalForm.get('categoria')?.setValue(data.id_categoria);
-    this.productoService.obtenerCategoriaProducto( data.id_categoria ).subscribe((response: Categoria) => {
-
-    });
-    this.inventarioForm.get('estado')?.setValue(data.disponibilidad.toString());
-    this.inventarioForm.get('cantidad')?.setValue(data.cantidad);
-    this.formularioLleno = true;
-    this.habilitarEditar = true;
-  }*/
+  ngOnInit(): void { }
 
   // Método para hacer submit del formulario
   enviar(): void{
@@ -293,6 +198,10 @@ export class FormProductoContainerComponent implements OnInit {
 
   obtenerGeneralForm( event: FormGroup ): void {
     this.generalForm = event;
+  }
+
+  obtenerDesignForm( event: FormGroup ): void {
+    this.designForm = event;
   }
 
   obtenerInventarioForm( event: FormGroup ): void {
