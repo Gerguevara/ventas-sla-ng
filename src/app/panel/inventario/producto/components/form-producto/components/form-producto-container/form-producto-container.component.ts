@@ -28,10 +28,6 @@ export class FormProductoContainerComponent implements OnInit {
   @Output()
   insertarProducto = new EventEmitter<boolean>();
 
-  // Valores de entrada en caso que el formulario solo sea para previsualización
-  estado = '1';
-  cantidad = '0';
-
   // Tabla de categorias
   displayedColumns: string[] = ['ID', 'Nombre', 'Descripción'];
 
@@ -56,15 +52,6 @@ export class FormProductoContainerComponent implements OnInit {
   designForm!: FormGroup;
   inventarioForm!: FormGroup;
 
-  // Getters para validaciones
-
-  get imagenNoValido(): boolean | undefined {
-    return this.designForm.get('fileInput')?.invalid;
-  }
-  get estadoNoValido(): boolean | undefined {
-    return this.inventarioForm.get('estado')?.invalid && this.inventarioForm.get('estado')?.touched;
-  }
-
   // Atributos del Chips List
   visible = true;
   addOnBlur = true;
@@ -73,7 +60,6 @@ export class FormProductoContainerComponent implements OnInit {
   constructor(
     private snackBar: MatSnackBar,
     private router: Router,
-    private formBuilder: FormBuilder,
     private productoService: ProductoService,
     private dialog: MatDialog,
     private dialogRef: MatDialogRef<FormProductoContainerComponent>) {
@@ -81,18 +67,13 @@ export class FormProductoContainerComponent implements OnInit {
     this.dialogRef.disableClose = true;
   }
 
-
-  // Método para obtener mensajes de errores de validaciones Imagen
-  getErrorImagenMessage(): string {
-    if (this.designForm.get('urlImagen')?.hasError('required') || this.designForm.get('urlImagen')?.value === '') {
-      return 'Debe insertar una imagen';
-    }
-    else {
-      return '';
+  ngOnInit(): void {
+    const data = this.productoService.productoChange;
+    if ( data ) {
+      this.habilitarEditar = true;
+      this.idProductoSeleccionado = data.id;
     }
   }
-
-  ngOnInit(): void { }
 
   // Método para hacer submit del formulario
   enviar(): void{
@@ -171,17 +152,18 @@ export class FormProductoContainerComponent implements OnInit {
       this.dialog.open( DialogSpinnerComponent );
       const producto = {
         id: this.idProductoSeleccionado,
-        id_categoria: this.generalForm.get('nombre')?.value.id,
+        id_categoria: this.generalForm.get('categoria')?.value.id,
         nombre_producto: this.generalForm.get('nombre')?.value,
         descripcion_producto: this.generalForm.get('descripcion')?.value,
         disponibilidad: this.inventarioForm.get('estado')?.value,
-        imagen: this.designForm.get('imagen')?.value,
+        imagen: this.designForm.get('fileInput')?.value,
         calificacion_promedio: '',
         precio: this.generalForm.get('precio')?.value,
         cantidad: this.inventarioForm.get('cantidad')?.value
       };
       this.productoService.actualizarProducto(producto as Producto).subscribe((response: any) => {
         this.dialog.closeAll();
+        this.router.navigate(['/panel/inventario/producto']);
         this.snackBar.open(response.mensaje, 'Cerrar', {
           duration: 5000
         });
@@ -189,6 +171,7 @@ export class FormProductoContainerComponent implements OnInit {
       (error: any) => {
         this.dialog.closeAll();
         console.log(error);
+        this.router.navigate(['/panel/inventario/producto']);
         this.snackBar.open(error, 'Cerrar', {
           duration: 5000
         });
@@ -206,6 +189,7 @@ export class FormProductoContainerComponent implements OnInit {
 
   obtenerInventarioForm( event: FormGroup ): void {
     this.inventarioForm = event;
+    this.actualizarProducto();
   }
 
   cerrarFormulario(): void {

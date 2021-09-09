@@ -2,7 +2,7 @@ import { debounceTime, map, startWith, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Resultado } from '@models/resultados/resultado.model';
 import { CategoriaService } from '@global-services/categoria.service';
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Categoria } from '@core/models/categoria.model';
 import { ProductoService } from '../../../../../../../core/services/producto.service';
@@ -13,7 +13,7 @@ import { Producto } from '@core/models/producto.model';
   templateUrl: './producto-general-form.component.html',
   styleUrls: ['./producto-general-form.component.scss']
 })
-export class ProductoGeneralFormComponent implements OnInit {
+export class ProductoGeneralFormComponent implements OnInit, OnDestroy {
 
   generalForm!: FormGroup;
   @Input()
@@ -43,6 +43,9 @@ export class ProductoGeneralFormComponent implements OnInit {
       categoria  : [this.categoria, Validators.required],
       precio     : [this.precio, [Validators.required]]
     });
+  }
+  ngOnDestroy(): void {
+    this.generalFormOutput$.emit(this.generalForm);
   }
 
   ngOnInit(): void {

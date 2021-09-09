@@ -19,7 +19,7 @@
 </mat-card>
 <mat-divider></mat-divider>
 <div>
-    <button type="button" mat-stroked-button (click)="submitInventarioForm()" [disabled]='inventarioForm.invalid' matStepperPrevious class="button">Regresar</button>
-    <!-- <button mat-flat-button *ngIf="habilitarGuardar" style="margin-right: 10px;" color="primary" type="button" (click)="actualizarProducto()"><mat-icon>save</mat-icon> Guardar</button>
-    <button type="submit" *ngIf="habilitarEnviar" mat-flat-button (click)="enviar()" color="primary" class="button">Enviar</button> -->
+    <button type="button" mat-stroked-button matStepperPrevious class="button">Regresar</button>
+    <button mat-flat-button style="margin-right: 10px;" [disabled]='inventarioForm.invalid' color="primary" type="button" (click)="submitInventarioForm()"><mat-icon>save</mat-icon> Guardar</button>
+    <!-- <button type="submit" *ngIf="habilitarEnviar" mat-flat-button (click)="enviar()" color="primary" class="button">Enviar</button> -->
 </div>

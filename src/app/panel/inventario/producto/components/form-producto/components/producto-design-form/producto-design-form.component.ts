@@ -1,5 +1,5 @@
 import { ProductoService } from '@global-services/producto.service';
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { environment } from '@environments/environment';
 
@@ -8,7 +8,7 @@ import { environment } from '@environments/environment';
   templateUrl: './producto-design-form.component.html',
   styleUrls: ['./producto-design-form.component.scss']
 })
-export class ProductoDesignFormComponent implements OnInit {
+export class ProductoDesignFormComponent implements OnInit, OnDestroy {
 
   designForm!: FormGroup;
   @Output() designFormOutput$ = new EventEmitter<FormGroup>();
@@ -28,6 +28,9 @@ export class ProductoDesignFormComponent implements OnInit {
     this.designForm = this.formBuilder.group({
       fileInput  : ['', [Validators.required]],
     });
+  }
+  ngOnDestroy(): void {
+    this.designFormOutput$.emit(this.designForm);
   }
 
   // Método para obtener mensajes de errores de validaciones Imagen
@@ -49,6 +52,7 @@ export class ProductoDesignFormComponent implements OnInit {
   // Se ejecuta cuando la imagen cambia
   cambioImagen( event: any ): void{
     if (event.target.files[0]){
+      this.mostrarImagen = false;
       this.cargandoImagen = true;
       // Cambia el nombre del botón por el nombre del archivo
       this.nombreArchivo = event.target.files[0].name;

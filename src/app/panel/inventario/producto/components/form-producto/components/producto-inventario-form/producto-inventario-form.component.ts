@@ -1,5 +1,5 @@
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Producto } from '@models/producto.model';
 import { ProductoService } from '../../../../../../../core/services/producto.service';
 
@@ -8,7 +8,7 @@ import { ProductoService } from '../../../../../../../core/services/producto.ser
   templateUrl: './producto-inventario-form.component.html',
   styleUrls: ['./producto-inventario-form.component.scss']
 })
-export class ProductoInventarioFormComponent implements OnInit {
+export class ProductoInventarioFormComponent implements OnInit, OnDestroy {
 
   inventarioForm!: FormGroup;
   @Output() inventarioFormOutput$ = new EventEmitter<FormGroup>();
@@ -23,6 +23,10 @@ export class ProductoInventarioFormComponent implements OnInit {
       estado     : [this.estado, [Validators.required]],
       cantidad   : [this.cantidad, [Validators.required]],
     });
+  }
+
+  ngOnDestroy(): void {
+    this.inventarioFormOutput$.emit(this.inventarioForm);
   }
 
   ngOnInit(): void {
