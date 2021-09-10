@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 
 import { IndexProductoRoutingModule } from './index-producto-routing.module';
 import { IndexProductoContainer } from './index-producto/index-producto.container';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -18,6 +20,8 @@ import { IndexProductoContainer } from './index-producto/index-producto.containe
     MatListModule,
     MatButtonModule,
     MatIconModule,
+    ReactiveFormsModule,
+    MatInputModule,
   ]
 })
 export class IndexProductoModule { }

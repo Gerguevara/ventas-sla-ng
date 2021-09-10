@@ -5,6 +5,7 @@ import { Producto } from '@models/producto.model';
 import { ProductoService } from '@global-services/producto.service';
 import { environment } from '@environments/environment';
 import { MatCard } from '@angular/material/card';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-index-product-card',
@@ -22,6 +23,9 @@ export class IndexProductCardComponent implements OnInit {
   calificacionProducto!: number;
   placeholderProductImage: string = environment.defaultProductImage;
   isInCart!: boolean;
+  cantidadControl = new FormControl(1, [
+    Validators.required
+  ]);
 
   constructor(
     private productoService: ProductoService,
@@ -44,6 +48,10 @@ export class IndexProductCardComponent implements OnInit {
     this.checkImageStatus();
     this.calificacionProducto = Number(this.productoInput.calificacion_promedio);
     this.isInCart = this.carritoService.estaEnCarrito(this.productoInput);
+    if(this.isInCart){
+      this.cantidadControl.setValue(this.carritoService.obtenerCantidad(this.productoInput));
+      this.cantidadControl.disable();
+    }
   }
 
   checkImageStatus(){
@@ -63,12 +71,14 @@ export class IndexProductCardComponent implements OnInit {
     $event.preventDefault();$event.stopPropagation();
     //logica de agregar producto al carrito
     if(!this.isInCart){
-      this.carritoService.agregar(this.productoInput);
+      this.carritoService.agregar(this.productoInput, this.cantidadControl.value);
       this.isInCart = true;
+      this.cantidadControl.disable();
     }
     else{
       this.carritoService.eliminar(this.productoInput);
       this.isInCart = false;
+      this.cantidadControl.enable();
     }
   }
 }

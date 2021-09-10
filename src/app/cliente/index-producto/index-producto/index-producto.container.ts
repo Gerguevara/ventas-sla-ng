@@ -4,6 +4,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Producto } from '@models/producto.model';
 import { IndexService } from '@global-services/index.service';
 import { CarritoService } from '@global-services/carrito.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-index-producto',
@@ -13,6 +14,9 @@ import { CarritoService } from '@global-services/carrito.service';
 export class IndexProductoContainer implements OnInit {
   producto? : Producto;
   isInCart!: boolean;
+  cantidadControl = new FormControl(1, [
+    Validators.required
+  ]);
   constructor(
     private route : ActivatedRoute,
     private indexService : IndexService,
@@ -30,6 +34,10 @@ export class IndexProductoContainer implements OnInit {
           next:(producto:Producto)=>{
             this.producto = producto;
             this.isInCart = this.carritoService.estaEnCarrito(producto);
+            if(this.isInCart){
+              this.cantidadControl.setValue(this.carritoService.obtenerCantidad(producto));
+              this.cantidadControl.disable();
+            }
           }
         })
       },
@@ -40,12 +48,14 @@ export class IndexProductoContainer implements OnInit {
   shoppingCartHandler($event: any){
     const product = this.producto? this.producto: {} as Producto;
     if(!this.isInCart){
-      this.carritoService.agregar(product);
+      this.carritoService.agregar(product, this.cantidadControl.value);
       this.isInCart = true;
+      this.cantidadControl.disable();
     }
     else{
       this.carritoService.eliminar(product);
       this.isInCart = false;
+      this.cantidadControl.enable();
     }
   }
 

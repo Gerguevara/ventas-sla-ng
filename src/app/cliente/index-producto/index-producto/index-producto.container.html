@@ -23,6 +23,21 @@
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
+                  <div [style]="'font-size: 12px'">
+                    <mat-form-field
+                      appearance="standard"
+                      [style.width.px]="45"
+                      (click)="$event.preventDefault();$event.stopPropagation();">
+                      <input
+                        matInput
+                        type="number"
+                        placeholder="1"
+                        value="1"
+                        min="1"
+                        [formControl]="cantidadControl">
+                    </mat-form-field>
+
+                  </div>
                 <button mat-button (click)="shoppingCartHandler($event)"><div *ngIf="!isInCart"><mat-icon>add_shopping_cart</mat-icon> Agregar a carrito de compras</div><div *ngIf="isInCart"><mat-icon>remove_shopping_cart</mat-icon> Eliminar de carrito de compras</div></button>
                 </mat-list-item>
             </mat-list>

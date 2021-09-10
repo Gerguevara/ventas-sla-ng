@@ -17,3 +17,14 @@
  mat-card-title, mat-card-content, img{
    margin-bottom: 0;
  }
+
+ mat-card-actions{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+ }
+
+ .mat-form-field-infix {
+   padding: 0;
+ }
