@@ -49,7 +49,14 @@ export class TwofaComponent extends ConfigTab implements OnInit {
 
   submitHandler(){
     if(this.formGroup.valid){
-      //todo here
+      this.twofaService.enviarCodigoTOTP(this.codeControl.value).subscribe({
+        next:(result: boolean)=>{
+          if(result){
+            this.twofaService.confirmTwoFactorAuth();
+            this.showSnackMessage('Autenticación a dos pasos confirmada');
+          }
+        }
+      })
     } else {
       this.showSnackMessage('Campos invalidos, por favor revisa');
     }
@@ -59,9 +66,11 @@ export class TwofaComponent extends ConfigTab implements OnInit {
     if($event.checked){
       this.twofaService.habilitarTwoFa().subscribe({
         next:()=>{
+          this.isChecked= true;
+          this.twofaService.activateTwoFactorAuth();
           this.getQr();
           this.getRecoveryCodes();
-          this.showSnackMessage('Habilitado con éxito, por favor almacene sus claves')
+          this.showSnackMessage('Habilitado con éxito, por favor escanee su código QR y almacene sus claves')
         },
         error:()=>this.showSnackMessage('Error habilitando 2fa'),
       });
@@ -87,11 +96,21 @@ export class TwofaComponent extends ConfigTab implements OnInit {
 
   getRecoveryCodes(){
     this.twofaService.obtenerCodigosRecuperacion().subscribe({
-      next: (codes: string)=>{
-        this.currentUserCodes = codes;
+      next: (codes: string[])=>{
+        console.log(codes);
+        this.currentUserCodes = this.displayCodes(codes);
+        console.log(this.currentUserCodes);
       },
       error:()=>this.showSnackMessage('Error obteniendo Codigos de Recuperacion'),
     })
+  }
+
+  displayCodes(codes: string[]): string{
+    let outputString = '';
+    codes.forEach((value)=>{
+      outputString = outputString.concat(`${value}<br/>`);
+    })
+    return outputString;
   }
 
   showSnackMessage(message: string){

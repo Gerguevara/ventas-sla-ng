@@ -1,8 +1,11 @@
+import { RecoverTwoFaComponent } from './recover-two-fa/recover-two-fa.component';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { TwofaService } from '@global-services/twofa.service';
 import { Event, Router } from '@angular/router';
+import { NgxPermissionsService } from 'ngx-permissions';
 
 @Component({
   selector: 'sla-twofa',
@@ -16,6 +19,8 @@ export class TwofaComponent implements OnInit {
     private twofaService: TwofaService,
     private formBuilder: FormBuilder,
     private matSnackBar: MatSnackBar,
+    private matDialog: MatDialog,
+    private permissions: NgxPermissionsService,
     private router: Router,
   ) {
     this.TOTPForm = this.formBuilder.group({
@@ -24,6 +29,15 @@ export class TwofaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  cerrarSesionHandler($event: any){
+    $event.preventDefault();$event.stopPropagation();
+    this.permissions.flushPermissions();
+    localStorage.removeItem('token');
+    localStorage.removeItem('rol');
+    this.router.navigate(['/']);
+    window.location.reload();
   }
 
   onSubmit($event: any) {
@@ -49,6 +63,11 @@ export class TwofaComponent implements OnInit {
         })
       }
     })
+  }
+
+  recoverHandler($event: any){
+    $event.preventDefault();$event.stopPropagation();
+    this.matDialog.open(RecoverTwoFaComponent)
   }
 
   get codeControl(): FormControl{

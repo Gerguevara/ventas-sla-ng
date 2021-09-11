@@ -2,12 +2,14 @@ import { PreflightService } from '@tool-services/preflight-service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TwofaService extends PreflightService{
+
+  private confirmPending: boolean = false;
 
   private url = `${environment.apiUrl}${environment.endpoints.twofa}`;
 
@@ -46,8 +48,8 @@ export class TwofaService extends PreflightService{
       );
   }
 
-  obtenerCodigosRecuperacion(): Observable<string>{
-    return this.httpClient.get<string>(
+  obtenerCodigosRecuperacion(): Observable<string[]>{
+    return this.httpClient.get<string[]>(
         `${this.url}/recovery`,
         this.setOptions()
       );
@@ -68,5 +70,21 @@ export class TwofaService extends PreflightService{
       },
       this.setOptions()
     )
+  }
+
+  activateTwoFactorAuth(){
+    this.confirmPending = true;
+  }
+
+  confirmTwoFactorAuth(){
+    this.confirmPending = false;
+  }
+
+  twoFactorPendingObservable(): Observable<boolean>{
+    return of<boolean>(this.confirmPending);
+  }
+
+  isTwoFactorPending(): boolean{
+    return this.confirmPending;
   }
 }

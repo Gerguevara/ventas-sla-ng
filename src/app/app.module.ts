@@ -16,11 +16,16 @@ import { TwofaComponent } from './twofa/twofa.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { ConfirmDialogTwoFaComponent } from './twofa/confirm-dialog-two-fa/confirm-dialog-two-fa.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { RecoverTwoFaComponent } from './twofa/recover-two-fa/recover-two-fa.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TwofaComponent
+    TwofaComponent,
+    ConfirmDialogTwoFaComponent,
+    RecoverTwoFaComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +39,7 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule,
     MatButtonModule,
     MatSnackBarModule,
+    MatDialogModule,
     NgxPermissionsModule.forRoot()
   ],
   providers: [
