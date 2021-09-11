@@ -1,3 +1,5 @@
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -29,7 +31,9 @@ import { IndexProductCardComponent } from './index-product-card/index-product-ca
     MatButtonModule,
     MatCardModule,
     MatListModule,
-    MatGridListModule
+    MatGridListModule,
+    ReactiveFormsModule,
+    MatInputModule,
   ],
   exports: [
     IndexProductCardComponent
