@@ -23,7 +23,7 @@ export class ProductoInventarioFormComponent implements OnInit, OnDestroy {
     // Formulario de inventario
     this.inventarioForm = this.formBuilder.group({
       estado     : [this.estado, [Validators.required]],
-      cantidad   : [this.cantidad, [Validators.required]],
+      cantidad   : [{ value: this.cantidad, disabled: true }, [Validators.required]],
     });
   }
 

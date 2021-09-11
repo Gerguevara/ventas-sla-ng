@@ -11,7 +11,7 @@
         </mat-form-field>
         <mat-form-field class="col">
             <mat-label>Cantidad Disponible</mat-label>
-            <input matInput readonly type="number" placeholder="Ej. 12" formControlName="cantidad" min="10">
+            <input matInput type="number" placeholder="Ej. 12" formControlName="cantidad" min="10">
             <span matSuffix>Unidades</span>
             <mat-error *ngIf="fontSizeControl.invalid">Min size: 0 unidades</mat-error>
         </mat-form-field>
@@ -20,5 +20,5 @@
 <mat-divider></mat-divider>
 <div>
     <button type="button" mat-stroked-button matStepperPrevious class="button">Regresar</button>
-    <button mat-flat-button style="margin-right: 10px;" [disabled]='inventarioForm.invalid' *ngIf="inventarioForm.enabled" color="primary" type="button"><mat-icon>save</mat-icon> Guardar</button>
+    <button mat-flat-button style="margin-right: 10px;" [disabled]='inventarioForm.invalid' (click)="submitInventarioForm()" color="primary" type="button"><mat-icon>save</mat-icon> Guardar</button>
 </div>

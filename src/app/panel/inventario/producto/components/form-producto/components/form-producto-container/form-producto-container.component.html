@@ -1,9 +1,6 @@
 <h2 mat-dialog-title>Formulario de Productos</h2>
 <mat-dialog-content>
     <mat-card class="card">
-        <ng-template [ngxPermissionsOnly]="['productos.update','productos.store']">
-            <button mat-flat-button *ngIf="habilitarGuardar" style="margin-right: 10px;" color="primary" type="button" (click)="actualizarProducto()"><mat-icon>save</mat-icon> Guardar</button>
-        </ng-template>
         <mat-horizontal-stepper linear #stepper>
             <!--Formulario General-->
             <mat-step #first_step [stepControl]="generalForm" label="General" errorMessage="Datos generales no válidos">

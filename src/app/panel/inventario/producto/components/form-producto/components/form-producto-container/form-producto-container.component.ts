@@ -1,11 +1,10 @@
-import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
-import { Categoria } from '@models/categoria.model';
 import { Producto } from '@models/producto.model';
 import { ProductoPost, ProductoService } from '@global-services/producto.service';
 
@@ -177,10 +176,16 @@ export class FormProductoContainerComponent implements OnInit {
 
   obtenerGeneralForm( event: FormGroup ): void {
     this.generalForm = event;
+    // Asignación de valores al servicio
+    this.productoService.productoChange.nombre_producto = this.generalForm.get('nombre')?.value;
+    this.productoService.productoChange.descripcion_producto = this.generalForm.get('descripcion')?.value;
+    this.productoService.productoChange.id_categoria = this.generalForm.get('categoria')?.value.id;
+    this.productoService.productoChange.precio = this.generalForm.get('precio')?.value;
   }
 
   obtenerDesignForm( event: FormGroup ): void {
     this.designForm = event;
+    this.productoService.productoChange.imagen = this.designForm.get('fileInput')?.value;
   }
 
   obtenerInventarioForm( event: FormGroup ): void {
