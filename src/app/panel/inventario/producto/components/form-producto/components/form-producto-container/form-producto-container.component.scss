@@ -12,6 +12,10 @@
     overflow-y: scroll;
 }
 
+::ng-deep .mat-horizontal-stepper-header {
+    pointer-events: none !important;
+}
+
 
 /* width */
 

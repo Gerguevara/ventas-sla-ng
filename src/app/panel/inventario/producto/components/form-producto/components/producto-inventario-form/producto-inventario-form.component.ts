@@ -32,7 +32,9 @@ export class ProductoInventarioFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.cargarData( this.productoService.productoChange );
+    if ( this.productoService.productoChange ) {
+      this.cargarData( this.productoService.productoChange );
+    }
   }
 
   cargarData( data: Producto ): void {

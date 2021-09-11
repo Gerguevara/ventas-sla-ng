@@ -48,7 +48,9 @@ export class ProductoGeneralFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Se carga la data ya almacenada en el servicio
-    this.cargarData( this.productoService.productoChange );
+    if ( this.productoService.productoChange ) {
+      this.cargarData( this.productoService.productoChange );
+    }
     if (this.categoriaControl){
       this.categoriasFiltradas = this.categoriaControl.valueChanges.pipe(
         debounceTime(250),

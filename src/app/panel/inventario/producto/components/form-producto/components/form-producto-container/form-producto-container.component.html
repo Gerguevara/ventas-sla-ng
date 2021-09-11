@@ -17,7 +17,7 @@
             <!--Formulario Inventario-->
             <mat-step #third_step [stepControl]="inventarioForm" label="Inventario" errorMessage="Datos no válidos">
                 <ng-container *ngIf="stepper.selected === third_step">
-                    <app-producto-inventario-form (submitFormFlag$)='actualizarProducto()' (inventarioFormOutput$)='obtenerInventarioForm($event)'></app-producto-inventario-form>
+                    <app-producto-inventario-form (submitFormFlag$)='enviarDatos()' (inventarioFormOutput$)='obtenerInventarioForm($event)'></app-producto-inventario-form>
                 </ng-container>
             </mat-step>
         </mat-horizontal-stepper>

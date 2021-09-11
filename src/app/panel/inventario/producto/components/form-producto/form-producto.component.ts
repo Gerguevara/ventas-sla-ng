@@ -22,7 +22,11 @@ export class FormProductoComponent implements OnInit {
     if ( data ) {
       this.dialog.open( FormProductoContainerComponent, { width: '80vw' } );
     } else {
-      this.router.navigate(['/panel/inventario/productos']);
+      if ( this.productoService.enableFormFlag ) {
+        this.dialog.open( FormProductoContainerComponent, { width: '80vw' } );
+      } else {
+        this.router.navigate(['/panel/inventario/productos']);
+      }
     }
   }
 

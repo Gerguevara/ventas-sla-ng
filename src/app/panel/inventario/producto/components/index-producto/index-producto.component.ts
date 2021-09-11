@@ -34,6 +34,11 @@ export class IndexProductoComponent implements OnInit {
     el.scrollIntoView();
   }
 
+  crearProducto(): void {
+    this.productoService.enableFormFlag = true;
+    this.router.navigate(['/panel/inventario/producto/mostrar']);
+  }
+
   mostrarProducto(): void {
     this.router.navigate(['/panel/inventario/producto/mostrar']);
   }

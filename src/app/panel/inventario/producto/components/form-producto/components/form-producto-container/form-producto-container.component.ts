@@ -11,6 +11,7 @@ import { ProductoPost, ProductoService } from '@global-services/producto.service
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 import { environment } from '@environments/environment';
 import { Router } from '@angular/router';
+import { threadId } from 'worker_threads';
 
 @Component({
   selector: 'sla-form-producto-container',
@@ -105,6 +106,7 @@ export class FormProductoContainerComponent implements OnInit {
       };
       this.productoService.crearProducto(producto).subscribe((response: any) => {
         this.dialog.closeAll();
+        this.limpiarObjeto();
         this.snackBar.open(response.mensaje, 'Cerrar', {
           duration: 5000
         });
@@ -112,6 +114,7 @@ export class FormProductoContainerComponent implements OnInit {
       },
       (error: any) => {
         this.dialog.closeAll();
+        this.limpiarObjeto();
         console.log(error);
         this.snackBar.open(error, 'Cerrar', {
           duration: 5000
@@ -158,6 +161,7 @@ export class FormProductoContainerComponent implements OnInit {
       };
       this.productoService.actualizarProducto(producto as Producto).subscribe((response: any) => {
         this.dialog.closeAll();
+        this.limpiarObjeto();
         this.router.navigate(['/panel/inventario/producto']);
         this.snackBar.open(response.mensaje, 'Cerrar', {
           duration: 5000
@@ -165,6 +169,7 @@ export class FormProductoContainerComponent implements OnInit {
       },
       (error: any) => {
         this.dialog.closeAll();
+        this.limpiarObjeto();
         console.log(error);
         this.router.navigate(['/panel/inventario/producto']);
         this.snackBar.open(error, 'Cerrar', {
@@ -174,8 +179,17 @@ export class FormProductoContainerComponent implements OnInit {
     }
   }
 
+  enviarDatos(): void {
+    if ( this.productoService.enableFormFlag ) {
+      this.enviar();
+    } else {
+      this.actualizarProducto();
+    }
+  }
+
   obtenerGeneralForm( event: FormGroup ): void {
     this.generalForm = event;
+    console.log(this.generalForm.value);
     // Asignación de valores al servicio
     this.productoService.productoChange.nombre_producto = this.generalForm.get('nombre')?.value;
     this.productoService.productoChange.descripcion_producto = this.generalForm.get('descripcion')?.value;
@@ -185,7 +199,7 @@ export class FormProductoContainerComponent implements OnInit {
 
   obtenerDesignForm( event: FormGroup ): void {
     this.designForm = event;
-    this.productoService.productoChange.imagen = this.designForm.get('fileInput')?.value;
+    this.productoService.productoChange.imagen = event.get('fileInput')?.value;
   }
 
   obtenerInventarioForm( event: FormGroup ): void {
@@ -194,6 +208,20 @@ export class FormProductoContainerComponent implements OnInit {
 
   cerrarFormulario(): void {
     this.router.navigate(['/panel/inventario/producto']);
+    this.limpiarObjeto();
     this.dialogRef.close();
+  }
+
+  limpiarObjeto(): void {
+    this.productoService.productoChange.nombre_producto = '';
+    this.productoService.productoChange.descripcion_producto = '';
+    this.productoService.productoChange.calificacion_promedio = '';
+    this.productoService.productoChange.disponibilidad = 0;
+    this.productoService.productoChange.cantidad = 0;
+    this.productoService.productoChange.imagen = '';
+    this.productoService.productoChange.precio = '';
+    this.productoService.productoChange.id = 0;
+    this.productoService.productoChange.id_categoria = 0;
+    this.productoService.enableFormFlag = false;
   }
 }

@@ -34,7 +34,7 @@ export class ProductoService  extends RecursoService<Producto>{
   */
   // productoChange$ = new EventEmitter<Producto>();
   productoChange!: Producto;
-  // enableFormFlag$ = new EventEmitter<Boolean>();
+  enableFormFlag = false;
 
   /*
   Este es un método para el manejo de la subida de la imagen del producto.
