@@ -45,6 +45,7 @@ export class ProductoDesignFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.imgUrl = this.productoService.productoChange.imagen;
+    this.designForm.get('fileInput')?.setValue(this.productoService.productoChange.imagen);
     this.mostrarImagen = true;
     this.deshabilitarImagen = false;
   }

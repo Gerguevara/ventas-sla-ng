@@ -16,8 +16,6 @@ import { Producto } from '@core/models/producto.model';
 export class ProductoGeneralFormComponent implements OnInit, OnDestroy {
 
   generalForm!: FormGroup;
-  @Input()
-  editable!: boolean;
   categoriasObservable!: Observable<Categoria[]> | Observable<Resultado<Categoria>>;
   selectable = true;
   removable = true;

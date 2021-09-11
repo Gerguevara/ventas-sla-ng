@@ -1,15 +1,9 @@
-<!-- <mat-expansion-panel #panelForm class="mat-elevation-z0">
-    <mat-expansion-panel-header>
-        <mat-panel-title>
-            {{panelTitle}}
-        </mat-panel-title>
-    </mat-expansion-panel-header>
-    <div #formProducto><app-form-producto (insertarProducto)="eventoInsertarNuevoProducto($event)"></app-form-producto></div>
-</mat-expansion-panel> -->
 <div class="header">
     <h1>Productos Disponibles</h1>
 </div>
-<mat-card>
-    <!-- <app-table-producto (clickTabla)="scroll(formProducto, $event)"></app-table-producto> -->
-    <app-table-producto (clickTabla)='mostrarProducto($event)'></app-table-producto>
+<mat-card style="position: relative;">
+    <button mat-stroked-button (click)="mostrarProducto()" color="primary" style="position: absolute; top: 15px; right: 15px;">
+      <mat-icon>add</mat-icon> Crear
+    </button>
+    <app-table-producto (clickTabla)='mostrarProducto()'></app-table-producto>
 </mat-card>

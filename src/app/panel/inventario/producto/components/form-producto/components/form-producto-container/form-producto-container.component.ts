@@ -32,12 +32,9 @@ export class FormProductoContainerComponent implements OnInit {
   displayedColumns: string[] = ['ID', 'Nombre', 'Descripción'];
 
   // Banderas para manejar el formulario entre edición y visualización de datos
-  habilitarCrear = true;
   habilitarEditar = false;
   habilitarGuardar = false;
   habilitarCancelar = false;
-  habilitarEnviar = false;
-  editable = true;
   formularioLleno = false;
 
   // URL de subida de imagenes
@@ -70,7 +67,6 @@ export class FormProductoContainerComponent implements OnInit {
   ngOnInit(): void {
     const data = this.productoService.productoChange;
     if ( data ) {
-      this.habilitarEditar = true;
       this.idProductoSeleccionado = data.id;
     }
   }
@@ -189,7 +185,6 @@ export class FormProductoContainerComponent implements OnInit {
 
   obtenerInventarioForm( event: FormGroup ): void {
     this.inventarioForm = event;
-    this.actualizarProducto();
   }
 
   cerrarFormulario(): void {

@@ -1,9 +1,6 @@
 <h2 mat-dialog-title>Formulario de Productos</h2>
 <mat-dialog-content>
-    <mat-card class="card" [ngClass]="{'disabled-controls': !editable}">
-        <ng-template [ngxPermissionsOnly]="['productos.update']">
-            <button mat-flat-button *ngIf="habilitarEditar" style="margin-right: 10px;" color="primary" type="button"><mat-icon>edit</mat-icon> Editar</button>
-        </ng-template>
+    <mat-card class="card">
         <ng-template [ngxPermissionsOnly]="['productos.update','productos.store']">
             <button mat-flat-button *ngIf="habilitarGuardar" style="margin-right: 10px;" color="primary" type="button" (click)="actualizarProducto()"><mat-icon>save</mat-icon> Guardar</button>
         </ng-template>
@@ -11,7 +8,7 @@
             <!--Formulario General-->
             <mat-step #first_step [stepControl]="generalForm" label="General" errorMessage="Datos generales no válidos">
                 <ng-container *ngIf="stepper.selected === null || stepper.selected === first_step">
-                    <app-producto-general-form (generalFormOutput$)='obtenerGeneralForm($event)' [editable]="editable"></app-producto-general-form>
+                    <app-producto-general-form (generalFormOutput$)='obtenerGeneralForm($event)'></app-producto-general-form>
                 </ng-container>
             </mat-step>
             <!--Formulario Diseño-->
@@ -23,7 +20,7 @@
             <!--Formulario Inventario-->
             <mat-step #third_step [stepControl]="inventarioForm" label="Inventario" errorMessage="Datos no válidos">
                 <ng-container *ngIf="stepper.selected === third_step">
-                    <app-producto-inventario-form (inventarioFormOutput$)='obtenerInventarioForm($event)'></app-producto-inventario-form>
+                    <app-producto-inventario-form (submitFormFlag$)='actualizarProducto()' (inventarioFormOutput$)='obtenerInventarioForm($event)'></app-producto-inventario-form>
                 </ng-container>
             </mat-step>
         </mat-horizontal-stepper>

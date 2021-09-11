@@ -11,10 +11,12 @@ import { ProductoService } from '../../../../../../../core/services/producto.ser
 export class ProductoInventarioFormComponent implements OnInit, OnDestroy {
 
   inventarioForm!: FormGroup;
-  @Output() inventarioFormOutput$ = new EventEmitter<FormGroup>();
   fontSizeControl = new FormControl(0, Validators.min(0));
   estado = '1';
   cantidad = '0';
+  // Salida del formulario de datos
+  @Output() inventarioFormOutput$ = new EventEmitter<FormGroup>();
+  @Output() submitFormFlag$ = new EventEmitter<Boolean>();
 
   constructor(private formBuilder: FormBuilder,
               private productoService: ProductoService) {
@@ -40,6 +42,7 @@ export class ProductoInventarioFormComponent implements OnInit, OnDestroy {
 
   submitInventarioForm(): void {
     this.inventarioFormOutput$.emit(this.inventarioForm);
+    this.submitFormFlag$.emit(true);
   }
 
 }

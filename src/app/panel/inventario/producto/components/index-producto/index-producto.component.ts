@@ -34,7 +34,7 @@ export class IndexProductoComponent implements OnInit {
     el.scrollIntoView();
   }
 
-  mostrarProducto( $event: any ): void {
+  mostrarProducto(): void {
     this.router.navigate(['/panel/inventario/producto/mostrar']);
   }
 
