@@ -33,7 +33,18 @@ export class ProductoService  extends RecursoService<Producto>{
   para que sea visualizado en el formulario
   */
   // productoChange$ = new EventEmitter<Producto>();
-  productoChange!: Producto;
+  // productoChange!: Producto;
+  productoChange: Producto = {
+    id: 0,
+    id_categoria: 1,
+    nombre_producto: '',
+    descripcion_producto: '',
+    precio: '0.00',
+    cantidad: 0,
+    disponibilidad: 0,
+    imagen: '',
+    calificacion_promedio: ''
+  };
   enableFormFlag = false;
 
   /*

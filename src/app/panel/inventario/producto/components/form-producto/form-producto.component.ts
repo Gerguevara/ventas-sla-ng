@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormProductoContainerComponent } from './components/form-producto-container/form-producto-container.component';
 import { ProductoService } from '../../../../../core/services/producto.service';
-import { Producto } from '@core/models/producto.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,7 +18,8 @@ export class FormProductoComponent implements OnInit {
 
   ngOnInit(): void {
     const data = this.productoService.productoChange;
-    if ( data ) {
+    console.log(this.productoService.enableFormFlag);
+    if ( data && data.id !== 0 ) {
       this.dialog.open( FormProductoContainerComponent, { width: '80vw' } );
     } else {
       if ( this.productoService.enableFormFlag ) {

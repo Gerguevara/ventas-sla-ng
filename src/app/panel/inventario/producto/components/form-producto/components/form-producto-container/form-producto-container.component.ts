@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
@@ -11,7 +11,6 @@ import { ProductoPost, ProductoService } from '@global-services/producto.service
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 import { environment } from '@environments/environment';
 import { Router } from '@angular/router';
-import { threadId } from 'worker_threads';
 
 @Component({
   selector: 'sla-form-producto-container',
@@ -100,7 +99,7 @@ export class FormProductoContainerComponent implements OnInit {
         nombre_producto: this.generalForm.get('nombre')?.value,
         descripcion_producto: this.generalForm.get('descripcion')?.value,
         disponibilidad: this.inventarioForm.get('estado')?.value,
-        imagen: this.designForm.get('imagen')?.value,
+        imagen: this.designForm.get('fileInput')?.value,
         precio: this.generalForm.get('precio')?.value,
         cantidad: this.inventarioForm.get('cantidad')?.value
       };
@@ -116,7 +115,7 @@ export class FormProductoContainerComponent implements OnInit {
         this.dialog.closeAll();
         this.limpiarObjeto();
         console.log(error);
-        this.snackBar.open(error, 'Cerrar', {
+        this.snackBar.open('Ah ocurrido un error!', 'Cerrar', {
           duration: 5000
         });
       });
@@ -189,7 +188,6 @@ export class FormProductoContainerComponent implements OnInit {
 
   obtenerGeneralForm( event: FormGroup ): void {
     this.generalForm = event;
-    console.log(this.generalForm.value);
     // Asignación de valores al servicio
     this.productoService.productoChange.nombre_producto = this.generalForm.get('nombre')?.value;
     this.productoService.productoChange.descripcion_producto = this.generalForm.get('descripcion')?.value;
@@ -219,9 +217,9 @@ export class FormProductoContainerComponent implements OnInit {
     this.productoService.productoChange.disponibilidad = 0;
     this.productoService.productoChange.cantidad = 0;
     this.productoService.productoChange.imagen = '';
-    this.productoService.productoChange.precio = '';
+    this.productoService.productoChange.precio = '0.00';
     this.productoService.productoChange.id = 0;
-    this.productoService.productoChange.id_categoria = 0;
+    this.productoService.productoChange.id_categoria = 1;
     this.productoService.enableFormFlag = false;
   }
 }
