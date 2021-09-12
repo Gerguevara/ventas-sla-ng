@@ -51,6 +51,6 @@ export class PerfilUsuarioService extends PreflightService {
   }
 
   actualizarPerfilUsuario( perfil: PerfilUsuario ): Observable<any> {
-    return this.http.put<any>(this.url + '/' + localStorage.getItem('user_identity'), perfil, this.setOptions());
+    return this.http.put<any>(this.url, perfil, this.setOptions());
   }
 }
