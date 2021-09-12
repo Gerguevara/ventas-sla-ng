@@ -1,0 +1,166 @@
+@import '~@angular/material/theming';
+@import 'variables';
+.card {
+    margin: 15px;
+    padding-bottom: 0px;
+}
+
+.card-step {
+    margin: 15px;
+    padding-bottom: 0px;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+::ng-deep .mat-horizontal-stepper-header {
+    pointer-events: none !important;
+}
+
+
+/* width */
+
+::-webkit-scrollbar {
+    width: 3px;
+    border-radius: 15px;
+}
+
+
+/* Track */
+
+ ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+
+/* Handle */
+
+ ::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+
+/* Handle on hover */
+
+ ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.example-stepper {
+    margin-top: 8px;
+}
+
+.mat-form-field {
+    margin-top: 16px;
+}
+
+.subtitle {
+    font-weight: bold;
+}
+
+.button {
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.col {
+    width: 100%;
+}
+
+.gridList {
+    padding: 10px;
+}
+
+.layoutImage {
+    margin: 5px;
+}
+
+.demo-table {
+    width: 100%;
+}
+
+.mat-row .mat-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+}
+
+mat-row:hover {
+    cursor: pointer;
+    background-color: $hover-white;
+}
+
+.demo-row-is-clicked {
+    font-weight: bold;
+}
+
+.imagen-view {
+    height: 30vw;
+    max-width: auto;
+}
+
+.example-container .mat-form-field+.mat-form-field {
+    margin-left: 8px;
+}
+
+.example-right-align {
+    text-align: right;
+}
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+    display: none;
+}
+
+input.example-right-align {
+    -moz-appearance: textfield;
+}
+
+.demo-table {
+    width: 100%;
+}
+
+.mat-row .mat-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+}
+
+mat-row:hover .mat-cell {
+    cursor: pointer;
+    background-color: $hover-white;
+}
+
+.demo-row-is-clicked {
+    font-weight: bold;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.disabled-controls {
+    background-color: mat-color($mat-gray, 200);
+    color: mat-color($mat-gray, 400) !important;
+}
+
+.mat-stepper-horizontal,
+.card-step,
+.demo-table,
+.demo-table th {
+    background-color: inherit;
+    color: inherit;
+}
+
+.mat-form-field {
+    position: sticky;
+}
