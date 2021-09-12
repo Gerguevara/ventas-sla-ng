@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PerfilUsuario } from '@core/models/perfil.usuario.model';
+import { PerfilUsuario } from '@models/perfil.usuario.model';
 import { PerfilUsuarioService } from '@core/services/perfil-usuario.service';
 import { DialogSpinnerComponent } from '../../tools/components/dialog-spinner/dialog-spinner.component';
 
@@ -65,17 +65,13 @@ export class PerfilUsuarioComponent implements OnInit {
 
   ngOnInit(): void {
     this.perfilForm.disable();
-    const id = localStorage.getItem('user_identity');
-    if ( id ) {
-      this.perfilService.obtenerPerfilUsuario( Number(id) ).subscribe((response: PerfilUsuario[]) => {
-        this.cargarDatos( response[0] );
-      },
-      (error: any) => {
-        console.log(error);
-      });
-    } else {
+    this.perfilService.getCurrentUserProfile().subscribe((response: PerfilUsuario) => {
+      this.cargarDatos( response );
+    },
+    (error: any) => {
+      console.log(error);
       this.snackBar.open('Usuario no autenticado', 'Cerrar', { duration: 5000 });
-    }
+    });
   }
 
   cargarDatos( perfil: PerfilUsuario ): void {
