@@ -1,1 +1,39 @@
-<p>dialog-cambiar-stock works!</p>
+<h2 mat-dialog-title> Cambiar Stock de Producto </h2>
+<mat-dialog-content>
+    <form [formGroup]='cambiarStockForm'>
+        <mat-form-field appearance="fill" class="input">
+            <mat-label>Concepto</mat-label>
+            <mat-select formControlName='tipo'>
+                <mat-option value="e">Entrada de Stock</mat-option>
+                <mat-option value="s">Salida de Stock</mat-option>
+                <mat-option value="d">Producto Defectuoso</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="input">
+            <mat-label>Cantidad</mat-label>
+            <input matInput formControlName='cantidad' type="number" placeholder="Ej. 12" formControlName="cantidad" min="1" [max]="data.cantidad">
+            <span matSuffix>Unidades</span>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-stroked-button (click)="abrirConfirmarDialog()" color="primary">Confirmar</button>
+</mat-dialog-actions>
+<ng-template #confirmation>
+    <h2 mat-dialog-title> Confirmar Cambio de Stock </h2>
+    <mat-dialog-content>
+        <p>¿Estás seguro de realizar los siguientes cambios?</p>
+        <p> <strong>Producto:</strong> {{ data.nombre_producto }}</p>
+        <div [ngSwitch]="cambiarStockForm.get('tipo')?.value">
+            <p *ngSwitchCase="'e'"> <strong>Concepto:</strong> Entrada de Stock</p>
+            <p *ngSwitchCase="'s'"> <strong>Concepto:</strong> Salida de Stock</p>
+            <p *ngSwitchCase="'d'"> <strong>Concepto:</strong> Producto Defectuoso</p>
+        </div>
+        <p> <strong>Cantidad:</strong> {{ cambiarStockForm.get('cantidad')?.value }}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button (click)="cerrarConfirmarDialog()">Cancelar</button>
+        <button mat-button mat-stroked-button color="primary">Confirmar</button>
+    </mat-dialog-actions>
+</ng-template>

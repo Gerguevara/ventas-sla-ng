@@ -18,7 +18,6 @@ export class FormProductoComponent implements OnInit {
 
   ngOnInit(): void {
     const data = this.productoService.productoChange;
-    console.log(this.productoService.enableFormFlag);
     if ( data && data.id !== 0 ) {
       this.dialog.open( FormProductoContainerComponent, { width: '80vw' } );
     } else {

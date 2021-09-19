@@ -11,6 +11,7 @@ import { ProductoPost, ProductoService } from '@global-services/producto.service
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 import { environment } from '@environments/environment';
 import { Router } from '@angular/router';
+import { DialogCambiarStockComponent } from '../dialog-cambiar-stock/dialog-cambiar-stock.component';
 
 @Component({
   selector: 'sla-form-producto-container',
@@ -48,6 +49,8 @@ export class FormProductoContainerComponent implements OnInit {
   designForm!: FormGroup;
   inventarioForm!: FormGroup;
 
+  productoEditFlag = false;
+
   // Atributos del Chips List
   visible = true;
   addOnBlur = true;
@@ -65,6 +68,7 @@ export class FormProductoContainerComponent implements OnInit {
 
   ngOnInit(): void {
     const data = this.productoService.productoChange;
+    this.productoEditFlag = this.productoService.enableFormFlag;
     if ( data ) {
       this.idProductoSeleccionado = data.id;
     }
@@ -183,11 +187,11 @@ export class FormProductoContainerComponent implements OnInit {
    * @name enviarDatos
    * @description
    * Es disparado al presionar el botón de Enviar en el formulario. Se encarga de evaluar si el producto
-   * es creado editado a través de una bandera (enableFormFlag), y creará o actualizará el producto
+   * es creado editado a través de una bandera (productoEditFlag), y creará o actualizará el producto
    * según corresponda
    */
   enviarDatos(): void {
-    if ( this.productoService.enableFormFlag ) {
+    if ( this.productoEditFlag ) {
       this.enviar();
     } else {
       this.actualizarProducto();
@@ -252,7 +256,8 @@ export class FormProductoContainerComponent implements OnInit {
    * @returns void
    */
   cambiarStock(): void {
-
+    const data = this.productoService.productoChange;
+    this.dialog.open( DialogCambiarStockComponent, { width: '50vw', data } );
   }
 
   /**
