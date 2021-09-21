@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Resultado } from '@models/resultados/resultado.model';
 import { Producto } from '@models/producto.model';
 import { ProductoService } from '@global-services/producto.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-index-producto',
@@ -18,6 +19,7 @@ export class IndexProductoComponent implements OnInit {
   data?: Producto[];
 
   constructor(
+    private router: Router,
     private productoService: ProductoService
     ) { }
 
@@ -30,6 +32,15 @@ export class IndexProductoComponent implements OnInit {
     this.setPanelTitle(`Modificando ${$event.nombre_producto}`);
     this.panel.open();
     el.scrollIntoView();
+  }
+
+  crearProducto(): void {
+    this.productoService.enableFormFlag = true;
+    this.router.navigate(['/panel/inventario/producto/mostrar']);
+  }
+
+  mostrarProducto(): void {
+    this.router.navigate(['/panel/inventario/producto/mostrar']);
   }
 
   setPanelTitle(title: string){
