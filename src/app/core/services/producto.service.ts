@@ -18,6 +18,15 @@ export interface ProductoPost {
   cantidad: number;
 }
 
+const token = 'Bearer ' + localStorage.getItem('token');
+const httpHeaders = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json',
+    'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
+    'Authorization': token
+  })
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -54,26 +63,12 @@ export class ProductoService  extends RecursoService<Producto>{
    */
 
   async uploadImage( form: any ): Promise<any> {
-    const token = 'Bearer ' + localStorage.getItem('token');
-    const httpHeaders = {
-      headers: new HttpHeaders({
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': token
-      })
-    };
     const response = await this.httpClient.post(
       `${environment.apiUrl}${this.endpoint}/uploadImage/`, form, httpHeaders).toPromise();
     return response;
   }
 
   deleteImage(path: string): Observable<any> {
-    const token = 'Bearer ' + localStorage.getItem('token');
-    const httpHeaders = {
-      headers: new HttpHeaders({
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': token
-      })
-    };
     return this.httpClient.post(`${environment.apiUrl}${this.endpoint}/deleteImage`, { path }, httpHeaders);
   }
 
@@ -82,66 +77,36 @@ export class ProductoService  extends RecursoService<Producto>{
   para la creación de un nuevo producto
   */
   crearProducto( producto: ProductoPost ): any {
-    const token = 'Bearer ' + localStorage.getItem('token');
-    const httpHeaders = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
-        'Authorization': token
-      })
-    };
     return this.httpClient.post<any>(`${environment.apiUrl}${this.endpoint}`, producto, httpHeaders);
   }
 
   actualizarProducto( producto: Producto ): Observable<any> {
-    const token = 'Bearer ' + localStorage.getItem('token');
-    const httpHeaders = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
-        'Authorization': token
-      })
-    };
     return this.httpClient.put<any>(`${environment.apiUrl}${this.endpoint}/${producto.id}`, JSON.stringify(producto), httpHeaders);
   }
 
   eliminarProducto( producto: Producto ): Observable<any> {
-    const token = 'Bearer ' + localStorage.getItem('token');
-    const httpHeaders = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
-        'Authorization': token
-      })
-    };
     return this.httpClient.delete<any>(`${environment.apiUrl}${this.endpoint}/${producto.id}`, httpHeaders);
   }
 
   obtenerCategoriaProducto( id: number ): Observable<Categoria> {
-    const token = 'Bearer ' + localStorage.getItem('token');
-    const httpHeaders = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
-        'Authorization': token
-      })
-    };
     return this.httpClient.get<Categoria>(`${environment.apiUrl}${environment.endpoints.categorias}/${id}`, httpHeaders);
   }
 
   obtenerListaProductos(): Observable<Resultado<Producto>> {
-    const token = 'Bearer ' + localStorage.getItem('token');
-    const options = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
-        'Authorization': token
-      })
-    };
-    return this.httpClient.get<Resultado<Producto>>(`${environment.apiUrl}${this.endpoint}?status=1`, options);
+    return this.httpClient.get<Resultado<Producto>>(`${environment.apiUrl}${this.endpoint}?status=1`, httpHeaders);
   }
 
-  getImage(producto: Producto){
+  getImage(producto: Producto): any{
     return this.httpClient.get<any>(producto.imagen);
+  }
+
+  cambiarStockProducto(idProducto: number, concepto: string, cantidad: number, precioUnitario: string): Observable<any> {
+    const data = {
+      id_producto: idProducto,
+      tipo: concepto,
+      cantidad,
+      precio_unitario: precioUnitario
+    };
+    return this.httpClient.post<any>(`${environment.apiUrl}${environment.endpoints.cambiarStockProducto}`, data, httpHeaders);
   }
 }

@@ -18,10 +18,11 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cerrar</button>
-    <button mat-stroked-button (click)="abrirConfirmarDialog()" color="primary">Confirmar</button>
+    <button mat-stroked-button [disabled]="cambiarStockForm.invalid" (click)="abrirConfirmarDialog()" color="primary">Confirmar</button>
 </mat-dialog-actions>
 <ng-template #confirmation>
-    <h2 mat-dialog-title> Confirmar Cambio de Stock </h2>
+    <h2 mat-dialog-title>
+        <mat-icon>info</mat-icon> Confirmar Cambio de Stock </h2>
     <mat-dialog-content>
         <p>¿Estás seguro de realizar los siguientes cambios?</p>
         <p> <strong>Producto:</strong> {{ data.nombre_producto }}</p>
@@ -34,6 +35,6 @@
     </mat-dialog-content>
     <mat-dialog-actions align="end">
         <button mat-button (click)="cerrarConfirmarDialog()">Cancelar</button>
-        <button mat-button mat-stroked-button color="primary">Confirmar</button>
+        <button mat-button mat-stroked-button (click)="confirmarCambioStock()" color="primary">Confirmar</button>
     </mat-dialog-actions>
 </ng-template>
