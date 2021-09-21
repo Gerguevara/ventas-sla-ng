@@ -4,6 +4,10 @@ import { IndexProductoComponent } from './components/index-producto/index-produc
 
 const routes: Routes = [
   { path: '', component: IndexProductoComponent},
+  {
+    path: 'kardex',
+    loadChildren: () => import('./kardex/kardex.module').then(m => m.KardexModule),
+  },
   { path: '**', pathMatch: 'full', redirectTo: '' }
 ];
 
