@@ -22,65 +22,24 @@ export class RolesService extends RecursoService<Rol> {
     super(environment.endpoints.roles,http);
   }
 
-  async getDepartamento( id: number ): Promise<Resultado<any>> {
-    const token = 'Bearer ' + localStorage.getItem('token');
-    const headers = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
-        'Authorization': token
-      })
-    };
-    const response = await this.http.get<Resultado<any>>(`${environment.apiUrl}` + 'departamentos/' + id, headers).toPromise();
-    return response;
+  getDepartamento( id: number ): Observable<Resultado<any>> {
+    return this.http.get<Resultado<any>>(`${environment.apiUrl}departamentos/${id}`, this.setOptions());
   }
 
   getDepartamentos(): Observable<Permission[]> {
-    const token = 'Bearer ' + localStorage.getItem('token');
-    const headers = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
-        'Authorization': token
-      })
-    };
-    return this.http.get<Permission[]>(`${environment.apiUrl}` + 'departamentos/', headers);
+    return this.http.get<Permission[]>(`${environment.apiUrl}departamentos/`, this.setOptions());
   }
 
   searchDepartamento( nombre: string ): Observable<Departamento[]> {
-    const token = 'Bearer ' + localStorage.getItem('token');
-    const headers = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
-        'Authorization': token
-      })
-    };
-    return this.http.get<Departamento[]>(`${environment.apiUrl}` + 'departamentos/search?consulta=' + nombre, headers);
+    return this.http.get<Departamento[]>(`${environment.apiUrl}departamentos/search?consulta=${nombre}`, this.setOptions());
   }
 
   getPanels(): Observable<PermissionsByPanel[]> {
-    const token = 'Bearer ' + localStorage.getItem('token');
-    const headers = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
-        'Authorization': token
-      })
-    };
-    return this.http.get<PermissionsByPanel[]>(`${environment.apiUrl}` + 'panels/', headers);
+    return this.http.get<PermissionsByPanel[]>(`${environment.apiUrl}panels/`, this.setOptions());
   }
 
   getPermisos( idRole: number ): Observable<Permission[]> {
-    const token = 'Bearer ' + localStorage.getItem('token');
-    const headers = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
-        'Authorization': token
-      })
-    };
-    return this.http.get<Permission[]>(`${environment.apiUrl}` + 'roles/' + idRole, headers).pipe(map(
+    return this.http.get<Permission[]>(`${environment.apiUrl}roles/${idRole}`, this.setOptions()).pipe(map(
       ( data: any ) => {
         return data.permisos;
       }
@@ -88,39 +47,15 @@ export class RolesService extends RecursoService<Rol> {
   }
 
   crearRol( rol: Rol ): Observable<any> {
-    const token = 'Bearer ' + localStorage.getItem('token');
-    const httpHeaders = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
-        'Authorization': token
-      })
-    };
-    return this.http.post<any>(`${environment.apiUrl}${this.endpoint}`, rol, httpHeaders);
+    return this.http.post<any>(`${environment.apiUrl}${this.endpoint}`, rol, this.setOptions());
   }
 
   actualizarRol( rol: Rol, id: number ): Observable<any> {
-    const token = 'Bearer ' + localStorage.getItem('token');
-    const httpHeaders = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
-        'Authorization': token
-      })
-    };
-    return this.http.put<any>(`${environment.apiUrl}${this.endpoint}` + '/' + id, rol, httpHeaders);
+    return this.http.put<any>(`${environment.apiUrl}${this.endpoint}/${id}`, rol, this.setOptions());
   }
 
   deleteRol( id: number ): Observable<any> {
-    const token = 'Bearer ' + localStorage.getItem('token');
-    const httpHeaders = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
-        'Authorization': token
-      })
-    };
-    return this.http.delete<any>(`${environment.apiUrl}${this.endpoint}/${id}`, httpHeaders);
+    return this.http.delete<any>(`${environment.apiUrl}${this.endpoint}/${id}`, this.setOptions());
   }
 
 }
