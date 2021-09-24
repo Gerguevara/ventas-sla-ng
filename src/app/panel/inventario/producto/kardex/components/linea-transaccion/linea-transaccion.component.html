@@ -1,0 +1,13 @@
+<div [ngClass]="{
+  'entrada': transaccion.tipo === 'e',
+  'salida': transaccion.tipo === 's'
+}">
+  <p>{{transaccion.id_producto}}</p>
+  <p>{{transaccion.cantidad}}</p>
+  <p>{{transaccion.precio_unitario}}</p>
+  <p>{{transaccion.total}}</p>
+  <p>{{transaccion.created_at}}</p>
+  <p>{{transaccion.cantidad_existencia}}</p>
+  <p>{{transaccion.valor_existencia}}</p>
+  <p>{{transaccion.total_existencia}}</p>
+</div>

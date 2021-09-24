@@ -37,6 +37,7 @@ export const environment = {
     resetPassword: 'resetPassword',
     tokenVerify: 'tokenVerify',
     changeMail: 'changeMail',
+    kardex: 'kardex',
   },
   patterns:
   {
