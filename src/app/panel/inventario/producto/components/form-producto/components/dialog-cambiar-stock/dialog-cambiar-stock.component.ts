@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Producto } from '@models/producto.model';
 import { ProductoService } from '../../../../../../../core/services/producto.service';
@@ -24,6 +24,7 @@ export class DialogCambiarStockComponent implements OnInit {
               private snackBar: MatSnackBar,
               private formBuilder: FormBuilder,
               private productoService: ProductoService,
+              private dialogRef: MatDialogRef<DialogCambiarStockComponent>,
               @Inject(MAT_DIALOG_DATA) public data: Producto ) {
                 this.cambiarStockForm = this.formBuilder.group({
                   tipo: ['e', Validators.required],
@@ -39,6 +40,10 @@ export class DialogCambiarStockComponent implements OnInit {
 
   cerrarConfirmarDialog(): void {
     this.confirmationDialogRef.close();
+  }
+
+  cerrarDialogCambioStock(change: boolean): void {
+    this.dialogRef.close(change);
   }
 
   /**
@@ -64,6 +69,7 @@ export class DialogCambiarStockComponent implements OnInit {
           this.snackBar.open('Los cambios se han guardado correctamente', 'Cerrar', { duration: 5000 });
           spinnerRef.close();
           this.cerrarConfirmarDialog();
+          this.cerrarDialogCambioStock(true);
         }
       }
     );

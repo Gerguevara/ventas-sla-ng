@@ -257,7 +257,12 @@ export class FormProductoContainerComponent implements OnInit {
    */
   cambiarStock(): void {
     const data = this.productoService.productoChange;
-    this.dialog.open( DialogCambiarStockComponent, { width: '50vw', data } );
+    const dialogCambiarStockRef = this.dialog.open( DialogCambiarStockComponent, { width: '50vw', data } );
+    dialogCambiarStockRef.afterClosed().subscribe((change: boolean) => {
+      if ( change ) {
+        this.cerrarFormulario();
+      }
+    });
   }
 
   /**
