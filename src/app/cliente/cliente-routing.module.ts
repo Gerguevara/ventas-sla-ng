@@ -29,6 +29,11 @@ const routes: Routes = [
         loadChildren: () => import('./config-usuario/config-usuario.module').then(m => m.ConfigUsuarioModule),
         canLoad: [AuthGuard, TwoFaBlockGuard]
       },
+      {
+        path:'payments',
+        loadChildren: () => import('./pagos/pagos.module').then(m => m.PagosModule),
+        canLoad: [AuthGuard, TwoFaBlockGuard]
+      },
     ]
   },
 ];
