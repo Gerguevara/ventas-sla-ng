@@ -6,6 +6,10 @@ import { NgxPermissionsGuard } from 'ngx-permissions';
 const routes: Routes = [
   { path: '', component: IndexProductoComponent},
   {
+    path: 'kardex',
+    loadChildren: () => import('./kardex/kardex.module').then(m => m.KardexModule),
+  },
+  {
     path: 'mostrar',
     loadChildren: () => import('./components/form-producto/form-producto.module').then(m => m.FormProductoModule),
     canActivate: [NgxPermissionsGuard],

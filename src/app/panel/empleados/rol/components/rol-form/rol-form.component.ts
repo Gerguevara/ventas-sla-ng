@@ -46,7 +46,7 @@ export class RolFormComponent implements OnInit {
   }
 
   // Tabla de categorias
-  url = `${environment.apiUrl}` + 'departamentos/';
+  url = `${environment.apiUrl}departamentos/`;
   displayedColumns: string[] = ['id', 'nombre', 'descripcion'];
   dataSource!: MatTableDataSource<any>;
   filasSeleccionadas = new Set<any>();
@@ -135,9 +135,13 @@ export class RolFormComponent implements OnInit {
     this.rolForm.get('id')?.setValue( rol.id );
     this.rolForm.get('nombre')?.setValue( rol.name );
     this.rolForm.get('descripcion')?.setValue( rol.descripcion );
-    this.roleService.getDepartamento( Number(rol.id_departamento) ).then((response: any) => {
-      this.rolForm.get('departamento')?.setValue( response.producto );
-    });
+    this.roleService.getDepartamento( Number(rol.id_departamento) ).subscribe(
+      {
+        next: (response: any) => {
+        this.rolForm.get('departamento')?.setValue( response.producto );
+        }
+      }
+    );
   }
 
   habilitarPermiso( id: number ): void{
