@@ -27,6 +27,7 @@ import { NgxPermissionsModule } from 'ngx-permissions';
 import { FormProductoComponent } from './form-producto.component';
 import { FormProductoContainerComponent } from './components/form-producto-container/form-producto-container.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { DialogCambiarStockComponent } from './components/dialog-cambiar-stock/dialog-cambiar-stock.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     ProductoDesignFormComponent,
     ProductoInventarioFormComponent,
     FormProductoContainerComponent,
+    DialogCambiarStockComponent,
   ],
   imports: [
     CommonModule,
