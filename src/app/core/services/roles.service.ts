@@ -31,7 +31,7 @@ export class RolesService extends RecursoService<Rol> {
   }
 
   searchDepartamento( nombre: string ): Observable<Departamento[]> {
-    return this.http.get<Departamento[]>(`${environment.apiUrl}departamentos/search?consulta=${nombre}`, this.setOptions());
+    return this.http.post<Departamento[]>(`${environment.apiUrl}departamentos/search`, {consulta: nombre} ,this.setOptions());
   }
 
   getPanels(): Observable<PermissionsByPanel[]> {

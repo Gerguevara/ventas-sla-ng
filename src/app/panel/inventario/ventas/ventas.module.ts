@@ -7,6 +7,7 @@ import { ToolsModule } from '../../../tools/tools.module';
 import { VentasIndexComponent } from './components/ventas-index/ventas-index.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -48,7 +49,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     NgxMatNativeDateModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
-    VentasRoutingModule
+    VentasRoutingModule,
+    MatPaginatorModule
   ]
 })
 export class VentasModule { }

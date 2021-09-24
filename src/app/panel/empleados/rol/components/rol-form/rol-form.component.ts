@@ -1,3 +1,4 @@
+import { DepartamentoService } from './../../../../../core/services/departamento.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
@@ -37,13 +38,13 @@ export class RolFormComponent implements OnInit {
   // Getters para validaciones
   // Aquí obtenemos el estado de validez de cada campo del formulario en métodos separados
   get nombreNoValido(): boolean | undefined {
-    return this.rolForm.get('nombre')?.invalid && this.rolForm.get('nombre')?.touched;
+    return this.nombreControl.invalid && this.nombreControl.touched;
   }
   get descripcionNoValido(): boolean | undefined {
-    return this.rolForm.get('descripcion')?.invalid && this.rolForm.get('descripcion')?.touched;
+    return this.descripcionControl.invalid && this.descripcionControl.touched;
   }
   get departamentoNoValido(): boolean | undefined {
-    return this.rolForm.get('departamento')?.invalid && this.rolForm.get('departamento')?.touched;
+    return this.departamentoControl?.invalid && this.departamentoControl?.touched;
   }
 
   // Tabla de categorias
@@ -69,13 +70,16 @@ export class RolFormComponent implements OnInit {
   permisosPorPanel: PermissionsByPanel[] = [];
   newRol!: Rol;
 
-  constructor( private formBuilder: FormBuilder,
-               public dialogRef: MatDialogRef<RolFormComponent>,
-               @Inject(MAT_DIALOG_DATA) public rol: Rol,
-               private roleService: RolesService,
-               private permission: PermissionService,
-               private snackBar: MatSnackBar,
-               private dialog: MatDialog ) {
+  constructor(
+    private formBuilder: FormBuilder,
+    public dialogRef: MatDialogRef<RolFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public rol: Rol,
+    private roleService: RolesService,
+    private departamentoService: DepartamentoService,
+    private permission: PermissionService,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
+  ) {
     // Inicializacion del formulario
     this.rolForm = this.formBuilder.group({
       id: [''],
@@ -97,15 +101,6 @@ export class RolFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const departamento = this.rolForm.get('departamento') as FormControl;
-    this.filteredDepartamentos = departamento.valueChanges.pipe(
-      startWith(''),
-      debounceTime(400),
-      distinctUntilChanged(),
-      switchMap(val => {
-        return this._filter(val || '');
-      })
-    );
     this.rolForm.disable();
     // Si se trae un rol se carga la data solo para previsualizacion
     if (this.rol) {
@@ -114,7 +109,8 @@ export class RolFormComponent implements OnInit {
       // Sino se abre el formulario para crear un nuevo rol
       this.editar();
     }
-    this.rolForm.get('permissions')?.setValue(this.permisos);
+    this.loadDepartamento();
+    this.permissionsControl?.setValue(this.permisos);
   }
 
   displayFn(dep: Departamento): string {
@@ -123,6 +119,19 @@ export class RolFormComponent implements OnInit {
 
   private _filter(name: string): Observable<Departamento[]> {
     return this.roleService.searchDepartamento(name);
+  }
+
+  loadDepartamento(value?: string){
+    this.filteredDepartamentos = value ? this._filter(value):  this.departamentoService.getObjects().pipe(
+      map((response: Resultado<Departamento>) => {
+        return response.data;
+      })
+    )
+  }
+
+  filterHandler(){
+    const departamento = (this.departamentoControl as FormControl).value;
+    this.loadDepartamento(departamento);
   }
 
   // Obtenemos todos los cambios que nos envíe el paginador con la data de la página
@@ -145,12 +154,12 @@ export class RolFormComponent implements OnInit {
   cargarData( rol: Rol ): void {
     // Método para cargar toda la data que venga de afuera en el formulario
     this.rolForm.get('id')?.setValue( rol.id );
-    this.rolForm.get('nombre')?.setValue( rol.name );
-    this.rolForm.get('descripcion')?.setValue( rol.descripcion );
+    this.nombreControl.setValue( rol.name );
+    this.descripcionControl.setValue( rol.descripcion );
     this.roleService.getDepartamento( Number(rol.id_departamento) ).subscribe(
       {
         next: (response: any) => {
-        this.rolForm.get('departamento')?.setValue( response.producto );
+        this.departamentoControl?.setValue( response.producto );
         }
       }
     );
@@ -162,11 +171,11 @@ export class RolFormComponent implements OnInit {
     if (index > -1) {
       // Si es así, se elimina
       this.permisos.splice(index, 1);
-      this.rolForm.get('permissions')?.setValue(this.permisos);
+      this.permissionsControl?.setValue(this.permisos);
     } else {
       // de lo contrario se añade a la lista
       this.permisos.push(id);
-      this.rolForm.get('permissions')?.setValue(this.permisos);
+      this.permissionsControl?.setValue(this.permisos);
     }
   }
 
@@ -174,7 +183,7 @@ export class RolFormComponent implements OnInit {
     if (this.enableEdit) {
       this.filasSeleccionadas.clear();
       this.departamento = '';
-      this.rolForm.get('departamento')?.setValue( '' );
+      this.departamentoControl?.setValue( '' );
     }
   }
 
@@ -183,7 +192,7 @@ export class RolFormComponent implements OnInit {
       this.filasSeleccionadas.clear();
       this.filasSeleccionadas.add( dep );
       this.departamento = dep.nombre;
-      this.rolForm.get('departamento')?.setValue( dep.id );
+      this.departamentoControl?.setValue( dep.id );
     }
   }
 
@@ -200,10 +209,10 @@ export class RolFormComponent implements OnInit {
     if ( this.rol ) {
       // si es así, se actualiza
       const newRol = {
-        name: this.rolForm.get('nombre')?.value,
-        descripcion: this.rolForm.get('descripcion')?.value,
+        name: this.nombreControl.value,
+        descripcion: this.descripcionControl.value,
         id_departamento: this.rol.id_departamento,
-        permissions: this.rolForm.get('permissions')?.value
+        permissions: this.permissionsControl?.value
       };
       this.roleService.actualizarRol( newRol as Rol, this.rolForm.get('id')?.value ).subscribe((response: any) => {
         dialogSpinnerRef.close();
@@ -220,12 +229,12 @@ export class RolFormComponent implements OnInit {
       });
     } else {
       // De lo contrario, se crea un nuevo rol
-      const departamentoSeleccionado = this.rolForm.get('departamento')?.value;
+      const departamentoSeleccionado = this.departamentoControl?.value;
       const newRol = {
-        name: this.rolForm.get('nombre')?.value,
-        descripcion: this.rolForm.get('descripcion')?.value,
+        name: this.nombreControl.value,
+        descripcion: this.descripcionControl.value,
         id_departamento: departamentoSeleccionado.id,
-        permissions: this.rolForm.get('permissions')?.value
+        permissions: this.permissionsControl?.value
       };
       this.roleService.crearRol( newRol as Rol ).subscribe((response: any) => {
         dialogSpinnerRef.close();
@@ -250,10 +259,10 @@ export class RolFormComponent implements OnInit {
 
   // Método para obtener mensajes de errores de validaciones Nombre
   getErrorNombreMessage(): string {
-    if (this.rolForm.get('nombre')?.hasError('required')) {
+    if (this.nombreControl.hasError('required')) {
       return 'Debe ingresar un valor';
     }
-    else if (this.rolForm.get('nombre')?.hasError('minlength')) {
+    else if (this.nombreControl.hasError('minlength')) {
       return 'Nombre no válido';
     }
     else {
@@ -263,7 +272,7 @@ export class RolFormComponent implements OnInit {
 
   // Método para obtener mensajes de errores de validaciones Nombre
   getErrorDepartamentoMessage(): string {
-    if (this.rolForm.get('departamento')?.hasError('required')) {
+    if (this.departamentoControl?.hasError('required')) {
       return 'Debe seleccionar un departamento';
     }
     else {
@@ -273,15 +282,28 @@ export class RolFormComponent implements OnInit {
 
   // Método para obtener mensajes de errores de validaciones Descripción
   getErrorDescripcionMessage(): string {
-    if (this.rolForm.get('descripcion')?.hasError('required')) {
+    if (this.descripcionControl.hasError('required')) {
       return 'Debe ingresar un valor';
     }
-    else if (this.rolForm.get('descripcion')?.hasError('minlength')) {
+    else if (this.descripcionControl.hasError('minlength')) {
       return 'Descripción no válida';
     }
     else {
       return '';
     }
+  }
+
+  get nombreControl(): FormControl{
+    return this.rolForm.get('nombre') as FormControl;
+  }
+  get descripcionControl(): FormControl{
+    return this.rolForm.get('descripcion') as FormControl;
+  }
+  get departamentoControl(): FormControl{
+    return this.rolForm.get('departamento') as FormControl;
+  }
+  get permissionsControl(): FormControl{
+    return this.rolForm.get('permissions') as FormControl;
   }
 
 }

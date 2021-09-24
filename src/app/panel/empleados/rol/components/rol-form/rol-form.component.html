@@ -19,8 +19,14 @@
                     </mat-form-field>
                     <mat-form-field class="col">
                         <mat-label>Departamento</mat-label>
-                        <input matInput formControlName='departamento' placeholder="Buscar" [matAutocomplete]="auto">
-                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                        <input
+                          matInput
+                          formControlName='departamento'
+                          placeholder="Buscar"
+                          [matAutocomplete]="auto"
+                          (click)="filterHandler()"
+                          (ngModelChange)="filterHandler()">
+                        <mat-autocomplete #auto [displayWith]="displayFn">
                             <mat-option *ngFor="let option of filteredDepartamentos | async" [value]="option">
                                 {{option.nombre}}
                             </mat-option>
@@ -53,8 +59,21 @@
                 </mat-accordion>
             </mat-card>
             <div style="margin-top: 10px; position: relative;">
-                <button mat-button type="button" matStepperPrevious>Regresar</button>
-                <button mat-button type="button" *ngIf="enableEdit" [disabled]="rolForm.invalid" (click)="enviar()" matStepperNext>Enviar</button>
+                <button
+                  mat-button
+                  type="button"
+                  matStepperPrevious>
+                    Regresar
+                </button>
+                <button
+                  mat-button
+                  type="button"
+                  *ngIf="enableEdit"
+                  [disabled]="rolForm.invalid"
+                  (click)="enviar()"
+                  matStepperNext>
+                    Enviar
+                </button>
             </div>
         </mat-step>
 

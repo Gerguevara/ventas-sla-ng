@@ -1,4 +1,4 @@
-import { Component, OnInit, LOCALE_ID, Inject, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, LOCALE_ID, Inject, AfterViewInit, ViewChild, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogVentaComponent } from '../dialog-venta/dialog-venta.component';
@@ -9,6 +9,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { environment } from '@environments/environment';
 import { ThemePalette } from '@angular/material/core';
+import { Resultado } from '@models/resultados/resultado.model';
 
 @Component({
   selector: 'sla-ventas-index',
@@ -19,6 +20,7 @@ export class VentasIndexComponent implements OnInit, AfterViewInit {
 
   // declaraciones para la tabla
   displayedColumns: string[] = ['id', 'estado', 'subtotal', 'total', 'fecha'];
+  dataLength: number = 0;
   dataSource!: MatTableDataSource<Orden>;
   clickedRows = new Set<Orden>();
   // URL para obtención de datos
@@ -38,15 +40,23 @@ export class VentasIndexComponent implements OnInit, AfterViewInit {
     end: new FormControl('', Validators.required)
   });
 
-  constructor( private dialog: MatDialog,
-               private ventasService: VentasService,
-               @Inject(LOCALE_ID) public locale: string ) {
-               }
+  constructor(
+    private dialog: MatDialog,
+    private ventasService: VentasService,
+    @Inject(LOCALE_ID) public locale: string
+  ) { }
+
   ngAfterViewInit(): void {
     this.inputParams$.next(this.params);
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.loadData();
+  }
+
+  ngOnChanges(event: SimpleChanges): void{
+    this.dataSource = new MatTableDataSource<Orden>(event[0].currentValue);
+  }
 
   /**
    * @ngdoc method
@@ -58,8 +68,18 @@ export class VentasIndexComponent implements OnInit, AfterViewInit {
    * @param event
    * @return void
    */
-  addDataToTable( event: Orden[] ): void {
-    this.dataSource = new MatTableDataSource<Orden>(event);
+  loadData( event?: any ): void {
+    console.log(event);
+    event = event? event : 1;
+    if((typeof event) === 'number'){
+      this.ventasService.getObjects().subscribe(
+        {
+          next: (result: Resultado<Orden>)=>{
+            this.dataSource = new MatTableDataSource<Orden>(result.data)
+          }
+        }
+      )
+    }
   }
 
   /**

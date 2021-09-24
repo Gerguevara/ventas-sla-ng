@@ -3,24 +3,19 @@ import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { Observable } from 'rxjs';
 import { Orden } from '@models/orden.model';
+import { RecursoService } from './recurso.service';
 
-const token = 'Bearer ' + localStorage.getItem('token');
-const headers = {
-  headers: new HttpHeaders({
-    'Content-Type':  'application/json',
-    'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
-    'Authorization': token
-  })
-};
 
 @Injectable({
   providedIn: 'root'
 })
-export class VentasService {
+export class VentasService extends RecursoService<Orden> {
 
   private url = `${environment.apiUrl}${environment.endpoints.ordenes}`;
 
-  constructor( private http: HttpClient ) { }
+  constructor( private http: HttpClient ) {
+    super(environment.endpoints.ordenes, http);
+  }
 
   /**
    * @ngdoc method
@@ -33,7 +28,7 @@ export class VentasService {
    * @returns Observable<any>
    */
   filtrarVentas( estado?: string, start?: string, end?: string ): Observable<any> {
-    return this.http.get<any>(`${this.url}?page_size=5&estado=${estado}&start=${start}&end=${end}`, headers);
+    return this.http.get<any>(`${this.url}?page_size=5&estado=${estado}&start=${start}&end=${end}`, this.setOptions());
   }
 
   /**
@@ -46,7 +41,7 @@ export class VentasService {
    * @returns Observable<any>
    */
   obtenerVenta(orden: Orden): Observable<Orden> {
-    return this.http.get<Orden>(`${this.url}/${orden.id}`, headers);
+    return this.http.get<Orden>(`${this.url}/${orden.id}`, this.setOptions());
   }
 
   /**
@@ -62,9 +57,9 @@ export class VentasService {
    */
   actualizarEstadoOrden(ordenId: number, estado: string, direccion?: string, fecha?: string): Observable<Orden> {
     if ( estado === 'E' ) {
-      return this.http.patch<Orden>(`${this.url}/${ordenId}`, { estado: estado, direccion: direccion, entrega: fecha }, headers);
+      return this.http.patch<Orden>(`${this.url}/${ordenId}`, { estado: estado, direccion: direccion, entrega: fecha }, this.setOptions());
     } else {
-      return this.http.patch<Orden>(`${this.url}/${ordenId}`, { estado: estado }, headers);
+      return this.http.patch<Orden>(`${this.url}/${ordenId}`, { estado: estado }, this.setOptions());
     }
   }
 }
