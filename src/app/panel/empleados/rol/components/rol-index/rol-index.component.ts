@@ -36,15 +36,19 @@ export class RolIndexComponent implements OnInit {
 
   // Obtenemos todos los cambios que nos envíe el paginador con la data de la página
   addDataToTable( event: Rol[] ): void {
-    // Seteamos estos datos a la tabla
-    this.roles.getObjects().subscribe(
-      {
-        next: (rol: Resultado<Rol>)=>{
-          console.log(rol);
-          this.dataSource = new MatTableDataSource(rol.data);
+    if(event){
+      this.dataSource = new MatTableDataSource(event);
+    } else {
+      // Seteamos estos datos a la tabla
+      this.roles.getObjects().subscribe(
+        {
+          next: (rol: Resultado<Rol>)=>{
+            console.log(rol);
+            this.dataSource = new MatTableDataSource(rol.data);
+          }
         }
-      }
-    )
+      )
+    }
   }
 
   verRol( rol: Rol ): void {

@@ -14,6 +14,7 @@ import { Permission } from '@models/permission.model';
 
 import { PermissionService } from '@global-services/permission.service';
 import { RolesService } from '@global-services/roles.service';
+import { Resultado } from '@models/resultados/resultado.model';
 
 import { PermissionsByPanel } from '@tool-models/PermissionsByPanel'
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
@@ -126,8 +127,19 @@ export class RolFormComponent implements OnInit {
 
   // Obtenemos todos los cambios que nos envíe el paginador con la data de la página
   addDataToTable( event: any[] ): void {
-    // Seteamos estos datos a la tabla
-    this.dataSource = new MatTableDataSource<any>(event);
+    if(event){
+      this.dataSource = new MatTableDataSource(event);
+    } else {
+      // Seteamos estos datos a la tabla
+      this.roleService.getObjects().subscribe(
+        {
+          next: (rol: Resultado<Rol>)=>{
+            console.log(rol);
+            this.dataSource = new MatTableDataSource(rol.data);
+          }
+        }
+      )
+    }
   }
 
   cargarData( rol: Rol ): void {
