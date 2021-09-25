@@ -38,6 +38,31 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
   get direccionNoValido(): boolean | undefined {
     return this.envioForm.get('direccion')?.invalid && this.envioForm.get('email')?.touched;
   }
+  /* ----------------------------------------------------------------------------------------- */
+  get nombresTarjetaNoValido(): boolean | undefined {
+    return this.pagoForm.get('nombres')?.invalid && this.pagoForm.get('nombres')?.touched;
+  }
+  get apellidosTarjetaNoValido(): boolean | undefined {
+    return this.pagoForm.get('apellidos')?.invalid && this.pagoForm.get('apellidos')?.touched;
+  }
+  get numeroTarjetaNoValido(): boolean | undefined {
+    return this.pagoForm.get('tarjeta')?.invalid && this.pagoForm.get('tarjeta')?.touched;
+  }
+  get mesTarjetaNoValido(): boolean | undefined {
+    return this.pagoForm.get('mes')?.invalid && this.pagoForm.get('mes')?.touched;
+  }
+  get anioTarjetaNoValido(): boolean | undefined {
+    return this.pagoForm.get('anio')?.invalid && this.pagoForm.get('anio')?.touched;
+  }
+  get cvvTarjetaNoValido(): boolean | undefined {
+    return this.pagoForm.get('cvv')?.invalid && this.pagoForm.get('cvv')?.touched;
+  }
+  get duiNoValido(): boolean | undefined {
+    return this.pagoForm.get('dui')?.invalid && this.pagoForm.get('dui')?.touched;
+  }
+  get nitNoValido(): boolean | undefined {
+    return this.pagoForm.get('nit')?.invalid && this.pagoForm.get('nit')?.touched;
+  }
 
   departamentos = [
     'Ahuachapán',
@@ -69,6 +94,15 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
                   email: ['', Validators.required],
                 });
                 this.pagoForm = this.formBuilder.group({
+                  metodo: ['pago_en_linea', Validators.required],
+                  nombres: ['', Validators.required],
+                  apellidos: ['', Validators.required],
+                  mes: [1, [Validators.required, Validators.min(1), Validators.max(12), Validators.maxLength(2)]],
+                  anio: [1, [Validators.required, Validators.maxLength(2)]],
+                  tarjeta: ['', [Validators.required, Validators.maxLength(16), Validators.minLength(16)]],
+                  cvv: ['', [Validators.required, Validators.maxLength(3)]],
+                  dui: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]],
+                  nit: ['', [Validators.required, Validators.minLength(14), Validators.maxLength(14)]],
                 });
                 this.municipiosArray = this.pagoService.municipios;
                 this.selectMunicipiosArray = this.municipiosArray.filter((item: any) => item.departamento === 'San Salvador');
@@ -126,6 +160,99 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
   getErrorDireccionMessage(): string {
     if (this.envioForm.get('direccion')?.hasError('required')) {
       return 'Debe ingresar una dirección de entrega';
+    }
+    else {
+      return '';
+    }
+  }
+
+  getErrorMunicipioMessage(): string {
+    if (this.envioForm.get('municipio')?.hasError('required')) {
+      return 'Debe seleccionar un municipio';
+    }
+    else {
+      return '';
+    }
+  }
+  /*---------------------------------------------------------------------------------------------*/
+  getErrorNombresTarjetaMessage(): string {
+    if (this.pagoForm.get('nombres')?.hasError('required')) {
+      return 'Debe ingresar sus nombres';
+    }
+    else {
+      return '';
+    }
+  }
+
+  getErrorApellidosTarjetaMessage(): string {
+    if (this.pagoForm.get('apellidos')?.hasError('required')) {
+      return 'Debe ingresar sus apellidos';
+    }
+    else {
+      return '';
+    }
+  }
+
+  getErrorTarjetaMessage(): string {
+    if (this.pagoForm.get('tarjeta')?.hasError('required')) {
+      return 'Debe ingresar su número de tarjeta';
+    } else if (this.pagoForm.get('tarjeta')?.hasError('maxLength')) {
+      return 'Número de tarjeta no válido';
+    }
+    else {
+      return '';
+    }
+  }
+
+  getErrorMesTarjetaMessage(): string {
+    if (this.pagoForm.get('mes')?.hasError('required')) {
+      return 'Debe ingresar el mes de vencimiento';
+    } else if (this.pagoForm.get('mes')?.hasError('maxLength')) {
+      return 'Mes no válido';
+    }
+    else {
+      return '';
+    }
+  }
+
+  getErrorAnioTarjetaMessage(): string {
+    if (this.pagoForm.get('anio')?.hasError('required')) {
+      return 'Debe ingresar el año de vencimiento';
+    } else if (this.pagoForm.get('anio')?.hasError('maxLength')) {
+      return 'Año no válido';
+    }
+    else {
+      return '';
+    }
+  }
+
+  getErrorCodigoTarjetaMessage(): string {
+    if (this.pagoForm.get('cvv')?.hasError('required')) {
+      return 'Debe ingresar el código de seguirdad';
+    } else if (this.pagoForm.get('cvv')?.hasError('maxLength')) {
+      return 'Código no válido';
+    }
+    else {
+      return '';
+    }
+  }
+
+  getErrorDuiMessage(): string {
+    if (this.pagoForm.get('dui')?.hasError('required')) {
+      return 'Debe ingresar su documento de identidad';
+    } else if (this.pagoForm.get('dui')?.hasError('maxLength')) {
+      return 'Número de DUI no válido';
+    }
+    else {
+      return '';
+    }
+  }
+
+  getErrorNitMessage(): string {
+    if (this.pagoForm.get('nit')?.hasError('required')) {
+      return 'Debe ingresar su NIT';
+    } else if (this.pagoForm.get('nit')?.hasError('maxLength')) {
+      return 'Número de NIT no válido';
     }
     else {
       return '';

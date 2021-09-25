@@ -1,6 +1,6 @@
 <ng-template #formPago>
     <mat-dialog-content>
-        <mat-horizontal-stepper>
+        <mat-horizontal-stepper linear #stepper>
             <mat-step #first_step label="Datos de Envío">
                 <ng-container>
                     <form [formGroup]="envioForm">
@@ -39,20 +39,69 @@
                             <mat-select formControlName="municipio">
                                 <mat-option *ngFor="let item of selectMunicipiosArray" [value]="item.municipio"> {{ item.municipio }} </mat-option>
                             </mat-select>
+                            <mat-error *ngIf="municipioNoValido"> {{ getErrorMunicipioMessage() }} </mat-error>
                         </mat-form-field>
                         <mat-form-field appearance="fill" class="input">
                             <mat-label>Dirección Completa</mat-label>
                             <textarea matInput formControlName="direccion"></textarea>
+                            <mat-error *ngIf="direccionNoValido"> {{ getErrorDireccionMessage() }} </mat-error>
                         </mat-form-field>
                     </form>
-                    <button mat-button matStepperNext [disabled]="envioForm.invalid">Next</button>
+                    <button type="button" mat-stroked-button matStepperNext [disabled]="envioForm.invalid">Next</button>
                 </ng-container>
             </mat-step>
             <mat-step #second_step label="Información de Pago">
                 <ng-container>
-                    <form>
-                        <h3>Método de Pago</h3>
+                    <form [formGroup]="pagoForm">
+                        <mat-form-field appearance="fill" class="input">
+                            <mat-label>Método de Pago</mat-label>
+                            <mat-select formControlName="metodo">
+                                <mat-option value="pago_en_linea">Pago en línea</mat-option>
+                                <mat-option value="pago_en_efectivo">Pago en efectivo</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="input">
+                            <mat-label>Nombres según Tarjeta</mat-label>
+                            <input matInput formControlName="nombres">
+                            <mat-error *ngIf="nombresTarjetaNoValido"> {{ getErrorNombresTarjetaMessage() }} </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="input">
+                            <mat-label>Apellidos según Tarjeta</mat-label>
+                            <input matInput formControlName="apellidos">
+                            <mat-error *ngIf="apellidosTarjetaNoValido"> {{ getErrorApellidosTarjetaMessage() }} </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="input">
+                            <mat-label>#Num Tarjeta</mat-label>
+                            <input matInput maxlength="16" type="number" formControlName="tarjeta">
+                            <mat-error *ngIf="numeroTarjetaNoValido"> {{ getErrorTarjetaMessage() }} </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="input">
+                            <mat-label>Mes de Vencimiento de Tarjeta</mat-label>
+                            <input matInput maxlength="2" type="number" formControlName="mes">
+                            <mat-error *ngIf="mesTarjetaNoValido"> {{ getErrorMesTarjetaMessage() }} </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="input">
+                            <mat-label>Año de Vencimiento de Tarjeta</mat-label>
+                            <input matInput maxlength="2" type="number" formControlName="anio">
+                            <mat-error *ngIf="anioTarjetaNoValido"> {{ getErrorAnioTarjetaMessage() }} </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="input">
+                            <mat-label>Código de Seguridad de Tarjeta</mat-label>
+                            <input matInput maxlength="3" type="number" formControlName="cvv">
+                            <mat-error *ngIf="telefonoNoValido"> {{ getErrorTelefonoMessage() }} </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="input">
+                            <mat-label>DUI</mat-label>
+                            <input matInput maxlength="9" type="number" formControlName="dui">
+                            <mat-error *ngIf="duiNoValido"> {{ getErrorDuiMessage() }} </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="input">
+                            <mat-label>NIT</mat-label>
+                            <input matInput maxlength="14" type="number" formControlName="nit">
+                            <mat-error *ngIf="nitNoValido"> {{ getErrorNitMessage() }} </mat-error>
+                        </mat-form-field>
                     </form>
+                    <button type="button" mat-stroked-button matStepperPrevious class="button">Regresar</button>
                 </ng-container>
             </mat-step>
         </mat-horizontal-stepper>
