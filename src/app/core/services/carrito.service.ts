@@ -1,14 +1,21 @@
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { PreflightService } from '@tool-services/preflight-service';
 import { Injectable } from '@angular/core';
 import { ProductoCarrito } from '@models/producto.carrito.model';
 import { Producto } from '@models/producto.model';
+import { environment } from '@environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CarritoService {
+export class CarritoService extends PreflightService {
   arregloCarrito: ProductoCarrito[] = [];
-
-  constructor() { }
+  endpoint = environment.endpoints.shoppingCart;
+  url = environment.apiUrl;
+  constructor(protected httpClient: HttpClient) {
+    super()
+  }
 
   agregar(producto: Producto, cantidad: number){
     //si no ha sido agregado
@@ -59,5 +66,9 @@ export class CarritoService {
       return true;
     }
     return false;
+  }
+
+  requestGet(): Observable<ProductoCarrito>{
+    return this.httpClient.get<ProductoCarrito>(`${this.url}${this.endpoint}`, this.setOptions());
   }
 }

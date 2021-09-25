@@ -38,6 +38,8 @@ export const environment = {
     tokenVerify: 'tokenVerify',
     changeMail: 'changeMail',
     kardex: 'kardex',
+    shoppingCart: 'shoppingCart',
+    
   },
   patterns:
   {
