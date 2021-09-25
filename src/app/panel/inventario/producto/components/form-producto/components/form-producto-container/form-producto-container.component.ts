@@ -11,6 +11,7 @@ import { ProductoPost, ProductoService } from '@global-services/producto.service
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 import { environment } from '@environments/environment';
 import { Router } from '@angular/router';
+import { DialogCambiarStockComponent } from '../dialog-cambiar-stock/dialog-cambiar-stock.component';
 
 @Component({
   selector: 'sla-form-producto-container',
@@ -48,6 +49,8 @@ export class FormProductoContainerComponent implements OnInit {
   designForm!: FormGroup;
   inventarioForm!: FormGroup;
 
+  productoEditFlag = false;
+
   // Atributos del Chips List
   visible = true;
   addOnBlur = true;
@@ -65,6 +68,7 @@ export class FormProductoContainerComponent implements OnInit {
 
   ngOnInit(): void {
     const data = this.productoService.productoChange;
+    this.productoEditFlag = this.productoService.enableFormFlag;
     if ( data ) {
       this.idProductoSeleccionado = data.id;
     }
@@ -178,14 +182,34 @@ export class FormProductoContainerComponent implements OnInit {
     }
   }
 
+  /**
+   * @ngdoc method
+   * @name enviarDatos
+   * @description
+   * Es disparado al presionar el botón de Enviar en el formulario. Se encarga de evaluar si el producto
+   * es creado editado a través de una bandera (productoEditFlag), y creará o actualizará el producto
+   * según corresponda
+   */
   enviarDatos(): void {
-    if ( this.productoService.enableFormFlag ) {
+    if ( this.productoEditFlag ) {
       this.enviar();
     } else {
       this.actualizarProducto();
     }
   }
 
+  /**
+   * --------------------------------------------------------------------------------------------------
+   */
+
+  /**
+   * Toda esta sección posee tres métodos con el mismo propósito. Todos son métodos ejecutados a través
+   * de un evento en su componente respectivo del formulario. Es decir, que cuando una sección del for-
+   * mulario es llenada, esta manda toda su información y cada método declarado aquí se encarga de reco-
+   * ger ese evento con la información ingresada. Luego setea esa información al objeto Producto decla-
+   * rado en el servicio el cual sirve para mantener los datos persistentes mientras el formulario es
+   * editado.
+   */
   obtenerGeneralForm( event: FormGroup ): void {
     this.generalForm = event;
     // Asignación de valores al servicio
@@ -204,12 +228,52 @@ export class FormProductoContainerComponent implements OnInit {
     this.inventarioForm = event;
   }
 
+  /**
+   * -------------------------------------------------------------------------------------------------
+   */
+
+  /**
+   * @ngdoc method
+   * @name cerrarFormulario
+   * @description
+   * Se encarga de realizar el cierre correcto del formulario, redireccionando al usuario
+   * al index de productos y limpiando el objeto Producto que se estaba presentando en el
+   * formulario.
+   * @returns void
+   */
   cerrarFormulario(): void {
     this.router.navigate(['/panel/inventario/producto']);
     this.limpiarObjeto();
     this.dialogRef.close();
   }
 
+  /**
+   * @ngdoc method
+   * @name cambiarStock
+   * @description
+   * Método que se encargará de abrir una ventana modal con el componente
+   * encargado del cambio del stock del producto seleccionado
+   * @returns void
+   */
+  cambiarStock(): void {
+    const data = this.productoService.productoChange;
+    const dialogCambiarStockRef = this.dialog.open( DialogCambiarStockComponent, { width: '50vw', data } );
+    dialogCambiarStockRef.afterClosed().subscribe((change: boolean) => {
+      if ( change ) {
+        this.cerrarFormulario();
+      }
+    });
+  }
+
+  /**
+   * @ngdoc method
+   * @name limpiarObjeto
+   * @description
+   * Método que reestablece todos los valores del objeto Producto en el servicio
+   * de Productos. Esta acción es necesaria cuando el formulario se cierra o se
+   * destruye
+   * @returns void
+   */
   limpiarObjeto(): void {
     this.productoService.productoChange.nombre_producto = '';
     this.productoService.productoChange.descripcion_producto = '';
