@@ -1,4 +1,4 @@
-import { Producto } from '@models/producto.model';
+import { Producto } from 'src/app/core/models/producto.model';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
 

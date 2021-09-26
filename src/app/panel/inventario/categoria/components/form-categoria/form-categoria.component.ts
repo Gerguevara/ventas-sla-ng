@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Categoria } from '@models/categoria.model';
+import { Categoria } from 'src/app/core/models/categoria.model';
 
 @Component({
   selector: 'app-form-categoria',

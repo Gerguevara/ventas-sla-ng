@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 
-import { Producto } from '@models/producto.model';
-import { ResultadoIndex } from '@models/resultados/resultado-index.model';
+import { Producto } from 'src/app/core/models/producto.model';
+import { ResultadoIndex } from 'src/app/core/models/resultados/resultado-index.model';
 import { IndexProductCardComponent } from '../index-product-card/index-product-card.component';
 import { promise } from 'protractor';
 

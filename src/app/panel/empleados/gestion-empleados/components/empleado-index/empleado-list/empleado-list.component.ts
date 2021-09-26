@@ -1,6 +1,6 @@
 import { MatTableDataSource } from '@angular/material/table';
 import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
-import { PerfilEmpleado } from '@models/perfil.empleado.model';
+import { PerfilEmpleado } from 'src/app/core/models/perfil.empleado.model';
 
 @Component({
   selector: 'app-empleado-list',

@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Transaccion } from '@models/transaccion.model';
+import { Transaccion } from 'src/app/core/models/transaccion.model';
 
 @Component({
   selector: 'sla-linea-transaccion',

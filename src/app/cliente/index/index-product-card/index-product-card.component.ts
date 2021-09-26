@@ -1,7 +1,7 @@
 import { CarritoService } from './../../../core/services/carrito.service';
 import { Component, Input, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 
-import { Producto } from '@models/producto.model';
+import { Producto } from 'src/app/core/models/producto.model';
 import { ProductoService } from '@global-services/producto.service';
 import { environment } from '@environments/environment';
 import { MatCard } from '@angular/material/card';

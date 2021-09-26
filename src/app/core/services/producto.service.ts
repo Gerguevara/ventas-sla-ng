@@ -2,9 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Categoria } from '@models/categoria.model';
-import { Producto } from '@models/producto.model';
-import { Resultado } from '@models/resultados/resultado.model';
+import { Categoria } from 'src/app/core/models/categoria.model';
+import { Producto } from 'src/app/core/models/producto.model';
+import { Resultado } from 'src/app/core/models/resultados/resultado.model';
 import { RecursoService } from './recurso.service';
 import { environment } from '@environments/environment';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';

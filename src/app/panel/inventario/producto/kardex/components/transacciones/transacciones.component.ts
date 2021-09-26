@@ -1,8 +1,8 @@
-import { Producto } from '@models/producto.model';
+import { Producto } from 'src/app/core/models/producto.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TransaccionService } from '@global-services/transaccion.service';
 import { Component, OnInit } from '@angular/core';
-import { Transaccion } from '@models/transaccion.model';
+import { Transaccion } from 'src/app/core/models/transaccion.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ProductoService } from '@global-services/producto.service';
 

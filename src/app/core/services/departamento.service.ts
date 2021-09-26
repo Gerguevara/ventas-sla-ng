@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { RecursoService } from './recurso.service';
 import { HttpClient } from '@angular/common/http';
-import { Departamento } from '@models/departamento.model';
+import { Departamento } from 'src/app/core/models/departamento.model';
 import { environment } from '@environments/environment';
 
 @Injectable({

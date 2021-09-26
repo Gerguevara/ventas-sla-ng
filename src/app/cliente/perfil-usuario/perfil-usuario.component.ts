@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PerfilUsuario } from '@models/perfil.usuario.model';
+import { PerfilUsuario } from 'src/app/core/models/perfil.usuario.model';
 import { PerfilUsuarioService } from '@core/services/perfil-usuario.service';
 import { DialogSpinnerComponent } from '../../tools/components/dialog-spinner/dialog-spinner.component';
 

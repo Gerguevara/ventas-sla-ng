@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { Empresa } from '@models/empresa.model';
+import { Empresa } from 'src/app/core/models/empresa.model';
 import { SolicitudesEmpresaService } from '@global-services/solicitudes-empresa.service';
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 

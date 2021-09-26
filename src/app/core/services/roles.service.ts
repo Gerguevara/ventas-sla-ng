@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
 
 import { RecursoService } from './recurso.service';
-import { Permission } from '@models/permission.model';
-import { Departamento } from '@models/departamento.model';
-import { Resultado } from '@models/resultados/resultado.model';
+import { Permission } from 'src/app/core/models/permission.model';
+import { Departamento } from 'src/app/core/models/departamento.model';
+import { Resultado } from 'src/app/core/models/resultados/resultado.model';
 import { environment } from '@environments/environment';
-import { Rol } from '@models/rol.model';
+import { Rol } from 'src/app/core/models/rol.model';
 import { PermissionsByPanel } from '@tool-models/PermissionsByPanel';
 
 @Injectable({

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Usuario } from '@models/usuario.model';
+import { Usuario } from 'src/app/core/models/usuario.model';
 import { environment } from '@environments/environment';
 import { RecursoService } from './recurso.service';
 import { Observable } from 'rxjs';

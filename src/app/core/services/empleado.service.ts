@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { PerfilEmpleado } from '@models/perfil.empleado.model';
+import { PerfilEmpleado } from 'src/app/core/models/perfil.empleado.model';
 import { environment } from '@environments/environment';
 import { RecursoService } from './recurso.service';
 import { Resultado } from '@core/models/resultados/resultado.model';

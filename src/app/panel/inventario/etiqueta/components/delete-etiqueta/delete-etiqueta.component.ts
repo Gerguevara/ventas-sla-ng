@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Etiqueta } from '@models/etiqueta.model';
+import { Etiqueta } from 'src/app/core/models/etiqueta.model';
 
 @Component({
   selector: 'app-delete-etiqueta',
