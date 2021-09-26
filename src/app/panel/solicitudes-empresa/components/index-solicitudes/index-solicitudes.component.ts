@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { Empresa } from 'src/app/core/models/empresa.model';
+import { Empresa } from '@models/empresa.model';
 import { SolicitudesEmpresaService } from '@global-services/solicitudes-empresa.service';
 import { MostraSolicitudComponent } from '../mostra-solicitud/mostra-solicitud.component';
 import { environment } from '@environments/environment';

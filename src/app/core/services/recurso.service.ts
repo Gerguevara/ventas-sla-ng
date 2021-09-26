@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
-import { Resultado } from 'src/app/core/models/resultados/resultado.model';
-import { Recurso } from 'src/app/core/models/recurso.model';
+import { Resultado } from '@models/resultados/resultado.model';
+import { Recurso } from '@models/recurso.model';
 import { PreflightService } from '@tool-services/preflight-service';
 
 export abstract class RecursoService<T extends Recurso> extends PreflightService {

@@ -4,10 +4,10 @@ import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { PreflightService } from '@tool-services/preflight-service';
 import { Injectable } from '@angular/core';
-import { ProductoCarrito } from 'src/app/core/models/producto.carrito.model';
-import { Producto } from 'src/app/core/models/producto.model';
+import { ProductoCarrito } from '@models/producto.carrito.model';
+import { Producto } from '@models/producto.model';
 import { environment } from '@environments/environment';
-import { ResultadoCarrito } from 'src/app/core/models/resultados/resultado-carrito.model';
+import { ResultadoCarrito } from '@models/resultados/resultado-carrito.model';
 import { resolve } from 'dns';
 
 @Injectable({

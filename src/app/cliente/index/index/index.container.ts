@@ -1,8 +1,8 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
-import { Categoria } from 'src/app/core/models/categoria.model';
-import { ResultadoIndex } from 'src/app/core/models/resultados/resultado-index.model';
+import { Categoria } from '@models/categoria.model';
+import { ResultadoIndex } from '@models/resultados/resultado-index.model';
 
 @Component({
   selector: 'app-index',

@@ -5,7 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 
-import { Producto } from 'src/app/core/models/producto.model';
+import { Producto } from '@models/producto.model';
 import { ProductoService } from '@global-services/producto.service';
 
 import { DialogEliminarProductoComponent } from '../dialog-eliminar-producto/dialog-eliminar-producto.component';

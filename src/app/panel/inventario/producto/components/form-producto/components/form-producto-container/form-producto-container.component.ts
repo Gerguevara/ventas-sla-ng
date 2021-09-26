@@ -5,7 +5,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
-import { Producto } from 'src/app/core/models/producto.model';
+import { Producto } from '@models/producto.model';
 import { ProductoPost, ProductoService } from '@global-services/producto.service';
 
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';

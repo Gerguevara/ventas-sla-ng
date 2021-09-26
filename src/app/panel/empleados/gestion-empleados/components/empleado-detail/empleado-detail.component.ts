@@ -1,5 +1,5 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { PerfilEmpleado } from 'src/app/core/models/perfil.empleado.model';
+import { PerfilEmpleado } from '@models/perfil.empleado.model';
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { environment } from '@environments/environment';

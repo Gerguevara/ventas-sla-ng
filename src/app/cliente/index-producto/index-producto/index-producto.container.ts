@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
-import { Producto } from 'src/app/core/models/producto.model';
+import { Producto } from '@models/producto.model';
 import { IndexService } from '@global-services/index.service';
 import { CarritoService } from '@global-services/carrito.service';
 import { FormControl, Validators } from '@angular/forms';

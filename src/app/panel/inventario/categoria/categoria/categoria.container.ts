@@ -5,8 +5,8 @@ import { PartialObserver } from 'rxjs';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
-import { Resultado } from 'src/app/core/models/resultados/resultado.model';
-import { Categoria } from 'src/app/core/models/categoria.model';
+import { Resultado } from '@models/resultados/resultado.model';
+import { Categoria } from '@models/categoria.model';
 import { CategoriaService } from '@global-services/categoria.service';
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 import { DeleteCategoriaComponent } from '../components/delete-categoria/delete-categoria.component';

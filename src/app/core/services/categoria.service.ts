@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Categoria } from 'src/app/core/models/categoria.model';
+import { Categoria } from '@models/categoria.model';
 import { RecursoService } from './recurso.service';
 import { environment } from '@environments/environment';
 import { Resolve } from '@angular/router';

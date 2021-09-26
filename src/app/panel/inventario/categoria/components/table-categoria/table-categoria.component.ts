@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Categoria } from 'src/app/core/models/categoria.model';
+import { Categoria } from '@models/categoria.model';
 
 @Component({
   selector: 'app-table-categoria',

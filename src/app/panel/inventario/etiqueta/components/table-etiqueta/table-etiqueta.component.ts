@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { Etiqueta } from 'src/app/core/models/etiqueta.model';
-import { Categoria } from 'src/app/core/models/categoria.model';
+import { Etiqueta } from '@models/etiqueta.model';
+import { Categoria } from '@models/categoria.model';
 import { CategoriaService } from '@global-services/categoria.service';
 
 @Component({

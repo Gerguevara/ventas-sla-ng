@@ -1,6 +1,6 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
-import { PerfilUsuario } from 'src/app/core/models/perfil.usuario.model';
+import { PerfilUsuario } from '@models/perfil.usuario.model';
 import { UsuarioService } from '@global-services/usuario.service';
 import { PerfilUsuarioService } from '@global-services/perfil-usuario.service';
 import { PartialObserver } from 'rxjs';
