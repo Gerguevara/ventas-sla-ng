@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Orden } from '@models/orden.model';
-import { Producto } from '@models/producto.model';
+import { Orden } from 'src/app/core/models/orden.model';
+import { Producto } from 'src/app/core/models/producto.model';
 import { DialogEstadoOrdenComponent } from '../dialog-estado-orden/dialog-estado-orden.component';
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';

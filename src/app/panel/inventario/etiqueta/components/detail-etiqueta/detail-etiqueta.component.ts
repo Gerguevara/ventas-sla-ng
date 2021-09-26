@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-import { Etiqueta } from '@models/etiqueta.model';
-import { Categoria } from '@models/categoria.model';
+import { Etiqueta } from 'src/app/core/models/etiqueta.model';
+import { Categoria } from 'src/app/core/models/categoria.model';
 import { CategoriaService } from '@global-services/categoria.service';
 
 @Component({

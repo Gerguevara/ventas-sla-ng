@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PerfilEmpleado } from '@models/perfil.empleado.model';
+import { PerfilEmpleado } from 'src/app/core/models/perfil.empleado.model';
 
 @Component({
   selector: 'app-empleado-confirmation-dialog',

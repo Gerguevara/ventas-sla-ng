@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { Resultado } from '@models/resultados/resultado.model';
-import { Producto } from '@models/producto.model';
+import { Resultado } from 'src/app/core/models/resultados/resultado.model';
+import { Producto } from 'src/app/core/models/producto.model';
 import { ProductoService } from '@global-services/producto.service';
 import { Router } from '@angular/router';
 

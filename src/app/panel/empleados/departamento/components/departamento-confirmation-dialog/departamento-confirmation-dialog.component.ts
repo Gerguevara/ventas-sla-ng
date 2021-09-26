@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Departamento } from '@models/departamento.model';
+import { Departamento } from 'src/app/core/models/departamento.model';
 import { Data } from '@tools/models/Data';
 
 @Component({

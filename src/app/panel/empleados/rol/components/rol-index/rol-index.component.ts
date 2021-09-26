@@ -4,8 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { environment } from '@environments/environment';
-import { Resultado } from '@models/resultados/resultado.model';
-import { Rol } from '@models/rol.model';
+import { Resultado } from 'src/app/core/models/resultados/resultado.model';
+import { Rol } from 'src/app/core/models/rol.model';
 import { RolesService } from '@global-services/roles.service';
 
 import { RolFormComponent } from '../rol-form/rol-form.component';

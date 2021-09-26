@@ -1,9 +1,9 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Producto } from '@models/producto.model';
-import { ProductoCarrito } from '@models/producto.carrito.model';
-import { ResultadoCarrito } from '@models/resultados/resultado-carrito.model';
+import { Producto } from 'src/app/core/models/producto.model';
+import { ProductoCarrito } from 'src/app/core/models/producto.carrito.model';
+import { ResultadoCarrito } from 'src/app/core/models/resultados/resultado-carrito.model';
 import { CarritoService } from '@global-services/carrito.service';
 
 @Component({

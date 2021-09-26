@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { PerfilUsuario } from '@models/perfil.usuario.model';
+import { PerfilUsuario } from 'src/app/core/models/perfil.usuario.model';
 import { environment } from '@environments/environment';
 import { PreflightService } from '@tool-services/preflight-service';
 import { map } from 'rxjs/operators';

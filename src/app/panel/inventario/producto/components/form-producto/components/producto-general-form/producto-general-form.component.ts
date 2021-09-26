@@ -1,6 +1,6 @@
 import { debounceTime, map, startWith, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { Resultado } from '@models/resultados/resultado.model';
+import { Resultado } from 'src/app/core/models/resultados/resultado.model';
 import { CategoriaService } from '@global-services/categoria.service';
 import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';

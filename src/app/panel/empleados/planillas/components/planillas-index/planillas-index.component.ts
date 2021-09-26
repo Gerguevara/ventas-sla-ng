@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { environment } from '@environments/environment';
-import { Planilla } from '@models/planilla.model';
+import { Planilla } from 'src/app/core/models/planilla.model';
 import { LineaPlanillasTableComponent } from '../linea-planillas-table/linea-planillas-table.component';
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 import { PlanillaService } from '@global-services/planilla.service';

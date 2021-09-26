@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Producto } from '@models/producto.model';
+import { Producto } from 'src/app/core/models/producto.model';
 import { ProductoService } from '../../../../../../../core/services/producto.service';
 import { DialogSpinnerComponent } from '../../../../../../../tools/components/dialog-spinner/dialog-spinner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';

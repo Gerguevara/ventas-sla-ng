@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { Producto } from '@models/producto.model';
+import { Producto } from 'src/app/core/models/producto.model';
 import { ProductoService } from '@global-services/producto.service';
 
 import { DialogMessageComponent } from '@tool-components/dialog-message/dialog-message.component';

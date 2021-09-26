@@ -2,7 +2,7 @@ import { ProductRemovedCartComponent } from './../product-removed-cart/product-r
 import { MatDialog } from '@angular/material/dialog';
 import { CarritoService } from '@global-services/carrito.service';
 import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
-import { Producto } from '@models/producto.model';
+import { Producto } from 'src/app/core/models/producto.model';
 
 @Component({
   selector: 'sla-producto-row',

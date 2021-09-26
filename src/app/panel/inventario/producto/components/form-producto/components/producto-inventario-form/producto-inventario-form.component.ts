@@ -1,6 +1,6 @@
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { Producto } from '@models/producto.model';
+import { Producto } from 'src/app/core/models/producto.model';
 import { ProductoService } from '../../../../../../../core/services/producto.service';
 
 @Component({
