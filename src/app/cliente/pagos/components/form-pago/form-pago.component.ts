@@ -183,6 +183,8 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
   getErrorEmailMessage(): string {
     if (this.envioForm.get('email')?.hasError('required')) {
       return 'Debe ingresar un correo electrónico';
+    } else if (this.envioForm.get('email')?.hasError('email')) {
+      return 'Correo electrónico no válido';
     }
     else {
       return '';
