@@ -8,9 +8,12 @@
       <img [src]="product.imagen" [style]="{'width':'200px'}">
       <mat-list>
         <mat-list-item>${{product.precio}} x {{quantity}} = {{totalRow}}</mat-list-item>
-        <mat-list-item>{{product.cantidad}} disponibles</mat-list-item>
+        <mat-list-item>{{product.cantidad}} solicitados</mat-list-item>
         <mat-list-item>{{product.calificacion_promedio}} estrellas</mat-list-item>
       </mat-list>
     </mat-card-content>
+    <mat-card-actions>
+      <button mat-flat-button (click)="deleteHandler($event)">Quitar del carrito</button>
+    </mat-card-actions>
   </mat-card>
 </a>

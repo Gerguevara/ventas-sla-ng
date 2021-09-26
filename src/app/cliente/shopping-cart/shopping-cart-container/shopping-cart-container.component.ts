@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Producto } from '@models/producto.model';
@@ -19,6 +20,7 @@ export class ShoppingCartContainerComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private carritoService: CarritoService,
+    private matSnackBar: MatSnackBar,
   ) {
     this.route.data.subscribe(
       {
@@ -44,7 +46,8 @@ export class ShoppingCartContainerComponent implements OnInit {
   }
 
   handleDelete(id: number){
-    this.productos = this.productos.filter((value:Producto)=>{value.id!==id})
+    this.productos = this.productos.filter((value:Producto)=>{return value.id!==id})
+    this.matSnackBar.open('Producto retirado del carrito', 'Cerrar', {duration:3000})
   }
 
 }

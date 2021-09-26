@@ -1,7 +1,9 @@
 a{
     text-decoration: none;
 }
-
+mat-card{
+  margin: 20px;
+}
 mat-card-content{
   display: flex;
   flex-direction: row;
