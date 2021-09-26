@@ -1075,7 +1075,7 @@ export class PagoService {
               }
 
   enviarDatosPago(infoEnvio: any, infoPago: any): Observable<any> {
-    const carritoJson = JSON.stringify(this.carritoService.obtenerCarrito());
+    const carritoJson = this.carritoService.obtenerCarrito();
     return this.http.post<any>(`${environment.apiUrl}${environment.endpoints.completarCompra}`, {
       nombres: infoEnvio.nombres,
       apellidos: infoEnvio.apellidos,
@@ -1084,7 +1084,7 @@ export class PagoService {
       departamento: infoEnvio.departamento,
       municipio: infoEnvio.municipio,
       infoAdicionalDireccion: infoEnvio.direccion,
-      metodoDePago: infoPago.metodo,
+      metodoDePago: 1,
       nombresSegunTarjeta: infoPago.nombres,
       apellidosSegunTarjeta: infoPago.apellidos,
       numTarjeta: infoPago.tarjeta.toString(),

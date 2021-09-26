@@ -137,7 +137,7 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
       console.log(response);
       this.snackBar.open('Su compra ha sido completada exitósamente', 'Cerrar', { duration: 5000 });
       spinnerRef.close();
-      this.dialogRef.close();
+      this.cerrarDialogo();
     }, (error: any) => {
       console.log(error);
       this.snackBar.open('Ah ocurrido un error!', 'Cerrar', { duration: 5000 });
