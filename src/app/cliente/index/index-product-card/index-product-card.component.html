@@ -26,27 +26,33 @@
     </mat-card-content>
     <mat-divider></mat-divider>
     <mat-card-actions>
-      <mat-form-field
-        appearance="standard"
-        [style.width.px]="45"
-        (click)="$event.preventDefault();$event.stopPropagation();">
-        <input
-          matInput
-          type="number"
-          placeholder="1"
-          value="1"
-          min="1"
-          [formControl]="cantidadControl">
-      </mat-form-field>
-      <button
-        mat-icon-button
-        color="primary"
-        aria-label="Agregar al carrito de compras"
-        (click)="shoppingCartHandler($event)"
-        >
-        <mat-icon *ngIf="!isInCart">add_shopping_cart</mat-icon>
-        <mat-icon *ngIf="isInCart">remove_shopping_cart</mat-icon>
-      </button>
+      <ng-container *ngIf="productoInput.disponibilidad===0 || productoInput.cantidad === 0">
+        El producto no está disponible
+      </ng-container>
+      <ng-container *ngIf="productoInput.disponibilidad===1 && productoInput.cantidad > 0">
+        <mat-form-field
+          appearance="standard"
+          [style.width.px]="45"
+          (click)="$event.preventDefault();$event.stopPropagation();">
+          <input
+            matInput
+            type="number"
+            placeholder="1"
+            value="1"
+            min="1"
+            [max]="productoInput.disponibilidad"
+            [formControl]="cantidadControl">
+        </mat-form-field>
+        <button
+          mat-icon-button
+          color="primary"
+          aria-label="Agregar al carrito de compras"
+          (click)="shoppingCartHandler($event)"
+          >
+          <mat-icon *ngIf="!isInCart">add_shopping_cart</mat-icon>
+          <mat-icon *ngIf="isInCart">remove_shopping_cart</mat-icon>
+        </button>
+      </ng-container>
     </mat-card-actions>
   </mat-card>
 </div>

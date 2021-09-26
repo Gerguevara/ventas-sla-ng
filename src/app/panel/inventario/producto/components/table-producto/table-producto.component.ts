@@ -13,6 +13,7 @@ import { environment } from '@environments/environment';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-table-producto',
@@ -56,6 +57,7 @@ export class TableProductoComponent implements OnInit, AfterViewInit {
     private productoService: ProductoService,
     private dialog: MatDialog,
     private permissions: NgxPermissionsService,
+    private router: Router,
     @Inject(LOCALE_ID) public locale: string
   ) { }
 
@@ -107,6 +109,11 @@ export class TableProductoComponent implements OnInit, AfterViewInit {
    */
   filtrarProducto( valor: string ): void {
     this.inputParams$.next(`${this.params}&search=${valor}`);
+  }
+
+  kardexHandler($event: any, idProducto: number){
+    $event.preventDefault(); $event.stopPropagation();
+    this.router.navigate(['/','panel','inventario','producto','kardex',idProducto])
   }
 
 }

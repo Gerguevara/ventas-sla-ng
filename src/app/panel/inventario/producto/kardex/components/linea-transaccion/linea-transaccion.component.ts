@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Transaccion } from '@models/transaccion.model';
 
 @Component({
@@ -9,10 +9,13 @@ import { Transaccion } from '@models/transaccion.model';
 export class LineaTransaccionComponent implements OnInit {
   @Input()
   transaccion!: Transaccion;
+  tipoEntrada!: boolean;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
+    this.tipoEntrada= this.transaccion.tipo === 'e'? true: false;
   }
 
 }

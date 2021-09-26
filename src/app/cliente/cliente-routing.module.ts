@@ -29,6 +29,10 @@ const routes: Routes = [
         loadChildren: () => import('./config-usuario/config-usuario.module').then(m => m.ConfigUsuarioModule),
         canLoad: [AuthGuard, TwoFaBlockGuard]
       },
+      {
+        path:'shopping-cart',
+        loadChildren: () => import('./shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule),
+      },
     ]
   },
 ];

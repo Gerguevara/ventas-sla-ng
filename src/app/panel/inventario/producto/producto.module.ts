@@ -1,3 +1,4 @@
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -56,6 +57,7 @@ import { ProductoService } from '@global-services/producto.service';
     MatExpansionModule,
     MatProgressSpinnerModule,
     MatAutocompleteModule,
+    MatTooltipModule,
     NgxPermissionsModule.forChild()
   ],
   providers: [

@@ -1,0 +1,28 @@
+@import 'variables';
+.entrada{
+  background-color: $primary;
+  color: white;
+}
+
+.salida{
+  background-color: $red;
+  color: white;
+}
+
+.entrada-title{
+  font-weight: 600;
+  font-size: large;
+}
+
+.salida-title{
+  font-weight: 600;
+  font-size: large;
+}
+
+.outer-card{
+  margin: 30px;
+}
+
+.inner-card{
+  margin: 40px 20px;
+}

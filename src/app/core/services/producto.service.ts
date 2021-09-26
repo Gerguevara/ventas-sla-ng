@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Categoria } from '@models/categoria.model';
@@ -7,6 +7,7 @@ import { Producto } from '@models/producto.model';
 import { Resultado } from '@models/resultados/resultado.model';
 import { RecursoService } from './recurso.service';
 import { environment } from '@environments/environment';
+import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
 export interface ProductoPost {
   id_categoria: number;
@@ -30,7 +31,7 @@ const httpHeaders = {
 @Injectable({
   providedIn: 'root'
 })
-export class ProductoService  extends RecursoService<Producto>{
+export class ProductoService  extends RecursoService<Producto> implements Resolve<Producto>{
 
   private endpoint = environment.endpoints.productos;
 
@@ -108,5 +109,10 @@ export class ProductoService  extends RecursoService<Producto>{
       precio_unitario: precioUnitario
     };
     return this.httpClient.post<any>(`${environment.apiUrl}${environment.endpoints.cambiarStockProducto}`, data, httpHeaders);
+  }
+
+  resolve(route: ActivatedRouteSnapshot){
+    const id =Number(route.paramMap.get('id'));
+    return this.getObject(id);
   }
 }
