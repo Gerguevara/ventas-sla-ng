@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PagoService } from '../../../../core/services/pago.service';
 import { environment } from '../../../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'sla-form-pago',
@@ -18,6 +19,8 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
 
   municipiosArray!: any[];
   selectMunicipiosArray!: any[];
+
+  dialogRef: any;
 
   // getters para validación de controles
   get nombresNoValido(): boolean | undefined {
@@ -83,6 +86,7 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
 
   constructor(private dialog: MatDialog,
               private formBuilder: FormBuilder,
+              private router: Router,
               private pagoService: PagoService ) {
                 this.envioForm = this.formBuilder.group({
                   departamento: ['San Salvador', Validators.required],
@@ -112,14 +116,19 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
               }
 
   ngAfterViewInit(): void {
-    const dialogRef = this.dialog.open(this.formPagoDialogContent, { width: '70vw' });
-    dialogRef.disableClose = true;
+    this.dialogRef = this.dialog.open(this.formPagoDialogContent, { width: '70vw' });
+    this.dialogRef.disableClose = true;
   }
 
   ngOnInit(): void {
     this.envioForm.get('departamento')?.valueChanges.subscribe((value: string) => {
       this.selectMunicipiosArray = this.municipiosArray.filter((item: any) => item.departamento === value);
     });
+  }
+
+  cerrarDialogo(): void {
+    this.dialogRef.close();
+    this.router.navigate(['/shopping-cart']);
   }
 
   // Mensajes de error para validaciones
