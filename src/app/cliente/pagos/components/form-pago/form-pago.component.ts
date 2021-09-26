@@ -106,13 +106,10 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
                   apellidos: ['', Validators.required],
                   mes: ['', [Validators.required, Validators.min(1), Validators.max(12), Validators.maxLength(2)]],
                   anio: ['', [Validators.required, Validators.min(1), Validators.max(99), Validators.maxLength(2)]],
-                  tarjeta: ['', [Validators.required, Validators.min(0), Validators.max(9999999999999999),
-                                 Validators.maxLength(16), Validators.minLength(16)]],
-                  cvv: ['', [Validators.required, Validators.min(0), Validators.max(999), Validators.maxLength(3)]],
-                  dui: ['', [Validators.required, Validators.min(0), Validators.max(999999999),
-                             Validators.minLength(9), Validators.maxLength(9)]],
-                  nit: ['', [Validators.required, Validators.min(0), Validators.max(99999999999999),
-                             Validators.minLength(14), Validators.maxLength(14)]],
+                  tarjeta: ['', [Validators.required, Validators.pattern(environment.patterns.tarjetaBanco)]],
+                  cvv: ['', [Validators.required, Validators.pattern(environment.patterns.cvv)]],
+                  dui: ['', [Validators.required, Validators.pattern(environment.patterns.dui)]],
+                  nit: ['', [Validators.required, Validators.pattern(environment.patterns.nit)]],
                 });
                 this.municipiosArray = this.pagoService.municipios;
                 this.selectMunicipiosArray = this.municipiosArray.filter((item: any) => item.departamento === 'San Salvador');
@@ -230,7 +227,7 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
   getErrorTarjetaMessage(): string {
     if (this.pagoForm.get('tarjeta')?.hasError('required')) {
       return 'Debe ingresar su número de tarjeta';
-    } else if (this.pagoForm.get('tarjeta')?.hasError('maxLength') || this.pagoForm.get('tarjeta')?.hasError('max')) {
+    } else if (this.pagoForm.get('tarjeta')?.hasError('pattern')) {
       return 'Número de tarjeta no válido';
     }
     else {
@@ -263,7 +260,7 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
   getErrorCodigoTarjetaMessage(): string {
     if (this.pagoForm.get('cvv')?.hasError('required')) {
       return 'Debe ingresar el código de seguirdad';
-    } else if (this.pagoForm.get('cvv')?.hasError('maxLength') || this.pagoForm.get('cvv')?.hasError('max')) {
+    } else if (this.pagoForm.get('cvv')?.hasError('pattern')) {
       return 'Código no válido';
     }
     else {
@@ -274,7 +271,7 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
   getErrorDuiMessage(): string {
     if (this.pagoForm.get('dui')?.hasError('required')) {
       return 'Debe ingresar su documento de identidad';
-    } else if (this.pagoForm.get('dui')?.hasError('maxLength') || this.pagoForm.get('dui')?.hasError('max')) {
+    } else if (this.pagoForm.get('dui')?.hasError('pattern')) {
       return 'Número de DUI no válido';
     }
     else {
@@ -285,7 +282,7 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
   getErrorNitMessage(): string {
     if (this.pagoForm.get('nit')?.hasError('required')) {
       return 'Debe ingresar su NIT';
-    } else if (this.pagoForm.get('nit')?.hasError('maxLength') || this.pagoForm.get('nit')?.hasError('max')) {
+    } else if (this.pagoForm.get('nit')?.hasError('pattern')) {
       return 'Número de NIT no válido';
     }
     else {

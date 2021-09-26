@@ -1091,8 +1091,8 @@ export class PagoService {
       mes: infoPago.mes.toString(),
       anio: infoPago.anio.toString(),
       cvv: infoPago.cvv.toString(),
-      dui: infoPago.dui.toString(),
-      nit: infoPago.nit.toString(),
+      dui: infoPago.dui.toString().split('-').join(''),
+      nit: infoPago.nit.toString().split('-').join(''),
       carrito: carritoJson,
     }, httpHeaders);
   }
