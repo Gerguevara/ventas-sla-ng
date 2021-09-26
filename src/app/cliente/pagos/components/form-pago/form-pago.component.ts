@@ -97,19 +97,23 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
                   metodo: ['pago_en_linea', Validators.required],
                   nombres: ['', Validators.required],
                   apellidos: ['', Validators.required],
-                  mes: [1, [Validators.required, Validators.min(1), Validators.max(12), Validators.maxLength(2)]],
-                  anio: [1, [Validators.required, Validators.maxLength(2)]],
-                  tarjeta: ['', [Validators.required, Validators.maxLength(16), Validators.minLength(16)]],
-                  cvv: ['', [Validators.required, Validators.maxLength(3)]],
-                  dui: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]],
-                  nit: ['', [Validators.required, Validators.minLength(14), Validators.maxLength(14)]],
+                  mes: ['', [Validators.required, Validators.min(1), Validators.max(12), Validators.maxLength(2)]],
+                  anio: ['', [Validators.required, Validators.min(1), Validators.max(99), Validators.maxLength(2)]],
+                  tarjeta: ['', [Validators.required, Validators.min(0), Validators.max(9999999999999999),
+                                 Validators.maxLength(16), Validators.minLength(16)]],
+                  cvv: ['', [Validators.required, Validators.min(0), Validators.max(999), Validators.maxLength(3)]],
+                  dui: ['', [Validators.required, Validators.min(0), Validators.max(999999999),
+                             Validators.minLength(9), Validators.maxLength(9)]],
+                  nit: ['', [Validators.required, Validators.min(0), Validators.max(99999999999999),
+                             Validators.minLength(14), Validators.maxLength(14)]],
                 });
                 this.municipiosArray = this.pagoService.municipios;
                 this.selectMunicipiosArray = this.municipiosArray.filter((item: any) => item.departamento === 'San Salvador');
               }
 
   ngAfterViewInit(): void {
-    this.dialog.open(this.formPagoDialogContent, { width: '70vw' });
+    const dialogRef = this.dialog.open(this.formPagoDialogContent, { width: '70vw' });
+    dialogRef.disableClose = true;
   }
 
   ngOnInit(): void {
