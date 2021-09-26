@@ -97,4 +97,9 @@ export class CarritoService extends PreflightService implements Resolve<Resultad
     }
   }
 
+  limpiarCarrito(): void {
+    this.arregloCarrito = [];
+    localStorage.removeItem('shopping-cart');
+  }
+
 }

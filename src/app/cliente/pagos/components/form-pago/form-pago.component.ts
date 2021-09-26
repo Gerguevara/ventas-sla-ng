@@ -6,6 +6,7 @@ import { environment } from '../../../../../environments/environment';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogSpinnerComponent } from '../../../../tools/components/dialog-spinner/dialog-spinner.component';
+import { CarritoService } from '../../../../core/services/carrito.service';
 
 @Component({
   selector: 'sla-form-pago',
@@ -90,7 +91,8 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
               private formBuilder: FormBuilder,
               private router: Router,
               private snackBar: MatSnackBar,
-              private pagoService: PagoService ) {
+              private pagoService: PagoService,
+              private carritoService: CarritoService ) {
                 this.envioForm = this.formBuilder.group({
                   departamento: ['San Salvador', Validators.required],
                   municipio: ['San Salvador', Validators.required],
@@ -116,8 +118,12 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
               }
 
   ngAfterViewInit(): void {
-    this.dialogRef = this.dialog.open(this.formPagoDialogContent, { width: '70vw' });
-    this.dialogRef.disableClose = true;
+    if (localStorage.getItem('token')) {
+      this.dialogRef = this.dialog.open(this.formPagoDialogContent, { width: '70vw' });
+      this.dialogRef.disableClose = true;
+    } else {
+      this.router.navigate(['/auth/login']);
+    }
   }
 
   ngOnInit(): void {
@@ -133,6 +139,7 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
     this.pagoService.enviarDatosPago(infoEnvio, infoPago).subscribe((response: any) => {
       console.log(response);
       this.snackBar.open('Su compra ha sido completada exitósamente', 'Cerrar', { duration: 5000 });
+      this.carritoService.limpiarCarrito();
       spinnerRef.close();
       this.cerrarDialogo();
     }, (error: any) => {
@@ -144,7 +151,7 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
 
   cerrarDialogo(): void {
     this.dialogRef.close();
-    this.router.navigate(['/shopping-cart']);
+    this.router.navigate(['/']);
   }
 
   // Mensajes de error para validaciones
