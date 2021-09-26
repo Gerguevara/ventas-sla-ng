@@ -40,7 +40,7 @@ export const environment = {
     cambiarStockProducto: 'transaccionesInventario',
     kardex: 'kardex',
     shoppingCart: 'shoppingCart',
-    
+    completarCompra: 'completarCompra'
   },
   patterns:
   {
@@ -49,7 +49,9 @@ export const environment = {
     dui: /[0-9]{8}[-][0-9]/,
     nit: /[0-9]{4}[-][0-9]{6}[-][0-9]{3}[-][0-9]{1}/,
     integer: /[0-9]+/,
-    decimal: /[0-9]+([.][0-9]+)?/
+    decimal: /[0-9]+([.][0-9]+)?/,
+    tarjetaBanco: /[0-9]{4}[-][0-9]{4}[-][0-9]{4}[-][0-9]{4}/,
+    cvv: /[0-9]{3}/,
   },
   appFonts: [
     "Merriweather Sans",
