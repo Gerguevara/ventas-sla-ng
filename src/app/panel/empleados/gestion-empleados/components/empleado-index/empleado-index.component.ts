@@ -5,10 +5,10 @@ import { PartialObserver } from 'rxjs';
 
 import { MatDialog } from '@angular/material/dialog';
 
-import { Rol } from 'src/app/core/models/rol.model';
-import { PerfilEmpleado } from 'src/app/core/models/perfil.empleado.model';
-import { Resultado } from 'src/app/core/models/resultados/resultado.model';
-import { ResultadoEmpleado } from 'src/app/core/models/resultados/resultado-empleado.model';
+import { Rol } from '@models/rol.model';
+import { PerfilEmpleado } from '@models/perfil.empleado.model';
+import { Resultado } from '@models/resultados/resultado.model';
+import { ResultadoEmpleado } from '@models/resultados/resultado-empleado.model';
 
 import { EmpleadoService } from '@global-services/empleado.service';
 import { RolesService } from '@global-services/roles.service';

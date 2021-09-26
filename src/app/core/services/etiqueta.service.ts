@@ -3,9 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { RecursoService } from './recurso.service';
-import { Etiqueta } from 'src/app/core/models/etiqueta.model';
-import { Categoria } from 'src/app/core/models/categoria.model';
-import { Resultado } from 'src/app/core/models/resultados/resultado.model';
+import { Etiqueta } from '@models/etiqueta.model';
+import { Categoria } from '@models/categoria.model';
+import { Resultado } from '@models/resultados/resultado.model';
 import { environment } from '@environments/environment';
 
 @Injectable({

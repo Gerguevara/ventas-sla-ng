@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { LineaPlanilla } from 'src/app/core/models/linea.planilla.model';
-import { Planilla } from 'src/app/core/models/planilla.model';
+import { LineaPlanilla } from '@models/linea.planilla.model';
+import { Planilla } from '@models/planilla.model';
 import { PlanillaService } from '@global-services/planilla.service';
 import { PlanillasFormComponent } from '../planillas-form/planillas-form.component';
 

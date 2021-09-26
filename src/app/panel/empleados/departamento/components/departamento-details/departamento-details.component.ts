@@ -7,7 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
-import { Departamento } from 'src/app/core/models/departamento.model';
+import { Departamento } from '@models/departamento.model';
 import { DepartamentoService } from '@global-services/departamento.service';
 import { Data } from '@tools/models/Data';
 

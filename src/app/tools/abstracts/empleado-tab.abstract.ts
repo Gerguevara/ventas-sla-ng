@@ -3,7 +3,7 @@ import { EmpleadoService } from '@global-services/empleado.service';
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { BreakpointObserver, Breakpoints, BreakpointState } from "@angular/cdk/layout";
 import { FormControl, FormGroup } from "@angular/forms";
-import { PerfilEmpleado } from "src/app/core/models/perfil.empleado.model";
+import { PerfilEmpleado } from "@models/perfil.empleado.model";
 import { environment } from "@environments/environment";
 import { LetterInputContext } from "@tools/models/LetterInputContext";
 

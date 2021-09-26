@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { LineaPlanilla } from 'src/app/core/models/linea.planilla.model';
+import { LineaPlanilla } from '@models/linea.planilla.model';
 import { PlanillaService } from '@global-services/planilla.service';
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 

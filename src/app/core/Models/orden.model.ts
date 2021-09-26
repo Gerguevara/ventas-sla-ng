@@ -1,5 +1,5 @@
-import { PerfilUsuario } from 'src/app/core/models/perfil.usuario.model';
-import { Producto } from 'src/app/core/models/producto.model';
+import { PerfilUsuario } from '@models/perfil.usuario.model';
+import { Producto } from '@models/producto.model';
 import { Recurso } from './recurso.model';
 
 export interface Orden extends Recurso{

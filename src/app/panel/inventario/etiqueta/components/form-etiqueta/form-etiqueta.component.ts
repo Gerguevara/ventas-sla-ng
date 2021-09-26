@@ -5,9 +5,9 @@ import { map, startWith } from 'rxjs/operators';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 ;
-import { Resultado } from 'src/app/core/models/resultados/resultado.model';
-import { Categoria } from 'src/app/core/models/categoria.model';
-import { Etiqueta } from 'src/app/core/models/etiqueta.model';
+import { Resultado } from '@models/resultados/resultado.model';
+import { Categoria } from '@models/categoria.model';
+import { Etiqueta } from '@models/etiqueta.model';
 import { CategoriaService } from '@global-services/categoria.service';
 import { FormCategoriaComponent } from '../../../categoria/components/form-categoria/form-categoria.component';
 

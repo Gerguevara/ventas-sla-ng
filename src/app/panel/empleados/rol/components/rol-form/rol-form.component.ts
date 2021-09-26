@@ -9,13 +9,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { Rol } from 'src/app/core/models/rol.model';
-import { Departamento } from 'src/app/core/models/departamento.model';
-import { Permission } from 'src/app/core/models/permission.model';
+import { Rol } from '@models/rol.model';
+import { Departamento } from '@models/departamento.model';
+import { Permission } from '@models/permission.model';
 
 import { PermissionService } from '@global-services/permission.service';
 import { RolesService } from '@global-services/roles.service';
-import { Resultado } from 'src/app/core/models/resultados/resultado.model';
+import { Resultado } from '@models/resultados/resultado.model';
 
 import { PermissionsByPanel } from '@tool-models/PermissionsByPanel'
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';

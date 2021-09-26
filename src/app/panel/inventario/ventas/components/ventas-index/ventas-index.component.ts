@@ -2,14 +2,14 @@ import { Component, OnInit, LOCALE_ID, Inject, AfterViewInit, ViewChild, SimpleC
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogVentaComponent } from '../dialog-venta/dialog-venta.component';
-import { Orden } from 'src/app/core/models/orden.model';
+import { Orden } from '@models/orden.model';
 import { VentasService } from '@global-services/ventas.service';
 import { Subject } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { environment } from '@environments/environment';
 import { ThemePalette } from '@angular/material/core';
-import { Resultado } from 'src/app/core/models/resultados/resultado.model';
+import { Resultado } from '@models/resultados/resultado.model';
 
 @Component({
   selector: 'sla-ventas-index',

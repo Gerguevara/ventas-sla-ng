@@ -8,7 +8,7 @@ import { MatDrawerMode, MatSidenav } from '@angular/material/sidenav';
 import { NgxPermissionsService } from 'ngx-permissions';
 
 import { environment } from '@environments/environment';
-import { Categoria } from 'src/app/core/models/categoria.model';
+import { Categoria } from '@models/categoria.model';
 
 import { IndexService } from '@global-services/index.service';
 import { LoginClienteService } from '@global-services/login-cliente.service';

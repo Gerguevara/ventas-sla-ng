@@ -6,8 +6,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
-import { Departamento } from 'src/app/core/models/departamento.model';
-import { Resultado } from 'src/app/core/models/resultados/resultado.model';
+import { Departamento } from '@models/departamento.model';
+import { Resultado } from '@models/resultados/resultado.model';
 import { DepartamentoService } from '@global-services/departamento.service';
 
 import { Data } from '@tools/models/Data';

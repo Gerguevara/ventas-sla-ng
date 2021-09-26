@@ -4,9 +4,9 @@ frontend:
     preBuild:
       commands:
         - npm ci
+        - npm install
     build:
       commands:
-        - npm install
         - npm run build
   artifacts:
     baseDirectory: dist/ventas-sla-ng

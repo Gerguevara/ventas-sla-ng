@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 
-import { Producto } from 'src/app/core/models/producto.model';
-import { ResultadoIndex } from 'src/app/core/models/resultados/resultado-index.model';
-import { Resultado } from 'src/app/core/models/resultados/resultado.model';
+import { Producto } from '@models/producto.model';
+import { ResultadoIndex } from '@models/resultados/resultado-index.model';
+import { Resultado } from '@models/resultados/resultado.model';
 import { IndexService } from '@global-services/index.service';
 
 @Component({

@@ -1,7 +1,7 @@
 import { PreflightService } from '@tool-services/preflight-service';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Transaccion } from 'src/app/core/models/transaccion.model';
+import { Transaccion } from '@models/transaccion.model';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
