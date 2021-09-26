@@ -200,7 +200,7 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
   getErrorTarjetaMessage(): string {
     if (this.pagoForm.get('tarjeta')?.hasError('required')) {
       return 'Debe ingresar su número de tarjeta';
-    } else if (this.pagoForm.get('tarjeta')?.hasError('maxLength')) {
+    } else if (this.pagoForm.get('tarjeta')?.hasError('maxLength') || this.pagoForm.get('tarjeta')?.hasError('max')) {
       return 'Número de tarjeta no válido';
     }
     else {
@@ -211,7 +211,7 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
   getErrorMesTarjetaMessage(): string {
     if (this.pagoForm.get('mes')?.hasError('required')) {
       return 'Debe ingresar el mes de vencimiento';
-    } else if (this.pagoForm.get('mes')?.hasError('maxLength')) {
+    } else if (this.pagoForm.get('mes')?.hasError('maxLength') || this.pagoForm.get('mes')?.hasError('max')) {
       return 'Mes no válido';
     }
     else {
@@ -220,7 +220,7 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
   }
 
   getErrorAnioTarjetaMessage(): string {
-    if (this.pagoForm.get('anio')?.hasError('required')) {
+    if (this.pagoForm.get('anio')?.hasError('required') || this.pagoForm.get('anio')?.hasError('max')) {
       return 'Debe ingresar el año de vencimiento';
     } else if (this.pagoForm.get('anio')?.hasError('maxLength')) {
       return 'Año no válido';
@@ -233,7 +233,7 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
   getErrorCodigoTarjetaMessage(): string {
     if (this.pagoForm.get('cvv')?.hasError('required')) {
       return 'Debe ingresar el código de seguirdad';
-    } else if (this.pagoForm.get('cvv')?.hasError('maxLength')) {
+    } else if (this.pagoForm.get('cvv')?.hasError('maxLength') || this.pagoForm.get('cvv')?.hasError('max')) {
       return 'Código no válido';
     }
     else {
@@ -244,7 +244,7 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
   getErrorDuiMessage(): string {
     if (this.pagoForm.get('dui')?.hasError('required')) {
       return 'Debe ingresar su documento de identidad';
-    } else if (this.pagoForm.get('dui')?.hasError('maxLength')) {
+    } else if (this.pagoForm.get('dui')?.hasError('maxLength') || this.pagoForm.get('dui')?.hasError('max')) {
       return 'Número de DUI no válido';
     }
     else {
@@ -255,7 +255,7 @@ export class FormPagoComponent implements OnInit, AfterViewInit {
   getErrorNitMessage(): string {
     if (this.pagoForm.get('nit')?.hasError('required')) {
       return 'Debe ingresar su NIT';
-    } else if (this.pagoForm.get('nit')?.hasError('maxLength')) {
+    } else if (this.pagoForm.get('nit')?.hasError('maxLength') || this.pagoForm.get('nit')?.hasError('max')) {
       return 'Número de NIT no válido';
     }
     else {

@@ -88,7 +88,7 @@
                         <mat-form-field appearance="fill" class="input">
                             <mat-label>Código de Seguridad de Tarjeta</mat-label>
                             <input matInput maxlength="3" type="number" formControlName="cvv">
-                            <mat-error *ngIf="telefonoNoValido"> {{ getErrorTelefonoMessage() }} </mat-error>
+                            <mat-error *ngIf="telefonoNoValido"> {{ getErrorCodigoTarjetaMessage() }} </mat-error>
                         </mat-form-field>
                         <mat-form-field appearance="fill" class="input">
                             <mat-label>DUI</mat-label>
@@ -102,7 +102,7 @@
                         </mat-form-field>
                     </form>
                     <button type="button" mat-stroked-button matStepperPrevious class="button">Regresar</button>
-                    <button type="button" mat-stroked-button class="button" color="primary">Enviar</button>
+                    <button type="button" mat-stroked-button [disabled]="pagoForm.invalid" class="button" color="primary">Enviar</button>
                 </ng-container>
             </mat-step>
         </mat-horizontal-stepper>
