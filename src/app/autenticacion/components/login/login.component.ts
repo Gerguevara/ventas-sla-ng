@@ -66,7 +66,6 @@ export class LoginComponent {
         if(response.locked===1){
           //no es un Item de bloqueo, es de funcionamiento de guard
           //si el usuario lo cambia en DevTools, no se desbloquea el 2fa, sino que se rompe
-          localStorage.setItem('unblockToken', response.token);
           url = [
             '/',
             'confirm'
@@ -74,7 +73,7 @@ export class LoginComponent {
         }
         localStorage.setItem('token', response.token);
         localStorage.setItem('tokenType', tokenType);
-        this.router.navigate(url);
+        location.reload();
       },
       error:(error: any) => {
         // Cerramos todos los dialogos abiertos hasta el momento

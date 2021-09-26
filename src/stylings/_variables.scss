@@ -1,6 +1,7 @@
 @import 'src/styles.scss';
 $primary: mat-color($ventas-sla-ng-primary,default);
 $accent: mat-color($ventas-sla-ng-accent,default);
+$red: mat-color($ventas-sla-ng-warn, default);
 $hover-white: mat-color($mat-gray, 200);
 $mat-card-margin: 30px 9vw;
 $mat-card-margin-product: 30px 3vw;

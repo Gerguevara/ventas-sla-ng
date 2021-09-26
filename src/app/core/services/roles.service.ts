@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
 
 import { RecursoService } from './recurso.service';
 import { Permission } from '@models/permission.model';
@@ -31,7 +31,9 @@ export class RolesService extends RecursoService<Rol> {
   }
 
   searchDepartamento( nombre: string ): Observable<Departamento[]> {
-    return this.http.get<Departamento[]>(`${environment.apiUrl}departamentos/search?consulta=${nombre}`, this.setOptions());
+    return this.http.post<Departamento[]>(`${environment.apiUrl}departamentos/search`, {consulta: nombre} ,this.setOptions()).pipe(
+      debounceTime(300),
+    );
   }
 
   getPanels(): Observable<PermissionsByPanel[]> {

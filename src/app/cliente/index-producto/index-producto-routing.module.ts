@@ -1,3 +1,4 @@
+import { ProductoService } from '@global-services/producto.service';
 import { IndexProductoContainer } from './index-producto/index-producto.container';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -5,7 +6,10 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path:':id',
-    component:IndexProductoContainer
+    component:IndexProductoContainer,
+    resolve: {
+      producto: ProductoService
+    }
   }
 ];
 
