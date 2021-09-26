@@ -1,1 +1,38 @@
-<p>empleado-index works!</p>
+<div class="header"><h1 color="primary">Empleados</h1></div>
+<a mat-button color="primary" [routerLink]="['/panel','empleados','empleados','registro']" [ngStyle]="{'margin': '10px;'}">
+  <mat-icon>person_add</mat-icon>Registrar nuevo empleado
+</a>
+<mat-card class="table-container">
+  Filtros:
+  <div class="filters">
+    <mat-form-field appearance="standard">
+      <mat-label>Buscar empleado</mat-label>
+      <input matInput (input)="filterEmpleados($event.target)">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="standard" >
+      <mat-label>Filtrar por rol</mat-label>
+      <mat-select #filter>
+        <mat-option [value]="'default'">Sin filtrar</mat-option>
+        <mat-option *ngFor="let role of roles" [value]="role">{{role.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+<app-empleado-list
+  [empleados]="empleados"
+  (viewEmpleadoEvent)="empleadoView($event)"
+  (updateEmpleadoEvent)="empleadoUpdate($event)"
+  (removeEmpleadoEvent)="empleadoDelete($event)"
+  ></app-empleado-list>
+
+  <mat-paginator
+      #paginator
+      [length]="dataLength"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 20]"
+      (page)="getEmpleados($event)"
+      showFirstLastButtons>
+  </mat-paginator>
+</mat-card>

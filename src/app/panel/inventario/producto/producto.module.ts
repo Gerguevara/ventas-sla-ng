@@ -1,3 +1,4 @@
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -5,7 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { ProductoRoutingModule } from './producto-routing.module';
-import { FormProductoComponent } from './components/form-producto/form-producto.component';
 import { TableProductoComponent } from './components/table-producto/table-producto.component';
 import { IndexProductoComponent } from './components/index-producto/index-producto.component';
 import { DialogEliminarProductoComponent } from './components/dialog-eliminar-producto/dialog-eliminar-producto.component';
@@ -29,19 +29,12 @@ import { NgxPermissionsModule } from 'ngx-permissions';
 import { ToolsModule } from '@tools/tools.module';
 import { PaginatorService } from '@tool-services/paginator.service';
 import { ProductoService } from '@global-services/producto.service';
-import { ProductoGeneralFormComponent } from './components/form-producto/components/producto-general-form/producto-general-form.component';
-import { ProductoDesignFormComponent } from './components/form-producto/components/producto-design-form/producto-design-form.component';
-import { ProductoInventarioFormComponent } from './components/form-producto/components/producto-inventario-form/producto-inventario-form.component';
 
 @NgModule({
   declarations: [
-    FormProductoComponent,
     TableProductoComponent,
     IndexProductoComponent,
     DialogEliminarProductoComponent,
-    ProductoGeneralFormComponent,
-    ProductoDesignFormComponent,
-    ProductoInventarioFormComponent,
   ],
   imports: [
     CommonModule,
@@ -64,6 +57,7 @@ import { ProductoInventarioFormComponent } from './components/form-producto/comp
     MatExpansionModule,
     MatProgressSpinnerModule,
     MatAutocompleteModule,
+    MatTooltipModule,
     NgxPermissionsModule.forChild()
   ],
   providers: [

@@ -1,5 +1,8 @@
 <div class="card-container" #main>
-  <mat-card>
+  <mat-card
+  matTooltipPosition="above"
+  [matTooltip]="productoInput.descripcion_producto"
+  >
     <mat-card-title>
       <ng-container *ngIf="hasImage;">
         <img mat-card-image src="{{productoInput?.imagen}}" alt="{{productoInput?.nombre_producto}} - {{productoInput?.descripcion_producto}}">
@@ -13,28 +16,43 @@
           <mat-list-item>
             <h3 matLine> {{productoInput?.nombre_producto}} </h3>
             <p matLine>
-              <span> {{productoInput?.descripcion_producto}} </span>
+              <span> $ {{productoInput?.precio}} </span>
             </p>
-          </mat-list-item>
-          <mat-divider></mat-divider>
-          <mat-list-item>
-            <h3 matLine>Calificacion</h3>
             <p matLine>
-              <span> {{productoInput?.calificacion_promedio}} </span>
+              <bar-rating [(rate)]="calificacionProducto" [max]="5"></bar-rating>
             </p>
           </mat-list-item>
-          <mat-divider></mat-divider>
-          <mat-list-item>
-            <h3 matLine>Precio </h3>
-            <p matLine>
-              <span> {{productoInput?.precio}} </span>
-            </p>
-          </mat-list-item>
-      </mat-list>
+        </mat-list>
     </mat-card-content>
     <mat-divider></mat-divider>
     <mat-card-actions>
-      Actions
+      <ng-container *ngIf="productoInput.disponibilidad===0 || productoInput.cantidad === 0">
+        El producto no está disponible
+      </ng-container>
+      <ng-container *ngIf="productoInput.disponibilidad===1 && productoInput.cantidad > 0">
+        <mat-form-field
+          appearance="standard"
+          [style.width.px]="45"
+          (click)="$event.preventDefault();$event.stopPropagation();">
+          <input
+            matInput
+            type="number"
+            placeholder="1"
+            value="1"
+            min="1"
+            [max]="productoInput.cantidad"
+            [formControl]="cantidadControl">
+        </mat-form-field>
+        <button
+          mat-icon-button
+          color="primary"
+          aria-label="Agregar al carrito de compras"
+          (click)="shoppingCartHandler($event)"
+          >
+          <mat-icon *ngIf="!isInCart">add_shopping_cart</mat-icon>
+          <mat-icon *ngIf="isInCart">remove_shopping_cart</mat-icon>
+        </button>
+      </ng-container>
     </mat-card-actions>
   </mat-card>
 </div>

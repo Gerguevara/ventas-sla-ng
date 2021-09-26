@@ -1,0 +1,47 @@
+<form
+  [formGroup]="formGroup"
+  (ngSubmit)="submitHandler()">
+  <mat-slide-toggle
+    [checked]="isChecked"
+    (change)="twoFaSwitchHandler($event)"></mat-slide-toggle>
+    <div *ngIf="isChecked">
+      <mat-horizontal-stepper [linear]="true" #stepper>
+        <mat-step label="Configura tu inicio de sesión">
+          <mat-card>
+            <mat-card-title>
+              QR two factor auth
+            </mat-card-title>
+            <mat-card-subtitle>
+              Escanea tu código QR con tu aplicación autenticadora, si no posees una puedes instalar Google Authenticator para tu teléfono <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&gl=US" target="_blank">android</a> o <a href="https://apps.apple.com/us/app/google-authenticator/id388497605" target="_blank">ios</a>.
+            </mat-card-subtitle>
+            <mat-card-content>
+              <div class="qr-display two-fa-config" [innerHTML]="currentUserQr"></div>
+            </mat-card-content>
+          </mat-card>
+          <mat-card>
+            <mat-card-title>
+              Códigos de recuperación
+            </mat-card-title>
+            <mat-card-subtitle>
+              Estos códigos te serán útiles en caso de que no puedas acceder a tu aplicación autenticadora
+            </mat-card-subtitle>
+            <div class="two-fa-config" [innerHTML]="currentUserCodes"></div>
+            <mat-card-subtitle>
+              Almacena estos codigos en un lugar seguro
+            </mat-card-subtitle>
+          </mat-card>
+          <button mat-button matStepperNext type="button">Siguiente</button>
+        </mat-step>
+        <mat-step label="Confirma los cambios" [stepControl]="formGroup">
+          <mat-form-field appearance="fill">
+            <mat-label>Ingresa el código de tu aplicación de autenticación</mat-label>
+            <input matInput placeholder="######" formControlName="code" required>
+            <mat-error *ngIf="codeControl.invalid">{{getErrorMessage(codeControl)}}</mat-error>
+          </mat-form-field>
+          <br/>
+          <button mat-button matStepperPrevious type="button">Regresar</button>
+          <button mat-button type="submit"><mat-icon>verified_user</mat-icon>Confirmar 2FA</button>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+</form>

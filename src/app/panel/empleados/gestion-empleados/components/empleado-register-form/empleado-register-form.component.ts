@@ -1,8 +1,8 @@
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AfterContentInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 
-import { Empleado } from '@models/empleado.model';
+import { PerfilEmpleado } from '@core/models/perfil.empleado.model';
 import { EmpleadoService } from '@global-services/empleado.service';
 import { environment } from '@environments/environment';
 
@@ -63,6 +63,13 @@ export class EmpleadoRegisterFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let emp: PerfilEmpleado = {} as PerfilEmpleado;
+    const { nombres } = emp;
+    const { apellidos } = emp;
+    const { email } = emp;
+    const accessEmpleado = {
+    }
+    this.accessForm.patchValue(emp)
   }
 
   submit(){
@@ -82,6 +89,6 @@ export class EmpleadoRegisterFormComponent implements OnInit {
   }
 
   getFormEmpleado(){
-    return this.getFormData() as Empleado;
+    return this.getFormData() as PerfilEmpleado;
   }
 }

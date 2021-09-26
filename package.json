@@ -11,6 +11,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-material-components/datetime-picker": "^6.0.3",
     "@angular-material-components/file-input": "^6.0.0",
     "@angular/animations": "~11.2.14",
     "@angular/cdk": "^11.2.13",
@@ -22,6 +23,7 @@
     "@angular/platform-browser": "~11.2.14",
     "@angular/platform-browser-dynamic": "~11.2.14",
     "@angular/router": "~11.2.14",
+    "ngx-bar-rating": "^2.0.0",
     "ngx-permissions": "^8.1.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

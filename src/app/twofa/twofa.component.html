@@ -1,0 +1,19 @@
+<div class="linklist">
+  <a [routerLink]="['/']">Home</a>
+  <a href="#" (click)="cerrarSesionHandler($event)">Cerrar Sesión</a>
+</div>
+<mat-card>
+  <form
+    [formGroup]="TOTPForm"
+    (ngSubmit)="onSubmit($event)">
+    <mat-form-field appearance="standard">
+      <mat-label>Ingresa el codigo de tu aplicacion</mat-label>
+      <input matInput
+      formControlName="code"
+      [placeholder]="codePlaceholder">
+    </mat-form-field>
+    <button mat-button type="submit">Enviar</button>
+    <button mat-button type="button" (click)="recoverHandler($event)">Perdí acceso a mi aplicación autenticadora</button>
+  </form>
+</mat-card>
+

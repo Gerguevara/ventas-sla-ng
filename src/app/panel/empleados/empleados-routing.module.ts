@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PlanillasModule } from './planillas/planillas.module';
 
 const routes: Routes = [
   {
@@ -13,6 +14,10 @@ const routes: Routes = [
   {
     path: 'empleados',
     loadChildren: () => import('./gestion-empleados/gestion-empleados.module').then(m => m.GestionEmpleadosModule)
+  },
+  {
+    path: 'planillas',
+    loadChildren: () => import('./planillas/planillas.module').then(m => m.PlanillasModule)
   },
   { path: '**', pathMatch: 'full', redirectTo: 'roles' }
 ];

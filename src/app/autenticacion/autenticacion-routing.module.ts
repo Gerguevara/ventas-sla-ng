@@ -5,15 +5,33 @@ import { SignupComponent } from './components/signup/signup.component';
 import { ForgotComponent } from './components/forgot/forgot.component';
 import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { TwofaComponent } from '../twofa/twofa.component';
+import { TwoFaGuard } from '@guards/two-fa.guard';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'signup',
+    component: SignupComponent
+  },
   // Ruta de redireccionamiento para verificar email con token
-  { path: 'signup/emailVerification/:id/:hash', component: EmailVerificationComponent },
-  { path: 'forgot', component: ForgotComponent },
-  { path: 'resetPassword/:token', component: ResetPasswordComponent },
-  { path: '**', pathMatch: 'full', redirectTo: 'login' }
+  {
+    path: 'signup/email-verification/:id/:hash',
+    component: EmailVerificationComponent
+  },
+  {
+    path: 'forgot',
+    component: ForgotComponent
+  },
+  {
+    path: 'reset-password/:token',
+    component: ResetPasswordComponent
+  },
+  {
+    path: '**', pathMatch: 'full', redirectTo: 'login' }
 ];
 
 @NgModule({

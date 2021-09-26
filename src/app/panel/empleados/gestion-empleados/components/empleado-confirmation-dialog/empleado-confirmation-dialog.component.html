@@ -1,1 +1,21 @@
-<p>empleado-confirmation-dialog works!</p>
+<div mat-dialog-content>
+  <p>
+    Se deshabilitará al empleado {{empleado.nombres}} ¿Deseas continuar?
+  </p>
+</div>
+<div mat-dialog-actions>
+  <button
+    mat-button
+    color="accent"
+    cdkFocusInitial
+    mat-dialog-close>
+    NO
+  </button>
+  <button
+    type="submit"
+    color="primary"
+    mat-raised-button
+    [mat-dialog-close]="empleado.user_id">
+    Sí
+  </button>
+</div>

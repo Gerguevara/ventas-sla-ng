@@ -10,7 +10,7 @@ import { Departamento } from '@models/departamento.model';
 import { Resultado } from '@models/resultados/resultado.model';
 import { DepartamentoService } from '@global-services/departamento.service';
 
-import { IData } from '@tool-interfaces/DataInterface';
+import { Data } from '@tools/models/Data';
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 import { DepartamentoFormComponent } from '../components/departamento-form/departamento-form.component';
 import { DepartamentoConfirmationDialogComponent } from '../components/departamento-confirmation-dialog/departamento-confirmation-dialog.component';
@@ -143,7 +143,7 @@ export class DepartamentoContainerComponent implements OnInit {
 
   openConfirmation(departamento : Departamento){
     const dialogText = `Se procederá a eliminar el departamento: `;
-    let data: IData<Departamento> = {data: departamento, paramsText: [dialogText]} as IData<Departamento>;
+    let data: Data<Departamento> = {data: departamento, paramsText: [dialogText]} as Data<Departamento>;
     //abrir dialogo con componente de confirmacion de borrado de departamento
     const dialogoFormRef = this.formDialog.open(DepartamentoConfirmationDialogComponent, {
       data: data,

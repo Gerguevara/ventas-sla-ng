@@ -1,10 +1,8 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 import { Categoria } from '@models/categoria.model';
 import { ResultadoIndex } from '@models/resultados/resultado-index.model';
-
-import { IndexService } from '@global-services/index.service';
-import { CategoriaService } from '@global-services/categoria.service';
 
 @Component({
   selector: 'app-index',
@@ -17,21 +15,15 @@ export class IndexContainer implements OnInit {
   results! : ResultadoIndex[];
 
   constructor(
-    private categoriaService : CategoriaService,
-    private indexService : IndexService
+    private route: ActivatedRoute,
     ) {
-    this.indexService.obtenerProductos().subscribe({
-      next:(result: ResultadoIndex[])=>{
-        if(result.length > 0){
-          this.results = result;
-          let cats: Categoria[] = [];
-          this.results.forEach(resultado => {
-            cats.push(resultado.categoria);
-          });
-          this.categorias=new Set<Categoria>(cats);
-        }
+    this.route.data.subscribe(
+      {
+        next: (response: any) => {
+        this.results = response.resultados;
+        this.categorias = response.categorias;
       }
-    });
+    })
   }
 
   ngOnInit(): void {}

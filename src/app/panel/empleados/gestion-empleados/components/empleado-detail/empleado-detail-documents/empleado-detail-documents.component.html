@@ -1,0 +1,10 @@
+<mat-grid-list [cols]="columns" [rowHeight]="rowHeight">
+  <mat-grid-tile *ngFor="let context of contexts">
+    <lib-full-letter-input
+      [context]="context"
+      [editableState]="editableState"
+      [globalSwitch]="globalSwitch"
+      (editableModeEnabled)="editingModeHandler($event)"
+    ></lib-full-letter-input>
+  </mat-grid-tile>
+</mat-grid-list>

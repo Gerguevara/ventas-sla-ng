@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-import { LoginClienteService, LoginResponse } from '@global-services/login-cliente.service';
+import { LoginResponse } from '@tool-models/LoginResponse';
+import { LoginClienteService } from '@global-services/login-cliente.service';
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 
 @Component({
@@ -12,7 +12,7 @@ import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-s
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   loginForm: FormGroup;
   hide = true;
@@ -26,19 +26,18 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password')?.invalid && this.loginForm.get('password')?.touched;
   }
 
-  constructor( private router: Router,
-               private formBuilder: FormBuilder,
-               private authService: LoginClienteService,
-               private snackBar: MatSnackBar,
-               private dialog: MatDialog ) {
+  constructor(
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private authService: LoginClienteService,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
+  ) {
     // Creación del formulario
     this.loginForm = this.formBuilder.group({
       email   : ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
-  }
-
-  ngOnInit(): void {
   }
 
   // Método para hacer submit del formulario
@@ -48,21 +47,42 @@ export class LoginComponent implements OnInit {
     // Hacemos un post a Login con las credenciales del formulario
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
-    this.authService.submitLogin( email, password ).subscribe(
-      (response: LoginResponse) => {
+    this.authService.submitLogin( email, password ).subscribe({
+      next:(response: LoginResponse) => {
         // El inicio de sesión es exitoso y guardamos el token en el LocalStorage
         // Cerramos todos los dialogos abiertos hasta el momento
         this.dialog.closeAll();
+        const previousToken = localStorage.getItem('token');
+        if(previousToken){
+          localStorage.removeItem('token');
+        }
+        const previousTokenType = localStorage.getItem('tokenType');
+        if(previousTokenType){
+          localStorage.removeItem('tokenType');
+        }
+
+        const tokenType = 'Bearer';
+        let url = ['/'];
+        if(response.locked===1){
+          //no es un Item de bloqueo, es de funcionamiento de guard
+          //si el usuario lo cambia en DevTools, no se desbloquea el 2fa, sino que se rompe
+          url = [
+            '/',
+            'confirm'
+          ]
+        }
         localStorage.setItem('token', response.token);
-        localStorage.setItem('rol', response.user.tipoUsuario);
-        this.router.navigate(['producto/index/table-producto']);
+        localStorage.setItem('tokenType', tokenType);
+        location.reload();
       },
-      (error: any) => {
+      error:(error: any) => {
         // Cerramos todos los dialogos abiertos hasta el momento
         this.dialog.closeAll();
         // El inicio de sesión falla y mostramos un mensaje de error al usuario
         this.snackBar.open('Credenciales no válidas', 'Cerrar');
-      });
+      },
+    });
+
   }
 
   // Método para obtener mensajes de errores de validaciones Email

@@ -17,44 +17,22 @@
                         <input matInput formControlName='descripcion' placeholder="Descripción Rol">
                         <mat-error *ngIf="descripcionNoValido">{{ getErrorDescripcionMessage() }}</mat-error>
                     </mat-form-field>
-
                     <mat-form-field class="col">
                         <mat-label>Departamento</mat-label>
-                        <!-- <mat-chip-list #chipList aria-label="Seleccion departamento">
-                            <mat-chip *ngIf="departamento !== ''" [selectable]="selectable" [removable]="removable" (removed)="quitarDepartamento()">
-                                {{ departamento }}
-                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                            </mat-chip>
-                            <input [matChipInputFor]="chipList" [matChipInputAddOnBlur]="true" disabled>
-                            <mat-error *ngIf="departamentoNoValido">{{ getErrorDepartamentoMessage() }}</mat-error>
-                        </mat-chip-list> -->
-                        <input matInput formControlName='departamento' placeholder="Buscar" [matAutocomplete]="auto">
-                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                        <input
+                          matInput
+                          formControlName='departamento'
+                          placeholder="Buscar"
+                          [matAutocomplete]="auto"
+                          (click)="filterHandler()"
+                          (ngModelChange)="filterHandler()">
+                        <mat-autocomplete #auto [displayWith]="displayFn">
                             <mat-option *ngFor="let option of filteredDepartamentos | async" [value]="option">
                                 {{option.nombre}}
                             </mat-option>
                         </mat-autocomplete>
                         <mat-error *ngIf="descripcionNoValido">{{ getErrorDescripcionMessage() }}</mat-error>
                     </mat-form-field>
-                    <!-- <div>
-                        <table mat-table [dataSource]="dataSource" class="mat-elevation-z1 demo-table">
-                            <ng-container matColumnDef="id">
-                                <th mat-header-cell *matHeaderCellDef>ID</th>
-                                <td mat-cell *matCellDef="let element">{{element.id}}</td>
-                            </ng-container>
-                            <ng-container matColumnDef="nombre">
-                                <th mat-header-cell *matHeaderCellDef>Nombre</th>
-                                <td mat-cell *matCellDef="let element">{{element.nombre}}</td>
-                            </ng-container>
-                            <ng-container matColumnDef="descripcion">
-                                <th mat-header-cell *matHeaderCellDef>Descripción</th>
-                                <td mat-cell *matCellDef="let element">{{element.descripcion}}</td>
-                            </ng-container>
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                            <tr mat-row (click)="seleccionarDepartamento(row)" [class.demo-row-is-clicked]="filasSeleccionadas.has(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
-                        </table>
-                        <app-paginator [urlData]="url" (pageDataChange$)="addDataToTable($event)"></app-paginator>
-                    </div> -->
                 </form>
             </mat-card>
             <div style="position: relative; margin-top: 10px;">
@@ -64,128 +42,38 @@
         <mat-step label="Permisos" state="chat">
             <mat-card class="mat-step">
                 <mat-accordion>
-                    <mat-expansion-panel>
+                    <mat-expansion-panel *ngFor="let item of permisosPorPanel">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                Roles
+                                {{ item.panel.name }}
                             </mat-panel-title>
                             <mat-panel-description>
-                                Permisos de administración de roles
+                                {{ item.panel.descripcion }}
                             </mat-panel-description>
                         </mat-expansion-panel-header>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(1)" [checked]="toggles[0]" class="list">Panel de roles</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(2)" [checked]="toggles[1]" class="list">Crear roles</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(3)" [checked]="toggles[2]" class="list">Consultar roles</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(4)" [checked]="toggles[3]" class="list">Actualizar roles</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(5)" [checked]="toggles[4]" class="list">Deshabilitar roles</mat-slide-toggle>
-                    </mat-expansion-panel>
-                    <mat-expansion-panel>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                Usuarios
-                            </mat-panel-title>
-                            <mat-panel-description>
-                                Permisos de administración de usuarios
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(6)" [checked]="toggles[5]" class="list">Panel de usuarios</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(7)" [checked]="toggles[6]" class="list">Consultar usuarios</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(8)" [checked]="toggles[7]" class="list">Actualizar usuarios</mat-slide-toggle>
-                    </mat-expansion-panel>
-                    <mat-expansion-panel>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                Departamentos
-                            </mat-panel-title>
-                            <mat-panel-description>
-                                Permisos de administración de departamentos
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(9)" [checked]="toggles[8]" class="list">Panel de departamentos</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(10)" [checked]="toggles[9]" class="list">Crear departamentos</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(11)" [checked]="toggles[10]" class="list">Consultar departamentos</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(12)" [checked]="toggles[11]" class="list">Actualizar departamentos</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(13)" [checked]="toggles[12]" class="list">Deshabilitar departamentos</mat-slide-toggle>
-                    </mat-expansion-panel>
-                    <mat-expansion-panel>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                Categorías
-                            </mat-panel-title>
-                            <mat-panel-description>
-                                Permisos de administración de categrías
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(14)" [checked]="toggles[13]" class="list">Panel de categorías</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(15)" [checked]="toggles[14]" class="list">Crear categorías</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(16)" [checked]="toggles[15]" class="list">Consultar categorías</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(17)" [checked]="toggles[16]" class="list">Actualizar categorías</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(18)" [checked]="toggles[17]" class="list">Deshabilitar categorías</mat-slide-toggle>
-                    </mat-expansion-panel>
-                    <mat-expansion-panel>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                Productos
-                            </mat-panel-title>
-                            <mat-panel-description>
-                                Permisos de administración de productos
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(19)" [checked]="toggles[18]" class="list">Panel de productos</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(20)" [checked]="toggles[19]" class="list">Crear productos</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(21)" [checked]="toggles[20]" class="list">Consultar productos</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(22)" [checked]="toggles[21]" class="list">Actualizar productos</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(23)" [checked]="toggles[22]" class="list">Deshabilitar productos</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(24)" [checked]="toggles[23]" class="list">Eliminar productos</mat-slide-toggle>
-                    </mat-expansion-panel>
-                    <mat-expansion-panel>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                Etiquetas
-                            </mat-panel-title>
-                            <mat-panel-description>
-                                Permisos de administración de etiquetas
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(27)" [checked]="toggles[24]" class="list">Panel de etiquetas</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(28)" [checked]="toggles[25]" class="list">Crear etiquetas</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(29)" [checked]="toggles[26]" class="list">Consultar etiquetas</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(30)" [checked]="toggles[27]" class="list">Actualizar etiquetas</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(31)" [checked]="toggles[28]" class="list">Deshabilitar etiquetas</mat-slide-toggle>
-                    </mat-expansion-panel>
-                    <mat-expansion-panel>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                Etiquetas de Productos
-                            </mat-panel-title>
-                            <mat-panel-description>
-                                Permisos de administración de etiquetas de productos
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(32)" [checked]="toggles[29]" class="list">Panel de etiquetas de productos</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(33)" [checked]="toggles[30]" class="list">Crear etiquetas de productos</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(34)" [checked]="toggles[31]" class="list">Consultar etiquetas de productos</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(35)" [checked]="toggles[32]" class="list">Actualizar etiquetas de productos</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(36)" [checked]="toggles[33]" class="list">Deshabilitar etiquetas de productos</mat-slide-toggle>
-                    </mat-expansion-panel>
-                    <mat-expansion-panel>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                Usuarios Empresariales
-                            </mat-panel-title>
-                            <mat-panel-description>
-                                Permisos de administración de usuarios empresariales
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(37)" [checked]="toggles[34]" class="list">Panel de cuentas empresariales</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(38)" [checked]="toggles[35]" class="list">Consultar cuentas empresariales</mat-slide-toggle>
-                        <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(39)" [checked]="toggles[36]" class="list">Actualizar cuentas empresariales</mat-slide-toggle>
+                        <!-- <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(1)" [checked]="toggles[0]" class="list">Panel de roles</mat-slide-toggle> -->
+                        <div *ngFor="let permiso of item.permisos">
+                            <mat-slide-toggle [disabled]="disableToggles" (toggleChange)="habilitarPermiso(permiso.id)" [checked]="permisos.indexOf(permiso.id) > -1" class="list">{{ permiso.descripcion }}</mat-slide-toggle>
+                        </div>
                     </mat-expansion-panel>
                 </mat-accordion>
             </mat-card>
             <div style="margin-top: 10px; position: relative;">
-                <button mat-button type="button" matStepperPrevious>Regresar</button>
-                <button mat-button type="button" *ngIf="enableEdit" [disabled]="rolForm.invalid" (click)="enviar()" matStepperNext>Enviar</button>
+                <button
+                  mat-button
+                  type="button"
+                  matStepperPrevious>
+                    Regresar
+                </button>
+                <button
+                  mat-button
+                  type="button"
+                  *ngIf="enableEdit"
+                  [disabled]="rolForm.invalid"
+                  (click)="enviar()"
+                  matStepperNext>
+                    Enviar
+                </button>
             </div>
         </mat-step>
 

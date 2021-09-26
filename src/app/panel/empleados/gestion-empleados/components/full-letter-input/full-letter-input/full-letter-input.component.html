@@ -1,0 +1,13 @@
+<h3 matLine> {{context.title}} </h3>
+<div matLine *ngIf="!switchControl">
+  <p>{{context.value}} <button mat-icon-button *ngIf="editableState" type="button" (click)="enableSwitchControl()"><mat-icon>edit</mat-icon></button></p>
+</div>
+<div class="edit-input-container" matLine *ngIf="switchControl">
+  <mat-form-field appearance="fill">
+      <input matInput type="text" [formControl]="context.valueControl" #valueInput>
+  </mat-form-field>
+  <div class="button-group">
+    <button mat-icon-button type="button" (click)="emitValueChange(valueInput.value)" [disabled]="!context.valueControl.valid"><mat-icon>done</mat-icon></button>
+    <button mat-icon-button type="button" (click)="disableSwitchControl()"><mat-icon>close</mat-icon></button>
+  </div>
+</div>

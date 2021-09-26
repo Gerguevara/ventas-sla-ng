@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from '@environments/environment';
 import { Observable } from 'rxjs';
+import { Permission } from '@core/models/permission.model';
 
 const token = 'Bearer ' + localStorage.getItem('token');
 const httpHeaders = {
@@ -18,26 +19,20 @@ const httpHeaders = {
 })
 export class PermissionService {
 
-  private API_URL = `${environment.apiUrl}`;
+  private API_URL = environment.apiUrl;
 
   constructor( private http: HttpClient ) { }
 
-  async getAllPermissions(): Promise<any> {
-    const resp = await this.http.get<string[]>(this.API_URL + 'getAllPermissions', httpHeaders).pipe(
-      map(
-        (response: any) => {
-          const list: string[] = [];
-          for (const item of response[0]) {
-            list.push(item.name);
-          }
-          return list;
-        }
-      )).toPromise();
-    return resp;
+  getPermissionsUser(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.API_URL}getPermissionsUser`, httpHeaders);
+  }
+
+  getAllPermissions(): Observable<Permission[]> {
+    return this.http.get<Permission[]>(`${this.API_URL}getAllPermissions/`, httpHeaders);
   }
 
   verifyPermission( permission: string ): Observable<any>{
-    return this.http.get<string[]>(this.API_URL + 'verifyPermission/' + permission, httpHeaders);
+    return this.http.get<string[]>(`${this.API_URL}verifyPermission/${permission}`, httpHeaders);
   }
 
 }

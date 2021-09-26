@@ -1,6 +1,7 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
+@import '~ngx-bar-rating/themes/br-default-theme';
 // Plus imports for other components in your app.
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
@@ -9,7 +10,7 @@ $ventas-sla-ng-typography: mat-typography-config(
   $font-family: 'Merriweather Sans',
 );
 $title-sla-ng-typography: mat-typography-config(
-  $font-family: 'Oswald',
+  $font-family: 'Open Sans',
 );
 @include mat-core($ventas-sla-ng-typography);
 // Define the palettes for your theme using the Material Design palettes available in palette.scss

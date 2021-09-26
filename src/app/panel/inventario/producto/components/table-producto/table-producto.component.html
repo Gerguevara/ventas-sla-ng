@@ -1,4 +1,8 @@
 <div>
+    <mat-form-field [formGroup]="filtro" appearance="fill" style="width: 40%;">
+        <mat-label>Nombre, descripción, etiqueta ...</mat-label>
+        <input matInput formControlName='valorBusqueda' type="text">
+    </mat-form-field>
     <mat-table [dataSource]="dataSource">
 
         <!-- Position Column -->
@@ -29,7 +33,22 @@
         <ng-container matColumnDef="Acciones">
             <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
             <mat-cell *matCellDef="let element">
-                <button *ngxPermissionsOnly="['productos.destroy','productos.desactivar']" (click)="quitarProducto(element)" style="margin-right: 5px; cursor: pointer;" mat-icon-button color="primary" aria-label="delete_icon">
+                <button
+                  *ngxPermissionsOnly="['transaccionInventario.kardex']"
+                  (click)="kardexHandler($event, element.id)"
+                  style="margin-right: 5px; cursor: pointer;"
+                  mat-icon-button color="primary"
+                  aria-label="delete_icon"
+                  [matTooltip]="'Kardex'">
+                    <mat-icon>multiline_chart</mat-icon>
+                </button>
+                <button
+                  *ngxPermissionsOnly="['productos.destroy','productos.desactivar']"
+                  (click)="quitarProducto(element)"
+                  style="margin-right: 5px; cursor: pointer;"
+                  mat-icon-button color="primary"
+                  aria-label="delete_icon"
+                  [matTooltip]="'eliminar'">
                     <mat-icon>delete</mat-icon>
                 </button>
             </mat-cell>
@@ -39,6 +58,6 @@
         <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="seleccionarProducto(row)"></mat-row>
     </mat-table>
 
-    <app-paginator [urlData]="url" [params]="params" (pageDataChange$)="addDataToTable($event)"></app-paginator>
+    <app-paginator [urlData]="url" [inputParams$]="inputParams$" (pageDataChange$)="addDataToTable($event)"></app-paginator>
 
 </div>

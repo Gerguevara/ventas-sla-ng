@@ -6,7 +6,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ValidatorsService } from '@global-services/validators.service';
-import { LoginClienteService, SignUpResponse } from '@global-services/login-cliente.service';
+import { SignUpResponse } from '@tool-models/SignUpResponse';
+import { LoginClienteService } from '@global-services/login-cliente.service';
 import { DialogMessageComponent } from '@tool-components/dialog-message/dialog-message.component';
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 export interface DialogData {

@@ -1,0 +1,36 @@
+<div class="header">
+  <h1>Carrito de compras</h1>
+</div>
+<ng-container *ngIf="retrieved">
+  <table>
+    <tr>
+      <td>
+        <ng-container *ngFor="let producto of productos">
+          <sla-producto-row
+            [product]="producto"
+            [quantity]="getCartProductQuantity(producto.id)"
+            (deleteEmitter)="handleDelete(producto.id)"></sla-producto-row>
+        </ng-container>
+      </td>
+      <td>
+        <mat-list>
+          <mat-list-item>
+            <h3 matLine>Subtotal</h3>
+            <p matLine>{{subtotal}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <h3 matLine>IVA</h3>
+            <p matLine>{{iva}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <h3 matLine>Total</h3>
+            <p matLine>{{total}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <button mat-flat-button [disabled]="productos.length===0"><mat-icon>shopping_bag</mat-icon> Pagar</button>
+          </mat-list-item>
+        </mat-list>
+      </td>
+    </tr>
+  </table>
+</ng-container>

@@ -18,11 +18,14 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "app",
+      "prefix": "sla",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+               "node-2fa/"
+            ],
             "outputPath": "dist/ventas-sla-ng",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -72,8 +75,17 @@
                   "maximumError": "4kb"
                 }
               ]
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": false,
+              "namedChunks": true
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -83,8 +95,12 @@
           "configurations": {
             "production": {
               "browserTarget": "ventas-sla-ng:build:production"
-            }
-          }
+            },
+            "development": {
+              "browserTarget": "{{PROJECT_NAME}}:build:development"
+             }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

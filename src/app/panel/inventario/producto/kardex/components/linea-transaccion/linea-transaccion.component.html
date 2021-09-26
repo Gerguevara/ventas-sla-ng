@@ -1,0 +1,34 @@
+<mat-card [ngClass]="{
+  'entrada': tipoEntrada,
+  'salida': !tipoEntrada,
+  'outer-card': true
+}">
+  <div [ngClass]="{
+    'entrada-title': tipoEntrada,
+    'salida-title': !tipoEntrada
+  }">
+    <ng-container *ngIf=" tipoEntrada">
+      Entrada
+    </ng-container>
+    <ng-container *ngIf=" !tipoEntrada">
+      Salida
+    </ng-container>
+  </div>
+  <mat-grid-list cols="2" [rowHeight]="'30px'">
+    <mat-grid-tile><p>Cantidad: {{transaccion.cantidad}}</p></mat-grid-tile>
+    <mat-grid-tile><p>Precio unitario: {{transaccion.precio_unitario}}</p></mat-grid-tile>
+    <mat-grid-tile><p>Total: {{transaccion.total}}</p></mat-grid-tile>
+  </mat-grid-list>
+  <mat-expansion-panel [ngClass]="{
+    'entrada': tipoEntrada,
+    'salida': !tipoEntrada,
+    'inner-card': true
+  }">
+  <mat-expansion-panel-header>
+    Existencias del {{transaccion.created_at}} del producto
+  </mat-expansion-panel-header>
+    <p>Cantidad: {{transaccion.cantidad_existencia}}</p>
+    <p>Valor: {{transaccion.valor_existencia}}</p>
+    <p>Total: {{transaccion.total_existencia}}</p>
+  </mat-expansion-panel>
+</mat-card>

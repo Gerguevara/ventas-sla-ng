@@ -1,0 +1,14 @@
+<mat-dialog-content [ngStyle]="{'flex-direction':flexDirection}">
+  <div class="input-container">
+    <ng-container *ngFor="let context of contexts">
+      <lib-full-letter-input
+        [context]="context"
+        [editableState]="editableState"
+        [globalSwitch]="globalSwitch"
+        (editableModeEnabled)="editingModeHandler($event)"
+        (valueChanged)="valueUpdateHandler($event)"
+      ></lib-full-letter-input>
+    </ng-container>
+  </div>
+  <img [src]="photo" alt="{{empleado.nombres}} {{empleado.apellidos}}" (error)="photoErrorHandler()">
+</mat-dialog-content>

@@ -21,6 +21,31 @@
                     <span> {{producto?.precio}} </span>
                 </p>
                 </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                  <ng-container *ngIf="producto.disponibilidad===0 || producto.cantidad === 0">
+                    El producto no está disponible
+                  </ng-container>
+                  <ng-container *ngIf="producto.disponibilidad===1 && producto.cantidad > 0">
+                    <div [style]="'font-size: 12px'">
+                      <mat-form-field
+                        appearance="standard"
+                        [style.width.px]="45"
+                        (click)="$event.preventDefault();$event.stopPropagation();">
+                        <input
+                          matInput
+                          type="number"
+                          placeholder="1"
+                          value="1"
+                          min="1"
+                          [max]="producto?.cantidad"
+                          [formControl]="cantidadControl">
+                      </mat-form-field>
+
+                    </div>
+                    <button mat-button (click)="shoppingCartHandler($event)"><div *ngIf="!isInCart"><mat-icon>add_shopping_cart</mat-icon> Agregar a carrito de compras</div><div *ngIf="isInCart"><mat-icon>remove_shopping_cart</mat-icon> Eliminar de carrito de compras</div></button>
+                    </ng-container>
+                </mat-list-item>
             </mat-list>
         </th>
     </tr>

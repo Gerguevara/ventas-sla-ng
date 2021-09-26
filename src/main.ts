@@ -23,7 +23,6 @@ for(let i = 0; i < environment.appFonts.length; i++){
     } else {
       appFontOutput = appFontArray[0].trim();
     }
-    console.log(appFontOutput);
     var link = document.createElement('link');
     link.id = 'fontLink';
     link.rel = 'stylesheet';

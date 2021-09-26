@@ -3,7 +3,11 @@ table {
     width: 100%;
 }
 
-mat-row:hover{
-  cursor: pointer;
-  background-color: $hover-white;
+mat-row:hover {
+    cursor: pointer;
+    background-color: $hover-white;
+}
+
+.example-form-field {
+    width: 30vw;
 }

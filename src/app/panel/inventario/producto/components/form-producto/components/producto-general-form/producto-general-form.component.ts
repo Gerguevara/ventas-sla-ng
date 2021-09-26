@@ -2,91 +2,94 @@ import { debounceTime, map, startWith, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Resultado } from '@models/resultados/resultado.model';
 import { CategoriaService } from '@global-services/categoria.service';
-import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Categoria } from '@core/models/categoria.model';
+import { ProductoService } from '../../../../../../../core/services/producto.service';
+import { Producto } from '@core/models/producto.model';
 
 @Component({
   selector: 'app-producto-general-form',
   templateUrl: './producto-general-form.component.html',
   styleUrls: ['./producto-general-form.component.scss']
 })
-export class ProductoGeneralFormComponent implements OnInit {
-  @Input()
+export class ProductoGeneralFormComponent implements OnInit, OnDestroy {
+
   generalForm!: FormGroup;
-  @Input()
-  editable!: boolean;
-  categorias!: Categoria[];
+  categoriasObservable!: Observable<Categoria[]> | Observable<Resultado<Categoria>>;
   selectable = true;
   removable = true;
   categoriasFiltradas: Observable<Categoria[]> = of<Categoria[]>([]);
 
-  constructor(private categoriaService: CategoriaService) {
-    this.getCategories();
+  // Valores de entrada en caso que el formulario solo sea para previsualización
+  nombre = '';
+  descripcion = '';
+  categoria = '';
+  precio = '0.00';
+
+  // Salida de datos del formulario
+  @Output() generalFormOutput$ = new EventEmitter<FormGroup>();
+
+  constructor(private categoriaService: CategoriaService,
+              private formBuilder: FormBuilder,
+              private productoService: ProductoService) {
+    // Creación del formulario
+    // Formulario general
+    this.generalForm = this.formBuilder.group({
+      nombre     : [this.nombre, [Validators.required, Validators.minLength(5)]],
+      descripcion: [this.descripcion, [Validators.required, Validators.minLength(5)]],
+      categoria  : [this.categoria, Validators.required],
+      precio     : [this.precio, [Validators.required]]
+    });
+  }
+  ngOnDestroy(): void {
+    this.generalFormOutput$.emit(this.generalForm);
   }
 
   ngOnInit(): void {
-    if(this.categoriaControl){
-      if(this.categoriaControl.value.length > 0){
-        this.categoriasFiltradas= this.categoriaControl.valueChanges.pipe(
-          debounceTime(350),
-          startWith(''),
-          map((value: string | Categoria) => (typeof value === 'string'? value : value.nombre)),
-          switchMap((name: string)=> this.getCategoriesObservable(name))
-        );
-      } else {
-        this.categoriasFiltradas = this.categoriaControl.valueChanges.pipe(
-          startWith(''),
-          switchMap(()=> this.getCategoriesObservable())
-        );
-        }
+    // Se carga la data ya almacenada en el servicio
+    if ( this.productoService.productoChange ) {
+      this.cargarData( this.productoService.productoChange );
+    }
+    if (this.categoriaControl){
+      this.categoriasFiltradas = this.categoriaControl.valueChanges.pipe(
+        debounceTime(250),
+        startWith(''),
+        map((value: string | Categoria) => (typeof value === 'string' ? value : value.nombre)),
+        switchMap((name: string) => this.getCategoriesObservable(name))
+      );
     }
   }
 
-  getCategories(event?: string){
-    if(event){
-      console.log('event triggered');
-      if(event !== ""){
-        this.categoriaService.buscarCategoria(event).subscribe({
-          next: (result: Categoria[]) => {
-            this.categorias = result;
-          },
-          error: (message: any) => console.log(message),
-        })
-      }
-    } else {
-      console.log('event not triggered');
-      this.categoriaService.getObjects().subscribe({
-        next: (result: Resultado<Categoria>) => {
-          this.categorias = result.data;
-        },
-        error: (message: any) => console.log(message),
-      })
-    }
+  cargarData( data: Producto ): void{
+    this.generalForm.get('nombre')?.setValue(data.nombre_producto);
+    this.generalForm.get('descripcion')?.setValue(data.descripcion_producto);
+    this.generalForm.get('precio')?.setValue(data.precio);
+    this.productoService.obtenerCategoriaProducto( data.id_categoria ).subscribe((response: Categoria) => {
+      this.generalForm.get('categoria')?.setValue(response);
+    });
   }
 
   getCategoriesObservable(searchValue?: string): Observable<Categoria[]> {
-    if(!searchValue || searchValue === ''){
-      return this.categoriaService.buscarCategoria().pipe(
-        map(( value:any )=>value.data)
-      )
+    if (!searchValue || searchValue === ''){
+      console.log('search value empty');
+      this.categoriasObservable = this.categoriaService.getObjects();
+      return this.categoriasObservable.pipe(
+        map(( value: any ) => value.data)
+      ) as Observable<Categoria[]>;
+    } else if (searchValue){
+      console.log('search value is not empty');
+      if (searchValue !== ''){
+        this.categoriasObservable = this.categoriaService.buscarCategoria(searchValue);
+      }
     }
-    return this.categoriaService.buscarCategoria(searchValue);
-  }
-
-  // Método para quitar una categoría de la tabla y del ChipList
-  quitarCategoria(): void {
-    if (this.editable) {
-      this.categorias = [];
-      this.generalForm.get('categoria')?.setValue('');
-    }
+    return this.categoriasObservable as Observable<Categoria[]>;
   }
 
   private getControl(key: string): AbstractControl{
-    if(this.generalForm){
-      let control = this.generalForm.get(key);
-      if(control){
+    if (this.generalForm){
+      const control = this.generalForm.get(key);
+      if (control){
         return control;
       } else {
         return new FormControl();
@@ -157,7 +160,11 @@ export class ProductoGeneralFormComponent implements OnInit {
     }
   }
 
-  displayCategoria(value: Categoria){
+  displayCategoria(value: Categoria): string{
     return value.nombre;
+  }
+
+  submitGeneralForm(): void {
+    this.generalFormOutput$.emit(this.generalForm);
   }
 }

@@ -37,8 +37,8 @@
       "@tool-components/*": [
         "src/app/tools/components/*"
       ],
-      "@tool-interfaces/*": [
-        "src/app/tools/Interfaces/*"
+      "@tool-models/*": [
+        "src/app/tools/models/*"
       ],
       "@tool-services/*": [
         "src/app/tools/services/*"
