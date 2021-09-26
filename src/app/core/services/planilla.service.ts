@@ -4,34 +4,29 @@ import { LineaPlanilla } from '@models/linea.planilla.model';
 import { Planilla } from '@models/planilla.model';
 import { environment } from '@environments/environment';
 import { Observable } from 'rxjs';
+import { PreflightService } from '@tools/services/preflight-service';
 
-const token = 'Bearer ' + localStorage.getItem('token');
-const httpHeaders = {
-  headers: new HttpHeaders({
-    'Content-Type':  'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Authorization': token
-  })
-};
 
 @Injectable({
   providedIn: 'root'
 })
-export class PlanillaService {
+export class PlanillaService extends PreflightService{
   private url = `${environment.apiUrl}${environment.endpoints.planillas}`;
   private urlLineaPlanilla = `${environment.apiUrl}${environment.endpoints.lineasdeplanillas}`;
 
-  constructor( private http: HttpClient ) { }
+  constructor( private http: HttpClient ) {
+    super()
+  }
 
   mostrarPlanilla( planilla: Planilla ): Observable<LineaPlanilla[]> {
-    return this.http.get<LineaPlanilla[]>(this.url + '/' + planilla.id, httpHeaders);
+    return this.http.get<LineaPlanilla[]>(this.url + '/' + planilla.id, this.setOptions());
   }
 
   actualizarLineaPlanilla( lineadeplanilla: LineaPlanilla ): Observable<any> {
-    return this.http.put<any> (this.urlLineaPlanilla + '/' + lineadeplanilla.id, JSON.stringify(lineadeplanilla), httpHeaders);
+    return this.http.put<any> (this.urlLineaPlanilla + '/' + lineadeplanilla.id, JSON.stringify(lineadeplanilla), this.setOptions());
   }
 
   eliminarPlanilla( id: number ): Observable<any> {
-    return this.http.delete<any>(this.url + '/' + id, httpHeaders);
+    return this.http.delete<any>(this.url + '/' + id, this.setOptions());
   }
 }

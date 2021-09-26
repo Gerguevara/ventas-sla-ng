@@ -1,6 +1,6 @@
 import { PreflightService } from '@tool-services/preflight-service';
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Empresa } from '@models/empresa.model';

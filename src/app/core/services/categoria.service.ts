@@ -20,7 +20,6 @@ export class CategoriaService extends RecursoService<Categoria> implements Resol
   }
 
   buscarCategoria(search?: string, non_empty?: boolean): Observable<Categoria[]> {
-    const token = 'Bearer ' + localStorage.getItem('token');
     let params = Object.create(null);
     if(search){
       params['search']= search;

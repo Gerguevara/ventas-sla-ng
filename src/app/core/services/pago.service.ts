@@ -1,22 +1,14 @@
+import { PreflightService } from '@tool-services/preflight-service';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { CarritoService } from './carrito.service';
 
-const token = 'Bearer ' + localStorage.getItem('token');
-const httpHeaders = {
-  headers: new HttpHeaders({
-    'Content-Type':  'application/json',
-    'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
-    'Authorization': token
-  })
-};
-
 @Injectable({
   providedIn: 'root'
 })
-export class PagoService {
+export class PagoService extends PreflightService {
 
   public municipios = [
     {
@@ -1069,10 +1061,13 @@ export class PagoService {
     },
   ];
 
-  constructor(private http: HttpClient,
-              private carritoService: CarritoService) {
-                console.log(JSON.stringify(this.carritoService.obtenerCarrito()));
-              }
+  constructor(
+    private http: HttpClient,
+    private carritoService: CarritoService
+  ) {
+    super();
+    console.log(JSON.stringify(this.carritoService.obtenerCarrito()));
+  }
 
   enviarDatosPago(infoEnvio: any, infoPago: any): Observable<any> {
     const carritoJson = this.carritoService.obtenerCarrito();
@@ -1094,6 +1089,6 @@ export class PagoService {
       dui: infoPago.dui.toString().split('-').join(''),
       nit: infoPago.nit.toString().split('-').join(''),
       carrito: carritoJson,
-    }, httpHeaders);
+    }, this.setOptions());
   }
 }

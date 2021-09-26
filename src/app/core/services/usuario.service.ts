@@ -4,7 +4,6 @@ import { Usuario } from '@models/usuario.model';
 import { environment } from '@environments/environment';
 import { RecursoService } from './recurso.service';
 import { Observable } from 'rxjs';
-import { EmailVerificationResponse } from '@tool-models/EmailVerificationResponse';
 
 @Injectable({
   providedIn: 'root'

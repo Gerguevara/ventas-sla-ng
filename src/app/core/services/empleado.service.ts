@@ -23,7 +23,6 @@ export class EmpleadoService extends RecursoService<PerfilEmpleado>{
   }
 
   getEmpleados(page: number = 1, page_size: number = 10, no_pagination?: boolean, search?: string, roleId?: number){
-    const token = 'Bearer ' + localStorage.getItem('token');
     let params = Object.create(null);
     if(!no_pagination){
       params['page']= page.toString();

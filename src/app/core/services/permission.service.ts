@@ -1,38 +1,31 @@
+import { PreflightService } from '@tool-services/preflight-service';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environment';
 import { Observable } from 'rxjs';
-import { Permission } from '@core/models/permission.model';
-
-const token = 'Bearer ' + localStorage.getItem('token');
-const httpHeaders = {
-  headers: new HttpHeaders({
-    'Content-Type':  'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Authorization': token
-  })
-};
+import { Permission } from '@models/permission.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PermissionService {
+export class PermissionService extends PreflightService{
 
   private API_URL = environment.apiUrl;
 
-  constructor( private http: HttpClient ) { }
+  constructor( private http: HttpClient ) {
+    super();
+  }
 
   getPermissionsUser(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.API_URL}getPermissionsUser`, httpHeaders);
+    return this.http.get<string[]>(`${this.API_URL}getPermissionsUser`, this.setOptions());
   }
 
   getAllPermissions(): Observable<Permission[]> {
-    return this.http.get<Permission[]>(`${this.API_URL}getAllPermissions/`, httpHeaders);
+    return this.http.get<Permission[]>(`${this.API_URL}getAllPermissions/`, this.setOptions());
   }
 
   verifyPermission( permission: string ): Observable<any>{
-    return this.http.get<string[]>(`${this.API_URL}verifyPermission/${permission}`, httpHeaders);
+    return this.http.get<string[]>(`${this.API_URL}verifyPermission/${permission}`, this.setOptions());
   }
 
 }
