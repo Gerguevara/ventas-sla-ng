@@ -6,9 +6,9 @@ export const environment = {
   production: false,
   appTitle: "SLA S.A. de C.V.",
   bannerText: "Las mejores marcas",
-  baseApiUrl: "http://localhost:8000/", //con / final
-  apiUrl: "http://localhost:8000/api/", //con / final
-  allowedOrigin:"http://localhost:4200", //tiene que coincidir con el que esta en el api
+  baseApiUrl: "http://18.216.4.165/", //con / final
+  apiUrl: "http://18.216.4.165/api/", //con / final
+  allowedOrigin:"https://main.d3tdi22d8b6e37.amplifyapp.com/", //tiene que coincidir con el que esta en el api
   defaultProductImage: "/assets/images/placeholder-product-image.svg",
   defaultUserPhotoImage: "/assets/images/portrait-placeholder.png",
   uploadUrl: "https://prueba-pp15001.000webhostapp.com/upload.php",
