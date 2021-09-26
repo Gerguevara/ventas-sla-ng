@@ -102,7 +102,7 @@
                         </mat-form-field>
                     </form>
                     <button type="button" mat-stroked-button matStepperPrevious class="button">Regresar</button>
-                    <button type="button" mat-stroked-button [disabled]="pagoForm.invalid" class="button" color="primary">Enviar</button>
+                    <button type="button" style="margin-left: 10px;" mat-stroked-button [disabled]="pagoForm.invalid" (click)="enviarDatos()" class="button" color="primary">Enviar</button>
                 </ng-container>
             </mat-step>
         </mat-horizontal-stepper>

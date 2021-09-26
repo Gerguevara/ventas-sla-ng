@@ -1,4 +1,17 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '@environments/environment';
+import { CarritoService } from './carrito.service';
+
+const token = 'Bearer ' + localStorage.getItem('token');
+const httpHeaders = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json',
+    'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
+    'Authorization': token
+  })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -1056,5 +1069,31 @@ export class PagoService {
     },
   ];
 
-  constructor() { }
+  constructor(private http: HttpClient,
+              private carritoService: CarritoService) {
+                console.log(JSON.stringify(this.carritoService.obtenerCarrito()));
+              }
+
+  enviarDatosPago(infoEnvio: any, infoPago: any): Observable<any> {
+    const carritoJson = JSON.stringify(this.carritoService.obtenerCarrito());
+    return this.http.post<any>(`${environment.apiUrl}${environment.endpoints.completarCompra}`, {
+      nombres: infoEnvio.nombres,
+      apellidos: infoEnvio.apellidos,
+      email: infoEnvio.email,
+      telefono: infoEnvio.telefono.toString(),
+      departamento: infoEnvio.departamento,
+      municipio: infoEnvio.municipio,
+      infoAdicionalDireccion: infoEnvio.direccion,
+      metodoDePago: infoPago.metodo,
+      nombresSegunTarjeta: infoPago.nombres,
+      apellidosSegunTarjeta: infoPago.apellidos,
+      numTarjeta: infoPago.tarjeta.toString(),
+      mes: infoPago.mes.toString(),
+      anio: infoPago.anio.toString(),
+      cvv: infoPago.cvv.toString(),
+      dui: infoPago.dui.toString(),
+      nit: infoPago.nit.toString(),
+      carrito: carritoJson,
+    }, httpHeaders);
+  }
 }
