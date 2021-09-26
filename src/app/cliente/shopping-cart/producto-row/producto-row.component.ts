@@ -15,7 +15,7 @@ export class ProductoRowComponent implements OnInit {
   @Input()
   quantity!: number;
   @Output()
-  deleteEmitter: EventEmitter<boolean> = new EventEmitter();
+  deleteEmitter: EventEmitter<number> = new EventEmitter();
 
   constructor(
     private carritoService: CarritoService,
@@ -35,11 +35,17 @@ export class ProductoRowComponent implements OnInit {
       dialogRef.afterClosed().subscribe(
         {
           next:()=>{
-            this.deleteEmitter.emit(true);
+            this.deleteEmitter.emit(this.product.id);
           }
         }
       )
     }
+  }
+
+  deleteHandler($event: any){
+    $event.preventDefault(); $event.stopPropagation();
+    this.carritoService.eliminar(this.product);
+    this.deleteEmitter.emit(this.product.id);
   }
 
   get totalRow(){

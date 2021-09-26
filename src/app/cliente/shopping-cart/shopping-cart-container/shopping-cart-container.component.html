@@ -27,7 +27,7 @@
             <p matLine>{{total}}</p>
           </mat-list-item>
           <mat-list-item>
-            <button mat-flat-button><mat-icon>shopping_bag</mat-icon> Pagar</button>
+            <button mat-flat-button [disabled]="productos.length===0"><mat-icon>shopping_bag</mat-icon> Pagar</button>
           </mat-list-item>
         </mat-list>
       </td>
