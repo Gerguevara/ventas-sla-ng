@@ -1,14 +1,28 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Resolve } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { PreflightService } from '@tool-services/preflight-service';
 import { Injectable } from '@angular/core';
 import { ProductoCarrito } from '@models/producto.carrito.model';
 import { Producto } from '@models/producto.model';
+import { environment } from '@environments/environment';
+import { ResultadoCarrito } from '@models/resultados/resultado-carrito.model';
+import { resolve } from 'dns';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CarritoService {
+export class CarritoService extends PreflightService implements Resolve<ResultadoCarrito>{
   arregloCarrito: ProductoCarrito[] = [];
-
-  constructor() { }
+  endpoint = environment.endpoints.shoppingCart;
+  url = environment.apiUrl;
+  constructor(
+    protected httpClient: HttpClient,
+    private matSnackBar: MatSnackBar,
+  ) {
+    super()
+  }
 
   agregar(producto: Producto, cantidad: number){
     //si no ha sido agregado
@@ -60,4 +74,27 @@ export class CarritoService {
     }
     return false;
   }
+
+  obtenerCarrito(): ProductoCarrito[]{
+    if(this.cargarArreglo()){
+      return this.arregloCarrito;
+    } else {
+      this.matSnackBar.open('Error obteniendo carrito','close',{duration:3000})
+      return [];
+    }
+  }
+
+  requestProductInfo(productos: ProductoCarrito[]): Observable<ResultadoCarrito>{
+    return this.httpClient.post<ResultadoCarrito>(`${this.url}${this.endpoint}`,productos,this.setOptions());
+  }
+
+  resolve(){
+    if(this.cargarArreglo()){
+      return this.requestProductInfo(this.arregloCarrito);
+    } else {
+      this.matSnackBar.open('Error','close',{duration:3000})
+      return of<ResultadoCarrito>();
+    }
+  }
+
 }

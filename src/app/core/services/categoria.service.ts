@@ -5,13 +5,17 @@ import { Observable } from 'rxjs';
 import { Categoria } from '@models/categoria.model';
 import { RecursoService } from './recurso.service';
 import { environment } from '@environments/environment';
+import { Resolve } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriaService extends RecursoService<Categoria> {
+export class CategoriaService extends RecursoService<Categoria> implements Resolve<Set<Categoria>>{
 
-  constructor(protected httpClient: HttpClient) {
+  constructor(
+    protected httpClient: HttpClient
+    ) {
     super(environment.endpoints.categorias, httpClient);
   }
 
@@ -27,5 +31,18 @@ export class CategoriaService extends RecursoService<Categoria> {
       params['non_empty']= non_empty;
     }
     return this.httpClient.get<Categoria[]>(this.API_URL, this.setOptions(params));
+  }
+
+
+  obtenerCategoriasIndex(): Observable<Categoria[]>{
+    return this.httpClient.get<Categoria[]>(`${environment.apiUrl}index`, this.setOptions({'solo_categorias': 'true'}));
+  }
+
+  resolve(){
+    return this.obtenerCategoriasIndex().pipe(
+      map((result: Categoria[])=>{
+        return new Set<Categoria>(result);
+      }
+    ));
   }
 }

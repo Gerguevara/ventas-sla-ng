@@ -15,8 +15,13 @@
 
     <div class="toolbar-items-right">
         <!-- items derecha toolbar principal -->
+        <!-- icon shopping cart  -->
+      <a [routerLink]="['/','shopping-cart']" mat-icon-button color="accent" aria-label="Menu button">
+        <mat-icon>shopping_cart</mat-icon>
+      </a>
+
         <!-- icon trigger para menu #menu -->
-        <button mat-icon-button [matMenuTriggerFor]="menu" color="accent" aria-label="Menu button">
+      <button mat-icon-button [matMenuTriggerFor]="menu" color="accent" aria-label="Menu button">
         <mat-icon>account_circle</mat-icon>
       </button>
         <!-- fin icon trigger para menu #menu -->

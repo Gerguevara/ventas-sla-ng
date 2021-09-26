@@ -34,6 +34,10 @@ const routes: Routes = [
         loadChildren: () => import('./pagos/pagos.module').then(m => m.PagosModule),
         canLoad: [AuthGuard, TwoFaBlockGuard]
       },
+      {
+        path:'shopping-cart',
+        loadChildren: () => import('./shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule),
+      }
     ]
   },
 ];

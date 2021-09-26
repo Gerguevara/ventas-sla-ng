@@ -28,12 +28,23 @@ export class IndexSolicitudesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.addDataToTable();
   }
 
   // Obtenemos todos los cambios que nos envíe el paginador con la data de la página
-  addDataToTable( event: Empresa[] ): void {
-    // Seteamos estos datos a la tabla
-    this.dataSource = new MatTableDataSource<Empresa>(event);
+  addDataToTable( event?: Empresa[] ): void {
+    if(event){
+      // Seteamos estos datos a la tabla
+      this.dataSource = new MatTableDataSource<Empresa>(event);
+    } else {
+      this.solicitudesEmpresaService.getData().subscribe(
+        {
+          next: (empresas: Empresa[])=>{
+            this.dataSource = new MatTableDataSource<Empresa>(empresas)
+          }
+        }
+      )
+    }
   }
 
   mostrarDialogo( solicitud: Empresa ): void {

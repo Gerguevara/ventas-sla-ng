@@ -12,7 +12,7 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./index-producto.container.scss']
 })
 export class IndexProductoContainer implements OnInit {
-  producto? : Producto;
+  producto! : Producto;
   isInCart!: boolean;
   cantidadControl = new FormControl(1, [
     Validators.required

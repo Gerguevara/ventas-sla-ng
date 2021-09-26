@@ -8,11 +8,12 @@ import { Producto } from '@models/producto.model';
 import { ResultadoIndex } from '@models/resultados/resultado-index.model';
 import { environment } from '@environments/environment';
 import { HttpOptions } from '@tools/models/HttpOptions';
+import { Resolve } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
-export class IndexService extends RecursoService<Producto> {
+export class IndexService extends RecursoService<Producto> implements Resolve<ResultadoIndex[]> {
 
   constructor(protected httpClient: HttpClient) {
     super(environment.endpoints.index, httpClient);
@@ -34,5 +35,9 @@ export class IndexService extends RecursoService<Producto> {
       options = this.setOptions();
     }
     return this.httpClient.get<ResultadoIndex[]>(`${environment.apiUrl}index`, options);
+  }
+
+  resolve(){
+    return this.obtenerProductos();
   }
 }

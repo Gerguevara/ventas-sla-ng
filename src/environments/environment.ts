@@ -39,6 +39,8 @@ export const environment = {
     changeMail: 'changeMail',
     cambiarStockProducto: 'transaccionesInventario',
     kardex: 'kardex',
+    shoppingCart: 'shoppingCart',
+    
   },
   patterns:
   {

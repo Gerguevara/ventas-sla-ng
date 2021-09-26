@@ -1,8 +1,8 @@
-import { PerfilUsuario } from '@core/models/perfil.usuario.model';
-import { Producto } from '@core/models/producto.model';
+import { PerfilUsuario } from '@models/perfil.usuario.model';
+import { Producto } from '@models/producto.model';
+import { Recurso } from './recurso.model';
 
-export interface Orden {
-  id: number;
+export interface Orden extends Recurso{
   id_user: number;
   id_metodo_de_pago: number;
   estado: string;
