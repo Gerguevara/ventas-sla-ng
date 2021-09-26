@@ -113,6 +113,6 @@ export class ProductoService  extends RecursoService<Producto> implements Resolv
 
   resolve(route: ActivatedRouteSnapshot){
     const id =Number(route.paramMap.get('id'));
-    return this.httpClient.get<Producto>(`${this.API_URL}/${id}`, this.setOptions(undefined,false,false));
+    return this.httpClient.get<Producto>(`${environment.apiUrl}index/${id}`, this.setOptions(undefined,false,false));
   }
 }
