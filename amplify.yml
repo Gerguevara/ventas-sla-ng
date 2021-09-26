@@ -6,6 +6,7 @@ frontend:
         - npm ci
     build:
       commands:
+        - npm install
         - npm run build
   artifacts:
     baseDirectory: dist/ventas-sla-ng
