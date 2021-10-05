@@ -37,6 +37,12 @@ const routes: Routes = [
       {
         path:'shopping-cart',
         loadChildren: () => import('./shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule),
+        canLoad: [TwoFaBlockGuard]
+      },
+      {
+        path:'wishlist',
+        loadChildren: () => import('./shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule),
+        canLoad: [AuthGuard, TwoFaBlockGuard]
       }
     ]
   },

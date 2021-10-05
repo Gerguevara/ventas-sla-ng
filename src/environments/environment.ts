@@ -40,7 +40,8 @@ export const environment = {
     cambiarStockProducto: 'transaccionesInventario',
     kardex: 'kardex',
     shoppingCart: 'shoppingCart',
-    completarCompra: 'completarCompra'
+    completarCompra: 'completarCompra',
+    wishlist: 'wishlist',
   },
   patterns:
   {
