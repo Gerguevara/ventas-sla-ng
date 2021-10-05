@@ -1,3 +1,4 @@
+import { CategoriasIndexService } from './../core/services/Resolvers/categorias-index.service';
 import { ClienteComponent } from './cliente.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -41,10 +42,14 @@ const routes: Routes = [
       },
       {
         path:'wishlist',
-        loadChildren: () => import('./shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule),
+        loadChildren: () => import('./wishlist/wishlist.module').then(m => m.WishlistModule),
         canLoad: [AuthGuard, TwoFaBlockGuard]
       }
-    ]
+    ],
+    resolve:
+    {
+      categorias : CategoriasIndexService
+    }
   },
 ];
 

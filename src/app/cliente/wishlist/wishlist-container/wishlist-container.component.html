@@ -1,5 +1,5 @@
 <div class="header">
-  <h1>Carrito de compras</h1>
+  <h1>Lista de deseos</h1>
 </div>
 <ng-container *ngFor="let producto of productos">
     <sla-product-row [product]="producto" (deleteEmitter)="handleDelete(producto.id)"></sla-product-row>

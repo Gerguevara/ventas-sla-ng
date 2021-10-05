@@ -1,6 +1,7 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
 import { Producto } from '@models/producto.model';
+import { ActivatedRoute, Data } from '@angular/router';
 
 @Component({
   selector: 'sla-wishlist-container',
@@ -11,10 +12,19 @@ export class WishlistContainerComponent implements OnInit {
   productos: Producto[] = [];
 
   constructor(
-    private matSnackBar: MatSnackBar
-  ) { }
+    private matSnackBar: MatSnackBar,
+    private route: ActivatedRoute,
+    ) {
+    this.route.data.subscribe(
+      {
+        next: (response: Data) => {
+          this.productos = response.wishlist;
+      }
+    })
+  }
 
   ngOnInit(): void {
+    this.route
   }
 
   handleDelete(id: number){
