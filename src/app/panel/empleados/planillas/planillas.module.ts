@@ -15,12 +15,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
+import { CreatePlanillaFormComponent } from './components/create-planilla-form/create-planilla-form.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
     PlanillasIndexComponent,
     PlanillasFormComponent,
-    LineaPlanillasTableComponent
+    LineaPlanillasTableComponent,
+    CreatePlanillaFormComponent
   ],
   imports: [
     CommonModule,
@@ -32,6 +36,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatButtonModule,
     MatSnackBarModule,
     MatFormFieldModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
     MatInputModule,
     MatDialogModule,
     PlanillasRoutingModule
