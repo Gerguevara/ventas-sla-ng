@@ -1,4 +1,7 @@
-<mat-card>
+<mat-card style="position: relative;">
+    <button mat-stroked-button (click)="crearPlanilla()" color="primary" style="position: absolute; top: 15px; right: 15px;">
+      <mat-icon>add</mat-icon> Crear
+    </button>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
         <!-- ID Column -->
         <ng-container matColumnDef="id">
@@ -23,8 +26,8 @@
             <th mat-header-cell *matHeaderCellDef>Acciones</th>
             <td mat-cell *matCellDef="let element">
                 <button type="button" (click)="eliminarPlanilla(element)" style="margin-right: 5px; cursor: pointer;" mat-icon-button color="primary" aria-label="delete_icon">
-                    <mat-icon>delete</mat-icon>
-                </button>
+                  <mat-icon>delete</mat-icon>
+              </button>
             </td>
         </ng-container>
 

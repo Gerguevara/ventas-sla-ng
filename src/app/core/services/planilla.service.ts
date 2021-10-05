@@ -27,6 +27,10 @@ export class PlanillaService {
     return this.http.get<LineaPlanilla[]>(this.url + '/' + planilla.id, httpHeaders);
   }
 
+  crearPlanilla( nombre: string, fecha: string ): Observable<any> {
+    return this.http.post<any>(this.url, { nombre, fecha }, httpHeaders);
+  }
+
   actualizarLineaPlanilla( lineadeplanilla: LineaPlanilla ): Observable<any> {
     return this.http.put<any> (this.urlLineaPlanilla + '/' + lineadeplanilla.id, JSON.stringify(lineadeplanilla), httpHeaders);
   }

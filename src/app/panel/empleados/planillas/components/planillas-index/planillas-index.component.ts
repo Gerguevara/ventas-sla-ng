@@ -7,6 +7,7 @@ import { LineaPlanillasTableComponent } from '../linea-planillas-table/linea-pla
 import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 import { PlanillaService } from '@global-services/planilla.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CreatePlanillaFormComponent } from '../create-planilla-form/create-planilla-form.component';
 
 @Component({
   selector: 'app-planillas-index',
@@ -34,6 +35,23 @@ export class PlanillasIndexComponent implements OnInit {
   addDataToTable( event: Planilla[] ): void {
     // Seteamos estos datos a la tabla
     this.dataSource = new MatTableDataSource<Planilla>(event);
+  }
+
+  /**
+   * @ngdoc method
+   * @name crearPlanilla
+   * @description
+   * Se encarga de mostrar el formulario de creación de planillas en una ventana de dialogo
+   * @returns void
+   */
+  crearPlanilla(): void {
+    const dialogRef = this.dialog.open( CreatePlanillaFormComponent, { width: '45vw' } );
+    dialogRef.afterClosed().subscribe((planilla: Planilla) => {
+      if ( planilla ) {
+        this.dataSource.data.push( planilla );
+        this.dataSource.data = this.dataSource.data;
+      }
+    })
   }
 
   verPlanilla( planilla: Planilla ): void {

@@ -3,7 +3,6 @@ import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ThemePalette } from '@angular/material/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Orden } from '@models/orden.model';
-import { DialogSpinnerComponent } from '@tool-components/dialog-spinner/dialog-spinner.component';
 import { formatDate } from '@angular/common';
 
 @Component({
@@ -27,7 +26,6 @@ export class DialogEstadoOrdenComponent implements OnInit {
   estadoOrdenForm!: FormGroup;
 
   constructor( private formBuilder: FormBuilder,
-               private dialog: MatDialog,
                public dialogRef: MatDialogRef<DialogEstadoOrdenComponent>,
                @Inject(LOCALE_ID) public locale: string,
                @Inject(MAT_DIALOG_DATA) public orden: Orden, ) {
