@@ -55,7 +55,11 @@ export class VentasReportComponent implements OnInit {
   descargarPdf(): void {
     this.dialog.open( DialogSpinnerComponent );
     const cantidad = this.productosVendidosForm.get('cantidad')?.value;
-    this.ventasService.obtenerReportePdf(cantidad).subscribe((response: any) => {
+    let date = this.productosVendidosForm.get('fecha')?.value;
+    if ( date ) {
+      date = formatDate( date, 'yyyy-MM-dd', this.locale );
+    }
+    this.ventasService.obtenerReportePdf(cantidad, date).subscribe((response: any) => {
       const file = new Blob([response], { type: 'application/pdf' });
       const fileURL = URL.createObjectURL(file);
       window.open(fileURL);
