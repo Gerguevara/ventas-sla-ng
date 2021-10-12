@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { Orden } from '@models/orden.model';
 import { RecursoService } from './recurso.service';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -61,5 +60,29 @@ export class VentasService extends RecursoService<Orden> {
     } else {
       return this.http.patch<Orden>(`${this.url}/${ordenId}`, { estado: estado }, this.setOptions());
     }
+  }
+
+  /**
+   * @ngdoc method
+   * @name obtenerMasVendidos
+   * @description
+   * Realiza petición get a API enviando la cantidad de productos más vendidos que se desean obtener
+   * junto con la fecha que se quiere evaluar.
+   */
+  obtenerMasVendidos(cantidad: number, fecha?: string): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}${environment.endpoints.productosVendidos}`, {cantidad, fecha}, this.setOptions());
+  }
+
+  obtenerReportePdf(cantidad: number, fecha?: string): Observable<any> {
+    /* return this.http.post<any>(`${environment.apiUrl}${environment.endpoints.productosVendidosPdf}`,
+                                { cantidad, fecha }, this.setOptions());*/
+                                const token = 'Bearer ' + localStorage.getItem('token');
+                                const headers = new HttpHeaders({
+                                  'Content-Type':  'application/json',
+                                  'Access-Control-Allow-Origin': `${environment.allowedOrigin}`,
+                                  'Authorization': token,
+                                  'Accept': 'application/pdf' });
+                                return this.http.post<any>(`${environment.apiUrl}${environment.endpoints.productosVendidosPdf}`,
+                                { cantidad, fecha }, { headers, responseType: 'blob' as 'json' } );
   }
 }
