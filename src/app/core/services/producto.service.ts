@@ -64,13 +64,14 @@ export class ProductoService  extends RecursoService<Producto> implements Resolv
    */
 
   async uploadImage( form: any ): Promise<any> {
+    console.log(form);
     const response = await this.httpClient.post(
-      `${environment.apiUrl}${this.endpoint}/uploadImage/`, form, httpHeaders).toPromise();
+      `${environment.apiUrl}${this.endpoint}/uploadImage/`, JSON.stringify(form), this.setOptions()).toPromise();
     return response;
   }
 
   deleteImage(path: string): Observable<any> {
-    return this.httpClient.post(`${environment.apiUrl}${this.endpoint}/deleteImage`, { path }, httpHeaders);
+    return this.httpClient.post(`${environment.apiUrl}${this.endpoint}/deleteImage`, { path }, this.setOptions());
   }
 
   /*
@@ -78,23 +79,23 @@ export class ProductoService  extends RecursoService<Producto> implements Resolv
   para la creación de un nuevo producto
   */
   crearProducto( producto: ProductoPost ): any {
-    return this.httpClient.post<any>(`${environment.apiUrl}${this.endpoint}`, producto, httpHeaders);
+    return this.httpClient.post<any>(`${environment.apiUrl}${this.endpoint}`, producto, this.setOptions());
   }
 
   actualizarProducto( producto: Producto ): Observable<any> {
-    return this.httpClient.put<any>(`${environment.apiUrl}${this.endpoint}/${producto.id}`, JSON.stringify(producto), httpHeaders);
+    return this.httpClient.put<any>(`${environment.apiUrl}${this.endpoint}/${producto.id}`, JSON.stringify(producto), this.setOptions());
   }
 
   eliminarProducto( producto: Producto ): Observable<any> {
-    return this.httpClient.delete<any>(`${environment.apiUrl}${this.endpoint}/${producto.id}`, httpHeaders);
+    return this.httpClient.delete<any>(`${environment.apiUrl}${this.endpoint}/${producto.id}`, this.setOptions());
   }
 
   obtenerCategoriaProducto( id: number ): Observable<Categoria> {
-    return this.httpClient.get<Categoria>(`${environment.apiUrl}${environment.endpoints.categorias}/${id}`, httpHeaders);
+    return this.httpClient.get<Categoria>(`${environment.apiUrl}${environment.endpoints.categorias}/${id}`, this.setOptions());
   }
 
   obtenerListaProductos(): Observable<Resultado<Producto>> {
-    return this.httpClient.get<Resultado<Producto>>(`${environment.apiUrl}${this.endpoint}?status=1`, httpHeaders);
+    return this.httpClient.get<Resultado<Producto>>(`${environment.apiUrl}${this.endpoint}?status=1`, this.setOptions());
   }
 
   getImage(producto: Producto): any{
@@ -108,7 +109,7 @@ export class ProductoService  extends RecursoService<Producto> implements Resolv
       cantidad,
       precio_unitario: precioUnitario
     };
-    return this.httpClient.post<any>(`${environment.apiUrl}${environment.endpoints.cambiarStockProducto}`, data, httpHeaders);
+    return this.httpClient.post<any>(`${environment.apiUrl}${environment.endpoints.cambiarStockProducto}`, data, this.setOptions());
   }
 
   resolve(route: ActivatedRouteSnapshot){

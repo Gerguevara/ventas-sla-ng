@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogSpinnerComponent } from '../../../../../tools/components/dialog-spinner/dialog-spinner.component';
 import { formatDate } from '@angular/common';
+import { environment } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'sla-ventas-report',
@@ -16,6 +17,7 @@ export class VentasReportComponent implements OnInit {
 
   listaProductos: any;
   imagen: any;
+  baseUrl = environment.baseApiUrl;
 
   constructor( private ventasService: VentasService, private formBuilder: FormBuilder,
                private dialog: MatDialog,

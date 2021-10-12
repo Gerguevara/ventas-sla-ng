@@ -27,7 +27,7 @@
                         <mat-card-title> {{ item.nombre_producto }} </mat-card-title>
                         <mat-card-subtitle>Vendidos: {{ item.veniddos }} </mat-card-subtitle>
                     </mat-card-header>
-                    <img mat-card-image [src]="item.imagen" alt="Photo of a Shiba Inu">
+                    <img mat-card-image [src]="baseUrl + item.imagen" onerror="this.src='/assets/images/placeholder-product-image.svg'" [alt]="item.nombre_producto">
                     <mat-card-content>
                     </mat-card-content>
                 </mat-card>
