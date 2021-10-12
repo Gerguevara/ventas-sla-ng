@@ -64,9 +64,8 @@ export class ProductoService  extends RecursoService<Producto> implements Resolv
    */
 
   async uploadImage( form: any ): Promise<any> {
-    console.log(form);
     const response = await this.httpClient.post(
-      `${environment.apiUrl}${this.endpoint}/uploadImage/`, JSON.stringify(form), this.setOptions()).toPromise();
+      `${environment.apiUrl}${this.endpoint}/uploadImage/`, form, this.setOptions()).toPromise();
     return response;
   }
 
