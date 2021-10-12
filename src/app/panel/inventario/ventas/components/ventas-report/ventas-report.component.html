@@ -1,0 +1,37 @@
+<div class="header">
+    <h1>Productos Más Vendidos</h1>
+</div>
+<mat-card>
+    <form [formGroup]="productosVendidosForm" style="position: relative; display: inline-block;">
+        <mat-form-field appearance="fill" style="width: 15vw;">
+            <mat-label>Cantidad</mat-label>
+            <input matInput #cantidad formControlName="cantidad" type="number" placeholder="Ex. 5" min="1" max="10">
+        </mat-form-field>
+        <mat-form-field appearance="fill" style="width: 15vw; margin-left: 10px;">
+            <mat-label>Fecha Desde</mat-label>
+            <input matInput formControlName="fecha" readonly [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <button type="button" mat-raised-button style="margin-left: 10px;" color="primary" (click)="obtenerProductos()" [disabled]="productosVendidosForm.invalid">
+          <mat-icon>task_alt</mat-icon> Consultar
+        </button>
+    </form>
+    <button mat-raised-button type="button" style="position: absolute; left: 15px; top: 80px" (click)="descargarPdf()" color="primary">
+        <mat-icon>picture_as_pdf</mat-icon> Generar PDF</button>
+    <mat-grid-list cols="2" rowHeight="1:1.1" style="margin-top: 5vw;">
+        <div *ngFor="let item of listaProductos">
+            <mat-grid-tile>
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title> {{ item.nombre_producto }} </mat-card-title>
+                        <mat-card-subtitle>Vendidos: {{ item.veniddos }} </mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image [src]="item.imagen" alt="Photo of a Shiba Inu">
+                    <mat-card-content>
+                    </mat-card-content>
+                </mat-card>
+            </mat-grid-tile>
+        </div>
+    </mat-grid-list>
+</mat-card>

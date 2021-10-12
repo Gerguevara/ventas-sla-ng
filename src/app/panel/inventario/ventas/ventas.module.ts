@@ -22,12 +22,16 @@ import { MatListModule } from '@angular/material/list';
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { DialogEstadoOrdenComponent } from './components/dialog-estado-orden/dialog-estado-orden.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { CoreModule } from '../../../core/core.module';
+import { VentasReportComponent } from './components/ventas-report/ventas-report.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
     VentasIndexComponent,
     DialogVentaComponent,
-    DialogEstadoOrdenComponent
+    DialogEstadoOrdenComponent,
+    VentasReportComponent,
   ],
   imports: [
     CommonModule,
@@ -41,6 +45,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatSnackBarModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    MatGridListModule,
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
@@ -50,6 +55,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     VentasRoutingModule,
+    CoreModule,
     MatPaginatorModule
   ]
 })

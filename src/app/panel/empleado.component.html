@@ -49,10 +49,24 @@
                             <mat-icon color="primary">receipt_long</mat-icon>&nbsp;&nbsp;Productos
                         </a>
                     </ng-template>
+                    <mat-divider></mat-divider>
                     <ng-template [ngxPermissionsOnly]="['productos.index']">
-                        <a mat-list-item [routerLink]="['/panel/inventario/ventas']" class="list-item-container">
-                            <mat-icon color="primary">verified</mat-icon>&nbsp;&nbsp;Ventas
-                        </a>
+                        <mat-expansion-panel mat-list-item class="mat-elevation-z0 list-item-container">
+                            <mat-expansion-panel-header>
+                                <mat-icon color="primary">verified</mat-icon>&nbsp;&nbsp;Ventas
+                            </mat-expansion-panel-header>
+                            <mat-nav-list>
+                                <mat-divider></mat-divider>
+                                <a mat-list-item [routerLink]="['/panel/inventario/ventas']" class="list-item-container">
+                                    <mat-icon color="primary">account_balance_wallet</mat-icon>&nbsp;&nbsp;Gestionar Ventas
+                                </a>
+                                <mat-divider></mat-divider>
+                                <a mat-list-item [routerLink]="['/panel/inventario/ventas/report']" class="list-item-container">
+                                    <mat-icon color="primary">analytics</mat-icon>&nbsp;&nbsp;Reportes de Productos
+                                </a>
+                                <mat-divider></mat-divider>
+                            </mat-nav-list>
+                        </mat-expansion-panel>
                     </ng-template>
                     <mat-divider></mat-divider>
                     <ng-template [ngxPermissionsOnly]="['categorias.index']">

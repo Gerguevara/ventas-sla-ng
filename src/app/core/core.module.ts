@@ -17,11 +17,14 @@ import { EstadoOrdenPipe } from './pipes/estado-orden.pipe';
     CommonModule,
     HttpClientModule
   ],
-  providers:[
+  providers: [
     CategoriaService,
     EtiquetaService,
     ProductoService,
     DepartamentoService
+  ],
+  exports: [
+    EstadoOrdenPipe,
   ]
 })
 export class CoreModule { }

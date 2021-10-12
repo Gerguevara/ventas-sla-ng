@@ -65,6 +65,7 @@ export class ProductoDesignFormComponent implements OnInit, OnDestroy {
       form.append('image', this.fileInput, this.fileInput.name);
 
       this.productoService.uploadImage( form ).then((response: any) => {
+        console.log(response);
         this.cargandoImagen = false;
         this.imgUrl = `${environment.baseApiUrl}${response.path}`;
         this.mostrarImagen = true;
